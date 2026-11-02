@@ -295,3 +295,62 @@ gantt
 - [ ] Prisma: model, quan hệ, transaction, migration, seed.
 - [ ] Repository pattern. Không có `$queryRaw`.
 - [ ] Đã thử chạy với MySQL và ghi kết quả.
+
+---
+
+## Phụ lục B. Kịch bản demo 15 phút
+
+**Chuẩn bị:** 3 profile Chrome (Khách sỉ `lan.uet`, Nghệ nhân `ongtu`, Admin) cùng 1 điện thoại. Dữ liệu vừa reset. `RFQ26-0001` đang `BIDDING` với 4 chào giá.
+
+| Thời gian | Người thao tác | Nội dung | Barem thể hiện |
+|---|---|---|---|
+| 0:00–1:00 | TV1 | Giới thiệu một câu: *"vCraft là triển lãm số của làng gốm Bát Tràng: kể chuyện, truy xuất, và điều phối đơn sỉ."* Lướt trang chủ: ảnh lớn, bản tin làng | B3 |
+| 1:00–3:00 | TV3 | `/san-pham`: lọc theo danh mục và giá, **mở tab Network cho thấy chỉ có JSON, trang không tải lại**. Copy URL có bộ lọc dán sang tab mới. Gõ "binh hut loc" để thấy gợi ý. Vào chi tiết sản phẩm, mở lightbox. Vào gian trưng bày của xưởng. Chuyển DevTools sang cỡ điện thoại để thấy responsive | B1, B3, B4, B6, B8 |
+| 3:00–4:30 | TV3 | `/ban-do`: bật lọc "Đang mở cửa", bấm ghim xem popup, "Chỉ đường". Giải thích trạng thái mở cửa được tính ở server theo giờ Việt Nam | B1 |
+| 4:30–7:00 | TV2 | **Mời giám khảo dùng điện thoại quét tem QR trên chiếc cốc thật.** Trang `/truy-xuat/…` mở ra với dòng thời gian từ ngày chọn đất. Chuyển sang profile Nghệ nhân: mở lô đang làm, **thêm mốc với 3 ảnh**, chỉ cho thấy ảnh 4 MB được backend thu còn khoảng 80 KB WebP. Hoàn tất lô, thử sửa mốc cũ thì bị chặn (`409 BATCH_LOCKED`) | B1, B4, B7 |
+| 7:00–11:30 | TV1 | Khách sỉ **tạo RFQ mới** qua 3 bước: cố nhập sai ngày để thấy báo lỗi ngay, rồi gửi; hệ thống báo "Đã mời 6 xưởng". Chuyển sang profile Nghệ nhân: **chuông thông báo nhảy số mà không tải lại trang**, chào giá. Quay lại `RFQ26-0001` có sẵn: bảng so sánh, bấm **"Gợi ý phân bổ"** (2.000 + 3.000), xác nhận chốt. **Demo khóa:** mở sẵn 2 tab cùng bấm chốt, một tab nhận thông báo xung đột. Nghệ nhân bấm bắt đầu sản xuất, gắn lô, giao hàng. Khách xác nhận nhận hàng. Mở dòng thời gian trạng thái | B1, B2, B4, B6 |
+| 11:30–13:00 | TV2, TV3 | Profile Admin: **duyệt hồ sơ** `moidangky` để hộ này đăng nhập được. Đăng tin "Lịch cúp điện" và ghim, banner hiện ngay ở bảng điều khiển nghệ nhân. Mở bảng điều phối và bảng thống kê | B1, B2 |
+| 13:00–15:00 | Cả nhóm | Kỹ thuật: cây thư mục, module `quotes` (`QuoteStateMachine`, `transition()`), `schema.prisma`. Thử gọi API sửa sản phẩm của xưởng khác thì nhận **403**. Mở DevTools cho thấy cookie `httpOnly`. **F5 ở trang sâu** không lỗi | B5, B7, B8, B9 |
+
+**Mẹo:** nói ít, cho thấy nhiều. Mỗi phần mở đầu bằng *vấn đề*, sau đó *thao tác*, cuối cùng chỉ ra *điểm kỹ thuật*. Khi gặp lỗi, giữ bình tĩnh, chuyển sang dữ liệu seed tương đương và đi tiếp.
+
+---
+
+## Phụ lục C. Câu hỏi vấn đáp thường gặp
+
+| # | Câu hỏi | Ý chính khi trả lời |
+|---|---|---|
+| 1 | Vì sao chọn SPA cùng REST API mà không render ở server? | Đáp ứng trực tiếp tiêu chí fetch, JSON, cập nhật DOM. Tách rõ frontend và backend. API dùng lại được cho ứng dụng di động. Nhược điểm SEO được giảm bằng thẻ meta theo từng route |
+| 2 | Máy trạng thái cài thế nào? Làm sao chặn chuyển trạng thái sai? | Một bảng chuyển trạng thái và **một hàm `transition()` duy nhất**. Cặp (trạng thái, sự kiện) không có trong bảng thì trả `400 INVALID_TRANSITION`. Mọi lần chuyển đều ghi lịch sử |
+| 3 | Hai người cùng bấm chốt thì chuyện gì xảy ra? | Khóa lạc quan: `updateMany` có điều kiện `status` và `version`. Bên thứ hai cập nhật được 0 dòng, transaction bị rollback, nhận `409`. Có test đồng thời chứng minh |
+| 4 | Vì sao khóa lạc quan mà không dùng `SELECT … FOR UPDATE`? | Tranh chấp hiếm nên không cần giữ khóa. Không phụ thuộc CSDL vì Prisma không có API cho `FOR UPDATE`, phải viết SQL thô. Khóa bi quan hợp hơn khi tranh chấp xảy ra thường xuyên |
+| 5 | Nghệ nhân đổi giá đúng lúc khách đang chốt thì sao? | Khách gửi kèm `bidVersion` đã thấy. Lệch thì trả `409` và giao diện hiện giá mới để khách xem lại |
+| 6 | QR chứa gì? Đổi tên miền thì tem cũ có chết không? | Chứa link ngắn `/q/{mã}`. QR sinh theo yêu cầu từ `APP_URL`. Tem đã in thì cần giữ tên miền, hoặc đặt chuyển hướng từ tên miền cũ. Đường dẫn `/q` do server quyết định đích nên có thể đổi cấu trúc trang mà không phải in lại tem |
+| 7 | Làm sao đảm bảo nhật ký không bị sửa về sau? | Hoàn tất lô thì khóa (`lockedAt`), API từ chối sửa. Chỉ được thêm ghi chú, có dấu thời gian riêng. Mở rộng: chuỗi băm (TRC-11) |
+| 8 | Ảnh được tối ưu thế nào? Chứng minh đi | Kiểm tra magic bytes, sharp tự xoay, xóa EXIF và GPS, sinh 3 kích thước WebP và LQIP. Frontend dùng `srcset` và lazy. Mở tab Network so sánh dung lượng gốc với bản đã xử lý |
+| 9 | Token lưu ở đâu? Vì sao không dùng `localStorage`? | Access token nằm trong bộ nhớ. Refresh token trong cookie `httpOnly`, JavaScript không đọc được nên XSS không lấy được. Refresh xoay vòng, phát hiện dùng lại thì thu hồi |
+| 10 | Làm sao chặn nghệ nhân A sửa sản phẩm của nghệ nhân B? | Ngoài kiểm tra vai trò, mọi truy vấn ở service đều có điều kiện `workshopId` của người gọi. Demo được trường hợp nhận 403 |
+| 11 | "Độc lập CSDL" thể hiện ở đâu? | Dùng Prisma, không có SQL thô. Tìm kiếm qua cột chuẩn hóa thay vì hàm riêng của Postgres. Đã đổi `provider` sang MySQL và chạy được |
+| 12 | F5 ở `/xuong/abc` có bị 404 không? Vì sao? | Không. Nginx `try_files … /index.html` trả về SPA, React Router xử lý tiếp. Khi chạy dev, Vite tự làm việc này |
+| 13 | Nhóm dùng những mẫu thiết kế nào? | Phân tầng, Repository, State, Strategy (`StorageProvider`), Observer (`DomainEvents`), Factory, Singleton, Chain of Responsibility (middleware), DI qua constructor. Mở được code tương ứng |
+| 14 | Vì sao kiểm tra dữ liệu ở cả frontend lẫn backend? | Frontend để người dùng có phản hồi nhanh. Backend để an toàn, vì frontend có thể bị bỏ qua. Dùng chung schema Zod nên hai phía không lệch nhau |
+| 15 | Hệ thống chọn "hộ phù hợp" thế nào? | Lọc cứng theo danh mục, trạng thái duyệt, có nhận đơn sỉ. Chấm điểm theo năng lực, uy tín, đúng hạn, phản hồi. Mời 10 xưởng cao điểm nhất. Admin có thể chỉnh |
+| 16 | Tổng số lượng các hộ nhận làm không đủ 5.000 thì sao? | Không cho chốt khi tổng chưa bằng số lượng yêu cầu. Gợi ý báo còn thiếu bao nhiêu. Admin mời thêm hộ |
+| 17 | Upload một file `.exe` đổi đuôi thành `.jpg` thì sao? | Magic bytes không khớp nên trả `415`. Kể cả qua được thì sharp mã hóa lại ảnh nên dữ liệu lạ bị loại |
+| 18 | Tìm kiếm tiếng Việt không dấu hoạt động thế nào? | Khi lưu, ghi cột `searchText`: bỏ dấu, đổi `đ` thành `d`, chữ thường. Từ khóa tìm kiếm được chuẩn hóa giống hệt rồi so khớp bằng `contains` |
+| 19 | "Đang mở cửa" tính theo múi giờ nào? | Tính ở server theo `Asia/Ho_Chi_Minh` dựa trên lịch theo tuần và các ngày ngoại lệ. Không phụ thuộc đồng hồ của máy khách |
+| 20 | Nếu làm tiếp thì phát triển gì? | Thanh toán đặt cọc, kết nối đơn vị vận chuyển, chuỗi băm nhật ký, giao diện tiếng Anh cho khách quốc tế, ứng dụng di động dùng lại cùng API |
+
+---
+
+## Phụ lục D. Kế hoạch cắt giảm phạm vi
+
+Kích hoạt khi đến **Chủ nhật 29/11 (M3)** mà còn trễ từ một tuần trở lên, hoặc khi lịch thi bị dời sớm hơn.
+
+| Mức | Cắt hoặc đơn giản hóa | Giữ nguyên bằng mọi giá |
+|---|---|---|
+| Nhẹ | Bỏ toàn bộ P2: email, yêu thích, đánh giá, chuỗi băm, bảng giá nguyên liệu, AVIF | Mọi yêu cầu P0 |
+| Vừa | SSE thay bằng hỏi lại định kỳ. Bỏ quên mật khẩu. Bỏ e2e (giữ unit và tích hợp). Bảng thống kê chỉ còn các thẻ số liệu | **Gợi ý phân bổ**, **chốt có khóa**, **trang truy xuất đẹp**, **bản đồ có trạng thái mở cửa**. Đây là những điểm tạo ấn tượng |
+| Mạnh | Gom cụm ghim và danh sách đồng bộ bản đồ: bỏ. Tìm kiếm chỉ còn lọc, không có gợi ý. Bảng điều phối chỉ còn bản đọc | Đủ 6 trạng thái báo giá, QR quét được, upload resize, phân quyền |
+
+**Không bao giờ cắt:** responsive (hệ số 0,2), dữ liệu seed đẹp, tập dượt demo.
