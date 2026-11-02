@@ -789,3 +789,55 @@ erDiagram
 
 ### 10.3 Slug ổn định
 Khi đổi tên sản phẩm hoặc xưởng, slug cũ được lưu vào `SlugHistory`. API trả dữ liệu kèm `canonicalSlug`. Frontend thay URL bằng `navigate(…, { replace: true })`, nên các link cũ đã chia sẻ không bị hỏng.
+
+---
+
+## 11. Ánh xạ barem chấm điểm
+
+| # | Tiêu chí | Hệ số | vCraft đáp ứng bằng | Bằng chứng khi demo |
+|---|---|:-:|---|---|
+| 1 | Chức năng và các tính năng đã cài đặt | **0,35** | Toàn bộ yêu cầu P0 cho 3 vai trò và 4 yêu cầu kỹ thuật. Thêm các tính năng P1 tạo điểm cộng: gợi ý phân bổ, in tem và đếm lượt quét QR, chuông thông báo thời gian thực, tìm kiếm không dấu kèm gợi ý, bảng thống kê, tác vụ hết hạn tự động | Chạy trọn kịch bản demo ([ROADMAP, Phụ lục B](ROADMAP.md)) |
+| 2 | Thiết kế: logic, dễ sử dụng | 0,1 | Điều hướng riêng cho từng vai trò, biểu mẫu nhiều bước có thanh bước, dòng thời gian trạng thái, điền sẵn dữ liệu, hộp thoại xác nhận, trạng thái rỗng có hướng dẫn | Khách tạo yêu cầu báo giá trong chưa tới 2 phút, không cần giải thích |
+| 3 | Giao diện: responsive, đẹp, hiện đại, có bản sắc | **0,2** | Design system Lam, Ngà, Đất nung. Chữ serif cho tiêu đề. Ảnh thật. Họa tiết lam và con dấu. Kiểm tra ở 4 cỡ màn hình. Trang truy xuất dạng kể chuyện | Bật chế độ thiết bị trong DevTools. Mở trang truy xuất trên điện thoại thật |
+| 4 | Hiệu năng: fetch/AJAX, backend API, JSON, cập nhật DOM | 0,1 | SPA cùng REST API JSON. TanStack Query. Lọc, cuộn vô hạn, chào giá, thông báo đều không tải lại trang. Ảnh WebP nhiều kích thước | Tab Network lọc Fetch/XHR chỉ thấy JSON. Điểm Lighthouse |
+| 5 | Phong cách lập trình | 0,05 | Phân tầng và các mẫu ở mục 7.2. Monorepo. ESLint, Prettier. TSDoc. Schema dùng chung | Mở cây thư mục và module `quotes` |
+| 6 | Xử lý nhập liệu | 0,05 | Xem chi tiết ở cuối mục này | Nhập sai thì báo lỗi ngay. Gõ "binh" thì có gợi ý |
+| 7 | An ninh | 0,05 | Mục 6.2: bcrypt, refresh token xoay vòng trong cookie `httpOnly`, RBAC cộng kiểm tra sở hữu, giới hạn tần suất, CSP, làm sạch HTML, kiểm tra upload, mã hóa AES-GCM | Dùng token của nghệ nhân A sửa sản phẩm của nghệ nhân B thì nhận 403. Cookie `httpOnly` trong DevTools |
+| 8 | Viết lại và định tuyến URL | 0,05 | Mục 10: slug tiếng Việt, bộ lọc trên URL, route lồng nhau có bảo vệ, SPA fallback, link ngắn `/q`, slug ổn định | F5 ở trang sâu. Dán link có bộ lọc sang tab khác. Quét QR thấy chuyển từ `/q/…` sang `/truy-xuat/…` |
+| 9 | Thao tác CSDL hướng đối tượng, độc lập CSDL | 0,05 | Prisma (model, quan hệ, transaction, migration), Repository pattern, không dùng SQL thô, tìm kiếm qua cột chuẩn hóa | Mở `schema.prisma`. Đổi `provider` sang MySQL, chạy `db push` và `seed`, ứng dụng vẫn chạy |
+
+**Chi tiết tiêu chí 6, xử lý nhập liệu:**
+- **Kiểm tra hợp lệ:** schema Zod dùng chung cho cả frontend và backend. Báo lỗi ngay khi rời ô nhập, bằng tiếng Việt. Kiểm tra bất đồng bộ (email đã tồn tại chưa). Kiểm tra chéo giữa các trường (ngày cần hàng phải sau hạn nhận báo giá, mốc nhật ký không ở tương lai).
+- **Tự động điền:** thông tin người mua lấy từ hồ sơ. Kéo ghim thì địa chỉ tự điền. Slug tự sinh từ tên. Công đoạn tiếp theo được gợi ý sẵn. Biểu mẫu báo giá điền sẵn từ trang sản phẩm.
+- **Gợi ý:** ô tìm kiếm có gợi ý. Ô địa chỉ có gợi ý. Lý do được mời hiển thị cho hộ nghề.
+- **Chuyển đổi:** ô tiền tự định dạng `1.250.000 ₫` và lưu dạng số. Số điện thoại chuẩn hóa về dạng `+84`. Văn bản tiếng Việt chuẩn hóa NFC, cắt khoảng trắng thừa. Ngày hiển thị theo `vi-VN`, lưu theo UTC. Thành tiền tự tính bằng đơn giá nhân số lượng.
+
+---
+
+## 12. Rủi ro và phương án
+
+| Rủi ro | Khả năng | Ảnh hưởng | Phương án |
+|---|:-:|:-:|---|
+| Luồng báo giá phức tạp, làm trễ cả dự án | Cao | Cao | Làm máy trạng thái và test từ Tuần 3, sớm hơn giao diện. Ưu tiên P0. Có kế hoạch cắt giảm ([ROADMAP, Phụ lục D](ROADMAP.md)) |
+| Ảnh nặng làm web chậm | Trung bình | Cao | Dựng pipeline ảnh ngay Tuần 2. Mọi ảnh trong seed đều đi qua pipeline |
+| Không quét được QR trong phòng thi vì mạng | Trung bình | Cao | Triển khai công khai có HTTPS. Mang theo điện thoại phát 4G. In sẵn tem dán lên sản phẩm thật. Phương án cuối: mở trực tiếp link |
+| Dữ liệu demo bị hỏng ngay trước giờ thi | Thấp | Cao | `pnpm db:reset` dựng lại trong vòng 1 phút. Có bản sao lưu CSDL |
+| Mỗi thành viên chỉ nắm phần của mình khi vấn đáp | Trung bình | Trung bình | Cuối mỗi tuần demo chéo. Mỗi người tập trả lời toàn bộ câu hỏi ở [ROADMAP, Phụ lục C](ROADMAP.md) |
+| Dịch vụ bên ngoài bị giới hạn (tile OSM, Nominatim chỉ cho 1 yêu cầu mỗi giây) | Trung bình | Thấp | Cache kết quả geocode. Debounce. Ghi công OSM đúng chính sách sử dụng |
+| Bản quyền ảnh | Thấp | Trung bình | Tự chụp ảnh (có xin phép) hoặc dùng ảnh giấy phép mở và ghi nguồn |
+
+---
+
+## 13. Tiêu chí nghiệm thu
+
+Phiên bản v1.0.0 được coi là xong khi:
+
+- [ ] Mọi yêu cầu **P0** đạt tiêu chí chấp nhận, kiểm tra bằng tài khoản seed của cả 3 vai trò.
+- [ ] Luồng báo giá đi đủ `DRAFT → … → DELIVERED`, có chia đơn cho ít nhất 2 hộ. Test đồng thời ở mục 5.2 chạy xanh.
+- [ ] Quét QR bằng điện thoại thật mở đúng trang truy xuất. Lô đã hoàn tất không sửa được.
+- [ ] Bản đồ hiển thị đúng trạng thái mở cửa theo giờ Việt Nam.
+- [ ] Ảnh upload ra đủ 3 kích thước WebP, không còn dữ liệu EXIF.
+- [ ] Đạt các chỉ tiêu PERF-01 đến PERF-03. Checklist SEC-01 đến SEC-12 đã rà.
+- [ ] Responsive ở 360, 768, 1024 và 1440 px, không có thanh cuộn ngang.
+- [ ] CI xanh: lint, typecheck, test, build.
+- [ ] Bản triển khai công khai chạy ổn định. `pnpm db:reset` đã được thử ngay trước buổi thi.
