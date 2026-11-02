@@ -91,3 +91,80 @@ gantt
 - [ ] Có dữ liệu seed minh họa.
 - [ ] PR đã được review, CI xanh. Có TSDoc cho các hàm service mới.
 - [ ] Nếu đổi API thì đã cập nhật [PRD, mục 9](PRD.md).
+
+---
+
+## Phần B. Từng bước theo tuần
+
+> Mỗi bước có: **người phụ trách** · **đầu ra** · tiêu chí barem liên quan (B1 đến B9, theo thứ tự trong bảng barem).
+
+### Tuần 1 (02–08/11) · Giai đoạn 0: Khởi động và thiết kế
+
+**Mục tiêu:** cả nhóm hiểu chung một sản phẩm, và có đủ bản vẽ để khi code không phải đoán.
+
+- [ ] **0.1 Họp khởi động.** *Cả nhóm.* Đọc đề và 3 tài liệu này. Chốt nghề (gốm Bát Tràng), phân vai, kênh liên lạc, lịch họp.
+  → Đầu ra: bảng phân vai, điền tên và MSSV vào README.
+- [ ] **0.2 Dựng bảng công việc.** *TV1.* Tạo repo GitHub và GitHub Projects. Mỗi yêu cầu P0 và P1 thành một issue, gắn nhãn `module`, `P0/P1/P2` và người phụ trách. Thêm mẫu PR.
+  → Đầu ra: bảng có khoảng 90 issue.
+- [ ] **0.3 Đi thực địa Bát Tràng.** *TV2 chủ trì, cả nhóm đi nếu được.* Xin phép chụp ảnh 5 đến 8 xưởng. Ghi lại câu chuyện gia đình, giờ mở cửa, **tọa độ thật**. Chụp đủ 8 công đoạn cho ít nhất 2 lô. Mua 1 đến 2 sản phẩm thật để dán tem QR khi demo.
+  → Đầu ra: thư mục ảnh gốc cùng file ghi chú dùng cho seed. Nếu không đi được thì dùng ảnh có giấy phép mở và ghi nguồn. *(B3)*
+- [ ] **0.4 Vẽ wireframe** trên Figma, cả bản điện thoại và máy tính. *TV3: màn công khai và quản trị. TV2: màn nghệ nhân. TV1: luồng báo giá.*
+  Khoảng 18 màn: Trang chủ, Danh sách sản phẩm, Chi tiết sản phẩm, Gian trưng bày, Bản đồ, Trang truy xuất, Tin tức, Đăng nhập, Đăng ký nghệ nhân (3 bước), Bảng điều khiển nghệ nhân, Hồ sơ xưởng, Sửa sản phẩm, Nhật ký lô, Hộp cơ hội báo giá cùng biểu mẫu chào giá, Tạo RFQ (3 bước), So sánh và chốt, Theo dõi đơn, Hàng đợi duyệt, Bảng điều phối. *(B2, B3)*
+- [ ] **0.5 Design system.** *TV3.* Đưa các token màu, chữ, khoảng cách, bo góc từ [PRODUCT, mục 9](PRODUCT.md) vào Figma. Vẽ logo chữ v và con dấu. Thiết kế khoảng 10 component cơ bản.
+  → Đầu ra: trang "UI Kit" trên Figma. *(B3)*
+- [ ] **0.6 ERD và `schema.prisma` bản nháp.** *TV1*, cả nhóm review. Bám theo [PRD, mục 8](PRD.md). *(B9)*
+- [ ] **0.7 Chốt API contract.** *TV1*, mọi người góp ý. Dùng bảng endpoint và ví dụ JSON ở [PRD, mục 9](PRD.md). Chốt bản v1. Từ đây đổi API phải báo cả nhóm. *(B4)*
+- [ ] **0.8 Quy ước code.** *TV1.* ESLint, Prettier, Husky cùng lint-staged, Conventional Commits, cấu trúc thư mục theo README. *(B5)*
+
+**🏁 M0, Chủ nhật 08/11:** có wireframe đủ các màn P0, UI Kit, ERD, API contract v1, bảng công việc. Cả nhóm cùng xem lại và chốt.
+
+---
+
+### Tuần 2 (09–15/11) · Giai đoạn 1: Nền móng
+
+**Mục tiêu:** bộ khung để cả 3 người cùng code song song mà không giẫm chân nhau.
+
+- [ ] **1.1 Dựng monorepo.** *TV1.* pnpm workspaces gồm `apps/web` (Vite, React, TS), `apps/api` (Express, TS), `packages/shared`. TypeScript `strict`, alias đường dẫn, `pnpm dev` chạy song song cả hai app. CI trên GitHub Actions chạy lint, typecheck, test, build. *(B5)*
+- [ ] **1.2 CSDL.** *TV1.* Viết `docker-compose.yml` cho Postgres. Hoàn thiện `schema.prisma`, tạo migration đầu tiên. Seed khung: 3 vai trò, danh mục, mẫu công đoạn gốm, bảng `Counter`. *(B9)*
+- [ ] **1.3 Khung API.** *TV1.* `app.ts`; kiểm tra biến môi trường bằng Zod; logger pino có `requestId`; các lớp lỗi kế thừa `AppError` và một error handler chung; định dạng phản hồi `{data}` / `{error}`; middleware `validate(schema)`; `helmet`, `cors`, `compression`. *(B4, B5, B7)*
+- [ ] **1.4 Xác thực.** *TV1.* Đăng ký, đăng nhập, refresh xoay vòng, đăng xuất, `me`, `check-email`. bcrypt. Bảng `Session`. Middleware `requireAuth` và `requireRole`. Giới hạn tần suất đăng nhập. Test tích hợp bằng Supertest. *(B7)* · AUTH-01, AUTH-03
+- [ ] **1.5 Pipeline ảnh.** *TV2.* `POST /media`: multer đọc vào bộ nhớ → kiểm tra magic bytes → sharp sinh 3 biến thể WebP và LQIP → `LocalStorage` → bản ghi `MediaAsset`. Phục vụ `/media` với header cache. Thử với ảnh 8 MB chụp từ điện thoại.
+  → Đầu ra: ảnh 8 MB thành bản `thumb` khoảng 20 KB. *(B1, B4)* · MED-02 đến MED-04
+- [ ] **1.6 Component `ImageUploader`.** *TV2.* Kéo thả, xem trước, thanh tiến trình cho từng ảnh (dùng `XMLHttpRequest` vì `fetch` không báo được tiến trình upload), sắp xếp bằng dnd-kit, xóa, báo lỗi từng ảnh. · MED-01
+- [ ] **1.7 Khung SPA.** *TV3.* Router với 3 layout (Public, Artisan, Admin), route tải lười, `RequireRole`, trang 404 và 403. http client bọc `fetch`: tự gọi refresh khi gặp 401 (chỉ một lần, các yêu cầu khác xếp hàng chờ). `AuthProvider`. `QueryClient`. *(B4, B8)*
+- [ ] **1.8 UI Kit bằng code.** *TV3.* Button, Input, Textarea, Select, Checkbox, DatePicker, `MoneyInput`, Dialog, `ConfirmDialog`, Toast, Card, Badge, Skeleton, `EmptyState`, Pagination, Tabs, `Stepper`, Breadcrumb, Lightbox. Header và Footer theo thương hiệu. Nạp font, khai báo token CSS. *(B3, B6)*
+- [ ] **1.9 Trang đăng nhập và đăng ký khách hàng.** *TV3*, gọi API thật. Kiểm tra email bất đồng bộ, báo lỗi ngay khi nhập. *(B6)*
+
+**🏁 M1, Chủ nhật 15/11:** đăng nhập được bằng cả 3 vai trò, mỗi vai trò vào đúng layout. Upload nhiều ảnh ra 3 kích thước. CI xanh.
+
+---
+
+### Tuần 3 (16–22/11) · Giai đoạn 2: Triển lãm số
+
+**Mục tiêu:** khách xem được sản phẩm theo hộ và theo phân loại. Nghệ nhân đăng ký, được duyệt, rồi đăng sản phẩm.
+
+- [ ] **2.1 Đăng ký nghệ nhân 3 bước.** *TV3 làm giao diện, TV1 làm `POST /auth/register-artisan`.* Bước 2 dùng bản đồ chọn vị trí (bản đơn giản, Tuần 4 nâng cấp). Bước 3 upload minh chứng ở chế độ riêng tư. Số CCCD mã hóa AES-GCM. · AUTH-02, SEC-09
+- [ ] **2.2 Hàng đợi duyệt.** *TV3.* Danh sách hồ sơ chờ duyệt, trang chi tiết có trình xem minh chứng và số CCCD đã che. Duyệt hoặc từ chối kèm lý do. Ghi `AuditLog`. Khóa và mở khóa tài khoản. · ADM-01, ADM-02, ADM-05
+- [ ] **2.3 Hồ sơ xưởng.** *TV2.* API và màn sửa: câu chuyện bằng TipTap (làm sạch ở server), thư viện ảnh, chứng nhận, trình chỉnh giờ mở cửa theo tuần, danh mục sở trường, năng lực. Slug tự sinh cùng `SlugHistory`. · WS-01 đến WS-03
+- [ ] **2.4 Sản phẩm.** *TV2.* Thêm, sửa, xóa. `MoneyInput`. Tối đa 12 ảnh. Trạng thái. Cột `searchText` chuẩn hóa không dấu được ghi tự động mỗi khi lưu. · PRD-01, PRD-02, PRD-04
+- [ ] **2.5 Trang công khai.** *TV3.* `/san-pham` có lọc, sắp xếp, cuộn vô hạn, bộ lọc đồng bộ với URL. `/san-pham/:slug`. `/danh-muc/:slug`. `/xuong`. `/xuong/:slug`. Trang chủ gồm ảnh lớn, sản phẩm nổi bật, xưởng tiêu biểu, bản tin. Mọi ảnh dùng `srcset` và LQIP. *(B1, B3, B4, B8)* · CAT-01 đến CAT-03, CAT-05, WS-04, WS-05
+- [ ] **2.6 Tìm kiếm không dấu và gợi ý.** *TV3.* `GET /search/suggest`, debounce 300 ms, điều hướng bằng bàn phím. *(B6)* · CAT-04
+- [ ] **2.7 Lõi báo giá.** *TV1.* Viết `QuoteStateMachine` cùng **unit test cho mọi cặp (trạng thái, sự kiện)**. Repository cho RFQ, Invitation, Bid, Order, Allocation. Service ghép hộ (mục 5.3 của PRD) cùng unit test. *(B1, B5)*
+
+**🏁 M2, Chủ nhật 22/11:** đi trọn luồng "Đăng ký nghệ nhân → Admin duyệt → nghệ nhân điền hồ sơ và đăng 3 sản phẩm → khách vãng lai thấy sản phẩm, lọc theo hộ và theo phân loại". Test máy trạng thái xanh.
+
+---
+
+### Tuần 4 (23–29/11) · Giai đoạn 3: Bản đồ và Truy xuất
+
+**Mục tiêu:** hoàn thành 2 yêu cầu kỹ thuật 4.1 và 4.3. Bắt đầu nửa đầu luồng báo giá.
+
+- [ ] **3.1 Lô và nhật ký.** *TV2.* Tạo lô với mã sinh từ `Counter`. Thêm mốc: gợi ý công đoạn tiếp theo, bắt buộc có ảnh, kiểm tra thời gian. Sửa, xóa mốc khi lô chưa khóa. Hoàn tất lô: kiểm tra có mốc "Nung" và "Thành phẩm", rồi đặt `lockedAt`. Thêm ghi chú bổ sung. Gắn sản phẩm vào lô. · TRC-01 đến TRC-04, PRD-03
+- [ ] **3.2 QR.** *TV2.* `GET /me/batches/:code/qr` trả PNG hoặc SVG, mức sửa lỗi H, có logo, có ETag. `GET /q/:code` trả 302 và tăng `scanCount`. Màn tải QR. · TRC-05, TRC-07, TRC-09
+- [ ] **3.3 Trang truy xuất.** *TV2.* `/truy-xuat/:maLo` theo bố cục ở mục 5.5 của PRD. Ưu tiên điện thoại. Dòng thời gian hiện dần khi cuộn. Thẻ meta Open Graph. Hỗ trợ cả trạng thái "Đang thực hiện". *(B3)* · TRC-06, TRC-10
+- [ ] **3.4 Bản đồ.** *TV3.* `GET /workshops/map` tính `isOpenNow` ở server theo giờ Việt Nam. Dùng react-leaflet, ghim màu theo trạng thái, popup, gom cụm, bộ lọc, danh sách bên cạnh đồng bộ với bản đồ, nút "Vị trí của tôi" và "Chỉ đường". · MAP-01 đến MAP-05
+- [ ] **3.5 Chọn vị trí xưởng.** *TV3.* Kéo ghim thì gọi Nominatim để tự điền địa chỉ (có debounce và cache). Gõ địa chỉ thì ghim nhảy tới. Dùng ở bước 2 đăng ký và ở màn hồ sơ xưởng. *(B6)* · WS-06
+- [ ] **3.6 Tạo và gửi RFQ.** *TV1.* Biểu mẫu 3 bước, tự lưu nháp. `send` thì chạy ghép hộ, tạo lời mời, ghi bản ghi thông báo. Trang "Yêu cầu của tôi". · QUO-01, QUO-02, QUO-09
+- [ ] **3.7 Hộp cơ hội báo giá và chào giá.** *TV1.* Danh sách lời mời kèm lý do được mời. Biểu mẫu chào giá tự tính thành tiền và cảnh báo trễ hạn. Sửa chào giá theo `version` cùng `BidRevision`. Rút chào giá. Ràng buộc mỗi xưởng một chào giá. · QUO-03 đến QUO-05
+
+**🏁 M3, Chủ nhật 29/11:** **quét QR bằng điện thoại thật** (qua IP LAN hoặc tunnel) ra trang truy xuất. Bản đồ hiển thị đúng xưởng đang mở và đang đóng. Khách gửi được RFQ, 2 nghệ nhân chào giá được.
