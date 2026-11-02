@@ -1,0 +1,56 @@
+<div align="center">
+
+# vCraft
+
+**Tinh hoa làng nghề, muôn phương lan tỏa**
+
+Nền tảng *Triển lãm số · Truy xuất nguồn gốc · Điều phối đơn sỉ* cho làng gốm Bát Tràng
+
+Bài tập lớn INT3306 – Phát triển ứng dụng web · Học kỳ Fall 2026
+
+</div>
+
+> 🚧 **Trạng thái:** đang phát triển theo [lộ trình 8 tuần](docs/ROADMAP.md).
+> README này mô tả sản phẩm ở trạng thái hoàn thiện. Các lệnh cài đặt chạy được từ cuối Tuần 2, khi khung dự án đã dựng xong.
+
+---
+
+## 1. Giới thiệu
+
+vCraft là nền tảng web dành cho **Ban quản lý (BQL) làng gốm Bát Tràng** (Gia Lâm, Hà Nội). vCraft không phải một trang bán lẻ. Nó là một **"Triển lãm số"**: mỗi hộ gia đình, nghệ nhân có không gian riêng để kể câu chuyện làm nghề, trưng bày sản phẩm độc bản và **công khai nhật ký sản xuất của từng lô hàng** qua mã QR.
+
+Với đơn hàng lớn, vCraft là một **sàn báo giá kín**. Khách sỉ gửi một yêu cầu, hệ thống mời các hộ phù hợp vào chào giá, khách chốt và hệ thống **chia đơn cho nhiều hộ cùng làm**.
+
+| | |
+|---|---|
+| Làng nghề | Gốm sứ Bát Tràng. Muốn đổi sang nghề khác thì chỉ cần đổi dữ liệu, xem [PRODUCT.md, mục 2](docs/PRODUCT.md) |
+| Vai trò | Khách hàng (Buyer/Tourist) · Nghệ nhân (Artisan) · Quản trị viên BQL (Admin) |
+| Kiến trúc | React SPA ⇄ REST API JSON (Express) ⇄ Prisma ORM ⇄ PostgreSQL |
+
+## 2. Tính năng chính
+
+### Khách hàng (Buyer / Tourist)
+- Duyệt sản phẩm theo **phân loại** hoặc theo **hộ gia đình**. Có lọc, sắp xếp, và tìm kiếm không dấu kèm gợi ý tức thì.
+- **Bản đồ làng nghề** tương tác: mỗi xưởng là một ghim, màu ghim cho biết xưởng *đang mở cửa đón khách* hay không. Bấm ghim để xem popup thông tin nhanh và chỉ đường.
+- **Quét QR** trên sản phẩm để mở trang kể lại hành trình của cả lô hàng, từ ngày nhào đất.
+- **Yêu cầu báo giá sỉ** (ví dụ: 5.000 cốc in logo Trường ĐH Công nghệ trong 30 ngày): so sánh các chào giá, chốt một hoặc nhiều hộ (có **gợi ý phân bổ tối ưu chi phí**), theo dõi tiến độ đến khi nhận hàng.
+
+### Nghệ nhân / Hộ gia đình (Artisan)
+- Hồ sơ xưởng: lịch sử gia đình, ảnh xưởng, chứng nhận chất lượng, giờ mở cửa, vị trí trên bản đồ.
+- Đăng sản phẩm với nhiều ảnh (kéo thả, sắp xếp) và gắn sản phẩm vào **lô sản xuất**.
+- **Nhật ký sản xuất**: thêm từng mốc công đoạn (chọn đất → tạo dáng → vẽ → tráng men → nung → thành phẩm) kèm ảnh minh chứng. Hệ thống tự sinh **tem QR** cho lô để in.
+- Hộp **cơ hội báo giá**: chào giá, sửa hoặc rút khi còn hạn, nhận đơn, cập nhật tiến độ, giao hàng.
+
+### Quản trị viên: Ban quản lý / Hội làng nghề (Admin)
+- Kiểm duyệt hồ sơ đăng ký hộ nghề (đối chiếu minh chứng), cấp huy hiệu *Hộ nghề xác thực*, tạm khóa tài khoản vi phạm.
+- Quản lý tin tức cộng đồng: giá nguyên vật liệu, lịch cúp điện, chính sách hỗ trợ. Có thể ghim tin khẩn.
+- Bảng điều phối đơn sỉ toàn làng và bảng thống kê.
+
+## 3. Điểm nhấn kỹ thuật
+
+| Yêu cầu đề bài | Cách vCraft giải quyết |
+|---|---|
+| 4.1 Nhật ký sản xuất & truy xuất nguồn gốc | Mỗi lô (`Batch`) chứa một mảng mốc (`ProductionStage`), mỗi mốc có ảnh minh chứng. Backend sinh QR (PNG/SVG) trỏ tới link ngắn `/q/{mã-lô}`, link này chuyển hướng 302 tới trang `/truy-xuat/{mã-lô}`. Lô hoàn tất thì nhật ký bị khóa. Mọi sản phẩm cùng lô dùng chung một QR. |
+| 4.2 Luồng báo giá & điều phối đơn | Máy trạng thái `DRAFT → SENT → BIDDING → ACCEPTED → IN_PRODUCTION → DELIVERED` (thêm `CANCELLED`, `EXPIRED`). Mọi chuyển trạng thái đi qua một `QuoteStateMachine` duy nhất, chạy trong transaction, dùng **khóa lạc quan theo `version`**: nếu hai thao tác tranh chấp, thao tác sau nhận `409 Conflict`. |
+| 4.3 Bản đồ số làng nghề | Leaflet + OpenStreetMap, gom cụm ghim, popup thông tin. Trạng thái mở cửa tính ở server theo múi giờ `Asia/Ho_Chi_Minh`. Nghệ nhân chọn vị trí xưởng bằng cách kéo ghim, địa chỉ tự điền. |
+| 4.4 Giao diện & đa phương tiện | Upload nhiều ảnh. Backend dùng `sharp` để kiểm tra, tự xoay ảnh, xóa EXIF/GPS, sinh 3 kích thước WebP và một ảnh mờ (LQIP). Frontend dùng `srcset` và lazy-load. |
