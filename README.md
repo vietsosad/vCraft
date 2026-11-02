@@ -177,3 +177,45 @@ Mật khẩu chung: `Vcraft@2026`. Chỉ dùng cho môi trường demo.
 | Nghệ nhân (chờ duyệt) | `moidangky@vcraft.test` | Dùng để demo kiểm duyệt |
 | Khách sỉ | `lan.uet@vcraft.test` | Có sẵn một yêu cầu báo giá đang ở trạng thái `BIDDING` với 4 chào giá |
 | Khách lẻ | `minh@vcraft.test` | |
+
+## 8. Lệnh thường dùng
+
+| Lệnh | Tác dụng |
+|---|---|
+| `pnpm dev` | Chạy web và api song song, tự nạp lại khi sửa code |
+| `pnpm build` | Build production cả hai app |
+| `pnpm lint` / `pnpm typecheck` | ESLint / kiểm tra kiểu TypeScript |
+| `pnpm test` | Unit + integration test (Vitest, Supertest) |
+| `pnpm test:e2e` | Kiểm thử đầu-cuối (Playwright) |
+| `pnpm db:migrate` | Áp dụng migration |
+| `pnpm db:seed` | Nạp dữ liệu mẫu (chạy lại nhiều lần vẫn an toàn) |
+| `pnpm db:reset` | Xóa sạch, migrate lại và seed. Dùng trước mỗi buổi demo |
+| `pnpm db:studio` | Mở Prisma Studio để xem dữ liệu |
+
+## 9. Tài liệu
+
+| Tài liệu | Nội dung |
+|---|---|
+| [docs/PRODUCT.md](docs/PRODUCT.md) | Mô tả sản phẩm: vấn đề, chân dung người dùng, hành trình, bản sắc thương hiệu, phạm vi |
+| [docs/PRD.md](docs/PRD.md) | Đặc tả yêu cầu: chức năng, máy trạng thái, cơ chế khóa, dữ liệu, API, URL, ánh xạ barem |
+| [docs/ROADMAP.md](docs/ROADMAP.md) | Lộ trình 8 tuần từng bước, phân công, checklist barem, kịch bản demo và câu hỏi vấn đáp |
+
+## 10. Quy ước làm việc
+
+- **Nhánh:** `main` (luôn demo được) ← `develop` ← `feat/<module>-<mô-tả>`, `fix/<mô-tả>`.
+- **Commit:** Conventional Commits, ví dụ `feat(quotes): khóa lạc quan khi chốt báo giá`.
+- **Pull request:** cần một người review và CI xanh (lint, typecheck, test, build) mới được merge.
+- **Code:** TypeScript `strict`, ESLint + Prettier, viết TSDoc cho service và hàm công khai, không để logic nghiệp vụ trong controller hay component.
+
+## 11. Nhóm thực hiện
+
+| Thành viên | MSSV | Phụ trách chính |
+|---|---|---|
+| _Thành viên 1_ | _…_ | Nền tảng (auth, CSDL, hạ tầng) và Luồng báo giá |
+| _Thành viên 2_ | _…_ | Nghệ nhân: hồ sơ xưởng, sản phẩm, nhật ký và QR truy xuất, pipeline ảnh |
+| _Thành viên 3_ | _…_ | Trải nghiệm khách (design system, danh mục, bản đồ) và Quản trị |
+
+## 12. Ghi công
+
+- Dữ liệu bản đồ © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
+- Ảnh trong dữ liệu mẫu do nhóm tự chụp tại Bát Tràng (đã xin phép các hộ) hoặc lấy từ nguồn giấy phép mở. Nguồn được ghi kèm từng ảnh trong dữ liệu seed.
