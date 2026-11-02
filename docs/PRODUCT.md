@@ -147,3 +147,95 @@ vCraft
 ```
 
 Danh sách URL đầy đủ và quyền truy cập từng trang: xem [PRD, mục 10](PRD.md).
+
+## 9. Bản sắc thương hiệu
+
+### 9.1 Tên gọi và thông điệp
+- **vCraft**: chữ *v* gợi **V**iệt, **v**illage (làng) và động tác **v**uốt gốm trên bàn xoay. *Craft* là nghề thủ công.
+- **Slogan:** *Tinh hoa làng nghề, muôn phương lan tỏa.*
+- **Một câu định vị:** "Mỗi món đồ có một câu chuyện, và bạn có thể kiểm chứng nó."
+
+### 9.2 Ý tưởng logo
+- Chữ **v** viết thường, cách điệu thành dáng một chiếc chén nhìn nghiêng, nét như vệt cọ men lam.
+- Biến thể **con dấu (triện) màu đất nung** dùng cho huy hiệu *Hộ nghề xác thực* và góc tem QR. Con dấu là chữ ký của BQL trên mỗi sản phẩm.
+
+### 9.3 Bảng màu (lấy từ chất liệu gốm)
+
+| Token CSS | Tên gọi | Mã màu | Dùng cho |
+|---|---|---|---|
+| `--lam` | Lam Bát Tràng | `#1F4E9A` | Màu chủ đạo: nút chính, liên kết, tiêu đề nhấn |
+| `--lam-dam` | Lam đậm | `#163A73` | Trạng thái hover, nền footer |
+| `--nga` | Men ngà | `#F7F2E8` | Nền trang |
+| `--su` | Trắng sứ | `#FFFDF8` | Bề mặt thẻ, hộp thoại |
+| `--dat-nung` | Đất nung | `#A34A23` | Nút phụ, con dấu xác thực, điểm nhấn |
+| `--men-ngoc` | Men ngọc | `#5E8F7B` | Trạng thái tích cực, ghim "Đang mở cửa". Chỉ dùng làm nền hoặc biểu tượng, không dùng làm màu chữ nhỏ |
+| `--muc` | Mực tàu | `#1C1A17` | Chữ chính |
+| `--tro` | Tro bếp | `#6B645A` | Chữ phụ, đường viền |
+| `--vang-rom` | Vàng rơm | `#C8962E` | Cảnh báo, sắp hết hạn |
+| `--do-son` | Đỏ son | `#B3261E` | Lỗi, thao tác nguy hiểm |
+
+Độ tương phản đã tính theo WCAG: chữ Lam trên nền Ngà khoảng 7,2:1. Chữ trắng trên nút Đất nung khoảng 5,9:1. Cả hai đạt chuẩn AA.
+
+### 9.4 Chữ
+- **Tiêu đề:** Playfair Display hoặc Lora. Kiểu serif mang cảm giác thủ công, trang trọng. Khi nhúng phải kiểm tra font có bộ ký tự `vietnamese`.
+- **Nội dung:** Be Vietnam Pro, một font thiết kế riêng cho tiếng Việt, dễ đọc trên điện thoại.
+- **Mã số** (mã lô, mã yêu cầu báo giá): font đơn cách (monospace). Giá tiền dùng `font-variant-numeric: tabular-nums` để các con số thẳng cột.
+- **Cỡ chữ:** 14 / 16 / 18 / 22 / 28 / 36 / 48 px. Chữ nội dung tối thiểu 16 px, giãn dòng 1,6.
+
+### 9.5 Hình ảnh
+- **Ảnh thật là nhân vật chính:** ánh sáng tự nhiên, cận cảnh bàn tay, nét vẽ, bề mặt men. Không dùng ảnh stock của nước ngoài.
+- **Tỷ lệ cố định:** 4:5 cho thẻ sản phẩm, 16:9 cho ảnh xưởng và ảnh bìa, 1:1 cho ảnh đại diện. Khung luôn đặt sẵn `aspect-ratio` để trang không bị giật khi ảnh tải xong.
+- Nền ngà ấm, góc bo nhẹ 4 đến 8 px, gợi cảm giác viên gạch men chứ không bo tròn kiểu ứng dụng di động.
+
+### 9.6 Họa tiết và chất liệu
+- Đường viền **hoa văn lam** (mây, sóng nước) làm vạch phân cách giữa các phần lớn.
+- Nền phần đầu trang có **vân men rạn** rất mờ.
+- **Con dấu đất nung** cho huy hiệu xác thực và tem QR.
+
+### 9.7 Chuyển động
+- Nhẹ và chậm, như nhịp bàn xoay. Dòng thời gian truy xuất hiện dần khi cuộn. Ảnh chuyển từ bản mờ (LQIP) sang ảnh nét.
+- Tôn trọng thiết lập `prefers-reduced-motion` của người dùng: tắt hiệu ứng nếu họ yêu cầu.
+
+### 9.8 Giọng văn
+
+| Tình huống | Nên viết | Tránh |
+|---|---|---|
+| Lô chưa có mốc nào | "Mỗi mẻ gốm là một câu chuyện. Hãy ghi lại công đoạn đầu tiên." | "Không có dữ liệu." |
+| Nút tạo lô | "Mở lô mới" | "Create batch" |
+| Xung đột khi chốt giá | "Xưởng Ông Tư vừa cập nhật báo giá (12.000đ → 13.500đ). Vui lòng xem lại trước khi chốt." | "Error 409: version mismatch" |
+| Hồ sơ đang chờ duyệt | "Ban quản lý đang xem hồ sơ của bạn, thường trong vòng 2 ngày làm việc." | "Pending approval." |
+| Xác nhận chốt | "Chốt 2 xưởng cho 5.000 cốc? Sau khi chốt, báo giá sẽ không thay đổi được nữa." | "Bạn có chắc không?" |
+
+Xưng hô "bạn", câu ngắn, dùng từ ngữ của làng nghề (mẻ, lò, men, mộc) thay cho thuật ngữ kỹ thuật.
+
+## 10. Nguyên tắc trải nghiệm
+
+1. **Ảnh là nhân vật chính.** Chữ chỉ để dẫn chuyện cho ảnh.
+2. **Nghệ nhân dùng được bằng một tay trên điện thoại.** Vùng bấm tối thiểu 44 px, chụp ảnh thẳng từ camera, ít trường bắt buộc.
+3. **Luôn cho biết người dùng đang ở bước nào.** Thanh bước (stepper) cho các biểu mẫu nhiều bước, dòng thời gian trạng thái cho yêu cầu báo giá và đơn hàng.
+4. **Không làm mất dữ liệu.** Tự lưu nháp, hỏi xác nhận trước thao tác không hoàn tác được.
+5. **Phản hồi tức thì.** Không tải lại trang, hiện khung xương (skeleton) khi đang tải, báo kết quả bằng toast.
+
+## 11. Phạm vi
+
+| Trong phạm vi | Ngoài phạm vi (ghi nhận cho tương lai) |
+|---|---|
+| 3 vai trò cùng mọi chức năng đề bài yêu cầu | Thanh toán trực tuyến, đặt cọc qua cổng thanh toán |
+| Nhật ký lô, QR, trang truy xuất | Kết nối đơn vị vận chuyển |
+| Luồng báo giá đầy đủ, chia đơn nhiều hộ | Chat thời gian thực giữa khách và hộ |
+| Bản đồ, tin tức, thông báo trong ứng dụng | Ứng dụng di động riêng (iOS/Android) |
+| Giao diện responsive cho điện thoại, máy tính bảng, máy tính | Giỏ hàng bán lẻ (khách lẻ liên hệ trực tiếp hoặc mua tại xưởng) |
+| Tiếng Việt | Giao diện tiếng Anh (P2, chỉ làm nếu dư thời gian) |
+
+## 12. Chỉ số thành công
+
+**Với sản phẩm** (giả định khi vận hành thật):
+- 80% hộ trong làng có hồ sơ được duyệt sau 3 tháng.
+- 60% sản phẩm công khai có gắn lô truy xuất.
+- Thời gian từ khi gửi yêu cầu báo giá đến khi có chào giá đầu tiên dưới 24 giờ.
+- 30% yêu cầu báo giá được chia cho từ 2 hộ trở lên. Đây là chỉ số cho thấy BQL điều phối hiệu quả.
+
+**Với bài tập lớn:**
+- Chạy trọn kịch bản demo 15 phút không lỗi, bằng dữ liệu seed và một điện thoại thật để quét QR.
+- Mọi yêu cầu P0 trong [PRD](PRD.md) đạt tiêu chí chấp nhận.
+- Đạt mọi mục trong checklist barem ở [ROADMAP, Phụ lục A](ROADMAP.md).
