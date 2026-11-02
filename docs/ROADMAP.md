@@ -168,3 +168,69 @@ gantt
 - [ ] **3.7 Hộp cơ hội báo giá và chào giá.** *TV1.* Danh sách lời mời kèm lý do được mời. Biểu mẫu chào giá tự tính thành tiền và cảnh báo trễ hạn. Sửa chào giá theo `version` cùng `BidRevision`. Rút chào giá. Ràng buộc mỗi xưởng một chào giá. · QUO-03 đến QUO-05
 
 **🏁 M3, Chủ nhật 29/11:** **quét QR bằng điện thoại thật** (qua IP LAN hoặc tunnel) ra trang truy xuất. Bản đồ hiển thị đúng xưởng đang mở và đang đóng. Khách gửi được RFQ, 2 nghệ nhân chào giá được.
+
+---
+
+### Tuần 5 (30/11–06/12) · Giai đoạn 4: Báo giá và Điều phối
+
+**Mục tiêu:** hoàn thành yêu cầu kỹ thuật 4.2. Đây là phần khó nhất và nhiều điểm nhất.
+
+- [ ] **4.1 So sánh và gợi ý phân bổ.** *TV1.* Bảng so sánh sắp xếp được. `GET /quotes/:code/allocation-suggestion` theo mục 5.4 của PRD. Giao diện chia số lượng, hiển thị tổng và báo thiếu hoặc thừa ngay khi nhập. Hộp thoại xác nhận. · QUO-06, QUO-07
+- [ ] **4.2 Chốt có khóa.** *TV1.* Toàn bộ trong một transaction: kiểm tra `quoteVersion` và từng `bidVersion`, chuyển trạng thái T3, tạo đơn và phân bổ, chuyển các chào giá còn lại sang `REJECTED`, ghi lịch sử. Frontend xử lý `409`: tự tải lại và báo rõ điều gì đã thay đổi. **Test đồng thời**: `Promise.all` 2 yêu cầu chốt thì đúng 1 thành công. *(B1)* · QUO-08, QUO-11, ORD-01
+- [ ] **4.3 Phân bổ và tiến độ.** *TV2.* Nghệ nhân bấm bắt đầu (kích hoạt T4), cập nhật tiến độ, gắn lô, đánh dấu đã giao. Khách xác nhận đã nhận (kích hoạt T5). Dòng thời gian trạng thái trên trang đơn của cả hai phía. · ORD-02 đến ORD-04, TRC-10 phần gắn với đơn
+- [ ] **4.4 Thông báo.** *TV2.* `DomainEvents` dựa trên EventEmitter, `NotificationService`, API danh sách và đánh dấu đã đọc. Chuông thông báo tự hỏi lại server mỗi 30 giây. Trang `/thong-bao`. *(B4)* · NTF-01
+- [ ] **4.5 Tin tức.** *TV3.* Khu quản trị thêm, sửa tin bằng TipTap (làm sạch ở server), chuyên mục, ghim, hẹn giờ. Trang `/tin-tuc`. Banner tin ghim trên trang chủ và bảng điều khiển nghệ nhân. · NEWS-01 đến NEWS-03
+- [ ] **4.6 Bảng điều phối.** *TV3.* Liệt kê mọi RFQ, lọc theo trạng thái, xem chào giá và phân bổ, mời thêm hộ, cảnh báo sắp trễ. · ORD-05, ADM-06
+- [ ] **4.7 Bảng thống kê.** *TV3.* Các thẻ số liệu và biểu đồ: RFQ theo trạng thái, sản phẩm theo danh mục, lượt quét QR 30 ngày. · ADM-04
+
+**🏁 M4, Chủ nhật 06/12:** dùng 3 cửa sổ trình duyệt (khách sỉ, 2 nghệ nhân, admin) chạy trọn `DRAFT → SENT → BIDDING → ACCEPTED (chia 2 hộ) → IN_PRODUCTION → DELIVERED`. Thử mở 2 tab cùng bấm chốt thì có đúng một tab nhận 409.
+
+---
+
+### Tuần 6 (07–13/12) · Giai đoạn 5: Hoàn thiện
+
+**Mục tiêu:** từ "chạy được" thành "đẹp và mượt". Cuối tuần **đóng băng tính năng**.
+
+- [ ] **5.1 Tác vụ định kỳ.** *TV1.* node-cron: tự `EXPIRED`, nhắc trước hạn 24 giờ. Chạy lại nhiều lần không gây sai lệch. Có test. · QUO-10
+- [ ] **5.2 Thông báo theo thời gian thực.** *TV1.* SSE tại `/notifications/stream`, quay về hỏi định kỳ khi mất kết nối. · NTF-02
+- [ ] **5.3 Trải nghiệm nghệ nhân trên điện thoại.** *TV2.* Thêm mốc ngay từ camera (`accept="image/*" capture="environment"`), nút lớn, bảng điều khiển gồm cơ hội mới, lô đang làm, đơn đang chạy. Trang in tem A4. · TRC-08, MED-07
+- [ ] **5.4 Kiểm tra responsive toàn bộ.** *TV3.* Mọi màn ở 360, 768, 1024, 1440 px. Đủ ba trạng thái tải, rỗng, lỗi. Trang 404 và 403. Toast. Hộp thoại xác nhận. Viết lại câu chữ theo [PRODUCT, mục 9.8](PRODUCT.md). *(B2, B3)*
+- [ ] **5.5 Seed đẹp.** *Cả nhóm.* 15 xưởng có ảnh thật và tọa độ thật. 120 sản phẩm. 20 lô có nhật ký đầy đủ. 6 RFQ, mỗi cái ở một trạng thái khác nhau, trong đó `RFQ26-0001` "5.000 cốc in logo UET" đang `BIDDING` với 4 chào giá để dùng khi demo. 12 tin tức. 1 hồ sơ chờ duyệt. Chạy seed nhiều lần vẫn ra cùng kết quả.
+- [ ] **5.6 Rà soát chéo.** *Cả nhóm.* Mỗi người chạy kịch bản demo ở Phụ lục B trên phần của người khác và ghi lỗi.
+
+**🏁 M5, Chủ nhật 13/12: ĐÓNG BĂNG TÍNH NĂNG.** Sau mốc này chỉ sửa lỗi, tối ưu và viết tài liệu. Yêu cầu P1 nào chưa xong thì chuyển sang P2.
+
+---
+
+### Tuần 7 (14–20/12) · Giai đoạn 6: Chất lượng
+
+**Mục tiêu:** đạt các chỉ tiêu phi chức năng ở mục 6 của PRD.
+
+- [ ] **6.1 Hiệu năng.** *TV2.* Kiểm tra dung lượng ảnh thật trên trang danh sách (mục tiêu ≤ 1 MB), `sizes` đặt đúng, lazy load, không bị giật bố cục. Phân tích gói JS bằng `rollup-plugin-visualizer`, tải lười Leaflet, TipTap và khu quản trị. Bật log truy vấn của Prisma để tìm lỗi N+1. Thêm index. Chạy Lighthouse cho 3 trang. *(B4)* · PERF-01 đến PERF-06
+- [ ] **6.2 Bảo mật.** *TV1.* Rà checklist SEC-01 đến SEC-12. Thử tấn công: IDOR (sửa sản phẩm của xưởng khác), XSS (chèn `<script>` vào tin tức và mô tả), file giả ảnh (`.exe` đổi đuôi thành `.jpg`), dò mật khẩu, CSRF. Chạy `pnpm audit`. *(B7)*
+- [ ] **6.3 Kiểm thử.** *TV1, TV2: unit và tích hợp. TV3: e2e.* Unit: máy trạng thái, ghép hộ, phân bổ, slug, `isOpenNow`, chuẩn hóa tìm kiếm. Tích hợp: auth, chốt đồng thời, khóa lô, phân quyền. E2E bằng Playwright: (a) khách xem, lọc, quét truy xuất; (b) luồng báo giá trọn vẹn; (c) đăng ký, duyệt. Đưa tất cả vào CI. · MAINT-01
+- [ ] **6.4 Khả năng tiếp cận.** *TV3.* Chạy axe DevTools, kiểm tra độ tương phản, `alt`, `label`, thứ tự focus, dùng bàn phím trên popup bản đồ và lightbox. · USA-02
+- [ ] **6.5 Dọn code.** *Cả nhóm.* Review chéo toàn bộ, xóa code chết, viết TSDoc cho service, cập nhật README và PRD cho khớp code thật. *(B5)*
+- [ ] **6.6 Thử độc lập CSDL.** *TV1.* Đổi `provider` sang `mysql`, chạy `prisma db push`, chạy seed, đi một vòng luồng chính. Ghi kết quả vào README. *(B9)*
+
+**🏁 M6, Chủ nhật 20/12:** gắn tag `v1.0.0-rc.1`. Lighthouse đạt chỉ tiêu. Toàn bộ test xanh. Không còn lỗi mức nghiêm trọng.
+
+---
+
+### Tuần 8 (21–27/12) · Giai đoạn 7: Triển khai và Tập dượt
+
+**Mục tiêu:** sẵn sàng cho buổi vấn đáp mà không có bất ngờ.
+
+- [ ] **7.1 Triển khai.** *TV1.* Lựa chọn 1: VPS với Docker Compose, Nginx và chứng chỉ HTTPS của Let's Encrypt. Lựa chọn 2: Render (API và Postgres) cùng Vercel hoặc Netlify (web, cấu hình rewrite cho SPA). Gắn tên miền. Đặt `APP_URL` đúng. Seed dữ liệu trên production.
+- [ ] **7.2 Tem QR thật.** *TV2.* In tem cho 1 đến 2 lô, dán lên sản phẩm gốm thật đã mua ở Tuần 1. Thử quét bằng cả iPhone và Android, cả qua wifi và 4G.
+- [ ] **7.3 Tập dượt.** *Cả nhóm.* Chạy [kịch bản demo](#phụ-lục-b-kịch-bản-demo-15-phút) **ít nhất 3 lần có bấm giờ**, luân phiên người thao tác để ai cũng demo được mọi phần.
+- [ ] **7.4 Vấn đáp thử.** *Cả nhóm.* Hỏi đáp chéo theo [Phụ lục C](#phụ-lục-c-câu-hỏi-vấn-đáp-thường-gặp). Mỗi người phải trả lời được **mọi** câu, không chỉ câu thuộc phần mình.
+- [ ] **7.5 Đóng băng.** Gắn tag `v1.0.0`. Xuất bản sao lưu CSDL. Quay video màn hình dự phòng (chỉ dùng khi có sự cố mạng hoặc thiết bị, vì đề bài yêu cầu demo trực tiếp).
+
+**🏁 M7, Chủ nhật 27/12:** bản v1.0.0 đã triển khai, đã tập dượt 3 lần, checklist barem ở Phụ lục A tick đủ.
+
+### Ngày thi: checklist trước giờ vào phòng
+- [ ] Chạy `pnpm db:reset` trên production (hoặc khôi phục bản sao lưu) **trước 1 giờ**.
+- [ ] Mở sẵn 3 profile Chrome đã đăng nhập: **Khách sỉ**, **Nghệ nhân**, **Admin**. Zoom 110%. Tắt thông báo của hệ điều hành.
+- [ ] Điện thoại đã sạc đầy, bật 4G phát wifi. Sản phẩm có tem QR. Có sẵn bản chạy local bằng Docker phòng khi mất mạng.
+- [ ] Mở sẵn VS Code ở thư mục `apps/api/src/modules/quotes` và file `schema.prisma`.
