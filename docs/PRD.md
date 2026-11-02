@@ -552,3 +552,240 @@ HTTP ─▶ Route ─▶ Middleware (auth → rbac → validate) ─▶ Controll
 | Dependency Injection (qua constructor) | Service nhận repository và các provider qua constructor |
 | DTO + Schema | Schema Zod nằm trong `packages/shared`, dùng chung cho frontend và backend |
 | Frontend: Container/Presentational, Custom Hook, Provider, Compound Component | `pages/` ghép các `features/`. Hook `useQuote()`. `AuthProvider`. Các component `Stepper`, `Tabs` |
+
+---
+
+## 8. Mô hình dữ liệu
+
+### 8.1 Sơ đồ quan hệ
+
+```mermaid
+erDiagram
+    USER ||--o| WORKSHOP : "sở hữu"
+    USER ||--o{ ARTISAN_APPLICATION : "nộp"
+    USER ||--o{ SESSION : "có"
+    USER ||--o{ QUOTE_REQUEST : "tạo"
+    USER ||--o{ NOTIFICATION : "nhận"
+    WORKSHOP }o--o{ CATEGORY : "sở trường"
+    WORKSHOP ||--o{ CERTIFICATION : "có"
+    WORKSHOP ||--o{ PRODUCT : "trưng bày"
+    WORKSHOP ||--o{ BATCH : "sản xuất"
+    CATEGORY ||--o{ PRODUCT : "phân loại"
+    BATCH ||--o{ PRODUCTION_STAGE : "gồm"
+    BATCH ||--o{ PRODUCT : "chứa"
+    PRODUCTION_STAGE }o--o{ MEDIA_ASSET : "minh chứng"
+    PRODUCT }o--o{ MEDIA_ASSET : "ảnh"
+    QUOTE_REQUEST ||--o{ QUOTE_INVITATION : "mời"
+    WORKSHOP ||--o{ QUOTE_INVITATION : "được mời"
+    QUOTE_REQUEST ||--o{ BID : "nhận"
+    WORKSHOP ||--o{ BID : "gửi"
+    BID ||--o{ BID_REVISION : "lịch sử"
+    QUOTE_REQUEST ||--o{ QUOTE_STATUS_HISTORY : "lịch sử"
+    QUOTE_REQUEST ||--o| ORDER : "chốt thành"
+    ORDER ||--|{ ORDER_ALLOCATION : "phân bổ"
+    BID ||--o| ORDER_ALLOCATION : "sinh ra"
+    ORDER_ALLOCATION }o--o| BATCH : "gắn lô"
+```
+
+### 8.2 Thực thể và trường chính
+
+| Thực thể | Trường chính | Ghi chú |
+|---|---|---|
+| `User` | id, email (unique), passwordHash, fullName, phone, role, status, failedLoginCount, lockedUntil | role là `BUYER`, `ARTISAN` hoặc `ADMIN`. status là `ACTIVE`, `PENDING` hoặc `SUSPENDED` |
+| `Session` | id, userId, refreshTokenHash, familyId, userAgent, ip, expiresAt, revokedAt | Phục vụ xoay vòng refresh token |
+| `ArtisanApplication` | id, userId, nationalIdEnc, documentIds, status, reviewerId, reviewNote, reviewedAt | `nationalIdEnc` mã hóa AES-256-GCM |
+| `Workshop` | id, ownerId (unique), name, slug (unique), story, foundedYear, generation, mainArtisan, address, lat, lng, phone, acceptsVisitors, experienceOffered, openingHours (Json), capacityPerMonth, acceptsWholesale, verifiedAt, coverId, ratingAvg, ratingCount, searchText | |
+| `WorkshopCategory` | workshopId, categoryId | Bảng nối nhiều-nhiều cho danh mục sở trường |
+| `Certification` | id, workshopId, name, issuer, issuedAt, imageId | |
+| `Category` | id, name, slug, parentId, sortOrder | Cây 2 cấp |
+| `Product` | id, workshopId, categoryId, batchId?, name, slug, description, material, glaze, dimensions, price (Decimal), priceOnRequest, isUnique, stock, status, searchText, publishedAt | |
+| `MediaAsset` | id, ownerId, visibility (`PUBLIC` / `PRIVATE`), storageKey, mime, width, height, bytes, variants (Json), lqip, dominantColor, alt | |
+| `ProductImage`, `WorkshopImage`, `StageImage` | ownerId, mediaId, sortOrder | Bảng nối có thứ tự |
+| `StageTemplate` | id, craft, key, name, sortOrder, hint, requiredForCompletion | Dữ liệu riêng của nghề |
+| `Batch` | id, code (unique), workshopId, categoryId, name, plannedQty, startedAt, completedAt, status, lockedAt, scanCount | |
+| `ProductionStage` | id, batchId, templateKey?, title, occurredAt, note, isAddendum, hash?, createdAt | `hash` dùng cho TRC-11 |
+| `QuoteRequest` | id, code (unique), buyerId, title, categoryId, description, quantity, unit, budget?, customization, attachmentIds, biddingClosesAt, neededBy, deliveryAddress, status, **version**, cancelReason | |
+| `QuoteInvitation` | id, quoteId, workshopId, matchScore, matchReasons (Json), invitedBy, viewedAt | `UNIQUE(quoteId, workshopId)` |
+| `Bid` | id, quoteId, workshopId, unitPrice, quantityOffered, leadTimeDays, validUntil, note, status, **version** | `UNIQUE(quoteId, workshopId)` |
+| `BidRevision` | id, bidId, version, unitPrice, quantityOffered, leadTimeDays, createdAt | Lịch sử sửa giá |
+| `QuoteStatusHistory` | id, quoteId, fromStatus, toStatus, actorId?, reason, createdAt | Nhật ký chuyển trạng thái |
+| `Order` | id, code (unique), quoteId (unique), buyerId, totalAmount, createdAt | Không lưu trạng thái riêng |
+| `OrderAllocation` | id, orderId, bidId, workshopId, quantity, unitPrice, dueDate, status, progress, batchId?, startedAt, shippedAt, deliveredAt | |
+| `Review` | id, allocationId (unique), rating, comment | P2 |
+| `News` | id, title, slug, category, excerpt, contentHtml, coverId, isPinned, status, publishAt, outageStart?, outageEnd?, area?, authorId | |
+| `Notification` | id, userId, type, title, link, payload (Json), readAt, createdAt | |
+| `AuditLog` | id, actorId, action, entity, entityId, meta (Json), ip, createdAt | |
+| `SlugHistory` | id, entity, entityId, oldSlug | Phục vụ chuyển hướng về slug mới |
+| `Counter` | key, value | Sinh mã tuần tự `BT26-…`, `RFQ26-…`, `ORD26-…` |
+
+**Nguyên tắc để độc lập với CSDL:**
+- Không dùng `$queryRaw`.
+- Không dùng tính năng riêng của PostgreSQL. Ví dụ tìm kiếm không dấu dùng cột `searchText` đã chuẩn hóa (bỏ dấu, đổi `đ` thành `d`, chữ thường) cộng `contains`, thay vì `unaccent` hay `mode: 'insensitive'` vốn chỉ chạy trên PostgreSQL.
+- Tiền lưu bằng kiểu `Decimal`. Enum và `Json` đều được MySQL 8 hỗ trợ.
+
+---
+
+## 9. Thiết kế API
+
+### 9.1 Quy ước
+- Đường dẫn gốc `/api/v1`. Dữ liệu JSON, tên trường kiểu camelCase, thời gian theo ISO 8601 UTC.
+- Phân trang: `?page=1&pageSize=24`. Phản hồi có `meta: { page, pageSize, total }`.
+- Phản hồi thành công: `{ "data": … , "meta"?: … }`.
+- Phản hồi lỗi: `{ "error": { "code", "message", "details"? } }`. `message` bằng tiếng Việt, hiển thị thẳng được cho người dùng.
+- Mã HTTP: `200` / `201` / `204` · `400` sai định dạng · `401` chưa đăng nhập · `403` không có quyền · `404` · `409` xung đột hoặc bị khóa · `413` / `415` lỗi upload · `422` sai nghiệp vụ · `429` quá tần suất.
+
+```json
+{
+  "error": {
+    "code": "BID_VERSION_CONFLICT",
+    "message": "Xưởng gốm Ông Tư vừa cập nhật báo giá. Vui lòng xem lại trước khi chốt.",
+    "details": { "bidId": "b_8f2c", "expectedVersion": 2, "currentVersion": 3 }
+  }
+}
+```
+
+### 9.2 Danh sách endpoint
+
+**Xác thực**
+
+| Phương thức và đường dẫn | Quyền | Mô tả |
+|---|---|---|
+| `POST /auth/register` | Khách vãng lai | Đăng ký khách hàng |
+| `POST /auth/register-artisan` | Khách vãng lai | Đăng ký nghệ nhân, kèm minh chứng (id ảnh đã upload) |
+| `GET /auth/check-email?email=` | Khách vãng lai | Kiểm tra email đã tồn tại chưa, dùng khi nhập |
+| `POST /auth/login` · `POST /auth/refresh` · `POST /auth/logout` | | Đăng nhập, làm mới token, đăng xuất |
+| `GET /auth/me` | Đã đăng nhập | Thông tin người dùng hiện tại |
+| `POST /auth/forgot-password` · `POST /auth/reset-password` | Khách vãng lai | P1 |
+
+**Công khai**
+
+| Phương thức và đường dẫn | Mô tả |
+|---|---|
+| `GET /categories` | Cây danh mục |
+| `GET /products?category=&workshop=&minPrice=&maxPrice=&unique=&traceable=&q=&sort=&page=` | Danh sách sản phẩm |
+| `GET /products/:slug` | Chi tiết sản phẩm. Có `canonicalSlug` nếu slug đã đổi |
+| `GET /search/suggest?q=` | Gợi ý tìm kiếm, tối đa 8 kết quả |
+| `GET /workshops?category=&openNow=&experience=&page=` | Danh sách xưởng |
+| `GET /workshops/:slug` | Gian trưng bày |
+| `GET /workshops/map` | Dữ liệu gọn cho bản đồ |
+| `GET /trace/:code` | Dữ liệu trang truy xuất |
+| `GET /news?category=&page=` · `GET /news/:slug` | Tin tức |
+| `GET /q/:code` *(ngoài `/api`)* | Chuyển hướng 302 tới `/truy-xuat/:code` và tăng `scanCount` |
+
+**Nghệ nhân** (`requireRole('ARTISAN')`, mọi truy vấn lọc theo xưởng của chính người gọi)
+
+| Phương thức và đường dẫn | Mô tả |
+|---|---|
+| `GET` · `PATCH /me/workshop` | Xem, sửa hồ sơ xưởng |
+| `PUT /me/workshop/images` | Đặt danh sách ảnh, thứ tự, ảnh bìa |
+| `POST` · `PATCH` · `DELETE /me/workshop/certifications[/:id]` | Chứng nhận |
+| `GET` · `POST /me/products` · `GET` · `PATCH` · `DELETE /me/products/:id` | Sản phẩm |
+| `GET` · `POST /me/batches` · `GET /me/batches/:code` | Lô |
+| `POST /me/batches/:code/stages` · `PATCH` · `DELETE …/stages/:id` | Mốc. Lô đã khóa thì trả `409` |
+| `POST /me/batches/:code/complete` | Hoàn tất và khóa lô |
+| `GET /me/batches/:code/qr?format=png\|svg&size=` | Tải QR |
+| `GET /stage-templates?craft=gom` | Mẫu công đoạn |
+
+**Báo giá và đơn hàng**
+
+| Phương thức và đường dẫn | Quyền | Mô tả |
+|---|---|---|
+| `POST /quotes` · `PATCH /quotes/:code` | Khách hàng | Tạo, sửa bản nháp |
+| `POST /quotes/:code/send` | Khách hàng | Chuyển T1 |
+| `POST /quotes/:code/cancel` | Khách hàng, Admin | Chuyển T6 |
+| `GET /quotes?status=` | Mọi vai trò | Khách: RFQ của mình. Nghệ nhân: RFQ được mời. Admin: tất cả |
+| `GET /quotes/:code` | Theo vai trò | Nghệ nhân chỉ thấy chào giá của chính mình |
+| `GET /quotes/:code/bids` | Khách hàng, Admin | Bảng so sánh |
+| `POST /quotes/:code/bids` | Nghệ nhân được mời | Gửi chào giá (có thể kích hoạt T2) |
+| `PATCH /bids/:id` · `POST /bids/:id/withdraw` | Nghệ nhân | Body gửi kèm `version` |
+| `GET /quotes/:code/allocation-suggestion` | Khách hàng | Gợi ý phân bổ (mục 5.4) |
+| `POST /quotes/:code/accept` | Khách hàng | Body: `{ quoteVersion, selections: [{ bidId, bidVersion, quantity }] }`. Chuyển T3 |
+| `GET /quotes/:code/history` | Các bên liên quan | Dòng thời gian trạng thái |
+| `GET /orders/:code` | Các bên liên quan | Đơn và các phân bổ |
+| `POST /orders/:code/allocations/:id/start` | Nghệ nhân | Có thể kích hoạt T4 |
+| `PATCH /orders/:code/allocations/:id` | Nghệ nhân | `{ progress, batchCode }` |
+| `POST /orders/:code/allocations/:id/ship` | Nghệ nhân | Đánh dấu đã giao |
+| `POST /orders/:code/allocations/:id/confirm` | Khách hàng | Xác nhận đã nhận (có thể kích hoạt T5) |
+
+**Ảnh, thông báo, quản trị**
+
+| Phương thức và đường dẫn | Quyền | Mô tả |
+|---|---|---|
+| `POST /media` (multipart `files[]`, `visibility`) | Đã đăng nhập | Trả về mảng `MediaAsset` |
+| `DELETE /media/:id` | Chủ sở hữu | Xóa ảnh |
+| `GET /media/private/:id` | Admin | Xem ảnh minh chứng riêng tư |
+| `GET /notifications` · `POST /notifications/read` · `GET /notifications/stream` | Đã đăng nhập | Danh sách, đánh dấu đã đọc, SSE |
+| `GET /admin/applications?status=` · `GET /admin/applications/:id` | Admin | Hàng đợi duyệt |
+| `POST /admin/applications/:id/approve` · `…/reject` | Admin | Duyệt, từ chối (kèm lý do) |
+| `GET /admin/users` · `POST /admin/users/:id/suspend` · `…/reactivate` | Admin | Quản lý tài khoản |
+| `GET` · `POST` · `PATCH` · `DELETE /admin/news[/:id]` | Admin | Tin tức |
+| `… /admin/categories`, `… /admin/stage-templates` | Admin | Danh mục, mẫu công đoạn |
+| `GET /admin/stats` · `GET /admin/audit-logs` | Admin | Thống kê, nhật ký thao tác |
+| `POST /admin/quotes/:code/invitations` · `DELETE …/:workshopId` | Admin | Mời thêm, bớt hộ |
+
+### 9.3 Ví dụ: `GET /api/v1/trace/BT26-00042`
+
+```json
+{
+  "data": {
+    "code": "BT26-00042",
+    "name": "Bình men lam vẽ sen – mẻ tháng 11",
+    "status": "COMPLETED",
+    "lockedAt": "2026-11-20T09:12:00Z",
+    "workshop": { "slug": "xuong-gom-ong-tu", "name": "Xưởng gốm Ông Tư", "verified": true, "generation": 4 },
+    "stages": [
+      {
+        "day": 1,
+        "title": "Chọn và xử lý đất",
+        "occurredAt": "2026-10-28T01:00:00Z",
+        "note": "Đất sét trắng ngâm lọc 3 ngày",
+        "images": [{ "thumb": "/media/2026/10/9f3a1c2b7d4e-320.webp", "md": "/media/2026/10/9f3a1c2b7d4e-800.webp", "lqip": "data:image/webp;base64,UklGR…" }]
+      }
+    ],
+    "products": [{ "slug": "binh-men-lam-ve-sen-a1b2", "name": "Bình men lam vẽ sen", "thumb": "/media/…-320.webp" }],
+    "scanCount": 128
+  }
+}
+```
+
+---
+
+## 10. Định tuyến URL
+
+### 10.1 URL phía frontend (React Router, slug tiếng Việt không dấu)
+
+| URL | Trang | Quyền |
+|---|---|---|
+| `/` | Trang chủ | Công khai |
+| `/san-pham?danh-muc=&xuong=&gia-tu=&gia-den=&doc-ban=1&sap-xep=gia-tang&trang=2` | Danh sách sản phẩm. Bộ lọc nằm trên URL nên chia sẻ được | Công khai |
+| `/san-pham/:slug` | Chi tiết sản phẩm | Công khai |
+| `/danh-muc/:slug` | Sản phẩm theo phân loại | Công khai |
+| `/xuong` · `/xuong/:slug` · `/xuong/:slug/san-pham` | Danh sách xưởng, gian trưng bày, sản phẩm của xưởng | Công khai |
+| `/ban-do?dang-mo=1&trai-nghiem=1` | Bản đồ | Công khai |
+| `/truy-xuat/:maLo` | Trang truy xuất | Công khai |
+| `/tin-tuc` · `/tin-tuc/:slug` | Tin tức | Công khai |
+| `/dang-nhap?tiep=/bao-gia/tao-moi` · `/dang-ky` · `/dang-ky/nghe-nhan` · `/quen-mat-khau` | Xác thực. Đăng nhập xong quay về đúng trang trong tham số `tiep` | Chưa đăng nhập |
+| `/bao-gia` · `/bao-gia/tao-moi` · `/bao-gia/:ma` · `/don-hang/:ma` | Báo giá và đơn của khách | Khách hàng |
+| `/nghe-nhan` → `/nghe-nhan/tong-quan` | Bảng điều khiển nghệ nhân | Nghệ nhân |
+| `/nghe-nhan/ho-so-xuong` · `/nghe-nhan/san-pham[/moi \| /:id]` · `/nghe-nhan/lo-san-xuat[/moi \| /:ma \| /:ma/in-tem]` · `/nghe-nhan/co-hoi-bao-gia[/:ma]` · `/nghe-nhan/don-hang/:ma` | Khu làm việc của nghệ nhân | Nghệ nhân |
+| `/quan-tri/tong-quan` · `/quan-tri/ho-nghe?trang-thai=cho-duyet` · `/quan-tri/ho-nghe/:id` · `/quan-tri/nguoi-dung` · `/quan-tri/dieu-phoi` · `/quan-tri/tin-tuc[/moi \| /:id]` · `/quan-tri/danh-muc` · `/quan-tri/cong-doan` · `/quan-tri/nhat-ky` | Khu quản trị | Admin |
+| `/thong-bao` · `/tai-khoan` | Thông báo, tài khoản | Đã đăng nhập |
+| `*` | Trang 404 có lối quay về | Công khai |
+
+- **Route lồng nhau theo layout:** `PublicLayout`, `ArtisanLayout`, `AdminLayout`, mỗi layout có thanh điều hướng riêng.
+- **Bảo vệ route:** `<RequireRole role="ARTISAN">`. Chưa đăng nhập thì chuyển tới `/dang-nhap?tiep=…`. Sai vai trò thì hiện trang 403.
+- **Tải lười theo route** bằng `React.lazy`. Khi đổi trang thì cập nhật `<title>` và thẻ meta.
+
+### 10.2 Quy tắc viết lại URL phía server (Nginx)
+
+| Quy tắc | Mục đích |
+|---|---|
+| `location / { try_files $uri $uri/ /index.html; }` | SPA history fallback: nhấn F5 ở trang sâu không bị 404 |
+| `location /api/ { proxy_pass http://api:4000; }` | Chuyển yêu cầu tới API |
+| `location /q/ { proxy_pass http://api:4000; }` | Link ngắn trên QR: trả 302 tới `/truy-xuat/:code` và đếm lượt quét |
+| `location /media/ { expires 1y; add_header Cache-Control "public, immutable"; }` | Phục vụ ảnh với cache dài hạn |
+| Đường dẫn có chữ hoa hoặc dấu `/` ở cuối thì trả 301 về dạng chuẩn | Một nội dung chỉ có một URL |
+| Tiền tố phiên bản `/api/v1` | Có thể nâng phiên bản API mà không phá client cũ |
+
+### 10.3 Slug ổn định
+Khi đổi tên sản phẩm hoặc xưởng, slug cũ được lưu vào `SlugHistory`. API trả dữ liệu kèm `canonicalSlug`. Frontend thay URL bằng `navigate(…, { replace: true })`, nên các link cũ đã chia sẻ không bị hỏng.
