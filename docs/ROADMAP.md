@@ -234,3 +234,64 @@ gantt
 - [ ] Mở sẵn 3 profile Chrome đã đăng nhập: **Khách sỉ**, **Nghệ nhân**, **Admin**. Zoom 110%. Tắt thông báo của hệ điều hành.
 - [ ] Điện thoại đã sạc đầy, bật 4G phát wifi. Sản phẩm có tem QR. Có sẵn bản chạy local bằng Docker phòng khi mất mạng.
 - [ ] Mở sẵn VS Code ở thư mục `apps/api/src/modules/quotes` và file `schema.prisma`.
+
+---
+
+## Phụ lục A. Checklist barem
+
+### 1. Chức năng và các tính năng đã cài đặt (0,35)
+- [ ] 100% yêu cầu P0 trong PRD đạt tiêu chí chấp nhận.
+- [ ] 3 vai trò, mỗi vai trò có bảng điều khiển và điều hướng riêng.
+- [ ] Nhật ký lô có ảnh minh chứng. QR quét bằng điện thoại thật ra trang truy xuất. Lô đã khóa không sửa được.
+- [ ] Luồng báo giá đi đủ 6 trạng thái chính, cộng hủy và hết hạn. Chia đơn cho ít nhất 2 hộ.
+- [ ] Bản đồ có ghim, popup, trạng thái mở cửa.
+- [ ] Upload nhiều ảnh, backend resize.
+- [ ] Duyệt hộ nghề, khóa tài khoản, tin tức có ghim.
+- [ ] Có ít nhất 5 tính năng P1 tạo điểm cộng: gợi ý phân bổ, in tem và đếm lượt quét, chuông thông báo theo thời gian thực, tìm không dấu kèm gợi ý, bảng thống kê, tác vụ hết hạn, bảng điều phối.
+
+### 2. Thiết kế: logic, dễ sử dụng (0,1)
+- [ ] Biểu mẫu nhiều bước có thanh bước, quay lại không mất dữ liệu, tự lưu nháp.
+- [ ] Dòng thời gian trạng thái ở RFQ và đơn hàng.
+- [ ] Hộp thoại xác nhận trước thao tác không hoàn tác (chốt, hoàn tất lô, khóa tài khoản).
+- [ ] Trạng thái rỗng có lời mời hành động. Breadcrumb ở các trang sâu.
+- [ ] Đăng nhập xong quay về đúng trang đang xem (`?tiep=`).
+
+### 3. Giao diện: responsive, đẹp, hiện đại, có bản sắc (0,2)
+- [ ] Design system thống nhất: màu Lam, Ngà, Đất nung; chữ serif cho tiêu đề; con dấu; họa tiết lam.
+- [ ] Ảnh thật, tỷ lệ cố định, có ảnh mờ giữ chỗ, có lightbox.
+- [ ] Đẹp ở cả 360, 768, 1024 và 1440 px. Không có thanh cuộn ngang.
+- [ ] Trang truy xuất có cảm xúc: dòng thời gian, "Ngày thứ N", hiện dần khi cuộn.
+- [ ] Logo, favicon, ảnh Open Graph khi chia sẻ link.
+
+### 4. Hiệu năng: fetch/AJAX, API, JSON, cập nhật DOM (0,1)
+- [ ] Không thao tác dữ liệu nào làm tải lại trang: lọc, phân trang, cuộn vô hạn, chào giá, chốt, thông báo, upload.
+- [ ] Tab Network chỉ thấy JSON qua `/api/v1`.
+- [ ] Cập nhật lạc quan ở các thao tác nhỏ (đánh dấu đã đọc, sắp xếp ảnh).
+- [ ] Lighthouse ≥ 90 trên máy tính. Ảnh trang danh sách ≤ 1 MB.
+
+### 5. Phong cách lập trình (0,05)
+- [ ] Phân tầng Route, Controller, Service, Repository. Frontend chia theo `features/`.
+- [ ] Giải thích được ít nhất 5 mẫu thiết kế (PRD mục 7.2), mở ngay được code tương ứng.
+- [ ] ESLint, Prettier, TS `strict`, TSDoc, Conventional Commits, CI xanh.
+
+### 6. Xử lý nhập liệu (0,05)
+- [ ] Kiểm tra hợp lệ ở cả hai phía bằng chung schema, báo lỗi tiếng Việt ngay khi nhập.
+- [ ] Kiểm tra bất đồng bộ (email). Kiểm tra chéo giữa các trường (ngày).
+- [ ] Tự điền: địa chỉ từ ghim, slug từ tên, thông tin người mua từ hồ sơ, công đoạn tiếp theo.
+- [ ] Gợi ý: tìm kiếm, địa chỉ.
+- [ ] Chuyển đổi: định dạng tiền, chuẩn hóa số điện thoại, chuẩn hóa NFC, thành tiền tự tính.
+
+### 7. An ninh (0,05)
+- [ ] bcrypt. Access token nằm trong bộ nhớ. Refresh token trong cookie `httpOnly` và được xoay vòng.
+- [ ] RBAC và kiểm tra sở hữu: demo được trường hợp nhận 403.
+- [ ] Giới hạn tần suất đăng nhập, CSP, làm sạch HTML, kiểm tra upload, mã hóa AES-GCM số CCCD, HTTPS.
+
+### 8. Viết lại và định tuyến URL (0,05)
+- [ ] Slug tiếng Việt không dấu. Bộ lọc nằm trên URL. Route lồng nhau có bảo vệ. Có trang 404.
+- [ ] F5 ở trang sâu không lỗi (fallback của Nginx).
+- [ ] Link ngắn `/q/:code` trả 302. Slug cũ chuyển về slug mới.
+
+### 9. CSDL hướng đối tượng và độc lập CSDL (0,05)
+- [ ] Prisma: model, quan hệ, transaction, migration, seed.
+- [ ] Repository pattern. Không có `$queryRaw`.
+- [ ] Đã thử chạy với MySQL và ghi kết quả.
