@@ -466,3 +466,89 @@ flowchart LR
 
 ### 5.8 Thông báo
 Các service phát **sự kiện miền** (ví dụ `quote.accepted`) sau khi transaction commit. `NotificationService` đăng ký nhận các sự kiện đó, tạo bản ghi `Notification` cho đúng người nhận, và đẩy qua SSE nếu người nhận đang trực tuyến (NTF-02). Frontend dùng TanStack Query với `refetchInterval: 30_000` làm phương án dự phòng.
+
+---
+
+## 6. Yêu cầu phi chức năng
+
+### 6.1 Hiệu năng
+
+| Mã | Yêu cầu | Chỉ tiêu |
+|---|---|---|
+| PERF-01 | Trang danh sách 24 sản phẩm | Tổng ảnh tải lần đầu ≤ 1 MB. LCP ≤ 2,5 giây khi giả lập mạng 4G |
+| PERF-02 | API danh sách | p95 ≤ 300 ms với 2.000 sản phẩm trong CSDL |
+| PERF-03 | Lighthouse | Performance ≥ 90 trên máy tính, ≥ 80 trên điện thoại, đo ở trang chủ, danh sách sản phẩm và trang truy xuất |
+| PERF-04 | Dung lượng JavaScript | Gói khởi đầu ≤ 250 KB sau gzip. Tách code theo route. Bản đồ, trình soạn thảo và khu quản trị được tải lười |
+| PERF-05 | Truy vấn CSDL | Không có lỗi N+1. Có index cho `slug`, `status`, `categoryId`, `workshopId`, `createdAt` |
+| PERF-06 | Nén phản hồi | Bật gzip hoặc brotli cho JSON, JS, CSS |
+| PERF-07 | Tải từng phần | Mọi thao tác dữ liệu dùng `fetch` và JSON, cập nhật DOM, **không tải lại trang** |
+
+### 6.2 Bảo mật
+
+| Mã | Yêu cầu |
+|---|---|
+| SEC-01 | Mật khẩu băm bằng bcrypt, cost 12. Áp dụng chính sách độ mạnh mật khẩu |
+| SEC-02 | Access token JWT 15 phút, chỉ giữ trong bộ nhớ trình duyệt (**không** dùng `localStorage`). Refresh token là chuỗi ngẫu nhiên 256 bit trong cookie `httpOnly; Secure; SameSite=Strict; Path=/api/v1/auth`. Server lưu bản băm SHA-256 trong bảng `Session`. Mỗi lần refresh thì xoay vòng token. Phát hiện token cũ bị dùng lại thì thu hồi cả chuỗi phiên |
+| SEC-03 | Phân quyền theo vai trò bằng middleware `requireRole`, cộng với kiểm tra sở hữu ở tầng service để chống IDOR: mọi truy vấn của nghệ nhân đều có điều kiện `workshopId` của chính họ |
+| SEC-04 | Kiểm tra mọi đầu vào (body, query, params) bằng Zod. Loại bỏ trường thừa |
+| SEC-05 | Chống XSS: React tự escape. HTML từ rich text được làm sạch bằng `sanitize-html` theo danh sách trắng. Đặt Content Security Policy qua `helmet` |
+| SEC-06 | Chống SQL injection: chỉ dùng query builder của Prisma, không ghép chuỗi SQL |
+| SEC-07 | Giới hạn tần suất: đăng nhập 5 lần mỗi 15 phút cho mỗi cặp IP và email. API chung 300 yêu cầu mỗi 15 phút cho mỗi IP. Upload 30 lần mỗi giờ |
+| SEC-08 | An toàn upload: kiểm tra magic bytes, giới hạn dung lượng và số lượng, mã hóa lại ảnh bằng `sharp` để vô hiệu hóa dữ liệu lạ giấu trong ảnh, đặt tên file ngẫu nhiên |
+| SEC-09 | Mã hóa: HTTPS khi triển khai. Số CCCD mã hóa AES-256-GCM khi lưu. Ảnh minh chứng ở vùng riêng tư |
+| SEC-10 | CORS chỉ cho phép origin trong danh sách. Cookie `SameSite=Strict` cộng kiểm tra header `Origin` với các yêu cầu thay đổi dữ liệu, để chống CSRF |
+| SEC-11 | Ghi nhật ký thao tác admin. Không trả stack trace ra ngoài ở môi trường production |
+| SEC-12 | Khóa bí mật chỉ nằm trong `.env`, không commit. Có `.env.example`. Chạy `pnpm audit` trong CI |
+
+### 6.3 Khả dụng, tương thích, bảo trì
+
+| Mã | Yêu cầu |
+|---|---|
+| USA-01 | Responsive từ 360 đến 1920 px, không có thanh cuộn ngang. Kiểm tra ở 360, 768, 1024 và 1440 px |
+| USA-02 | Khả năng tiếp cận theo WCAG 2.1 AA: độ tương phản, `alt` cho ảnh, `label` cho ô nhập, điều hướng được bằng bàn phím, viền focus rõ ràng |
+| USA-03 | Tiếng Việt chuẩn Unicode NFC. Tiền và ngày định dạng theo `vi-VN` |
+| USA-04 | Mọi danh sách có trạng thái đang tải (khung xương), trạng thái rỗng (kèm lời mời hành động) và trạng thái lỗi (kèm nút thử lại) |
+| COMP-01 | Chạy trên 2 phiên bản gần nhất của Chrome, Edge, Firefox, Safari, cùng Safari iOS và Chrome Android |
+| MAINT-01 | TypeScript `strict`. ESLint không lỗi. Độ phủ test của các service lõi (quotes, batches, auth) ≥ 70% |
+| MAINT-02 | Có migration theo phiên bản. Seed dựng lại toàn bộ dữ liệu bằng một lệnh |
+| OBS-01 | Log có cấu trúc (pino), mỗi yêu cầu có `requestId`. Mã lỗi trả về ổn định, không đổi tùy tiện |
+
+---
+
+## 7. Kiến trúc và lựa chọn công nghệ
+
+### 7.1 Lựa chọn và lý do
+
+| Thành phần | Chọn | Vì sao |
+|---|---|---|
+| Kiểu ứng dụng | SPA cùng REST API riêng | Đáp ứng trực tiếp tiêu chí 4 (fetch, JSON, cập nhật DOM). Tách rõ frontend và backend (tiêu chí 5). API dùng lại được cho ứng dụng di động sau này |
+| Frontend | React, TypeScript, Vite | Hệ sinh thái lớn, build nhanh, kiểu dữ liệu chặt |
+| Gọi dữ liệu | TanStack Query | Cache, tự làm mới, cập nhật lạc quan, phân trang và cuộn vô hạn |
+| Biểu mẫu | React Hook Form + Zod | Kiểm tra dữ liệu ngay khi nhập. **Dùng chung schema với backend** |
+| Giao diện | Tailwind CSS + Radix UI | Dựng design system nhanh. Radix lo phần khả năng tiếp cận cho hộp thoại, menu, tab |
+| Bản đồ | Leaflet + react-leaflet + markercluster | Mã nguồn mở, không cần khóa API hay thẻ thanh toán. Đề bài gợi ý trực tiếp |
+| Backend | Node.js, Express, TypeScript | Cùng ngôn ngữ với frontend, dùng chung kiểu dữ liệu |
+| ORM | Prisma | Mô hình hướng đối tượng, migration, transaction. Đổi CSDL bằng cách đổi `provider` (tiêu chí 9) |
+| CSDL | PostgreSQL | Ổn định, hỗ trợ JSON, transaction tốt |
+| Ảnh | sharp | Nhanh, hỗ trợ WebP và AVIF, tự xoay theo EXIF |
+
+### 7.2 Phân tầng và mẫu thiết kế
+
+```text
+HTTP ─▶ Route ─▶ Middleware (auth → rbac → validate) ─▶ Controller ─▶ Service ─▶ Repository ─▶ Prisma
+                                                         (HTTP ⇄ DTO)  (nghiệp vụ)  (truy cập dữ liệu)
+```
+
+| Mẫu thiết kế | Áp dụng ở đâu |
+|---|---|
+| Kiến trúc phân tầng | Controller chỉ chuyển đổi giữa HTTP và DTO. Service chứa nghiệp vụ. Repository là nơi duy nhất gọi Prisma |
+| Repository | `QuoteRepository`, `BatchRepository`… Service test được bằng repository giả |
+| State (bảng chuyển trạng thái) | `QuoteStateMachine` (mục 5.1) |
+| Strategy | `StorageProvider` có 2 cài đặt `LocalStorage` / `S3Storage`, chọn theo biến môi trường |
+| Factory | `ImageVariantFactory` sinh các biến thể ảnh theo cấu hình. `NotificationFactory` tạo nội dung thông báo theo loại sự kiện |
+| Observer (Pub/Sub) | `DomainEvents` dựa trên EventEmitter: `quote.accepted` được `NotificationService` và `AuditService` lắng nghe |
+| Singleton | `PrismaClient`, logger |
+| Chain of Responsibility | Chuỗi middleware của Express |
+| Dependency Injection (qua constructor) | Service nhận repository và các provider qua constructor |
+| DTO + Schema | Schema Zod nằm trong `packages/shared`, dùng chung cho frontend và backend |
+| Frontend: Container/Presentational, Custom Hook, Provider, Compound Component | `pages/` ghép các `features/`. Hook `useQuote()`. `AuthProvider`. Các component `Stepper`, `Tabs` |
