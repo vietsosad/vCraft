@@ -252,3 +252,217 @@ Các sự kiện sinh thông báo: `APPLICATION_APPROVED`, `APPLICATION_REJECTED
 | MED-05 | Cache dài hạn | P1 | Tên file chứa mã băm nội dung. Header `Cache-Control: public, max-age=31536000, immutable` |
 | MED-06 | Lớp lưu trữ trừu tượng | P1 | Interface `StorageProvider` có 2 cài đặt: `LocalStorage` và `S3Storage`, chọn bằng biến `STORAGE_DRIVER` |
 | MED-07 | Nén ảnh ở trình duyệt trước khi upload | P2 | Ảnh lớn hơn 3 MB được nén xuống chiều dài tối đa 2400 px trước khi gửi |
+
+---
+
+## 5. Đặc tả nghiệp vụ chi tiết
+
+### 5.1 Máy trạng thái báo giá
+
+```mermaid
+stateDiagram-v2
+    [*] --> DRAFT: Khách tạo yêu cầu
+    DRAFT --> SENT: send · ghép và mời hộ
+    DRAFT --> CANCELLED: cancel
+    SENT --> BIDDING: receiveBid · chào giá đầu tiên
+    SENT --> CANCELLED: cancel
+    SENT --> EXPIRED: expire · hết hạn, 0 chào giá
+    BIDDING --> ACCEPTED: accept · chốt ≥ 1 chào giá (khóa)
+    BIDDING --> CANCELLED: cancel
+    BIDDING --> EXPIRED: expire · quá hạn chốt
+    ACCEPTED --> IN_PRODUCTION: startProduction · mọi hộ đã bắt đầu
+    IN_PRODUCTION --> DELIVERED: deliver · khách nhận đủ hàng
+    DELIVERED --> [*]
+    CANCELLED --> [*]
+    EXPIRED --> [*]
+```
+
+| # | Từ | Sự kiện (API) | Sang | Ai thực hiện | Điều kiện | Tác động kèm |
+|---|---|---|---|---|---|---|
+| T1 | `DRAFT` | `send` qua `POST /quotes/:code/send` | `SENT` | Khách sở hữu RFQ | Đủ trường bắt buộc. Hạn nhận báo giá ≥ hiện tại + 24 giờ | Chạy thuật toán ghép hộ, tạo `QuoteInvitation`, thông báo `QUOTE_INVITED` |
+| T2 | `SENT` | `receiveBid` qua `POST /quotes/:code/bids` | `BIDDING` | Hộ được mời (hệ thống tự chuyển) | Chưa quá hạn nhận báo giá | Thông báo `BID_RECEIVED` cho khách |
+| T3 | `BIDDING` | `accept` qua `POST /quotes/:code/accept` | `ACCEPTED` | Khách sở hữu RFQ | `version` của RFQ khớp. Mỗi chào giá ở `SUBMITTED`, `version` khớp, còn hiệu lực. Tổng số lượng chọn bằng số lượng yêu cầu | Tạo `Order` và các `OrderAllocation`. Chào giá được chọn chuyển `ACCEPTED`, còn lại chuyển `REJECTED`. Thông báo cho mọi hộ đã chào giá |
+| T4 | `ACCEPTED` | `startProduction` (khi phân bổ cuối cùng được bắt đầu) | `IN_PRODUCTION` | Hệ thống | Không còn phân bổ nào ở `PENDING_START` | Thông báo cho khách |
+| T5 | `IN_PRODUCTION` | `deliver` (khi phân bổ cuối cùng được xác nhận nhận) | `DELIVERED` | Hệ thống | Mọi phân bổ ở `DELIVERED` | Mở chức năng đánh giá |
+| T6 | `DRAFT`, `SENT`, `BIDDING` | `cancel` qua `POST /quotes/:code/cancel` | `CANCELLED` | Khách hoặc Admin | Có lý do | Mọi chào giá chuyển `REJECTED`. Thông báo cho các hộ |
+| T7 | `SENT`, `BIDDING` | `expire` (tác vụ định kỳ) | `EXPIRED` | Hệ thống | `SENT`: quá hạn và không có chào giá nào. `BIDDING`: quá hạn nhận báo giá + 7 ngày mà chưa chốt | Thông báo cho các bên |
+
+Mọi cặp (trạng thái, sự kiện) không có trong bảng sẽ bị từ chối với `400 INVALID_TRANSITION`. Khách **được phép chốt sớm** trước hạn nhận báo giá. Sau hạn, hộ nghề không thể gửi mới hay sửa chào giá nữa.
+
+**Trạng thái phụ:**
+- `Bid`: `SUBMITTED` → `WITHDRAWN` | `ACCEPTED` | `REJECTED`. Sửa giá không đổi trạng thái, chỉ tăng `version` và ghi một `BidRevision`.
+- `OrderAllocation`: `PENDING_START` → `IN_PRODUCTION` → `SHIPPED` → `DELIVERED`.
+- `Batch`: `IN_PROGRESS` → `COMPLETED` (bị khóa).
+- **Trạng thái tổng của đơn chính là trạng thái của RFQ.** Đây là nguồn sự thật duy nhất. Bảng `Order` không lưu trạng thái riêng để tránh hai nơi lệch nhau.
+
+**Cài đặt:** mọi chuyển trạng thái đi qua đúng một hàm.
+
+```ts
+// apps/api/src/core/state-machine/quote.machine.ts
+export const QUOTE_TRANSITIONS = {
+  DRAFT:         { send: 'SENT', cancel: 'CANCELLED' },
+  SENT:          { receiveBid: 'BIDDING', cancel: 'CANCELLED', expire: 'EXPIRED' },
+  BIDDING:       { accept: 'ACCEPTED', cancel: 'CANCELLED', expire: 'EXPIRED' },
+  ACCEPTED:      { startProduction: 'IN_PRODUCTION' },
+  IN_PRODUCTION: { deliver: 'DELIVERED' },
+  DELIVERED: {}, CANCELLED: {}, EXPIRED: {},
+} as const satisfies Record<QuoteStatus, Partial<Record<QuoteEvent, QuoteStatus>>>;
+
+/**
+ * Chuyển trạng thái RFQ có điều kiện (khóa lạc quan).
+ * Phải được gọi bên trong prisma.$transaction. Service phát sự kiện miền SAU khi commit.
+ * @throws InvalidTransitionError nếu sự kiện không hợp lệ với trạng thái hiện tại
+ * @throws ConflictError nếu bản ghi đã bị người khác thay đổi
+ */
+export async function transition(tx: Tx, quote: QuoteRef, event: QuoteEvent, actor: Actor) {
+  const to = QUOTE_TRANSITIONS[quote.status][event];
+  if (!to) throw new InvalidTransitionError(quote.status, event);
+
+  const { count } = await tx.quoteRequest.updateMany({
+    where: { id: quote.id, status: quote.status, version: quote.version },
+    data:  { status: to, version: { increment: 1 } },
+  });
+  if (count === 0) throw new ConflictError('QUOTE_STATE_CONFLICT');
+
+  await tx.quoteStatusHistory.create({
+    data: { quoteId: quote.id, fromStatus: quote.status, toStatus: to, actorId: actor.id },
+  });
+  return to;
+}
+```
+
+### 5.2 Cơ chế khóa bản ghi và xử lý tranh chấp
+
+**Lựa chọn chính: khóa lạc quan (optimistic locking) bằng cột `version`.**
+- Tranh chấp trong thực tế hiếm, nên không cần giữ khóa lâu.
+- Dùng được trên mọi CSDL qua Prisma (`updateMany` có điều kiện), không cần câu SQL riêng như `SELECT … FOR UPDATE`. Đây cũng là điểm cộng cho tiêu chí 9 của barem.
+- Kết hợp ràng buộc `UNIQUE` ở CSDL cho những trường hợp chống trùng.
+
+| # | Tình huống tranh chấp | Nếu không xử lý | Cơ chế | Kết quả người dùng thấy |
+|---|---|---|---|---|
+| L1 | Khách bấm "Chốt" ở 2 tab, hoặc bấm đúp | Sinh 2 đơn trùng | Cập nhật có điều kiện `status = BIDDING AND version = v`. `count = 0` thì rollback toàn bộ transaction | Tab sau nhận `409 QUOTE_STATE_CONFLICT`. Giao diện tải lại trạng thái mới và báo "Yêu cầu này đã được chốt" |
+| L2 | Nghệ nhân sửa giá đúng lúc khách đang xem và bấm chốt | Chốt theo giá cũ, dẫn tới tranh chấp | Payload chốt gửi kèm `bidVersion` mà khách đã thấy. Lệch thì `409` | "Xưởng Ông Tư vừa cập nhật báo giá (12.000đ → 13.500đ). Vui lòng xem lại." Bảng so sánh tự làm mới |
+| L3 | Nghệ nhân sửa hoặc rút chào giá sau khi khách đã chốt | Đơn đã chốt bị thay đổi | Cập nhật chào giá chỉ thành công khi RFQ đang ở `SENT` hoặc `BIDDING` và chào giá đang ở `SUBMITTED`. Điều kiện kiểm tra trong cùng transaction | `409 QUOTE_LOCKED`: "Yêu cầu đã được chốt, không thể sửa chào giá" |
+| L4 | Hai hộ gửi chào giá đầu tiên cùng lúc, cả hai cùng kích hoạt `SENT → BIDDING` | Một hộ bị lỗi oan | Chuyển trạng thái này là **idempotent**: nếu RFQ đã ở `BIDDING` thì bỏ qua bước chuyển | Cả hai chào giá đều được ghi nhận |
+| L5 | Tác vụ hết hạn chạy đúng lúc khách bấm chốt | RFQ vừa `ACCEPTED` vừa `EXPIRED` | Cả hai đều cập nhật có điều kiện `status` và `version`, nên chỉ một bên thắng | Bên thua: khách nhận `409`, hoặc tác vụ định kỳ bỏ qua bản ghi đó |
+| L6 | Mạng chập chờn, nghệ nhân gửi chào giá 2 lần | 2 chào giá trùng | Ràng buộc `UNIQUE(quoteId, workshopId)` trên bảng `Bid` | Lần thứ 2 nhận `409`. Giao diện chuyển sang chế độ sửa chào giá |
+| L7 | Sửa mốc nhật ký của lô đã hoàn tất, nhằm làm giả lịch sử | Mất giá trị truy xuất | `Batch.lockedAt` khác null thì API từ chối sửa hoặc xóa mốc | `409 BATCH_LOCKED`. Chỉ được thêm ghi chú bổ sung |
+| L8 | Hai lô được tạo cùng lúc | Trùng mã lô | Bảng `Counter`: `update … value = value + 1` là thao tác nguyên tử trên mọi CSDL, cộng thêm `UNIQUE(code)` | Mã lô luôn duy nhất và tăng dần |
+
+**Kiểm thử bắt buộc:** gửi 2 yêu cầu chốt song song (`Promise.all`). Kỳ vọng đúng 1 yêu cầu `200`, 1 yêu cầu `409`, chỉ có 1 `Order` được tạo và có đúng 1 dòng lịch sử `BIDDING → ACCEPTED`.
+
+### 5.3 Thuật toán ghép hộ phù hợp
+
+**Bước 1: Lọc cứng.** Chỉ giữ các xưởng có `status = APPROVED`, chủ xưởng `ACTIVE`, `acceptsWholesale = true`, và danh mục sở trường chứa danh mục của RFQ.
+
+**Bước 2: Chấm điểm từ 0 đến 100.**
+
+| Thành phần | Trọng số | Cách tính |
+|---|:-:|---|
+| Năng lực | 40 | `min(1, capacityPerMonth × số tháng đến ngày cần hàng / quantity)` |
+| Uy tín | 30 | `ratingAvg / 5`. Chưa có đánh giá thì lấy 0,6 |
+| Đúng hạn | 20 | Tỷ lệ phân bổ đã giao đúng hạn. Chưa có lịch sử thì lấy 0,8 |
+| Phản hồi | 10 | Tỷ lệ lời mời trước đây mà xưởng đã chào giá |
+
+**Bước 3: Mời 10 xưởng điểm cao nhất** (hoặc tất cả nếu ít hơn 10). Lưu `matchScore` và `matchReasons` để hiển thị cho hộ nghề, ví dụ: *"Bạn được mời vì: sở trường Cốc chén, năng lực 3.000 sản phẩm/tháng."*
+
+**Bước 4:** Admin có thể mời thêm hoặc bớt xưởng thủ công (ADM-06).
+
+Một xưởng không đủ năng lực làm cả đơn vẫn được mời. Chính điều này tạo điều kiện để **chia đơn cho nhiều hộ**.
+
+### 5.4 Thuật toán gợi ý phân bổ
+
+Đầu vào: các chào giá đang `SUBMITTED`, số lượng yêu cầu `Q`, ngày cần hàng `D`.
+
+1. Loại các chào giá có ngày hoàn thành dự kiến (`hôm nay + leadTimeDays`) sau `D`.
+2. Sắp xếp theo đơn giá tăng dần. Bằng giá thì ưu tiên điểm uy tín cao hơn, rồi tới số ngày hoàn thành ngắn hơn.
+3. Lần lượt lấy `min(số còn thiếu, quantityOffered)` của từng chào giá cho tới khi đủ `Q`.
+4. Không đủ thì báo *"Còn thiếu N sản phẩm"* và đề xuất mời thêm hộ.
+5. Kết quả **chỉ là gợi ý**. Khách được chỉnh tay, server kiểm tra lại toàn bộ khi chốt.
+
+Với chi phí tuyến tính (đơn giá × số lượng) và giới hạn số lượng mỗi hộ, cách lấy tham lam theo đơn giá cho ra **tổng chi phí nhỏ nhất**. Ví dụ với `Q = 5.000`:
+
+| Xưởng | Đơn giá | Nhận làm | Số ngày | Gợi ý |
+|---|--:|--:|--:|--:|
+| Gốm Minh Hải | 11.500đ | 2.000 | 20 | 2.000 |
+| Gốm Ông Tư | 12.000đ | 3.500 | 25 | 3.000 |
+| Gốm Hưng Phát | 12.800đ | 5.000 | 18 | 0 |
+| **Tổng** | | | | **5.000, thành tiền 59.000.000đ** |
+
+### 5.5 Truy xuất nguồn gốc
+
+**Vòng đời lô:** Mở lô (`IN_PROGRESS`) → thêm các mốc → Hoàn tất (`COMPLETED`, nhật ký bị khóa) → chỉ còn thêm được ghi chú bổ sung.
+
+**Mẫu công đoạn cho nghề gốm (dữ liệu seed):**
+
+| # | Công đoạn | Gợi ý mô tả | Ảnh nên chụp |
+|---|---|---|---|
+| 1 | Chọn và xử lý đất | Ngâm, lọc, ủ đất sét | Bể lọc, khối đất đã ủ |
+| 2 | Tạo dáng | Vuốt tay trên bàn xoay, in khuôn hoặc đổ rót | Đôi tay trên bàn xoay |
+| 3 | Phơi và sửa mộc | Phơi khô, tỉa, gắn quai | Dãy mộc đang phơi |
+| 4 | Trang trí | Vẽ tay, khắc, đắp nổi | Cận cảnh nét vẽ |
+| 5 | Tráng men | Nhúng, dội hoặc phun men | Sản phẩm vừa phủ men |
+| 6 | **Nung** (bắt buộc để hoàn tất) | Loại lò, nhiệt độ, thời gian nung | Cửa lò, đồng hồ nhiệt |
+| 7 | Ra lò và kiểm định | Kiểm tra nứt, cong vênh, màu men | Sản phẩm vừa ra lò |
+| 8 | **Thành phẩm** (bắt buộc để hoàn tất) | Hoàn thiện, đóng gói, dán tem QR | Sản phẩm đã có tem |
+
+**QR:**
+- Nội dung là `{APP_URL}/q/{mã-lô}`. URL ngắn giúp mã QR thưa, dễ quét khi in nhỏ.
+- Đích của `/q/` do server quyết định, nên **tem đã in vẫn dùng được** kể cả khi sau này đổi cấu trúc trang.
+- QR được sinh khi có yêu cầu bằng thư viện `qrcode`, không lưu file. Có `ETag` để trình duyệt cache. Mức sửa lỗi H, có logo vCraft ở giữa.
+
+**Bố cục trang `/truy-xuat/:maLo` (ưu tiên điện thoại):**
+1. **Phần đầu:** ảnh thành phẩm, tên lô, mã lô, con dấu *"Hộ nghề xác thực bởi BQL làng gốm Bát Tràng"*.
+2. **Người làm:** ảnh đại diện, tên nghệ nhân, tên xưởng, "Đời thứ 4 làm gốm", liên kết tới gian trưng bày.
+3. **Hành trình:** dòng thời gian dọc. Mỗi mốc có nhãn "Ngày thứ N", công đoạn, mô tả và ảnh vuốt ngang. Các mốc hiện dần khi cuộn.
+4. **Thông số:** số lượng trong lô, chất liệu, loại men, nhiệt độ nung.
+5. **Sản phẩm cùng lô.**
+6. **Lời mời hành động:** "Đến thăm xưởng" (mở bản đồ), "Đặt hàng số lượng lớn" (mở biểu mẫu RFQ).
+7. **Chân trang:** "Nhật ký đã khóa ngày dd/mm/yyyy", số lượt quét, lần cập nhật cuối.
+
+### 5.6 Trạng thái mở cửa trên bản đồ
+
+```json
+{
+  "timezone": "Asia/Ho_Chi_Minh",
+  "weekly": {
+    "mon": [["07:30", "11:30"], ["13:30", "17:30"]],
+    "tue": [["07:30", "17:30"]],
+    "sun": []
+  },
+  "exceptions": [{ "date": "2027-02-17", "closed": true, "note": "Nghỉ Tết" }]
+}
+```
+
+- `isOpenNow` tính ở server theo giờ Việt Nam, không phụ thuộc đồng hồ của máy khách.
+- API trả kèm `todayHours` và `nextOpenAt`. Frontend hiển thị ví dụ: *"Đang mở · đóng lúc 17:30"* hoặc *"Đóng cửa · mở lại 7:30 sáng mai"*.
+- `GET /workshops/map` chỉ trả dữ liệu gọn (id, slug, tên, tọa độ, trạng thái, ảnh nhỏ), dưới 20 KB cho 100 xưởng, cache 60 giây.
+- Trung tâm bản đồ mặc định khoảng `20.976, 105.913` (làng Bát Tràng). Kiểm tra lại tọa độ thật khi đi thực địa.
+
+### 5.7 Quy trình xử lý ảnh
+
+```mermaid
+flowchart LR
+  A["Trình duyệt<br/>kéo thả nhiều ảnh"] -->|multipart| B["multer<br/>bộ nhớ, ≤10MB, ≤12 file"]
+  B --> C{"magic bytes<br/>JPEG/PNG/WebP?"}
+  C -- không --> X["415 UNSUPPORTED_MEDIA"]
+  C -- có --> D["sharp: rotate() theo EXIF<br/>xóa metadata/GPS"]
+  D --> E["3 kích thước WebP<br/>320 · 800 · 1600 (q≈78)"]
+  D --> F["LQIP 16px base64<br/>+ màu chủ đạo"]
+  E --> G["StorageProvider<br/>Local | S3"]
+  F --> H[("MediaAsset")]
+  G --> H
+```
+
+| Biến thể | Chiều ngang | Dùng ở đâu | Dung lượng mục tiêu |
+|---|--:|---|--:|
+| `thumb` | 320 px | Thẻ trong danh sách, popup bản đồ | ≤ 25 KB |
+| `md` | 800 px | Trang chi tiết, dòng thời gian | ≤ 90 KB |
+| `lg` | 1600 px | Lightbox, ảnh bìa | ≤ 250 KB |
+
+- Tên file có dạng `{sha1 rút gọn 12 ký tự}-{chiều ngang}.webp`, nằm trong `/media/{yyyy}/{mm}/`.
+- Ảnh minh chứng đăng ký (CCCD, giấy xác nhận) lưu ở vùng **riêng tư**. Chỉ phục vụ qua endpoint có kiểm tra quyền admin, không bao giờ nằm trong `/media` công khai.
+- Xử lý song song tối đa 4 ảnh cùng lúc để không làm nghẽn server.
+
+### 5.8 Thông báo
+Các service phát **sự kiện miền** (ví dụ `quote.accepted`) sau khi transaction commit. `NotificationService` đăng ký nhận các sự kiện đó, tạo bản ghi `Notification` cho đúng người nhận, và đẩy qua SSE nếu người nhận đang trực tuyến (NTF-02). Frontend dùng TanStack Query với `refetchInterval: 30_000` làm phương án dự phòng.
