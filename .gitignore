@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build & test output
+dist/
+build/
+coverage/
+playwright-report/
+test-results/
+
+# Environment variables (chỉ commit file .example)
+.env
+.env.*
+!.env.example
+
+# Ảnh upload khi chạy local
+apps/api/storage/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Tài liệu đề bài và file khóa tạm của Word (không đưa lên repo)
+vCraft.docx
+~$*
