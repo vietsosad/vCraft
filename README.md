@@ -127,3 +127,53 @@ vcraft/
 ├── docker-compose.yml
 └── README.md
 ```
+
+## 7. Cài đặt và chạy
+
+**Yêu cầu:** Node.js ≥ 22, pnpm ≥ 9, Docker Desktop.
+
+```bash
+git clone <repo-url> vcraft && cd vcraft
+pnpm install
+
+cp apps/api/.env.example apps/api/.env
+cp apps/web/.env.example apps/web/.env
+
+docker compose up -d db        # PostgreSQL ở cổng 5432
+pnpm db:migrate                # tạo bảng
+pnpm db:seed                   # dữ liệu mẫu: 15 xưởng, 120 sản phẩm, 20 lô, 6 yêu cầu báo giá
+
+pnpm dev                       # web: http://localhost:5173 · api: http://localhost:4000
+```
+
+Chạy toàn bộ bằng Docker: `docker compose up --build`, sau đó mở http://localhost:8080.
+
+**Quét QR bằng điện thoại khi chạy local:** đặt `APP_URL` thành một địa chỉ điện thoại truy cập được, ví dụ IP LAN `http://192.168.1.10:8080` hoặc đường hầm `cloudflared tunnel --url http://localhost:8080`. QR được sinh theo yêu cầu từ `APP_URL` nên chỉ cần khởi động lại API, không phải sinh lại dữ liệu.
+
+### Biến môi trường chính
+
+| Biến | Ví dụ | Ý nghĩa |
+|---|---|---|
+| `DATABASE_URL` | `postgresql://vcraft:vcraft@localhost:5432/vcraft` | Chuỗi kết nối CSDL |
+| `APP_URL` | `http://localhost:8080` | Địa chỉ công khai, dùng để sinh QR và link trong email |
+| `CORS_ORIGIN` | `http://localhost:5173` | Origin frontend được phép gọi API |
+| `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | chuỗi ngẫu nhiên ≥ 32 ký tự | Khóa ký token |
+| `ACCESS_TOKEN_TTL` / `REFRESH_TOKEN_TTL` | `15m` / `7d` | Thời hạn token |
+| `DATA_ENCRYPTION_KEY` | 32 byte, mã hóa base64 | Khóa AES-256-GCM để mã hóa số CCCD trong hồ sơ đăng ký |
+| `STORAGE_DRIVER` | `local` hoặc `s3` | Nơi lưu ảnh |
+| `UPLOAD_DIR` | `./storage` | Thư mục ảnh khi dùng `local` |
+| `SMTP_URL` | `smtp://...` | Gửi email (tùy chọn) |
+| `VITE_API_URL` | `/api/v1` | Base URL API cho frontend |
+
+### Tài khoản demo (sau khi seed)
+
+Mật khẩu chung: `Vcraft@2026`. Chỉ dùng cho môi trường demo.
+
+| Vai trò | Email | Ghi chú |
+|---|---|---|
+| Admin | `admin@vcraft.test` | Ban quản lý làng nghề |
+| Nghệ nhân | `ongtu@vcraft.test` | Xưởng gốm Ông Tư, chuyên men lam vẽ tay |
+| Nghệ nhân | `minhhai@vcraft.test` | Xưởng gốm Minh Hải, chuyên men rạn |
+| Nghệ nhân (chờ duyệt) | `moidangky@vcraft.test` | Dùng để demo kiểm duyệt |
+| Khách sỉ | `lan.uet@vcraft.test` | Có sẵn một yêu cầu báo giá đang ở trạng thái `BIDDING` với 4 chào giá |
+| Khách lẻ | `minh@vcraft.test` | |
