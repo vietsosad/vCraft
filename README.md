@@ -54,3 +54,76 @@ Với đơn hàng lớn, vCraft là một **sàn báo giá kín**. Khách sỉ g
 | 4.2 Luồng báo giá & điều phối đơn | Máy trạng thái `DRAFT → SENT → BIDDING → ACCEPTED → IN_PRODUCTION → DELIVERED` (thêm `CANCELLED`, `EXPIRED`). Mọi chuyển trạng thái đi qua một `QuoteStateMachine` duy nhất, chạy trong transaction, dùng **khóa lạc quan theo `version`**: nếu hai thao tác tranh chấp, thao tác sau nhận `409 Conflict`. |
 | 4.3 Bản đồ số làng nghề | Leaflet + OpenStreetMap, gom cụm ghim, popup thông tin. Trạng thái mở cửa tính ở server theo múi giờ `Asia/Ho_Chi_Minh`. Nghệ nhân chọn vị trí xưởng bằng cách kéo ghim, địa chỉ tự điền. |
 | 4.4 Giao diện & đa phương tiện | Upload nhiều ảnh. Backend dùng `sharp` để kiểm tra, tự xoay ảnh, xóa EXIF/GPS, sinh 3 kích thước WebP và một ảnh mờ (LQIP). Frontend dùng `srcset` và lazy-load. |
+
+## 4. Công nghệ
+
+| Lớp | Công nghệ |
+|---|---|
+| Frontend | React 19, TypeScript, Vite, React Router (library mode), TanStack Query, React Hook Form + Zod, Tailwind CSS, Radix UI, react-leaflet, TipTap |
+| Backend | Node.js 22 LTS, Express 5, TypeScript, Prisma ORM, Zod, JWT, bcrypt, multer + sharp, qrcode, helmet, express-rate-limit, pino, node-cron |
+| CSDL | PostgreSQL 16. Có thể chuyển sang MySQL 8 chỉ bằng cách đổi `provider` trong Prisma |
+| Kiểm thử | Vitest, Supertest, Playwright |
+| Hạ tầng | pnpm workspaces, Docker Compose, Nginx, GitHub Actions |
+
+Lý do chọn từng công nghệ và các mẫu thiết kế đã dùng: xem [PRD, mục 7](docs/PRD.md).
+
+## 5. Kiến trúc
+
+```mermaid
+flowchart LR
+  subgraph Client["Trình duyệt / Điện thoại"]
+    SPA["React SPA<br/>React Router · TanStack Query"]
+  end
+  subgraph Server["Máy chủ"]
+    NGINX["Nginx<br/>file tĩnh · SPA fallback · cache /media"]
+    API["Express REST API /api/v1<br/>Route → Controller → Service → Repository"]
+    JOBS["node-cron<br/>đóng hạn báo giá"]
+  end
+  DB[("PostgreSQL")]
+  FS[("Kho ảnh<br/>local / S3")]
+  OSM["OpenStreetMap tiles"]
+
+  SPA -- "fetch · JSON" --> NGINX
+  NGINX -- "/api, /q" --> API
+  API -- "Prisma ORM" --> DB
+  API -- "sharp" --> FS
+  NGINX -- "/media" --> FS
+  JOBS --> DB
+  SPA -. "tile bản đồ" .-> OSM
+```
+
+## 6. Cấu trúc thư mục
+
+```text
+vcraft/
+├── apps/
+│   ├── web/                        # Frontend: React SPA
+│   │   └── src/
+│   │       ├── app/                # router, providers, layouts
+│   │       ├── pages/              # component cấp route (mỏng, chỉ ghép feature)
+│   │       ├── features/           # chia theo nghiệp vụ
+│   │       │   ├── auth/  catalog/  workshops/  map/  traceability/
+│   │       │   ├── quotes/  orders/  news/  notifications/  admin/
+│   │       │   └── quotes/
+│   │       │       ├── api.ts          # gọi REST bằng fetch
+│   │       │       ├── hooks.ts        # TanStack Query hooks
+│   │       │       └── components/     # UI riêng của nghiệp vụ
+│   │       ├── components/ui/      # design system dùng chung
+│   │       ├── lib/                # http client, formatters, slugify
+│   │       └── styles/             # design tokens
+│   └── api/                        # Backend: Express
+│       ├── prisma/                 # schema.prisma, migrations, seed
+│       └── src/
+│           ├── modules/            # mỗi module: routes · controller · service · repository · schema
+│           │   ├── auth/  workshops/  products/  batches/  media/
+│           │   └── quotes/  orders/  news/  notifications/  admin/
+│           ├── core/               # state-machine, storage, image, qr, events, crypto
+│           ├── middlewares/        # auth, rbac, validate, upload, rate-limit, error
+│           ├── jobs/               # tác vụ định kỳ
+│           └── config/
+├── packages/
+│   └── shared/                     # Zod schema, enum, kiểu dữ liệu dùng chung FE ⇄ BE
+├── docs/                           # PRODUCT · PRD · ROADMAP
+├── docker-compose.yml
+└── README.md
+```
