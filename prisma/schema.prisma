@@ -1,0 +1,373 @@
+// vCraft – mô hình dữ liệu (Prisma ORM)
+// Mọi truy cập CSDL đi qua Prisma Client, không dùng SQL thô, để có thể đổi provider (postgresql ⇄ mysql).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ARTISAN
+  BUYER
+  ADMIN
+}
+
+enum AccountStatus {
+  ACTIVE
+  PENDING
+  SUSPENDED
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum GlazeType {
+  MEN_RAN_CO
+  MEN_LAM_CO
+  MEN_NGOC
+  MEN_HOA_BIEN
+  MEN_TRANG_NGA
+}
+
+enum QuoteStatus {
+  DRAFT_REQUEST
+  SENT_TO_ARTISANS
+  ARTISANS_BIDDING
+  BUYER_ACCEPTED
+  IN_PRODUCTION
+  DELIVERED
+  CANCELLED
+}
+
+enum BidStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum BatchStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum HeritageKind {
+  MUSEUM
+  KILN
+  TEMPLE
+  MARKET
+}
+
+enum NewsCategory {
+  NGUYEN_LIEU
+  LICH_CUP_DIEN
+  CHINH_SACH
+  SU_KIEN
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  name         String
+  passwordHash String
+  role         UserRole      @default(BUYER)
+  status       AccountStatus @default(ACTIVE)
+  phone        String?
+  avatarUrl    String?
+  organization String?
+  failedLogins Int           @default(0)
+  lockedUntil  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  artisanProfile ArtisanProfile?
+  sessions       Session[]
+  quoteRequests  QuoteRequest[]       @relation("BuyerQuotes")
+  newsPosts      CommunityNews[]
+  notifications  Notification[]
+  statusChanges  QuoteStatusHistory[]
+  auditLogs      AuditLog[]
+}
+
+/// Phiên đăng nhập phía server. Cookie chỉ chứa token ngẫu nhiên, CSDL lưu bản băm SHA-256.
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash  String   @unique
+  userAgent  String?
+  ipAddress  String?
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  lastSeenAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model ArtisanProfile {
+  id                 String             @id @default(cuid())
+  userId             String             @unique
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug               String             @unique
+  workshopName       String
+  artisanName        String
+  artisanTitle       String
+  clanName           String
+  establishedYear    Int
+  generation         Int                @default(1)
+  tagline            String?
+  familyHistory      String             @db.Text
+  address            String
+  latitude           Float
+  longitude          Float
+  phone              String?
+  isOpenForVisit     Boolean            @default(true)
+  /// Giờ mở cửa dạng "08:00-17:00"
+  openingHours       String             @default("08:00-17:00")
+  /// Các ngày mở cửa trong tuần (0 = Chủ nhật … 6 = Thứ bảy)
+  openDays           Int[]              @default([0, 1, 2, 3, 4, 5, 6])
+  experienceOffered  Boolean            @default(false)
+  experiencePriceVnd Int                @default(0)
+  acceptsWholesale   Boolean            @default(true)
+  maxMonthlyCapacity Int                @default(3000)
+  specialties        GlazeType[]
+  /// [{ name, issuer, year }]
+  certifications     Json               @default("[]")
+  /// [MediaImage]
+  workshopImages     Json               @default("[]")
+  coverImage         Json?
+  ratingAvg          Float              @default(4.5)
+  verificationStatus VerificationStatus @default(PENDING)
+  verificationNote   String?
+  verifiedAt         DateTime?
+  /// Số CCCD mã hóa AES-256-GCM, chỉ Admin giải mã để đối chiếu
+  nationalIdEnc      String?
+  /// [MediaImage] – minh chứng hộ nghề (lưu ở vùng riêng tư)
+  proofDocuments     Json               @default("[]")
+  searchText         String             @default("")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  products    Product[]
+  batches     ProductBatch[]
+  bids        QuoteBid[]
+  invitations QuoteInvitation[]
+
+  @@index([verificationStatus])
+}
+
+model Product {
+  id             String        @id @default(cuid())
+  artisanId      String
+  artisan        ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  name           String
+  slug           String        @unique
+  category       String
+  glazeType      GlazeType
+  priceVnd       Int
+  dimensions     String
+  firingTempC    Int           @default(1300)
+  glazeThickness String        @default("0.3mm")
+  story          String        @db.Text
+  /// [MediaImage]
+  images         Json          @default("[]")
+  isUniquePiece  Boolean       @default(false)
+  stock          Int           @default(1)
+  isPublished    Boolean       @default(true)
+  searchText     String        @default("")
+  currentBatchId String?
+  currentBatch   ProductBatch? @relation(fields: [currentBatchId], references: [id], onDelete: SetNull)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([category])
+  @@index([glazeType])
+  @@index([artisanId])
+  @@index([createdAt])
+}
+
+/// Lô sản xuất – mỗi lô có một mảng mốc công đoạn (productionStages) và một mã QR dùng chung.
+model ProductBatch {
+  id                String        @id @default(cuid())
+  batchCode         String        @unique
+  artisanId         String
+  artisan           ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  batchTitle        String
+  glazeType         GlazeType     @default(MEN_LAM_CO)
+  clayOrigin        String        @default("Đất sét Trúc Thôn và đất sét trắng Đông Triều")
+  claySoakDuration  String        @default("4 tháng qua hệ thống 4 bể (bể đánh, bể lắng, bể phơi, bể ủ)")
+  kilnType          String        @default("Lò gas kiểm soát nhiệt độ tự động")
+  peakTempC         Int           @default(1300)
+  firingDurationHr  Int           @default(18)
+  quantityProduced  Int
+  qrCodeDataUrl     String        @db.Text
+  /// [ProductionStage]
+  productionStages  Json          @default("[]")
+  status            BatchStatus   @default(IN_PROGRESS)
+  lockedAt          DateTime?
+  scanCount         Int           @default(0)
+  coverImage        Json?
+  quoteRequestId    String?
+  quoteRequest      QuoteRequest? @relation(fields: [quoteRequestId], references: [id], onDelete: SetNull)
+  allocatedQuantity Int?
+  products          Product[]
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([artisanId])
+}
+
+model QuoteRequest {
+  id                  String      @id @default(cuid())
+  requestCode         String      @unique
+  buyerId             String
+  buyer               User        @relation("BuyerQuotes", fields: [buyerId], references: [id])
+  organizationName    String
+  title               String
+  category            String
+  preferredGlaze      GlazeType
+  quantity            Int
+  targetBudgetPerUnit Int
+  deadlineDays        Int
+  specifications      String      @db.Text
+  deliveryAddress     String
+  /// [MediaImage]
+  referenceImages     Json        @default("[]")
+  biddingClosesAt     DateTime?
+  status              QuoteStatus @default(DRAFT_REQUEST)
+  /// Khóa lạc quan: mọi lần chuyển trạng thái phải khớp version và tăng thêm 1
+  version             Int         @default(1)
+  cancelReason        String?
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  bids             QuoteBid[]
+  invitations      QuoteInvitation[]
+  allocatedBatches ProductBatch[]
+  history          QuoteStatusHistory[]
+
+  @@index([status])
+  @@index([buyerId])
+}
+
+model QuoteInvitation {
+  id             String         @id @default(cuid())
+  quoteRequestId String
+  quoteRequest   QuoteRequest   @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+  artisanId      String
+  artisan        ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  matchScore     Int
+  /// Lý do được mời, hiển thị cho hộ nghề
+  matchReasons   Json           @default("[]")
+  invitedBy      String         @default("SYSTEM")
+  createdAt      DateTime       @default(now())
+
+  @@unique([quoteRequestId, artisanId])
+}
+
+model QuoteBid {
+  id                  String         @id @default(cuid())
+  quoteRequestId      String
+  quoteRequest        QuoteRequest   @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+  artisanId           String
+  artisan             ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  offeredPricePerUnit Int
+  committedQuantity   Int
+  estimatedDays       Int
+  proposalNote        String         @db.Text
+  status              BidStatus      @default(PENDING)
+  /// Số lượng thực tế được phân bổ khi khách chốt (có thể nhỏ hơn committedQuantity)
+  allocatedQuantity   Int?
+  version             Int            @default(1)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+
+  @@unique([quoteRequestId, artisanId])
+}
+
+model QuoteStatusHistory {
+  id             String       @id @default(cuid())
+  quoteRequestId String
+  quoteRequest   QuoteRequest @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+  fromStatus     QuoteStatus?
+  toStatus       QuoteStatus
+  actorId        String?
+  actor          User?        @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  note           String?
+  createdAt      DateTime     @default(now())
+
+  @@index([quoteRequestId])
+}
+
+model CommunityNews {
+  id          String       @id @default(cuid())
+  authorId    String
+  author      User         @relation(fields: [authorId], references: [id])
+  title       String
+  slug        String       @unique
+  category    NewsCategory
+  excerpt     String
+  content     String       @db.Text
+  coverImage  Json?
+  isUrgent    Boolean      @default(false)
+  isPublished Boolean      @default(true)
+  publishedAt DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([publishedAt])
+}
+
+/// Điểm di sản trên bản đồ (bảo tàng, lò cổ, đình, chợ) – không phải hộ nghề.
+model HeritageSite {
+  id           String       @id @default(cuid())
+  slug         String       @unique
+  name         String
+  kind         HeritageKind
+  description  String       @db.Text
+  address      String
+  latitude     Float
+  longitude    Float
+  openingHours String?
+  ticketInfo   String?
+  image        Json?
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  title     String
+  body      String
+  link      String?
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId, readAt])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String
+  entityId  String
+  meta      Json     @default("{}")
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+}
+
+/// Bộ đếm sinh mã tuần tự (mã lô, mã yêu cầu báo giá) – tăng nguyên tử trên mọi CSDL.
+model Counter {
+  key   String @id
+  value Int    @default(0)
+}
