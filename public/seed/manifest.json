@@ -1,0 +1,808 @@
+{
+  "hands-wheel": {
+    "src": "/seed/hands-wheel.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAQCdASoQAAwAA4BaJYwCdAC4Uke2fADNzrCURotAiks+WDMB0Y0lCKJH9yULk9ydeN7GTNadn/1GJNDiiPFU9t2url6pPvzMiW3MC+oaZUZ1TVNyQAAA",
+    "alt": "Đôi tay nghệ nhân chuốt gốm trên bàn xoay",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village8.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village8.jpg"
+    }
+  },
+  "hands-trim": {
+    "src": "/seed/hands-trim.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAQCdASoQAAwAA4BaJQBOgBeXGT4ygAD+0o8kZHuY3fCw48pm8daKlJkzhC6p8m6bmQ98blXUtOpPzxstz3Ip4VotBE9novg8ImeWeBvlrf3JEEq6rPom4QzQwh+fnNgAAA==",
+    "alt": "Nghệ nhân sửa hàng phơ, tỉa chân đế",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village11.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village11.jpg"
+    }
+  },
+  "artisan-wheel": {
+    "src": "/seed/artisan-wheel.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAQCdASoQAAwAA4BaJQBdgBaf+3vngADfjSThXPnB60ksyqt2mwL2/6lNlN40wnmhF2Z3toAMs6eZ30Ng0/RJPFiWtoCIt0fWPdgBthcp2NQZx8FjAnu8KNAAAA==",
+    "alt": "Nghệ nhân vuốt dáng bình trên bàn xoay",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village13.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village13.jpg"
+    }
+  },
+  "artisan-paint": {
+    "src": "/seed/artisan-paint.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADwAQCdASoQAAwAA4BaJZQAD40vJi0Y23AA/uzHIhUoj/syVgQl4z/pmLWH1v2omiPk+d7dc1sVHMOUh6nFiY10T7rb6JHDchOCLpt/DSaNCEcz6Du3OB9IGe3HnxPLONXBKqa+goAAAA==",
+    "alt": "Nghệ nhân vẽ hoa văn lên cốt gốm mộc",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village6.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village6.jpg"
+    }
+  },
+  "glazing-cups": {
+    "src": "/seed/glazing-cups.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABQAgCdASoQAAwAA4BaJagCdAYtfUmyiAXrZEAA/uZD9Fn6Gzl4+gXNt7DAcrKJ0vLYHhKJ3BxcJg7PJzbiXVO4kiE5znqibnM6G8EsiI74cF+KkEh+peVtMKDsH2YlSsgN1cpWo5AAAA==",
+    "alt": "Nhúng men trắng cho lô cốc sứ",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village10.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village10.jpg"
+    }
+  },
+  "bisque-teapots": {
+    "src": "/seed/bisque-teapots.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAQCdASoQAAwAA4BaJZwAD4oqEMsIiAAA9p/ThazqZ1p469HyB+l9vThzV8Tu5sRQvTJE1PMmr2MvXCN3OYDXO+cs+0AFYJTTIQ72XDlmSLkQ5Oal6y9XZ7Tn69uLx+RAe9OBAAA=",
+    "alt": "Ấm trà mộc chờ tráng men",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village7.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village7.jpg"
+    }
+  },
+  "bisque-teapots-2": {
+    "src": "/seed/bisque-teapots-2.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAwAA4BaJZQCdADiVMdySiDQAP628s/n0L6Ry+ag7++1gdLRqj58wJ1pH1tL4Q9RJ1RUylmPeioi8Eg036eUTC+5xG4GfGvMTLOITNI7hsAA",
+    "alt": "Dãy ấm mộc sau sơ nung",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village5.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village5.jpg"
+    }
+  },
+  "drying-greenware": {
+    "src": "/seed/drying-greenware.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoQAAwAA4BaJZwAAuqtTkRN0EAAAP7sVy/Mj/fnpjixAUtt9Ep0ZbStInuL+x6em9sRdDXAzjpjc7sFUZlpL2ZF5r6aLZk/zw5X2mxRGNaO/zEHEAA=",
+    "alt": "Phơi mộc trong xưởng",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village3.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village3.jpg"
+    }
+  },
+  "workshop-floor": {
+    "src": "/seed/workshop-floor.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAQCdASoQAAwAA4BaJZQAAaKqwYbEAAD+vcr6XfjmfkGf8HQJHqMPfZzTpcvQLnDXruDd0TrTX+tZRmbgLcVZ7MNzRrtu8stbPKvk4FakUQoUBI+vazNgHgA=",
+    "alt": "Xưởng gốm với nhiều thợ đang làm việc",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village9.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village9.jpg"
+    }
+  },
+  "workshop-molds": {
+    "src": "/seed/workshop-molds.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoQAAwAA4BaJZQC7ADdLGcxgIGqAAD+9Zqhl5yZkT8IGWJ7+YSPL6yVPHYXM+jSwHL2b0JlqryRZX0VTtEOsFk4yLuU+I8vu54AXyhx6iZwAA==",
+    "alt": "Khuôn thạch cao và sản phẩm mộc trong xưởng",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village12.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village12.jpg"
+    }
+  },
+  "bicycle-pottery": {
+    "src": "/seed/bicycle-pottery.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoQAAwAA4BaJYwCdAEf8Tsvx/cAAPa+yJ7wB95HOibD8yxMI8w6OOCSovwYUOM0T5BZD+ISR8ilmrXHmsxd/2PFSQZHB2QZrAP6CEozsAA=",
+    "alt": "Xe đạp thồ gốm trên phố Bát Tràng",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village1.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village1.jpg"
+    }
+  },
+  "bicycle-pottery-2": {
+    "src": "/seed/bicycle-pottery-2.webp",
+    "width": 1400,
+    "height": 921,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAoAA4BaJQBOgBoGEz7EAAD+ghm8eqH6uFMPPtO3Iry/SychG+JUoUwGBTG3iIXBKAfnPeLrx4UUa+k2157q1aYr0hwYtYAAAA==",
+    "alt": "Người dân chở gốm bằng xe đạp",
+    "credit": {
+      "title": "Bat-Trang-Ceramic-Village16a.jpg",
+      "author": "Steven C. Price",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat-Trang-Ceramic-Village16a.jpg"
+    }
+  },
+  "coal-wall": {
+    "src": "/seed/coal-wall.webp",
+    "width": 1400,
+    "height": 837,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAQCdASoQAAoAA4BaJaQAAfAN98dQAP7dgpOPkObmF4UTuOISPoSS/1LyPbvy7r78u8enur5XrS5t8HrOd+/sSBIQuW9etReHw4cY4fmJokJsAAA=",
+    "alt": "Bức tường dán bánh than đặc trưng làng cổ Bát Tràng",
+    "credit": {
+      "title": "Bát Tràng, tường than.JPG",
+      "author": "Greenknight dv",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%A1t_Tr%C3%A0ng,_t%C6%B0%E1%BB%9Dng_than.JPG"
+    }
+  },
+  "village-street": {
+    "src": "/seed/village-street.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAQCdASoQAAkAA4BaJQBOgBBTliAAyyBz9s7AWQIROeAWkOJopn6gSZ/qVsOt1NoHy24aSnyPkGtY5/Eojgdg6OWfj4V4SKSUAA==",
+    "alt": "Một góc đường làng Bát Tràng",
+    "credit": {
+      "title": "Bat Trang pottery and ceramics village in 2016 15.jpg",
+      "author": "Vuong Tri Binh",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat_Trang_pottery_and_ceramics_village_in_2016_15.jpg"
+    }
+  },
+  "village-alley": {
+    "src": "/seed/village-alley.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACwAQCdASoQAAkAA4BaJZQAApQUys6wAP7pXcUba33z2XAyBBf9aZPpk2JvyyDj+MzoQ/pAe44KmubpVIJOW9oAAAA=",
+    "alt": "Ngõ nhỏ trong làng cổ",
+    "credit": {
+      "title": "Bat Trang pottery and ceramics village in 2016 07.jpg",
+      "author": "Vuong Tri Binh",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat_Trang_pottery_and_ceramics_village_in_2016_07.jpg"
+    }
+  },
+  "clay-heap": {
+    "src": "/seed/clay-heap.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAwAA4BaJbACdAELz01s30hgAP6sXs2Pv01iYu3mayY4V5LEfMmZZC5nc05M48YbP1gxDU508WkdC2D8LWXhXK0L1S4ujN6mE6a7xZGo0NrmtxRbCoAA",
+    "alt": "Đất sét thô tập kết chờ xử lý",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2699.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2699.JPG"
+    }
+  },
+  "clay-processing": {
+    "src": "/seed/clay-processing.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAQCdASoQAAwAA4BaJZwAAlfJo1qgAP7psMokgvLxbXy1dxKxV1cuM1rswk2NCuoTpvAQaSGQmXKysvrQgvmTdvKSXUQGvWARrWNYtBwgiGAA",
+    "alt": "Khu xử lý và luyện đất",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2711.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2711.JPG"
+    }
+  },
+  "workshop-saggars": {
+    "src": "/seed/workshop-saggars.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACwAQCdASoQAAwAA4BaJZQC7ACJoungAP6HWYT2tqEh+tqhfeeiWkp+kUXS5i4IdzrOLR0FQQi0Vgw9wrdHGtTRzcy8Jd1/1GpAxsfXBElsnF2SnJ6F2h9aggAAAA==",
+    "alt": "Bao nung và dụng cụ trong xưởng",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2722.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2722.JPG"
+    }
+  },
+  "kiln-loading": {
+    "src": "/seed/kiln-loading.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAAwAA4BaJZwAApKF7R+fgAD+uBqW5/+R9e6ZGgbEFFYr7B8faCc/MXBiFfuZ4b+ImgyXpaWVJZ1p0WFAAA==",
+    "alt": "Sản phẩm xếp trong lò chuẩn bị nung",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2727.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2727.JPG"
+    }
+  },
+  "bisque-pieces": {
+    "src": "/seed/bisque-pieces.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQAgCdASoQAAwAA4BaJbACdAYtzgLOvi7N0gAA/ubKxtHxtY8ZDp/3fylq6Olm14gXai7Niiq0YaENcnRsWHXexIThK2EWqN3OXrzw6zyfiMsQB/Hz/JH1+JVNfNN1vJbSFoNYAAA=",
+    "alt": "Sản phẩm mộc trên bàn xoay",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2731.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2731.JPG"
+    }
+  },
+  "market-hall": {
+    "src": "/seed/market-hall.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQAgCdASoQAAwAA4BaJQBdgMXr5gIYFbd4SYAA/t20kursZeHGewNbls9R6zL1jMaqy5V3VIheaKgmw+0N6tKf7y84pFNw+hYRpMNaBU9gxgI9RZLWRUw51QAAAA==",
+    "alt": "Chợ gốm Bát Tràng",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2654.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2654.JPG"
+    }
+  },
+  "big-jars": {
+    "src": "/seed/big-jars.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAQCdASoQAAwAA4BaJYwAAogjJDRgAP74jqjcGw4r3dohbxhMqZ6GsiyAeXmDBueBrcJ/QKlereWXpq0Ongl7gLwrMPa+w/vMHRd1b9eld2wqAAA=",
+    "alt": "Chum lớn vẽ lam bày bán",
+    "credit": {
+      "title": "Xã Bát Tràng、鉢塲社 バチャン村 DSCF2676.JPG",
+      "author": "松岡明芳",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:X%C3%A3_B%C3%A1t_Tr%C3%A0ng%E3%80%81%E9%89%A2%E5%A1%B2%E7%A4%BE_%E3%83%90%E3%83%81%E3%83%A3%E3%83%B3%E6%9D%91_DSCF2676.JPG"
+    }
+  },
+  "kiln-bw": {
+    "src": "/seed/kiln-bw.webp",
+    "width": 1024,
+    "height": 683,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwAgCdASoQAAsAA4BaJaQAD4/Q1pIQP/FxwAD+3eLtwkycC6700EcdzYXpbrC3B7fII0CoDYDowOBnhxtJae403qthakdVu0n9LZj/dRrOFlaST8mzL3x/lbGkXjxQHAAAAA==",
+    "alt": "Sản phẩm sứ trong lò nung",
+    "credit": {
+      "title": "Bat Trang porcelain.jpg",
+      "author": "yuht-a",
+      "license": "CC BY 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat_Trang_porcelain.jpg"
+    }
+  },
+  "shop-display": {
+    "src": "/seed/shop-display.webp",
+    "width": 1400,
+    "height": 2489,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoJABAAA4BaJagCdAEQFE9r/jMgAP5rXUsyUi5Ce0HVLvxrqpfZv7x6tK+JsmWtxQI1F64AohiDpYoqhyxm+PqQ0eQrxrsc1ORMyoB6MJIuOoQIAAA=",
+    "alt": "Tủ trưng bày gốm men lam",
+    "credit": {
+      "title": "Bát Tràng DSC 0092.JPG",
+      "author": "Greenknight dv",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%A1t_Tr%C3%A0ng_DSC_0092.JPG"
+    }
+  },
+  "shop-table": {
+    "src": "/seed/shop-table.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABwAgCdASoQAAkAA4BaJaACdAYv1zXMfHISB8QAAP6tgqu9gKhamKLzwF5UoulfQ6xXk2EI64EMUWyXYnnUyss5adXCYGnOeV4wsJuqtMPNGGstuT4GeD4hCMkAvwiAAAA=",
+    "alt": "Bàn trưng bày gốm cổ",
+    "credit": {
+      "title": "Bát Tràng DSC 0091.JPG",
+      "author": "Greenknight dv",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%A1t_Tr%C3%A0ng_DSC_0091.JPG"
+    }
+  },
+  "shop-plates": {
+    "src": "/seed/shop-plates.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoQAAkAA4BaJZQCdADwh8R8AAD+wAunJt3HznaubOI9LCyM7IHgJmOJPf2VKEebixDYpCPH13GVRu/vq7UkVMLchOwAAA==",
+    "alt": "Đĩa gốm vẽ rồng phượng",
+    "credit": {
+      "title": "Bát Tràng DSC 0095.JPG",
+      "author": "Greenknight dv",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%A1t_Tr%C3%A0ng_DSC_0095.JPG"
+    }
+  },
+  "shop-blue-white": {
+    "src": "/seed/shop-blue-white.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAkAA4BaJYgC7ADdQgE5VpgA/oGrhSy+WAVIwj8P/05CSFwV8WqQEqErChR2fbeC0L+Z7egvRdLKLu/uhAAA",
+    "alt": "Kệ bát đĩa men lam",
+    "credit": {
+      "title": "Bát Tràng DSC 0096.JPG",
+      "author": "Greenknight dv",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%A1t_Tr%C3%A0ng_DSC_0096.JPG"
+    }
+  },
+  "shop-vases": {
+    "src": "/seed/shop-vases.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwAgCdASoQAAkAA4BaJZgCw7YuRv7zd1RSAAD+6k2WZbKKUKOO2KVhOTH7L7GH1+S2l9jaNebLiu5rcp7ifAGG/O6s3Oqukokxky/dkOUlytQAAAA=",
+    "alt": "Lọ hoa và chóe men lam",
+    "credit": {
+      "title": "Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 33.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Ceramics_shop_in_B%C3%A1t_Tr%C3%A0ng,_Hanoi_(1_March_2018)_33.jpg"
+    }
+  },
+  "market-street": {
+    "src": "/seed/market-street.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADQAQCdASoQAAkAA4BaJZQAAtroTDplAAD5Neq01F4F8OB+nIBi45jCQiJsJ/mrrowNP0hbAx+JqwADGAA=",
+    "alt": "Dãy cửa hàng trong chợ gốm",
+    "credit": {
+      "title": "Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 61.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Ceramics_shop_in_B%C3%A1t_Tr%C3%A0ng,_Hanoi_(1_March_2018)_61.jpg"
+    }
+  },
+  "shop-white": {
+    "src": "/seed/shop-white.webp",
+    "width": 1400,
+    "height": 2489,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABwAQCdASoJABAAA4BaJYgAAk8YAAD+AAoEPyG2W3RN7wjMJHf3W9Sd//eFhJ+cNh6nvNQSSwki1BMw/ggLK6EetI/r9nxLEfZ9QUsjPhgAAA==",
+    "alt": "Kệ gốm trắng ngà",
+    "credit": {
+      "title": "Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 63.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Ceramics_shop_in_B%C3%A1t_Tr%C3%A0ng,_Hanoi_(1_March_2018)_63.jpg"
+    }
+  },
+  "market-stalls": {
+    "src": "/seed/market-stalls.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoQAAkAA4BaJZQAApITnzTnAAD+4naRggSSCeFrwVYqQfL5ZQyfFqz5LY+8KAW0LQW7RZKALTDCYV2/16iDgmAA",
+    "alt": "Quầy hàng gốm trong chợ",
+    "credit": {
+      "title": "Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 71.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Ceramics_shop_in_B%C3%A1t_Tr%C3%A0ng,_Hanoi_(1_March_2018)_71.jpg"
+    }
+  },
+  "cups-batch": {
+    "src": "/seed/cups-batch.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAAkAA4BaJZQAAsY9LkxIgAD+8YZdbkD7bQyz5+RAn4iPvcCA4z8cRR+WdgqBySx5y5wcV7kIUAAA",
+    "alt": "Lô cốc gốm thành phẩm",
+    "credit": {
+      "title": "Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 76.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Ceramics_shop_in_B%C3%A1t_Tr%C3%A0ng,_Hanoi_(1_March_2018)_76.jpg"
+    }
+  },
+  "blue-lamp": {
+    "src": "/seed/blue-lamp.webp",
+    "width": 1400,
+    "height": 1867,
+    "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAgCdASoMABAAA4BaJQBdgMX/7ZhOLae2/4AA/oh/Lcd9456Bbu2eDiRAUaoj7CNMaJYZjIOpZckZ2V4qf0SyId//wxy81h7wAtsCAo1g9Sv2HIT/YqG/FnnwRnbL68AAAA==",
+    "alt": "Đèn dầu sứ vẽ rồng men lam",
+    "credit": {
+      "title": "Kerosene lamps in Vietnam (đèn dầu bằng sứ).JPG",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Kerosene_lamps_in_Vietnam_(%C4%91%C3%A8n_d%E1%BA%A7u_b%E1%BA%B1ng_s%E1%BB%A9).JPG"
+    }
+  },
+  "smoking-vase": {
+    "src": "/seed/smoking-vase.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAQCdASoQAAwAA4BaJZwAAWsQ7NAAAP7qMFgAZ21kPUWbdTDACLv+83FitJ+zQ1Rc5MQOb9RzzROJZYoT70+TNkbw4qG9GLF4c9NmvzkrnLy8xp9w7gAA",
+    "alt": "Bình gốm men lam truyền thống",
+    "credit": {
+      "title": "Bình hút thuốc (device for smoking) 2.jpg",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%ACnh_h%C3%BAt_thu%E1%BB%91c_(device_for_smoking)_2.jpg"
+    }
+  },
+  "crackle-lime-1": {
+    "src": "/seed/crackle-lime-1.webp",
+    "width": 1400,
+    "height": 1867,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwAgCdASoMABAAA4BaJYwAAp/lSeK59Q7EQAD+9pomzZGdkDIzBEFOs/5Zbt60ctr2rnh/6taHALG2uVv83MsxlYCAizuYuc5hmqAlsblFTPN8+AA=",
+    "alt": "Bình vôi men xanh hỏa biến",
+    "credit": {
+      "title": "Bình vôi (lime container) 1.JPG",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%ACnh_v%C3%B4i_(lime_container)_1.JPG"
+    }
+  },
+  "crackle-lime-3": {
+    "src": "/seed/crackle-lime-3.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAwAA4BaJZgC7AC8yH4uZQQAAP7Skf1L9EEjKj/XLis1W59wstDVzBSz4S0adTorwPYquKRkBS+0rKIK1fzrEro/JJI0BzkkAAAA",
+    "alt": "Bình vôi men rạn quai rồng",
+    "credit": {
+      "title": "Bình vôi (lime container) 3.JPG",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%ACnh_v%C3%B4i_(lime_container)_3.JPG"
+    }
+  },
+  "crackle-lime-4": {
+    "src": "/seed/crackle-lime-4.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAQCdASoQAAwAA4BaJZQAAvwL8qsbJuAA+x8JbWdwrxr184GaVAMyXsnkTtN3KJi+4/IkAVBvPT/nEMjeG639hQSgyBxHjNu8chwewn3vkV3EVuBLCnpwAAA=",
+    "alt": "Bộ bình vôi men rạn",
+    "credit": {
+      "title": "Bình vôi (lime container) 4.JPG",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%ACnh_v%C3%B4i_(lime_container)_4.JPG"
+    }
+  },
+  "crackle-lime-5": {
+    "src": "/seed/crackle-lime-5.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAwAA4BaJYwCdADpls/ONAAA/q1AbwYZ81bbx6JNv3CGXfm8mGuEGi4nz2PVUCmIiTFR3vfPbgsvKdMr5oTNFuKMxoQLAAvRoAAA",
+    "alt": "Bình vôi men rạn đắp quai",
+    "credit": {
+      "title": "Bình vôi (lime container) 5.JPG",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%ACnh_v%C3%B4i_(lime_container)_5.JPG"
+    }
+  },
+  "crackle-lime-6": {
+    "src": "/seed/crackle-lime-6.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACwAQCdASoQAAwAA4BaJZQAAlmajk0wAP70mFz5Be+ZpfgvLyHGMYr/5WLFgKlqKYwRehudyvVgG2KX9b+/DamcwmfBUsSS/IcBt0nBHMut4uAA",
+    "alt": "Bình men rạn xám tro",
+    "credit": {
+      "title": "Bình vôi (lime container) 6.JPG",
+      "author": "Hungda",
+      "license": "CC BY-SA 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:B%C3%ACnh_v%C3%B4i_(lime_container)_6.JPG"
+    }
+  },
+  "incense-burner": {
+    "src": "/seed/incense-burner.webp",
+    "width": 1400,
+    "height": 1595,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAwAgCdASoOABAAA4BaJQBOgCKRmBOioGi8CAD+6uxczpsicfYMS353FG1soS09wg/yYyU6aEPAmfJTM4Osye6q1HMuUa2M8GGFDh4uLF7lxNhIFqAAAA==",
+    "alt": "Lư hương men rạn vẽ lam",
+    "credit": {
+      "title": "Incense burner, Bat Trang ceramic - Nguyen dynasty, 19th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05333.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Incense_burner,_Bat_Trang_ceramic_-_Nguyen_dynasty,_19th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05333.JPG"
+    }
+  },
+  "paper-tube": {
+    "src": "/seed/paper-tube.webp",
+    "width": 1400,
+    "height": 2048,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoLABAAA4BaJZQAAvrefyPyiAD+t7YFNV7JUjUgiduzez23XxKvYsNikSJJ8Je/WoaxGocshTBMwSaj8aigAA==",
+    "alt": "Ống bút men rạn vẽ mây lam",
+    "credit": {
+      "title": "Tube for papers, Bat Trang ceramic - Nguyen dynasty, 19th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05329.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Tube_for_papers,_Bat_Trang_ceramic_-_Nguyen_dynasty,_19th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05329.JPG"
+    }
+  },
+  "storage-jar": {
+    "src": "/seed/storage-jar.webp",
+    "width": 1400,
+    "height": 2100,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoLABAAA4BaJYgCdADb0+Pk3vAA3e2bi1xuhqP2lSnxbXmrCHFZN7GApkYYHFa8npU5p6ixAheZ6wwmCci1BOQAAAA=",
+    "alt": "Chóe men lam vẽ phong cảnh và linh vật",
+    "credit": {
+      "title": "Storage jar with landscape and sacred animals, Bat Trang, Hanoi, Nguyen dynasty, Gia Long reign (1802-1819 AD), blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05640.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Storage_jar_with_landscape_and_sacred_animals,_Bat_Trang,_Hanoi,_Nguyen_dynasty,_Gia_Long_reign_(1802-1819_AD),_blue_and_white_glazed_ceramic_-_National_Museum_of_Vietnamese_History_-_Hanoi,_Vietnam_-_DSC05640.JPG"
+    }
+  },
+  "chu-dau-jar": {
+    "src": "/seed/chu-dau-jar.webp",
+    "width": 1400,
+    "height": 1750,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAQCdASoNABAAA4BaJZwAAjkQef5AAP7trVsTeyfFes5BTnwCdnW+zZDRpL288FVaFpY3N9veNO0Gx74qm1Wi/ZILTcRObWiFrO4vpNRef2dbVsAAAA==",
+    "alt": "Bình men lam hoa dây",
+    "credit": {
+      "title": "Blue and white Chu Dau jar NMVH EDAV.jpg",
+      "author": "Marie-Lan Nguyen",
+      "license": "Public domain",
+      "url": "https://commons.wikimedia.org/wiki/File:Blue_and_white_Chu_Dau_jar_NMVH_EDAV.jpg"
+    }
+  },
+  "lamp-stand": {
+    "src": "/seed/lamp-stand.webp",
+    "width": 1400,
+    "height": 1872,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAwAgCdASoMABAAA4BaJagCdADdHvoC/WiJAAD+05FcluXb29IYKh4QruiKpjpsHz302DKnienKEV1SMjOTof0OVAAAAA==",
+    "alt": "Chân đèn men lam",
+    "credit": {
+      "title": "Lamp stand, Chu Dau kiln, Hai Duong province, Early Le dynasty, 15th century AD, blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05690.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Lamp_stand,_Chu_Dau_kiln,_Hai_Duong_province,_Early_Le_dynasty,_15th_century_AD,_blue_and_white_glazed_ceramic_-_National_Museum_of_Vietnamese_History_-_Hanoi,_Vietnam_-_DSC05690.JPG"
+    }
+  },
+  "lamp-stand-2": {
+    "src": "/seed/lamp-stand-2.webp",
+    "width": 1400,
+    "height": 2100,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoLABAAA4BaJYwCsADyXgK4mAD+9hlDMSbIMxrJzHytWwdhC9xA+Zobbio+FRer79nqHPetqTMT3kwPlE9rLyywXn6iAAAA",
+    "alt": "Cây đèn thờ men lam",
+    "credit": {
+      "title": "Lamp stand, Quan Am pagoda, Hung Yen province, Mac dynasty, 2nd year of Hung Tri reign (1589 AD), blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05685.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Lamp_stand,_Quan_Am_pagoda,_Hung_Yen_province,_Mac_dynasty,_2nd_year_of_Hung_Tri_reign_(1589_AD),_blue_and_white_glazed_ceramic_-_National_Museum_of_Vietnamese_History_-_Hanoi,_Vietnam_-_DSC05685.JPG"
+    }
+  },
+  "lam-dish": {
+    "src": "/seed/lam-dish.webp",
+    "width": 1400,
+    "height": 1350,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoQAA8AA4BaJZwAApQRo5ldcy1AAP7gq56nboZVw+owBlOdpt73+JtavbZWABNm5aPYKB4gFTjdeGcP9jkjy18Ya7CTKSYd9O7esCERcWwB70IAAAA=",
+    "alt": "Đĩa men lam hoa dây",
+    "credit": {
+      "title": "Schotel met bloemranken, AK-RAK-1971-5.jpg",
+      "author": "Rijksmuseum",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Schotel_met_bloemranken,_AK-RAK-1971-5.jpg"
+    }
+  },
+  "lam-bowl": {
+    "src": "/seed/lam-bowl.webp",
+    "width": 1400,
+    "height": 1204,
+    "blurDataURL": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAACQAQCdASoQAA4AA4BaJZwAAuTaAAAA/uceMNe5lDffZlnhupKTgKk0/8pB7Zvlr1hm3x8hAAA=",
+    "alt": "Bát men lam hoa dây",
+    "credit": {
+      "title": "Klokvormige kom met bloemranken, AK-RAK-1971-7.jpg",
+      "author": "Rijksmuseum",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Klokvormige_kom_met_bloemranken,_AK-RAK-1971-7.jpg"
+    }
+  },
+  "lam-jar-peony": {
+    "src": "/seed/lam-jar-peony.webp",
+    "width": 1400,
+    "height": 1729,
+    "blurDataURL": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoNABAAA4BaJaQAAubd+FauXAAA/u/P8HeNKSN0QPPH9J+Uvzzvon72oBCqUJEq3UsVsAAA",
+    "alt": "Hũ men lam hoa mẫu đơn bốn tai",
+    "credit": {
+      "title": "Eivormige pot met pioenranken en vier oren, AK-RAK-1972-1.jpg",
+      "author": "Rijksmuseum",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Eivormige_pot_met_pioenranken_en_vier_oren,_AK-RAK-1972-1.jpg"
+    }
+  },
+  "lam-jar-small": {
+    "src": "/seed/lam-jar-small.webp",
+    "width": 1400,
+    "height": 1451,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoPABAAA4BaJaQAAudf/nY0gRgA/ucXv0uiBT5RRfXdgBG9PVZdojzLDXuRYAAA",
+    "alt": "Hũ nhỏ men lam",
+    "credit": {
+      "title": "Eivormige pot met bloemranken, AK-RAK-1987-5.jpg",
+      "author": "Rijksmuseum",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Eivormige_pot_met_bloemranken,_AK-RAK-1987-5.jpg"
+    }
+  },
+  "lam-jar-small-2": {
+    "src": "/seed/lam-jar-small-2.webp",
+    "width": 1400,
+    "height": 1451,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAACwAQCdASoPABAAA4BaJZwAAuVt1OCoAP7nEyXAnpj3/cwR0ZSF3s68OTNFQFpW+PsqNnMxWe0CAA==",
+    "alt": "Hũ men lam hoa cúc",
+    "credit": {
+      "title": "Eivormige pot met bloemranken, AK-RAK-1987-6.jpg",
+      "author": "Rijksmuseum",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Eivormige_pot_met_bloemranken,_AK-RAK-1987-6.jpg"
+    }
+  },
+  "lam-fish-plate": {
+    "src": "/seed/lam-fish-plate.webp",
+    "width": 1400,
+    "height": 1247,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAA4AA4BaJZwAAlyltyqrwAD+1dxG5WYa+eioPAVJkZqaCcONOCFy1Q7jWjV4sOUIXbO+QDAAAA==",
+    "alt": "Đĩa men lam vẽ cá",
+    "credit": {
+      "title": "Plat au décor de poisson, M.C. 2019-92(3).jpg",
+      "author": "Unknown authorUnknown author",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Plat_au_d%C3%A9cor_de_poisson,_M.C._2019-92(3).jpg"
+    }
+  },
+  "lam-big-plate": {
+    "src": "/seed/lam-big-plate.webp",
+    "width": 1400,
+    "height": 1750,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAQCdASoNABAAA4BaJaQAAuyaPtxAAP7EZ0RoFRNk9pYjEnoax33kUMxFCGoBJ/hx2NuBs3WNfz8+X3j1WWiBqHZvY9pUps+hdgoAAAA=",
+    "alt": "Đĩa lớn men lam hoa sen",
+    "credit": {
+      "title": "Grand plat, M.C. 2020-23 (1 of 4).jpg",
+      "author": "Unknown authorUnknown author",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Grand_plat,_M.C._2020-23_(1_of_4).jpg"
+    }
+  },
+  "lam-big-plate-side": {
+    "src": "/seed/lam-big-plate-side.webp",
+    "width": 1400,
+    "height": 1120,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoQAA0AA4BaJaQAAuzBnJQ+AAD43jwGYEAl3jAbZ2PritJz4S1lLaCAbKKtu2VO8GAXI9HNq3unAAAA",
+    "alt": "Đĩa men lam nhìn nghiêng",
+    "credit": {
+      "title": "Grand plat, M.C. 2020-23 (3 of 4).jpg",
+      "author": "Unknown authorUnknown author",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Grand_plat,_M.C._2020-23_(3_of_4).jpg"
+    }
+  },
+  "lam-tea-bowl": {
+    "src": "/seed/lam-tea-bowl.webp",
+    "width": 1400,
+    "height": 1120,
+    "blurDataURL": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAQAgCdASoQAA0AA4BaJYwCdAEDY6wBVG/wAP6xwJhRvdHgGRBZaoDVbeH5blTF+c3uf5o39VHECYs+HIAAAA==",
+    "alt": "Bát trà men lam",
+    "credit": {
+      "title": "Bol, M.C. 2019-90 (1 of 4).jpg",
+      "author": "Unknown",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bol,_M.C._2019-90_(1_of_4).jpg"
+    }
+  },
+  "lam-tea-bowl-2": {
+    "src": "/seed/lam-tea-bowl-2.webp",
+    "width": 1400,
+    "height": 1120,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoQAA0AA4BaJZQAApebZSn4MAD+0+gc8PzUKP6PYvNjiRI1cYuYrAMvlQ4/rWvjrb1IIobwYDr/VXTd867IAA==",
+    "alt": "Bát trà men lam vẽ dây",
+    "credit": {
+      "title": "Bol, M.C. 2019-90 (2 of 4).jpg",
+      "author": "Unknown authorUnknown author",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bol,_M.C._2019-90_(2_of_4).jpg"
+    }
+  },
+  "lam-kendi": {
+    "src": "/seed/lam-kendi.webp",
+    "width": 1400,
+    "height": 1083,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoQAAwAA4BaJZwAAn/FSUlaJwAA/vkYY7PTPbcFrUD1Lb/wj+gjVqQKxymb2a1SnE/NiqTUVdtzf4nsQ82HC2orwGW8wbIAAAA=",
+    "alt": "Bình rót men lam cánh sen",
+    "credit": {
+      "title": "Miniature Holy Water Container (Kendi) with Lotus Petals and Chrysanthemum Scrolls LACMA M.74.32.3.jpg",
+      "author": "Không rõ",
+      "license": "Public domain",
+      "url": "https://commons.wikimedia.org/wiki/File:Miniature_Holy_Water_Container_(Kendi)_with_Lotus_Petals_and_Chrysanthemum_Scrolls_LACMA_M.74.32.3.jpg"
+    }
+  },
+  "ngoc-dish": {
+    "src": "/seed/ngoc-dish.webp",
+    "width": 1400,
+    "height": 922,
+    "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAABwAQCdASoQAAsAA4BaJZgCdAAhQAD8eEk4dXOCqlaZBmm747kdWMeZOhcnNk17goIAAA==",
+    "alt": "Đĩa men ngọc khắc hoa",
+    "credit": {
+      "title": "Dish, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05385.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Dish,_celadon_glaze_ceramic_-_L%C3%BD_dynasty,_11th-12th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05385.JPG"
+    }
+  },
+  "ngoc-bowls": {
+    "src": "/seed/ngoc-bowls.webp",
+    "width": 1400,
+    "height": 594,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACQAQCdASoQAAcAA4BaJZQAAnzZnCgA37JQBnt1PhgSspz93Ex48iL+A8vwkG0r8DlMZQAA",
+    "alt": "Đôi bát men ngọc",
+    "credit": {
+      "title": "Bowls, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05388.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bowls,_celadon_glaze_ceramic_-_L%C3%BD_dynasty,_11th-12th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05388.JPG"
+    }
+  },
+  "ngoc-bowl": {
+    "src": "/seed/ngoc-bowl.webp",
+    "width": 1400,
+    "height": 1069,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAgCdASoQAAwAA4BaJagCdAEf6ZIGau1ZAAD+mSrfGrr5gPacIxeu3XmYXQocoojqZtAo4TJ/Piu5gy6XpbKtzTh7zzw30cVFE/AA",
+    "alt": "Bát men ngọc in hoa",
+    "credit": {
+      "title": "Bowl, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05398.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bowl,_celadon_glaze_ceramic_-_L%C3%BD_dynasty,_11th-12th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05398.JPG"
+    }
+  },
+  "ngoc-plate": {
+    "src": "/seed/ngoc-plate.webp",
+    "width": 1400,
+    "height": 1126,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAA0AA4BaJZACdAEfZsySwoAAAP7U7dzMDcU3Dp683+5G1y0PopIfZ/WEae11LnKzQ3GFr1eh7dxOJ9pnAl5Hiyq/+Le5YAA=",
+    "alt": "Đĩa men ngọc cánh sen",
+    "credit": {
+      "title": "Dish for domestic use, Ly-Tran dynasty, 11th-14th century AD, celadon glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05519.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Dish_for_domestic_use,_Ly-Tran_dynasty,_11th-14th_century_AD,_celadon_glazed_ceramic_-_National_Museum_of_Vietnamese_History_-_Hanoi,_Vietnam_-_DSC05519.JPG"
+    }
+  },
+  "ngoc-bowls-2": {
+    "src": "/seed/ngoc-bowls-2.webp",
+    "width": 1400,
+    "height": 669,
+    "blurDataURL": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAgAA4BaJagCdADp66nY0PvAAMxMXDGWukinRfuyWzGpprnEsI2Tf5q6QbhGY4rdWRsipVNrDttw+IR51Hp28evkm3FxLRdjwAAA",
+    "alt": "Bộ bát men ngọc",
+    "credit": {
+      "title": "Bowls for domestic use, Ly-Tran dynasty, 11th-14th century AD, celadon glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05522.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bowls_for_domestic_use,_Ly-Tran_dynasty,_11th-14th_century_AD,_celadon_glazed_ceramic_-_National_Museum_of_Vietnamese_History_-_Hanoi,_Vietnam_-_DSC05522.JPG"
+    }
+  },
+  "ngoc-jar": {
+    "src": "/seed/ngoc-jar.webp",
+    "width": 1200,
+    "height": 800,
+    "blurDataURL": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADwAQCdASoQAAsAA4BaJZwAAxZH40TmhgAA/vb0K8BX+y75XM/h5bdF7EjyKqowc1ouvpm5rV1enYBNqgZAEBIyhusAAA==",
+    "alt": "Hũ men ngọc đắp nổi",
+    "credit": {
+      "title": "Vietnam 14th C - Celadon jar Museum of Asian Civilisation.jpg",
+      "author": "Không rõ",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Vietnam_14th_C_-_Celadon_jar_Museum_of_Asian_Civilisation.jpg"
+    }
+  }
+}
