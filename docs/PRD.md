@@ -8,6 +8,8 @@
 | Trạng thái | Đã chốt phạm vi P0. P1 và P2 có thể điều chỉnh theo tiến độ |
 | Liên quan | [Mô tả sản phẩm](PRODUCT.md) · [Lộ trình](ROADMAP.md) · [README](../README.md) |
 
+> **Cập nhật triển khai (08/11/2026):** bản cài đặt thực tế theo tài liệu thiết kế "Thiết kế Prompt Web vCraft": **Next.js 15 full-stack** (Server Components + REST Route Handlers trả JSON) thay cho cặp React SPA + Express ở mục 7; vẫn dùng Prisma + PostgreSQL. Tên trạng thái báo giá dùng bộ `DRAFT_REQUEST → SENT_TO_ARTISANS → ARTISANS_BIDDING → BUYER_ACCEPTED → IN_PRODUCTION → DELIVERED` (+ `CANCELLED`); trạng thái `EXPIRED` và tác vụ hết hạn tự động (QUO-10) chưa làm. URL dùng đường dẫn tiếng Anh theo template, kèm alias tiếng Việt (`/san-pham`, `/ban-do`, `/truy-xuat/:code`). Bổ sung trợ lý AI có công cụ truy vấn CSDL. Chi tiết cài đặt xem [README](../README.md).
+
 **Mục lục**
 
 1. [Tổng quan](#1-tổng-quan)

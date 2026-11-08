@@ -4,218 +4,157 @@
 
 **Tinh hoa làng nghề, muôn phương lan tỏa**
 
-Nền tảng *Triển lãm số · Truy xuất nguồn gốc · Điều phối đơn sỉ* cho làng gốm Bát Tràng
+Triển lãm số · Truy xuất nguồn gốc bằng QR · Bản đồ làng nghề · Sàn báo giá sỉ · Trợ lý AI cho làng gốm Bát Tràng
 
 Bài tập lớn INT3306 – Phát triển ứng dụng web · Học kỳ Fall 2026
 
 </div>
 
-> 🚧 **Trạng thái:** đang phát triển theo [lộ trình 8 tuần](docs/ROADMAP.md).
-> README này mô tả sản phẩm ở trạng thái hoàn thiện. Các lệnh cài đặt chạy được từ cuối Tuần 2, khi khung dự án đã dựng xong.
-
 ---
 
 ## 1. Giới thiệu
 
-vCraft là nền tảng web dành cho **Ban quản lý (BQL) làng gốm Bát Tràng** (Gia Lâm, Hà Nội). vCraft không phải một trang bán lẻ. Nó là một **"Triển lãm số"**: mỗi hộ gia đình, nghệ nhân có không gian riêng để kể câu chuyện làm nghề, trưng bày sản phẩm độc bản và **công khai nhật ký sản xuất của từng lô hàng** qua mã QR.
-
-Với đơn hàng lớn, vCraft là một **sàn báo giá kín**. Khách sỉ gửi một yêu cầu, hệ thống mời các hộ phù hợp vào chào giá, khách chốt và hệ thống **chia đơn cho nhiều hộ cùng làm**.
+vCraft là nền tảng web của **Ban quản lý (BQL) làng gốm Bát Tràng**. Mỗi hộ nghề có gian trưng bày riêng để kể câu chuyện gia đình, trưng bày tác phẩm và **công khai nhật ký sản xuất từng lô hàng qua mã QR**. Với đơn hàng lớn, vCraft là **phòng đấu thầu kín**: khách sỉ gửi một yêu cầu, hệ thống mời đúng các xưởng phù hợp, các xưởng chào giá, khách chốt và **chia đơn cho nhiều hộ cùng làm**.
 
 | | |
 |---|---|
-| Làng nghề | Gốm sứ Bát Tràng. Muốn đổi sang nghề khác thì chỉ cần đổi dữ liệu, xem [PRODUCT.md, mục 2](docs/PRODUCT.md) |
-| Vai trò | Khách hàng (Buyer/Tourist) · Nghệ nhân (Artisan) · Quản trị viên BQL (Admin) |
-| Kiến trúc | React SPA ⇄ REST API JSON (Express) ⇄ Prisma ORM ⇄ PostgreSQL |
+| Làng nghề | Gốm sứ Bát Tràng (Gia Lâm, Hà Nội) |
+| Vai trò | Khách / du khách · Khách sỉ · Nghệ nhân (hộ nghề) · Ban quản lý (Admin) |
+| Kiến trúc | Next.js 15 (App Router) full-stack: Server Components + REST Route Handlers (JSON) · Prisma ORM · PostgreSQL |
 
-## 2. Tính năng chính
+## 2. Tính năng theo vai trò
 
-### Khách hàng (Buyer / Tourist)
-- Duyệt sản phẩm theo **phân loại** hoặc theo **hộ gia đình**. Có lọc, sắp xếp, và tìm kiếm không dấu kèm gợi ý tức thì.
-- **Bản đồ làng nghề** tương tác: mỗi xưởng là một ghim, màu ghim cho biết xưởng *đang mở cửa đón khách* hay không. Bấm ghim để xem popup thông tin nhanh và chỉ đường.
-- **Quét QR** trên sản phẩm để mở trang kể lại hành trình của cả lô hàng, từ ngày nhào đất.
-- **Yêu cầu báo giá sỉ** (ví dụ: 5.000 cốc in logo Trường ĐH Công nghệ trong 30 ngày): so sánh các chào giá, chốt một hoặc nhiều hộ (có **gợi ý phân bổ tối ưu chi phí**), theo dõi tiến độ đến khi nhận hàng.
+**Khách hàng / du khách**
+- Phòng triển lãm: lọc theo phân loại, dòng men, hộ gia đình, khoảng giá, độc bản, có truy xuất. Mọi thao tác gọi `GET /api/products` và cập nhật lưới tại chỗ, bộ lọc nằm trên URL.
+- Tìm kiếm không dấu kèm gợi ý tức thì ("binh hut loc" ra "Bình hút lộc").
+- Bản đồ làng nghề chia đôi màn hình: ghim SVG hình bình gốm, vòng sóng men ngọc khi xưởng **đang mở cửa** (tính theo giờ Việt Nam), popup kiểu vé tham quan, chỉ đường, điểm di sản.
+- Quét QR trên sản phẩm: link ngắn `/q/{mã-lô}` chuyển hướng 302 tới trang kể chuyện `/trace/{mã-lô}` với "mạch lửa lò nung".
+- Trợ lý AI "Sứ giả Tinh hoa Bát Tràng" trả lời bằng dữ liệu sống của làng.
 
-### Nghệ nhân / Hộ gia đình (Artisan)
-- Hồ sơ xưởng: lịch sử gia đình, ảnh xưởng, chứng nhận chất lượng, giờ mở cửa, vị trí trên bản đồ.
-- Đăng sản phẩm với nhiều ảnh (kéo thả, sắp xếp) và gắn sản phẩm vào **lô sản xuất**.
-- **Nhật ký sản xuất**: thêm từng mốc công đoạn (chọn đất → tạo dáng → vẽ → tráng men → nung → thành phẩm) kèm ảnh minh chứng. Hệ thống tự sinh **tem QR** cho lô để in.
-- Hộp **cơ hội báo giá**: chào giá, sửa hoặc rút khi còn hạn, nhận đơn, cập nhật tiến độ, giao hàng.
+**Khách sỉ**
+- Tạo yêu cầu báo giá qua 4 bước. Bản nháp tự lưu, thông tin tổ chức điền sẵn, tự tính tổng ngân sách.
+- Phòng đấu thầu: so sánh chào giá, **gợi ý phân bổ tối ưu chi phí**, chốt một hoặc nhiều xưởng, theo dõi tiến độ từng lô, xác nhận nhận hàng.
+- Nút **"Mô phỏng xung đột đồng thời"** gửi hai yêu cầu chốt cùng lúc để thấy đúng một yêu cầu thành công, yêu cầu kia nhận `409 Conflict`.
 
-### Quản trị viên: Ban quản lý / Hội làng nghề (Admin)
-- Kiểm duyệt hồ sơ đăng ký hộ nghề (đối chiếu minh chứng), cấp huy hiệu *Hộ nghề xác thực*, tạm khóa tài khoản vi phạm.
-- Quản lý tin tức cộng đồng: giá nguyên vật liệu, lịch cúp điện, chính sách hỗ trợ. Có thể ghim tin khẩn.
-- Bảng điều phối đơn sỉ toàn làng và bảng thống kê.
+**Nghệ nhân / hộ nghề**
+- Đăng ký 3 bước: kéo ghim trên bản đồ để chọn vị trí (địa chỉ tự điền), tải minh chứng ở vùng riêng tư, số CCCD được mã hóa.
+- Hồ sơ xưởng, công tắc "đang nhận khách" (bản đồ cập nhật ngay), sản phẩm nhiều ảnh.
+- Lô sản xuất: mã lô và QR tự sinh, thêm mốc theo mẫu 6 công đoạn kèm ảnh minh chứng, hoàn tất thì **khóa nhật ký**, in tem QR khổ A4.
+- Hộp cơ hội báo giá: lý do được mời, chào giá kín, sửa giá theo `version`, rút chào giá.
 
-## 3. Điểm nhấn kỹ thuật
+**Ban quản lý**
+- Kiểm duyệt hộ nghề (xem minh chứng riêng tư, CCCD đã che), cấp huy hiệu *Hộ nghề xác thực*, tạm khóa tài khoản.
+- Bảng điều phối đơn sỉ toàn làng: xem mọi chào giá, mời thêm xưởng khi thiếu công suất, cảnh báo lô chậm.
+- Đăng tin cộng đồng. Tin khẩn hiện banner và gửi thông báo tới mọi hộ.
+- Thống kê và nhật ký thao tác.
 
-| Yêu cầu đề bài | Cách vCraft giải quyết |
+## 3. Bốn yêu cầu kỹ thuật của đề bài
+
+| Yêu cầu | Cài đặt |
 |---|---|
-| 4.1 Nhật ký sản xuất & truy xuất nguồn gốc | Mỗi lô (`Batch`) chứa một mảng mốc (`ProductionStage`), mỗi mốc có ảnh minh chứng. Backend sinh QR (PNG/SVG) trỏ tới link ngắn `/q/{mã-lô}`, link này chuyển hướng 302 tới trang `/truy-xuat/{mã-lô}`. Lô hoàn tất thì nhật ký bị khóa. Mọi sản phẩm cùng lô dùng chung một QR. |
-| 4.2 Luồng báo giá & điều phối đơn | Máy trạng thái `DRAFT → SENT → BIDDING → ACCEPTED → IN_PRODUCTION → DELIVERED` (thêm `CANCELLED`, `EXPIRED`). Mọi chuyển trạng thái đi qua một `QuoteStateMachine` duy nhất, chạy trong transaction, dùng **khóa lạc quan theo `version`**: nếu hai thao tác tranh chấp, thao tác sau nhận `409 Conflict`. |
-| 4.3 Bản đồ số làng nghề | Leaflet + OpenStreetMap, gom cụm ghim, popup thông tin. Trạng thái mở cửa tính ở server theo múi giờ `Asia/Ho_Chi_Minh`. Nghệ nhân chọn vị trí xưởng bằng cách kéo ghim, địa chỉ tự điền. |
-| 4.4 Giao diện & đa phương tiện | Upload nhiều ảnh. Backend dùng `sharp` để kiểm tra, tự xoay ảnh, xóa EXIF/GPS, sinh 3 kích thước WebP và một ảnh mờ (LQIP). Frontend dùng `srcset` và lazy-load. |
+| **4.1 Nhật ký sản xuất & QR** | `ProductBatch.productionStages` là mảng mốc (thời điểm, mô tả, nhiệt độ, ảnh). QR sinh ở backend bằng `qrcode` (mức sửa lỗi H). Mọi sản phẩm cùng lô dùng chung QR. Lô hoàn tất thì khóa, sửa hay xóa mốc trả `409 BATCH_LOCKED`. → `src/lib/services/batch-service.ts`, `src/app/trace/[batchCode]` |
+| **4.2 Máy trạng thái báo giá & khóa bản ghi** | `DRAFT_REQUEST → SENT_TO_ARTISANS → ARTISANS_BIDDING → BUYER_ACCEPTED → IN_PRODUCTION → DELIVERED` (thêm `CANCELLED`). Bảng chuyển trạng thái ở `quote-machine.ts`. Mọi chuyển trạng thái chạy trong **giao dịch Serializable** (tự thử lại khi gặp P2034), dùng `updateMany(where: { status, version })` (khóa lạc quan); lệch phiên bản thì trả `409`. → `src/lib/services/quotation-service.ts` |
+| **4.3 Bản đồ số** | `react-leaflet` nạp qua `next/dynamic({ ssr: false })` trong lớp bọc client, ghim `L.divIcon` SVG, popup, bộ lọc. Tile đi qua proxy nội bộ `/tiles` có bộ đệm đĩa. → `src/components/map/*` |
+| **4.4 Đa phương tiện** | `POST /api/upload` xử lý song song nhiều ảnh bằng `sharp`: kiểm tra định dạng thật, tự xoay EXIF, xóa metadata/GPS, resize 1200px WebP q82, thêm bản thu nhỏ 480px và ảnh mờ 16px. Giao diện hiện dung lượng trước → sau. → `src/lib/services/media-service.ts` |
 
 ## 4. Công nghệ
 
 | Lớp | Công nghệ |
 |---|---|
-| Frontend | React 19, TypeScript, Vite, React Router (library mode), TanStack Query, React Hook Form + Zod, Tailwind CSS, Radix UI, react-leaflet, TipTap |
-| Backend | Node.js 22 LTS, Express 5, TypeScript, Prisma ORM, Zod, JWT, bcrypt, multer + sharp, qrcode, helmet, express-rate-limit, pino, node-cron |
-| CSDL | PostgreSQL 16. Có thể chuyển sang MySQL 8 chỉ bằng cách đổi `provider` trong Prisma |
-| Kiểm thử | Vitest, Supertest, Playwright |
-| Hạ tầng | pnpm workspaces, Docker Compose, Nginx, GitHub Actions |
+| Khung | Next.js 15 (App Router), React 19, TypeScript strict |
+| Giao diện | Tailwind CSS 4, Framer Motion, Lucide, font Cormorant Garamond · Plus Jakarta Sans · JetBrains Mono |
+| Dữ liệu | PostgreSQL 16, Prisma ORM 6 |
+| Bản đồ | Leaflet + react-leaflet, dữ liệu OpenStreetMap |
+| Ảnh, QR | sharp, qrcode |
+| Bảo mật | bcryptjs, phiên server (token băm SHA-256), AES-256-GCM, Zod |
+| AI | `@anthropic-ai/sdk` (Claude, vòng lặp tool-use có streaming) và bộ trả lời cục bộ |
+| Kiểm thử | Vitest, Playwright |
 
-Lý do chọn từng công nghệ và các mẫu thiết kế đã dùng: xem [PRD, mục 7](docs/PRD.md).
-
-## 5. Kiến trúc
-
-```mermaid
-flowchart LR
-  subgraph Client["Trình duyệt / Điện thoại"]
-    SPA["React SPA<br/>React Router · TanStack Query"]
-  end
-  subgraph Server["Máy chủ"]
-    NGINX["Nginx<br/>file tĩnh · SPA fallback · cache /media"]
-    API["Express REST API /api/v1<br/>Route → Controller → Service → Repository"]
-    JOBS["node-cron<br/>đóng hạn báo giá"]
-  end
-  DB[("PostgreSQL")]
-  FS[("Kho ảnh<br/>local / S3")]
-  OSM["OpenStreetMap tiles"]
-
-  SPA -- "fetch · JSON" --> NGINX
-  NGINX -- "/api, /q" --> API
-  API -- "Prisma ORM" --> DB
-  API -- "sharp" --> FS
-  NGINX -- "/media" --> FS
-  JOBS --> DB
-  SPA -. "tile bản đồ" .-> OSM
-```
-
-## 6. Cấu trúc thư mục
+## 5. Cấu trúc thư mục
 
 ```text
-vcraft/
-├── apps/
-│   ├── web/                        # Frontend: React SPA
-│   │   └── src/
-│   │       ├── app/                # router, providers, layouts
-│   │       ├── pages/              # component cấp route (mỏng, chỉ ghép feature)
-│   │       ├── features/           # chia theo nghiệp vụ
-│   │       │   ├── auth/  catalog/  workshops/  map/  traceability/
-│   │       │   ├── quotes/  orders/  news/  notifications/  admin/
-│   │       │   └── quotes/
-│   │       │       ├── api.ts          # gọi REST bằng fetch
-│   │       │       ├── hooks.ts        # TanStack Query hooks
-│   │       │       └── components/     # UI riêng của nghiệp vụ
-│   │       ├── components/ui/      # design system dùng chung
-│   │       ├── lib/                # http client, formatters, slugify
-│   │       └── styles/             # design tokens
-│   └── api/                        # Backend: Express
-│       ├── prisma/                 # schema.prisma, migrations, seed
-│       └── src/
-│           ├── modules/            # mỗi module: routes · controller · service · repository · schema
-│           │   ├── auth/  workshops/  products/  batches/  media/
-│           │   └── quotes/  orders/  news/  notifications/  admin/
-│           ├── core/               # state-machine, storage, image, qr, events, crypto
-│           ├── middlewares/        # auth, rbac, validate, upload, rate-limit, error
-│           ├── jobs/               # tác vụ định kỳ
-│           └── config/
-├── packages/
-│   └── shared/                     # Zod schema, enum, kiểu dữ liệu dùng chung FE ⇄ BE
-├── docs/                           # PRODUCT · PRD · ROADMAP
-├── docker-compose.yml
-└── README.md
+prisma/                 schema.prisma, migrations, seed.ts (dữ liệu mẫu Bát Tràng)
+public/seed/            62 ảnh tư liệu đã tối ưu + manifest.json (ghi công)
+scripts/                fetch-seed-images.ts – tải lại ảnh mẫu từ Wikimedia Commons
+src/
+  app/                  trang (Server Components) và REST API (app/api/**/route.ts)
+    api/                auth, products, workshops, quotes, bids, me/*, admin/*, upload, chat, geocode
+    trace/  q/  map/    truy xuất QR, link ngắn, bản đồ
+    dashboard/artisan   khu làm việc nghệ nhân
+    dashboard/admin     khu điều phối Ban quản lý
+  components/           ui · layout · exhibition · map · trace · quotes · artisan · admin · ai
+  lib/
+    services/           nghiệp vụ: quotation, batch, catalog, product, admin, media, storage, qr, allocation…
+    validators/         schema Zod dùng chung cho biểu mẫu và API
+    auth/               phiên, mật khẩu, guard phân quyền
+    ai/                 công cụ Prisma cho trợ lý và bộ trả lời cục bộ
+  middleware.ts         chuyển hướng sớm khu vực cần đăng nhập
+tests/                  unit test máy trạng thái, phân bổ, xử lý văn bản, giờ mở cửa, mã hóa
+docs/                   PRODUCT · PRD · ROADMAP
 ```
 
-## 7. Cài đặt và chạy
+## 6. Cài đặt và chạy
 
-**Yêu cầu:** Node.js ≥ 22, pnpm ≥ 9, Docker Desktop.
+Yêu cầu: Node.js ≥ 20, Docker Desktop.
 
 ```bash
-git clone <repo-url> vcraft && cd vcraft
-pnpm install
-
-cp apps/api/.env.example apps/api/.env
-cp apps/web/.env.example apps/web/.env
-
-docker compose up -d db        # PostgreSQL ở cổng 5432
-pnpm db:migrate                # tạo bảng
-pnpm db:seed                   # dữ liệu mẫu: 15 xưởng, 120 sản phẩm, 20 lô, 6 yêu cầu báo giá
-
-pnpm dev                       # web: http://localhost:5173 · api: http://localhost:4000
+npm install
+cp .env.example .env              # sửa DATA_ENCRYPTION_KEY
+npm run db:up                     # PostgreSQL ở cổng 5434
+npx prisma migrate deploy         # tạo bảng
+npm run db:seed                   # dữ liệu mẫu: 7 xưởng, 32 tác phẩm, 9 lô, 5 yêu cầu báo giá
+npm run dev                       # http://localhost:3000
 ```
 
-Chạy toàn bộ bằng Docker: `docker compose up --build`, sau đó mở http://localhost:8080.
+Bản production: `npm run build && npm start`.
 
-**Quét QR bằng điện thoại khi chạy local:** đặt `APP_URL` thành một địa chỉ điện thoại truy cập được, ví dụ IP LAN `http://192.168.1.10:8080` hoặc đường hầm `cloudflared tunnel --url http://localhost:8080`. QR được sinh theo yêu cầu từ `APP_URL` nên chỉ cần khởi động lại API, không phải sinh lại dữ liệu.
+**Quét QR bằng điện thoại:** đặt `APP_URL` thành địa chỉ điện thoại truy cập được, ví dụ `http://192.168.1.10:3000` (cùng wifi) hoặc URL của `cloudflared tunnel --url http://localhost:3000`, rồi chạy lại `npm run db:seed` để QR của các lô mẫu dùng địa chỉ mới.
 
-### Biến môi trường chính
+### Tài khoản demo
 
-| Biến | Ví dụ | Ý nghĩa |
+Mật khẩu chung `Vcraft@2026`. Khi `DEMO_MODE=true`, thanh xanh trên cùng cho phép đổi vai trò bằng một cú bấm.
+
+| Vai trò | Email | Dùng để demo |
 |---|---|---|
-| `DATABASE_URL` | `postgresql://vcraft:vcraft@localhost:5432/vcraft` | Chuỗi kết nối CSDL |
-| `APP_URL` | `http://localhost:8080` | Địa chỉ công khai, dùng để sinh QR và link trong email |
-| `CORS_ORIGIN` | `http://localhost:5173` | Origin frontend được phép gọi API |
-| `JWT_ACCESS_SECRET` / `JWT_REFRESH_SECRET` | chuỗi ngẫu nhiên ≥ 32 ký tự | Khóa ký token |
-| `ACCESS_TOKEN_TTL` / `REFRESH_TOKEN_TTL` | `15m` / `7d` | Thời hạn token |
-| `DATA_ENCRYPTION_KEY` | 32 byte, mã hóa base64 | Khóa AES-256-GCM để mã hóa số CCCD trong hồ sơ đăng ký |
-| `STORAGE_DRIVER` | `local` hoặc `s3` | Nơi lưu ảnh |
-| `UPLOAD_DIR` | `./storage` | Thư mục ảnh khi dùng `local` |
-| `SMTP_URL` | `smtp://...` | Gửi email (tùy chọn) |
-| `VITE_API_URL` | `/api/v1` | Base URL API cho frontend |
+| Ban quản lý | `admin@vcraft.test` | Duyệt hồ sơ, điều phối, đăng tin |
+| Khách sỉ | `lan.uet@vcraft.test` | `RFQ-UET-2026-5000` (5.000 cốc, đang nhận 4 chào giá, v2) |
+| Nghệ nhân | `ongtu@vcraft.test` | Lô `BT-2026-LAM-006` đang làm; được mời `RFQ-2026-0005` |
+| Nghệ nhân | `hungphat@vcraft.test` | Xưởng sỉ công suất lớn |
+| Nghệ nhân chờ duyệt | `moidangky@vcraft.test` | Hồ sơ trong hàng đợi kiểm duyệt |
 
-### Tài khoản demo (sau khi seed)
+Các xưởng và nghệ nhân trong dữ liệu mẫu là **hư cấu**, đặt tại tọa độ thật quanh làng. Các điểm di sản công cộng (Bảo tàng Gốm, Lò bầu cổ, Đình, Chợ gốm) dùng tên thật.
 
-Mật khẩu chung: `Vcraft@2026`. Chỉ dùng cho môi trường demo.
+### Trợ lý AI
 
-| Vai trò | Email | Ghi chú |
-|---|---|---|
-| Admin | `admin@vcraft.test` | Ban quản lý làng nghề |
-| Nghệ nhân | `ongtu@vcraft.test` | Xưởng gốm Ông Tư, chuyên men lam vẽ tay |
-| Nghệ nhân | `minhhai@vcraft.test` | Xưởng gốm Minh Hải, chuyên men rạn |
-| Nghệ nhân (chờ duyệt) | `moidangky@vcraft.test` | Dùng để demo kiểm duyệt |
-| Khách sỉ | `lan.uet@vcraft.test` | Có sẵn một yêu cầu báo giá đang ở trạng thái `BIDDING` với 4 chào giá |
-| Khách lẻ | `minh@vcraft.test` | |
+- Có `ANTHROPIC_API_KEY`: dùng Claude (`claude-opus-5-5`) với 5 công cụ truy vấn Prisma (`queryWorkshopsAndMap`, `verifyBatchByCode`, `searchExhibitionCatalog`, `inspectB2BQuotesAndCapacity`, `getCommunityAnnouncements`), có bật fallback phía server khi mô hình từ chối.
+- Không có khóa hoặc mất mạng: tự chuyển sang bộ trả lời cục bộ, phân tích câu hỏi tiếng Việt, gọi **cùng các công cụ** đó và trả lời bằng số liệu thật.
+- Giá chào thầu là thông tin kín: trợ lý chỉ nêu giá cho người tạo yêu cầu và Ban quản lý.
 
-## 8. Lệnh thường dùng
+## 7. Lệnh
 
 | Lệnh | Tác dụng |
 |---|---|
-| `pnpm dev` | Chạy web và api song song, tự nạp lại khi sửa code |
-| `pnpm build` | Build production cả hai app |
-| `pnpm lint` / `pnpm typecheck` | ESLint / kiểm tra kiểu TypeScript |
-| `pnpm test` | Unit + integration test (Vitest, Supertest) |
-| `pnpm test:e2e` | Kiểm thử đầu-cuối (Playwright) |
-| `pnpm db:migrate` | Áp dụng migration |
-| `pnpm db:seed` | Nạp dữ liệu mẫu (chạy lại nhiều lần vẫn an toàn) |
-| `pnpm db:reset` | Xóa sạch, migrate lại và seed. Dùng trước mỗi buổi demo |
-| `pnpm db:studio` | Mở Prisma Studio để xem dữ liệu |
+| `npm run dev` / `build` / `start` | Phát triển / build / chạy production |
+| `npm run typecheck` · `npm run lint` | Kiểm tra kiểu · ESLint |
+| `npm test` | Unit test (Vitest) |
+| `npm run db:seed` | Nạp lại dữ liệu mẫu (xóa sạch trước, chạy lại bao nhiêu lần cũng được) |
+| `npm run db:reset` | Xóa CSDL, migrate lại và seed |
+| `npm run images:fetch` | Tải lại ảnh mẫu từ Wikimedia Commons |
 
-## 9. Tài liệu
+## 8. Ánh xạ barem
 
-| Tài liệu | Nội dung |
+| Tiêu chí | Ở đâu trong sản phẩm |
 |---|---|
-| [docs/PRODUCT.md](docs/PRODUCT.md) | Mô tả sản phẩm: vấn đề, chân dung người dùng, hành trình, bản sắc thương hiệu, phạm vi |
-| [docs/PRD.md](docs/PRD.md) | Đặc tả yêu cầu: chức năng, máy trạng thái, cơ chế khóa, dữ liệu, API, URL, ánh xạ barem |
-| [docs/ROADMAP.md](docs/ROADMAP.md) | Lộ trình 8 tuần từng bước, phân công, checklist barem, kịch bản demo và câu hỏi vấn đáp |
+| Chức năng (0,35) | Đủ 3 vai trò, 4 yêu cầu kỹ thuật. Thêm: gợi ý phân bổ, demo xung đột 409, in tem QR, đếm lượt quét, thông báo, trợ lý AI có công cụ CSDL |
+| Thiết kế logic (0,1) | Biểu mẫu nhiều bước có thanh bước, dòng thời gian trạng thái, hộp thoại xác nhận, trạng thái rỗng có hướng dẫn, điều hướng theo vai trò |
+| Giao diện (0,2) | Design system "Bát Tràng Digital Exhibition", ảnh thật, scrollytelling, responsive từ 360px |
+| Hiệu năng / AJAX (0,1) | Lọc, gợi ý, chào giá, chốt, thông báo (hỏi lại mỗi 20 giây), bản đồ, upload, chat streaming đều dùng `fetch` + JSON, không tải lại trang |
+| Phong cách lập trình (0,05) | Route Handler mỏng → service → Prisma. Mẫu State, Strategy (`StorageProvider`), Singleton (Prisma), Chain (middleware) |
+| Nhập liệu (0,05) | Schema Zod dùng chung, kiểm tra email bất đồng bộ, định dạng tiền, chuẩn hóa NFC và số điện thoại, tự điền địa chỉ từ ghim |
+| An ninh (0,05) | bcrypt, phiên server có cookie `httpOnly`, khóa tạm sau 5 lần sai, RBAC cộng kiểm tra sở hữu, CSP, kiểm tra Origin, AES-GCM, kiểm tra ảnh bằng magic bytes |
+| URL (0,05) | Slug tiếng Việt, alias `/san-pham`, `/ban-do`, `/truy-xuat/:code`, link ngắn `/q/:code`, 301 cho URL cũ, `?next=` an toàn |
+| CSDL OOP (0,05) | Prisma, không dùng SQL thô, tìm kiếm qua cột `searchText` chuẩn hóa (độc lập CSDL), mã tuần tự qua bảng `Counter` |
 
-## 10. Quy ước làm việc
+## 9. Ghi công
 
-- **Nhánh:** `main` (luôn demo được) ← `develop` ← `feat/<module>-<mô-tả>`, `fix/<mô-tả>`.
-- **Commit:** Conventional Commits, ví dụ `feat(quotes): khóa lạc quan khi chốt báo giá`.
-- **Pull request:** cần một người review và CI xanh (lint, typecheck, test, build) mới được merge.
-- **Code:** TypeScript `strict`, ESLint + Prettier, viết TSDoc cho service và hàm công khai, không để logic nghiệp vụ trong controller hay component.
-
-## 11. Nhóm thực hiện
-
-| Thành viên | MSSV | Phụ trách chính |
-|---|---|---|
-| _Thành viên 1_ | _…_ | Nền tảng (auth, CSDL, hạ tầng) và Luồng báo giá |
-| _Thành viên 2_ | _…_ | Nghệ nhân: hồ sơ xưởng, sản phẩm, nhật ký và QR truy xuất, pipeline ảnh |
-| _Thành viên 3_ | _…_ | Trải nghiệm khách (design system, danh mục, bản đồ) và Quản trị |
-
-## 12. Ghi công
-
-- Dữ liệu bản đồ © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
-- Ảnh trong dữ liệu mẫu do nhóm tự chụp tại Bát Tràng (đã xin phép các hộ) hoặc lấy từ nguồn giấy phép mở. Nguồn được ghi kèm từng ảnh trong dữ liệu seed.
+Bản đồ © OpenStreetMap contributors. Ảnh tư liệu từ Wikimedia Commons (CC BY-SA / CC BY / CC0), danh sách đầy đủ ở trang `/credits`.
