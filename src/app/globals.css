@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/*
+ * Design system "Bát Tràng Digital Exhibition"
+ * Bảng màu chiết xuất từ chất liệu: cao lanh, xương gốm mộc, gạch đỏ Bảo tàng Gốm,
+ * men lam coban, men ngọc, lửa lò nung và mực tàu đánh rạn.
+ */
+@theme {
+  --color-kaolin: #f9f6f0;
+  --color-bisque: #f1ece1;
+  --color-bisque-deep: #e6dfcf;
+  --color-terracotta: #b84a39;
+  --color-terracotta-dark: #9a3b2b;
+  --color-cobalt: #1d3557;
+  --color-cobalt-soft: #2c4a72;
+  --color-celadon: #3b6e5c;
+  --color-celadon-soft: #dbe8e1;
+  --color-kiln: #d97706;
+  --color-ember: #fa903e;
+  --color-ink: #181615;
+  --color-ash: #575b5f;
+  --color-line: #ddd5c4;
+
+  --font-display: var(--font-cormorant), "Times New Roman", serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --radius-tile: 6px;
+  --shadow-soft: 0 1px 2px rgb(24 22 21 / 0.04), 0 8px 24px -12px rgb(24 22 21 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(24 22 21 / 0.06), 0 18px 40px -18px rgb(24 22 21 / 0.35);
+
+  --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+  --animate-fade-up: fade-up 0.6s ease-out both;
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.6); opacity: 0.75; }
+    100% { transform: scale(2.4); opacity: 0; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-kaolin);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+  }
+  ::selection {
+    background: var(--color-terracotta);
+    color: var(--color-kaolin);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  input, select, textarea, button { font: inherit; }
+}
+
+@layer components {
+  /* Vân men rạn rất mờ cho nền các khối lớn */
+  .crackle-bg {
+    background-color: var(--color-bisque);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23181615' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M0 40 L38 52 L60 20 L104 34 L132 0'/%3E%3Cpath d='M38 52 L30 98 L70 120 L60 20'/%3E%3Cpath d='M70 120 L118 104 L104 34'/%3E%3Cpath d='M118 104 L160 80 L200 96 L240 70'/%3E%3Cpath d='M160 80 L150 30 L190 10'/%3E%3Cpath d='M30 98 L0 130'/%3E%3Cpath d='M70 120 L64 170 L20 190 L0 240'/%3E%3Cpath d='M64 170 L112 186 L118 104'/%3E%3Cpath d='M112 186 L170 160 L200 96'/%3E%3Cpath d='M170 160 L210 200 L240 190'/%3E%3Cpath d='M112 186 L120 240'/%3E%3Cpath d='M210 200 L196 240'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  /* Vạch phân cách hoa văn sóng nước men lam */
+  .wave-divider {
+    height: 14px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'%3E%3Cpath d='M0 10 Q7 0 14 10 T28 10 T42 10 T56 10' fill='none' stroke='%231d3557' stroke-opacity='0.45' stroke-width='1.4'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+  }
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .prose-vcraft p { margin: 0 0 1em; }
+  .prose-vcraft h2 { font-size: 1.6rem; margin: 1.4em 0 0.5em; }
+  .prose-vcraft ul { list-style: disc; padding-left: 1.3em; margin-bottom: 1em; }
+  .prose-vcraft strong { color: var(--color-ink); }
+}
+
+/* Leaflet: popup kiểu "vé triển lãm" */
+.leaflet-container { font-family: var(--font-sans); background: #efe9dc; }
+.leaflet-popup-content-wrapper { border-radius: 8px; padding: 0; overflow: hidden; box-shadow: var(--shadow-lift); }
+.leaflet-popup-content { margin: 0; width: 260px !important; line-height: 1.45; }
+.leaflet-popup-content p { margin: 0 !important; }
+.leaflet-popup-content img { display: block; }
+.leaflet-tile-pane { filter: sepia(0.18) saturate(0.9); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  header, footer, .no-print { display: none !important; }
+  body { background: white; }
+  /* Các mốc dùng hiệu ứng hiện dần khi cuộn – khi in phải hiện đầy đủ */
+  li [style*="opacity"] { opacity: 1 !important; transform: none !important; }
+}
