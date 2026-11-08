@@ -15,7 +15,7 @@ test-results/
 !.env.example
 
 # Ảnh upload khi chạy local
-apps/api/storage/
+# (đã thay bằng storage/ ở cuối file)
 
 # Logs
 *.log
@@ -32,3 +32,12 @@ Thumbs.db
 # Tài liệu đề bài và file khóa tạm của Word (không đưa lên repo)
 vCraft.docx
 ~$*
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Ảnh upload, tile bản đồ đệm (sinh lúc chạy)
+storage/
