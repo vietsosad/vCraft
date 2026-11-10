@@ -584,6 +584,11 @@ const NEWS = [
 
 async function reset() {
   // Xóa theo thứ tự phụ thuộc
+  await prisma.review.deleteMany();
+  await prisma.favorite.deleteMany();
+  await prisma.experienceBooking.deleteMany();
+  await prisma.scanEvent.deleteMany();
+  await prisma.passwordResetToken.deleteMany();
   await prisma.notification.deleteMany();
   await prisma.auditLog.deleteMany();
   await prisma.quoteStatusHistory.deleteMany();
@@ -607,13 +612,13 @@ async function main() {
 
   console.log("→ Người dùng");
   const admin = await prisma.user.create({
-    data: { email: "admin@vcraft.test", name: "Nguyễn Văn Hùng", role: "ADMIN", passwordHash, organization: "Ban quản lý làng nghề Bát Tràng", phone: "+84912000001" },
+    data: { email: "admin@vcraft.test", name: "Nguyễn Văn Hùng", role: "ADMIN", passwordHash, createdAt: daysAgo(400), organization: "Ban quản lý làng nghề Bát Tràng", phone: "+84912000001" },
   });
   const lan = await prisma.user.create({
-    data: { email: "lan.uet@vcraft.test", name: "Trần Thị Lan", role: "BUYER", passwordHash, organization: "Trường Đại học Công nghệ – ĐHQGHN", phone: "+84912000002" },
+    data: { email: "lan.uet@vcraft.test", name: "Trần Thị Lan", role: "BUYER", passwordHash, createdAt: daysAgo(95), organization: "Trường Đại học Công nghệ – ĐHQGHN", phone: "+84912000002" },
   });
   const minh = await prisma.user.create({
-    data: { email: "minh@vcraft.test", name: "Lê Quang Minh", role: "BUYER", passwordHash, organization: "Công ty Du lịch Sông Hồng", phone: "+84912000003" },
+    data: { email: "minh@vcraft.test", name: "Lê Quang Minh", role: "BUYER", passwordHash, createdAt: daysAgo(120), organization: "Công ty Du lịch Sông Hồng", phone: "+84912000003" },
   });
 
   console.log("→ Xưởng nghệ nhân");
@@ -626,6 +631,7 @@ async function main() {
         name: w.name,
         role: "ARTISAN",
         passwordHash,
+        createdAt: daysAgo(230 + Object.keys(artisanIds).length * 6),
         phone: "+8491" + String(Math.floor(1000000 + Math.random() * 8999999)),
         artisanProfile: {
           create: {
@@ -649,7 +655,7 @@ async function main() {
             acceptsWholesale: w.acceptsWholesale,
             maxMonthlyCapacity: w.maxMonthlyCapacity,
             specialties: w.specialties,
-            ratingAvg: w.ratingAvg,
+            experienceCapacity: w.key === "thuanphong" ? 20 : w.key === "banxoay" ? 16 : 12,
             certifications: w.certifications,
             coverImage: img(w.cover),
             workshopImages: w.gallery.map((g) => img(g)),
@@ -673,6 +679,7 @@ async function main() {
       name: "Hoàng Văn Nam",
       role: "ARTISAN",
       status: "PENDING",
+      createdAt: daysAgo(1, 15),
       passwordHash,
       phone: "+84912000099",
       artisanProfile: {
@@ -971,6 +978,8 @@ async function main() {
     ],
   });
 
+  await seedEngagement({ lan, minh, artisanIds, artisanUserIds, passwordHash });
+
   console.log("→ Tin tức");
   for (const n of NEWS) {
     await prisma.communityNews.create({
@@ -1002,7 +1011,7 @@ async function main() {
   console.log("→ Thông báo mẫu");
   await prisma.notification.createMany({
     data: [
-      { userId: lan.id, type: "BID_RECEIVED", title: "Có 4 chào giá cho đơn 5.000 cốc", body: "Hưng Phát, Minh Hải, Bàn Xoay Phố Cổ và Thuận Phong Đường đã chào giá.", link: "/b2b-quotes/RFQ-UET-2026-5000" },
+      { userId: lan.id, type: "BID_RECEIVED", title: "Có 4 chào giá cho đơn 5.000 cốc", body: "Hưng Phát, Minh Hải, Bàn Xoay Phố Cổ và Thuận Phong Đường đã chào giá.", link: "/account/quotes/RFQ-UET-2026-5000" },
       { userId: artisanUserIds.ongtu, type: "QUOTE_INVITED", title: "Bạn được mời chào giá đơn sỉ", body: "2.000 cốc men lam vẽ hoa sen cho Ngày hội việc làm.", link: "/dashboard/artisan/quotes/RFQ-2026-0005" },
       { userId: admin.id, type: "APPLICATION_SUBMITTED", title: "Hồ sơ hộ nghề mới chờ duyệt", body: "Gốm Hoàng Gia Mới (dòng họ Hoàng) vừa gửi hồ sơ đăng ký.", link: "/dashboard/admin/approvals" },
     ],
@@ -1015,8 +1024,166 @@ async function main() {
     batches: await prisma.productBatch.count(),
     quotes: await prisma.quoteRequest.count(),
     bids: await prisma.quoteBid.count(),
+    bookings: await prisma.experienceBooking.count(),
+    reviews: await prisma.review.count(),
+    favorites: await prisma.favorite.count(),
+    scanEvents: await prisma.scanEvent.count(),
   };
   console.log("✓ Seed xong:", counts);
+}
+
+/* ---------------------------------------------------------------- Tương tác: lịch nặn gốm, đánh giá, đã lưu, lượt quét */
+
+/** Ngày gần nhất (tính từ hôm nay ± offset) mà xưởng mở cửa, dạng Date UTC nửa đêm (khớp cột @db.Date). */
+function visitDay(offset: number, openDays: number[]) {
+  const vnToday = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date());
+  const base = new Date(`${vnToday}T00:00:00Z`).getTime();
+  const step = offset >= 0 ? 1 : -1;
+  for (let i = offset; Math.abs(i) < 60; i += step) {
+    const d = new Date(base + i * 86_400_000);
+    if (openDays.includes(d.getUTCDay())) return d;
+  }
+  return new Date(base + offset * 86_400_000);
+}
+
+type BookingPlan = {
+  key: string;
+  user: { id: string };
+  name: string;
+  phone: string;
+  offset: number;
+  slot: string;
+  guests: number;
+  status: "PENDING" | "CONFIRMED" | "COMPLETED" | "DECLINED" | "CANCELLED";
+  note?: string;
+  review?: [number, string, string?];
+};
+
+async function seedEngagement(ctx: {
+  lan: { id: string };
+  minh: { id: string };
+  artisanIds: Record<string, string>;
+  artisanUserIds: Record<string, string>;
+  passwordHash: string;
+}) {
+  const { lan, minh, artisanIds, artisanUserIds, passwordHash } = ctx;
+  console.log("→ Khách du lịch, lịch nặn gốm, đánh giá");
+  const tourists: { id: string }[] = [];
+  for (const [email, name, phone] of [
+    ["thu.nguyen@vcraft.test", "Nguyễn Minh Thư", "+84912000011"],
+    ["khoa.pham@vcraft.test", "Phạm Đăng Khoa", "+84912000012"],
+    ["mai.vu@vcraft.test", "Vũ Thanh Mai", "+84912000013"],
+    ["an.do@vcraft.test", "Đỗ Hoài An", "+84912000014"],
+  ]) {
+    tourists.push(await prisma.user.create({ data: { email, name, phone, role: "BUYER", passwordHash, createdAt: daysAgo(8 + tourists.length * 9) } }));
+  }
+  const names = ["Bùi Gia Huy", "Ngô Phương Linh", "Trịnh Quốc Bảo", "Hà Thu Trang", "Lý Minh Khôi", "Đặng Ngọc Ánh", "Phan Tuấn Kiệt", "Chu Thảo Vy", "Mai Đức Long", "Tạ Hồng Nhung"];
+  await prisma.user.createMany({
+    data: names.map((name, i) => ({
+      email: `khach${i + 1}@vcraft.test`, name, role: "BUYER" as const, passwordHash, phone: `+849120001${String(i).padStart(2, "0")}`,
+      createdAt: daysAgo(3 + i * 5 + (i % 3)),
+    })),
+  });
+  const profiles = await prisma.artisanProfile.findMany({ where: { id: { in: Object.values(artisanIds) } } });
+  const byKey = (k: string) => profiles.find((p) => p.id === artisanIds[k])!;
+  let seq = 0;
+  const code = () => `TN-2026-${String(++seq).padStart(4, "0")}`;
+
+  const plan: BookingPlan[] = [
+    // Khách sỉ cũng là khách tham quan: lịch sắp tới và một buổi đã xong chưa đánh giá (để demo viết đánh giá)
+    { key: "ongtu", user: lan, name: "Trần Thị Lan", phone: "+84912000002", offset: 3, slot: "09:00", guests: 6, status: "CONFIRMED", note: "Đoàn cán bộ phòng Hành chính, muốn thử vẽ men lam." },
+    { key: "thuanphong", user: lan, name: "Trần Thị Lan", phone: "+84912000002", offset: -12, slot: "14:00", guests: 4, status: "COMPLETED" },
+    { key: "ongtu", user: minh, name: "Lê Quang Minh", phone: "+84912000003", offset: 1, slot: "13:00", guests: 12, status: "PENDING", note: "Đoàn khách du lịch Hàn Quốc, cần hướng dẫn bằng tiếng Anh." },
+    { key: "banxoay", user: minh, name: "Lê Quang Minh", phone: "+84912000003", offset: 5, slot: "10:00", guests: 8, status: "CONFIRMED" },
+    { key: "trangia", user: minh, name: "Lê Quang Minh", phone: "+84912000003", offset: -4, slot: "08:00", guests: 3, status: "DECLINED" },
+    // Khách du lịch đã ghé và để lại đánh giá
+    { key: "ongtu", user: tourists[0], name: "Nguyễn Minh Thư", phone: "+84912000011", offset: -20, slot: "09:00", guests: 2, status: "COMPLETED", review: [5, "Bác Tư cầm tay chỉ từng nét bút lông, nung xong chiếc chén vẽ sen đẹp ngoài mong đợi.", "Cảm ơn cháu, chén ra lò men lên rất đẹp, hẹn cháu mùa sen năm sau."] },
+    { key: "ongtu", user: tourists[1], name: "Phạm Đăng Khoa", phone: "+84912000012", offset: -33, slot: "15:00", guests: 4, status: "COMPLETED", review: [5, "Được nghe kể chuyện bốn đời làm men lam, trẻ con rất thích bàn xoay."] },
+    { key: "thuanphong", user: tourists[2], name: "Vũ Thanh Mai", phone: "+84912000013", offset: -9, slot: "10:00", guests: 3, status: "COMPLETED", review: [5, "Lần đầu thấy men rạn tận mắt, nghệ nhân giải thích vì sao vết rạn chạy như mạng nhện. Đáng đi!", "Cảm ơn chị đã ghé Thuận Phong Đường."] },
+    { key: "thuanphong", user: tourists[3], name: "Đỗ Hoài An", phone: "+84912000014", offset: -26, slot: "14:00", guests: 2, status: "COMPLETED", review: [4, "Buổi nặn gốm vui, chỉ hơi đông khách vào chiều cuối tuần."] },
+    { key: "minhhai", user: tourists[0], name: "Nguyễn Minh Thư", phone: "+84912000011", offset: -40, slot: "08:00", guests: 2, status: "COMPLETED", review: [4, "Học vuốt cốc trên bàn xoay, hướng dẫn kỹ, giá hợp lý."] },
+    { key: "trangia", user: tourists[1], name: "Phạm Đăng Khoa", phone: "+84912000012", offset: -15, slot: "10:00", guests: 5, status: "COMPLETED", review: [5, "Men hỏa biến mỗi chiếc một màu, được xem cả quy trình đẩy lửa.", "Cảm ơn anh, lần sau ghé đúng hôm ra lò nhé!"] },
+    { key: "banxoay", user: tourists[2], name: "Vũ Thanh Mai", phone: "+84912000013", offset: -6, slot: "16:00", guests: 6, status: "COMPLETED", review: [4, "Không gian phố cổ đẹp, chụp ảnh rất ưng. Bàn xoay hơi ít so với số khách."] },
+    { key: "banxoay", user: tourists[3], name: "Đỗ Hoài An", phone: "+84912000014", offset: 2, slot: "14:00", guests: 2, status: "PENDING" },
+    { key: "minhhai", user: tourists[3], name: "Đỗ Hoài An", phone: "+84912000014", offset: 6, slot: "10:00", guests: 4, status: "CANCELLED" },
+  ];
+  for (const b of plan) {
+    const prof = byKey(b.key);
+    const visit = visitDay(b.offset, prof.openDays);
+    const booking = await prisma.experienceBooking.create({
+      data: {
+        code: code(),
+        artisanId: prof.id,
+        userId: b.user.id,
+        visitDate: visit,
+        slot: b.slot,
+        guests: b.guests,
+        contactName: b.name,
+        contactPhone: b.phone,
+        note: b.note ?? null,
+        totalVnd: prof.experiencePriceVnd * b.guests,
+        status: b.status,
+        version: b.status === "PENDING" ? 1 : 2,
+        artisanNote: b.status === "DECLINED" ? "Hôm đó xưởng ra lò, mời anh chọn ngày khác giúp xưởng." : null,
+        createdAt: new Date(visit.getTime() - 5 * 86_400_000),
+      },
+    });
+    if (b.review) {
+      await prisma.review.create({
+        data: {
+          artisanId: prof.id,
+          authorId: b.user.id,
+          bookingId: booking.id,
+          rating: b.review[0],
+          comment: b.review[1],
+          artisanReply: b.review[2] ?? null,
+          repliedAt: b.review[2] ? new Date(visit.getTime() + 2 * 86_400_000) : null,
+          createdAt: new Date(visit.getTime() + 86_400_000),
+        },
+      });
+    }
+  }
+  await prisma.counter.create({ data: { key: "booking-2026", value: seq } });
+
+  // Điểm đánh giá thật (đơn RFQ-2026-0003 của Lan để trống để demo viết đánh giá đơn sỉ)
+  for (const id of Object.values(artisanIds)) {
+    const agg = await prisma.review.aggregate({ where: { artisanId: id }, _avg: { rating: true }, _count: { _all: true } });
+    await prisma.artisanProfile.update({ where: { id }, data: { ratingAvg: Math.round((agg._avg.rating ?? 0) * 10) / 10, ratingCount: agg._count._all } });
+  }
+
+  console.log("→ Đã lưu");
+  const products = await prisma.product.findMany({ where: { artisanId: { in: [artisanIds.ongtu, artisanIds.trangia, artisanIds.thuanphong] } }, take: 9, select: { id: true } });
+  await prisma.favorite.createMany({
+    data: [
+      ...products.filter((_, i) => i % 3 === 0).map((p) => ({ userId: lan.id, productId: p.id })),
+      { userId: lan.id, artisanId: artisanIds.ongtu },
+      ...products.slice(0, 2).map((p) => ({ userId: tourists[0].id, productId: p.id })),
+      { userId: minh.id, artisanId: artisanIds.banxoay },
+    ],
+  });
+
+  console.log("→ Lịch sử lượt quét QR");
+  const batches = await prisma.productBatch.findMany({ select: { id: true, scanCount: true, createdAt: true } });
+  const events: { batchId: string; createdAt: Date }[] = [];
+  for (const b of batches) {
+    const span = Math.max(1, Math.min(60, Math.floor((Date.now() - b.createdAt.getTime()) / 86_400_000)));
+    for (let i = 0; i < b.scanCount; i++) {
+      // nghiêng về các ngày gần đây và giờ hành chính – giống nhịp khách ghé chợ gốm
+      const day = Math.min(span - 1, Math.floor(Math.pow(Math.random(), 1.15) * span) + (Math.random() < 0.5 ? 1 : 0));
+      const t = Date.now() - day * 86_400_000 - Math.floor((2 + Math.random() * 9) * 3_600_000);
+      events.push({ batchId: b.id, createdAt: new Date(t) });
+    }
+  }
+  await prisma.scanEvent.createMany({ data: events });
+
+  console.log("→ Thông báo cho lịch hẹn và đánh giá");
+  await prisma.notification.createMany({
+    data: [
+      { userId: artisanUserIds.ongtu, type: "BOOKING_REQUESTED", title: "Lịch trải nghiệm mới: 12 khách, 13:00", body: "Lê Quang Minh · Đoàn khách du lịch Hàn Quốc", link: "/dashboard/artisan/bookings" },
+      { userId: lan.id, type: "BOOKING_CONFIRMED", title: "Xưởng đã xác nhận lịch trải nghiệm của bạn", body: "Xưởng gốm Ông Tư · 09:00, 6 khách", link: "/account/bookings" },
+      { userId: lan.id, type: "REVIEW_INVITE", title: "Đơn 300 đĩa lưu niệm đã giao – hãy đánh giá xưởng", body: "Đánh giá của bạn giúp các khách sỉ khác chọn xưởng.", link: "/account/reviews" },
+    ],
+  });
 }
 
 main()
