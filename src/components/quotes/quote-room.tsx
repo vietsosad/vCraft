@@ -156,14 +156,14 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-sm text-cobalt">{q.requestCode}</span>
+            <span className="font-mono text-sm text-lam">{q.requestCode}</span>
             <QuoteStatusBadge status={q.status} />
-            <span className="inline-flex items-center gap-1 rounded-full bg-cobalt px-2.5 py-0.5 font-mono text-[11px] text-kaolin" title="Khóa lạc quan: mọi thao tác phải gửi kèm phiên bản này">
+            <span className="inline-flex items-center gap-1 rounded-[4px] bg-lam px-2.5 py-0.5 font-mono text-[11px] text-on" title="Khóa lạc quan: mọi thao tác phải gửi kèm phiên bản này">
               <Lock className="size-3" /> Record v{q.version} · Optimistic Lock
             </span>
           </div>
           <h1 className="mt-3 text-3xl md:text-4xl">{q.title}</h1>
-          <p className="mt-2 text-sm text-ash">
+          <p className="mt-2 text-sm text-tro">
             {q.organizationName} · {formatNumber(q.quantity)} sản phẩm · {GLAZES[q.preferredGlaze].label} · {categoryLabel(q.category)} · cần trong {q.deadlineDays} ngày
           </p>
         </div>
@@ -176,23 +176,23 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
       <Card className="p-5"><QuoteFlow status={q.status} /></Card>
 
       {conflict && (
-        <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-terracotta/50 bg-terracotta/5 p-4 text-sm">
-          <AlertTriangle className="mt-0.5 size-5 shrink-0 text-terracotta" />
+        <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-datnung/50 bg-datnung/5 p-4 text-sm">
+          <AlertTriangle className="mt-0.5 size-5 shrink-0 text-datnung" />
           <div>
-            <p className="font-semibold text-terracotta">409 Conflict – dữ liệu đã thay đổi</p>
+            <p className="font-semibold text-datnung">409 Conflict – dữ liệu đã thay đổi</p>
             <p className="mt-1">{conflict}</p>
-            <p className="mt-1 text-ash">Bảng đã được tải lại với dữ liệu mới nhất (v{q.version}).</p>
+            <p className="mt-1 text-tro">Bảng đã được tải lại với dữ liệu mới nhất (v{q.version}).</p>
           </div>
         </div>
       )}
 
-      <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="space-y-8">
           {/* Người mua / BQL: bảng so sánh và chốt */}
           {canManage && q.status === "DRAFT_REQUEST" && (
             <Card className="p-6">
               <h2 className="text-2xl">Bản nháp</h2>
-              <p className="mt-2 text-sm text-ash">Gửi yêu cầu để hệ thống ghép và mời các xưởng phù hợp.</p>
+              <p className="mt-2 text-sm text-tro">Gửi yêu cầu để hệ thống ghép và mời các xưởng phù hợp.</p>
               <Button className="mt-4" variant="cobalt" onClick={() => setConfirm("send")}>Gửi tới các xưởng</Button>
             </Card>
           )}
@@ -202,35 +202,35 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
                   <h2 className="text-2xl">So sánh chào giá ({pendingBids.length})</h2>
-                  <p className="text-sm text-ash">Chọn một hoặc nhiều xưởng, tổng phân bổ phải đúng {formatNumber(q.quantity)} sản phẩm.</p>
+                  <p className="text-sm text-tro">Chọn một hoặc nhiều xưởng, tổng phân bổ phải đúng {formatNumber(q.quantity)} sản phẩm.</p>
                 </div>
                 <Button variant="outline" size="sm" onClick={suggest} disabled={!pendingBids.length}><Sparkles className="size-4" /> Gợi ý phân bổ tối ưu</Button>
               </div>
               {pendingBids.length === 0 ? (
                 <EmptyState title="Đang chờ các xưởng chào giá" description={`Đã mời ${q.invitations.length} xưởng. Trang sẽ tự cập nhật khi có chào giá mới.`} />
               ) : (
-                <div className="overflow-x-auto rounded-[var(--radius-tile)] border border-line bg-white/80">
+                <div className="relative overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/80">
                   <table className="w-full min-w-[720px] text-sm">
-                    <thead className="bg-bisque/70 text-left text-xs uppercase tracking-wider text-ash">
+                    <thead className="bg-nga-dam/70 text-left text-xs uppercase tracking-wider text-tro">
                       <tr>
                         <th className="px-3 py-3">Xưởng</th><th className="px-3 py-3 text-right">Đơn giá</th><th className="px-3 py-3 text-right">Nhận làm</th>
                         <th className="px-3 py-3 text-right">Số ngày</th><th className="px-3 py-3 text-right">Uy tín</th><th className="px-3 py-3">Phân bổ</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-line">
+                    <tbody className="divide-y divide-vua">
                       {pendingBids.map((b) => {
                         const late = b.estimatedDays > q.deadlineDays;
                         const qty = selection[b.id] ?? 0;
                         return (
-                          <tr key={b.id} className={cn(qty > 0 && "bg-celadon-soft/40")}>
+                          <tr key={b.id} className={cn(qty > 0 && "bg-ngoc-nhat/40")}>
                             <td className="px-3 py-3">
-                              <Link href={`/artisans/${b.artisan.slug}`} className="font-medium hover:text-terracotta">{b.artisan.workshopName}</Link>
-                              <p className="line-clamp-2 max-w-xs text-xs text-ash">{b.proposalNote}</p>
-                              <p className="font-mono text-[10px] text-ash">bid v{b.version} · {timeAgo(b.updatedAt)}</p>
+                              <Link href={`/artisans/${b.artisan.slug}`} className="font-medium hover:text-datnung">{b.artisan.workshopName}</Link>
+                              <p className="line-clamp-2 max-w-xs text-xs text-tro">{b.proposalNote}</p>
+                              <p className="font-mono text-[10px] text-tro">bid v{b.version} · {timeAgo(b.updatedAt)}</p>
                             </td>
-                            <td className={cn("px-3 py-3 text-right font-mono tabular", b.offeredPricePerUnit <= q.targetBudgetPerUnit ? "text-celadon" : "text-terracotta")}>{formatVnd(b.offeredPricePerUnit)}</td>
+                            <td className={cn("px-3 py-3 text-right font-mono tabular", b.offeredPricePerUnit <= q.targetBudgetPerUnit ? "text-ngoc" : "text-datnung")}>{formatVnd(b.offeredPricePerUnit)}</td>
                             <td className="px-3 py-3 text-right font-mono tabular">{formatNumber(b.committedQuantity)}</td>
-                            <td className={cn("px-3 py-3 text-right font-mono", late && "text-terracotta")}>{b.estimatedDays}{late && " ⚠"}</td>
+                            <td className={cn("px-3 py-3 text-right font-mono", late && "text-datnung")}>{b.estimatedDays}{late && " ⚠"}</td>
                             <td className="px-3 py-3 text-right font-mono">{b.artisan.ratingAvg.toFixed(1)}</td>
                             <td className="px-3 py-3">
                               <label className="sr-only" htmlFor={`alloc-${b.id}`}>Số lượng phân bổ cho {b.artisan.workshopName}</label>
@@ -243,7 +243,7 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
                                   const n = Math.min(Number(e.target.value.replace(/\D/g, "") || 0), b.committedQuantity);
                                   setSelection((s) => ({ ...s, [b.id]: n }));
                                 }}
-                                className="w-24 rounded border border-line px-2 py-1.5 text-right font-mono"
+                                className="w-24 rounded border border-vua px-2 py-1.5 text-right font-mono"
                               />
                             </td>
                           </tr>
@@ -251,11 +251,11 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
                       })}
                     </tbody>
                   </table>
-                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line bg-bisque/40 px-4 py-3">
+                  <div className="flex flex-wrap items-center justify-between gap-3 border-t border-vua bg-nga-dam/40 px-4 py-3">
                     <p className="text-sm">
-                      Đã phân bổ <strong className={cn("font-mono", totalSelected === q.quantity ? "text-celadon" : "text-terracotta")}>{formatNumber(totalSelected)}</strong> / {formatNumber(q.quantity)}
+                      Đã phân bổ <strong className={cn("font-mono", totalSelected === q.quantity ? "text-ngoc" : "text-datnung")}>{formatNumber(totalSelected)}</strong> / {formatNumber(q.quantity)}
                       {totalSelected > 0 && <> · Thành tiền <strong className="font-mono">{formatVnd(totalCost)}</strong></>}
-                      {totalSelected !== q.quantity && totalSelected > 0 && <span className="text-terracotta"> · {totalSelected < q.quantity ? `thiếu ${formatNumber(q.quantity - totalSelected)}` : `thừa ${formatNumber(totalSelected - q.quantity)}`}</span>}
+                      {totalSelected !== q.quantity && totalSelected > 0 && <span className="text-datnung"> · {totalSelected < q.quantity ? `thiếu ${formatNumber(q.quantity - totalSelected)}` : `thừa ${formatNumber(totalSelected - q.quantity)}`}</span>}
                     </p>
                     <Button variant="cobalt" disabled={totalSelected !== q.quantity || q.status !== "ARTISANS_BIDDING"} onClick={() => setConfirm("accept")}>
                       <Lock className="size-4" /> Chấp nhận & phân bổ đơn hàng
@@ -266,9 +266,9 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
 
               {/* Demo xung đột đồng thời */}
               {q.status === "ARTISANS_BIDDING" && pendingBids.length > 0 && (
-                <div className="mt-6 rounded-[var(--radius-tile)] border border-dashed border-cobalt/40 bg-cobalt/[0.04] p-5">
-                  <p className="flex items-center gap-2 font-semibold text-cobalt"><Zap className="size-4" /> Mô phỏng xung đột đồng thời (409 Conflict Demo)</p>
-                  <p className="mt-1 text-sm text-ash">
+                <div className="mt-6 rounded-[var(--radius-tile)] border border-dashed border-lam/40 bg-lam/[0.04] p-5">
+                  <p className="flex items-center gap-2 font-semibold text-lam"><Zap className="size-4" /> Mô phỏng xung đột đồng thời (409 Conflict Demo)</p>
+                  <p className="mt-1 text-sm text-tro">
                     Gửi hai yêu cầu chốt <em>cùng lúc</em> với cùng phiên bản v{q.version}, giống hai người bấm chốt ở hai cửa sổ. Giao dịch Serializable và điều kiện{" "}
                     <code className="font-mono text-xs">updateMany(where: {"{"} version: {q.version} {"}"})</code> bảo đảm chỉ một yêu cầu thắng.
                   </p>
@@ -276,7 +276,7 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
                   {demoResults && (
                     <div className="mt-4 grid gap-2 sm:grid-cols-2">
                       {demoResults.map((r) => (
-                        <div key={r.label} className={cn("rounded-md border p-3 text-sm", r.status === 200 ? "border-celadon/40 bg-celadon-soft/50" : "border-terracotta/40 bg-terracotta/5")}>
+                        <div key={r.label} className={cn("rounded-md border p-3 text-sm", r.status === 200 ? "border-ngoc/40 bg-ngoc-nhat/50" : "border-datnung/40 bg-datnung/5")}>
                           <p className="font-mono text-xs">{r.label} → HTTP {r.status}</p>
                           <p className="mt-1">{r.message}</p>
                         </div>
@@ -313,14 +313,14 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
                 {q.allocatedBatches.map((b) => {
                   const n = asStages(b.productionStages).length;
                   return (
-                    <Link key={b.id} href={`/trace/${b.batchCode}`} className="rounded-[var(--radius-tile)] border border-line bg-white/80 p-4 hover:border-terracotta/40">
+                    <Link key={b.id} href={`/trace/${b.batchCode}`} className="rounded-[var(--radius-tile)] border border-vua bg-su/80 p-4 hover:border-datnung/40">
                       <div className="flex items-center justify-between">
-                        <p className="font-mono text-xs text-cobalt">{b.batchCode}</p>
+                        <p className="font-mono text-xs text-lam">{b.batchCode}</p>
                         <Badge tone={b.status === "COMPLETED" ? "celadon" : "gold"}>{b.status === "COMPLETED" ? "Hoàn tất" : "Đang làm"}</Badge>
                       </div>
-                      <p className="mt-1 font-display text-xl">{b.artisan.workshopName}</p>
-                      <p className="text-sm text-ash">{formatNumber(b.allocatedQuantity ?? 0)} sản phẩm · {n}/6 công đoạn</p>
-                      <div className="mt-2 h-1.5 overflow-hidden rounded bg-bisque-deep"><div className="h-full bg-gradient-to-r from-terracotta to-ember" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
+                      <p className="mt-1 font-serif text-xl">{b.artisan.workshopName}</p>
+                      <p className="text-sm text-tro">{formatNumber(b.allocatedQuantity ?? 0)} sản phẩm · {n}/6 công đoạn</p>
+                      <div className="mt-2 h-1.5 overflow-hidden rounded bg-nga-sau"><div className="h-full bg-gradient-to-r from-datnung to-lua" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
                     </Link>
                   );
                 })}
@@ -332,7 +332,7 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
           {canManage && q.bids.some((b) => b.status !== "PENDING") && (
             <section>
               <h3 className="mb-3 text-xl">Kết quả chào giá</h3>
-              <ul className="divide-y divide-line rounded-[var(--radius-tile)] border border-line bg-white/70 text-sm">
+              <ul className="divide-y divide-vua rounded-[var(--radius-tile)] border border-vua bg-su/70 text-sm">
                 {q.bids.filter((b) => b.status !== "PENDING").map((b) => (
                   <li key={b.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5">
                     <span>{b.artisan.workshopName}</span>
@@ -348,26 +348,26 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
         {/* Cột phải */}
         <aside className="space-y-5">
           <Card className="p-5 text-sm">
-            <p className="eyebrow mb-3 !text-cobalt">Chi tiết yêu cầu</p>
+            <p className="label mb-3 !text-lam">Chi tiết yêu cầu</p>
             <p className="whitespace-pre-line leading-relaxed">{q.specifications}</p>
-            <dl className="mt-4 space-y-2 border-t border-line pt-4">
-              <div className="flex justify-between gap-3"><dt className="text-ash">Ngân sách</dt><dd className="font-mono">{formatVnd(q.targetBudgetPerUnit)}/sp</dd></div>
-              <div className="flex justify-between gap-3"><dt className="text-ash">Giao tới</dt><dd className="text-right">{q.deliveryAddress}</dd></div>
-              {q.biddingClosesAt && <div className="flex justify-between gap-3"><dt className="text-ash">Hạn chào giá</dt><dd>{formatDate(q.biddingClosesAt, true)}</dd></div>}
-              <div className="flex justify-between gap-3"><dt className="text-ash">Xưởng được mời</dt><dd>{q.invitations.length}</dd></div>
+            <dl className="mt-4 space-y-2 border-t border-vua pt-4">
+              <div className="flex justify-between gap-3"><dt className="text-tro">Ngân sách</dt><dd className="font-mono">{formatVnd(q.targetBudgetPerUnit)}/sp</dd></div>
+              <div className="flex justify-between gap-3"><dt className="text-tro">Giao tới</dt><dd className="text-right">{q.deliveryAddress}</dd></div>
+              {q.biddingClosesAt && <div className="flex justify-between gap-3"><dt className="text-tro">Hạn chào giá</dt><dd>{formatDate(q.biddingClosesAt, true)}</dd></div>}
+              <div className="flex justify-between gap-3"><dt className="text-tro">Xưởng được mời</dt><dd>{q.invitations.length}</dd></div>
             </dl>
-            {q.cancelReason && <p className="mt-3 rounded bg-ash/10 p-2 text-ash">Lý do hủy: {q.cancelReason}</p>}
+            {q.cancelReason && <p className="mt-3 rounded bg-tro/10 p-2 text-tro">Lý do hủy: {q.cancelReason}</p>}
           </Card>
 
           <Card className="p-5">
-            <p className="eyebrow mb-4 flex items-center gap-1.5 !text-cobalt"><History className="size-3.5" /> Lịch sử trạng thái</p>
-            <ol className="relative space-y-4 border-l border-line pl-5">
+            <p className="label mb-4 flex items-center gap-1.5 !text-lam"><History className="size-3.5" /> Lịch sử trạng thái</p>
+            <ol className="relative space-y-4 border-l border-vua pl-5">
               {q.history.map((h) => (
                 <li key={h.id} className="relative">
-                  <span className="absolute -left-[25px] top-1 grid size-3 place-items-center rounded-full bg-cobalt ring-4 ring-kaolin" />
+                  <span className="absolute -left-[25px] top-1 grid size-3 place-items-center rounded-full bg-lam ring-4 ring-nga" />
                   <p className="text-sm font-medium">{QUOTE_STATUS[h.toStatus].label}</p>
-                  <p className="text-xs text-ash">{h.actor ? `${h.actor.name}` : "Hệ thống"} · {formatDate(h.createdAt, true)}</p>
-                  {h.note && <p className="text-xs text-ash">{h.note}</p>}
+                  <p className="text-xs text-tro">{h.actor ? `${h.actor.name}` : "Hệ thống"} · {formatDate(h.createdAt, true)}</p>
+                  {h.note && <p className="text-xs text-tro">{h.note}</p>}
                 </li>
               ))}
             </ol>
@@ -389,7 +389,7 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
             <ul className="list-disc pl-5">
               {selectionsPayload.map((s) => <li key={s.bidId}>{q.bids.find((b) => b.id === s.bidId)?.artisan.workshopName}: {formatNumber(s.quantity)} sp</li>)}
             </ul>
-            <p className="text-ash">Sau khi chốt, các chào giá bị khóa và không thay đổi được. Hệ thống tạo lô sản xuất có mã QR cho từng xưởng.</p>
+            <p className="text-tro">Sau khi chốt, các chào giá bị khóa và không thay đổi được. Hệ thống tạo lô sản xuất có mã QR cho từng xưởng.</p>
           </div>
         ) : confirm === "deliver" ? (
           <p>Xác nhận đã nhận đủ hàng từ mọi xưởng. Thao tác này kết thúc đơn hàng.</p>
@@ -409,7 +409,7 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
       </Dialog>
 
       {q.status === "DELIVERED" && (
-        <p className="flex items-center gap-2 rounded-[var(--radius-tile)] bg-celadon-soft p-4 text-celadon"><CheckCircle2 className="size-5" /> Đơn hàng đã hoàn tất và giao đủ.</p>
+        <p className="flex items-center gap-2 rounded-[var(--radius-tile)] bg-ngoc-nhat p-4 text-ngoc"><CheckCircle2 className="size-5" /> Đơn hàng đã hoàn tất và giao đủ.</p>
       )}
     </div>
   );

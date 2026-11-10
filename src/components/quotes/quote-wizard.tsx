@@ -88,7 +88,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
         title: send ? `Đã gửi tới ${res.invited} xưởng phù hợp` : "Đã lưu bản nháp",
         description: res.requestCode,
       });
-      router.push(`/b2b-quotes/${res.requestCode}`);
+      router.push(`/account/quotes/${res.requestCode}`);
     } catch (err) {
       if (err instanceof ApiError) {
         setErrors(err.fieldErrors);
@@ -102,7 +102,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
   return (
     <div className="mt-8">
       <Stepper steps={STEPS} current={step} tone="cobalt" />
-      <div className="mt-8 rounded-[var(--radius-tile)] border border-line bg-white/70 p-6 shadow-soft">
+      <div className="mt-8 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-6 shadow-soft">
         {step === 0 && (
           <div className="space-y-4">
             <Field label="Tổ chức đặt hàng" htmlFor="organizationName" error={errors.organizationName} required hint="Tự điền từ hồ sơ tài khoản">
@@ -125,7 +125,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
                 </Select>
               </Field>
             </div>
-            {form.preferredGlaze && <p className="rounded-md bg-bisque p-3 text-xs text-ash">{GLAZES[form.preferredGlaze as keyof typeof GLAZES].description}</p>}
+            {form.preferredGlaze && <p className="rounded-md bg-nga-dam p-3 text-xs text-tro">{GLAZES[form.preferredGlaze as keyof typeof GLAZES].description}</p>}
             <Field label="Số lượng" htmlFor="quantity" error={errors.quantity} required hint="Tối thiểu 50 sản phẩm">
               <MoneyInput id="quantity" value={form.quantity} onChange={(v) => set("quantity", v)} invalid={!!errors.quantity} suffix="sp" placeholder="5.000" />
             </Field>
@@ -177,9 +177,9 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
               ["Thời hạn", `${form.deadlineDays} ngày · nhận chào giá ${form.biddingDays} ngày`],
               ["Giao tới", form.deliveryAddress],
             ].map(([k, v]) => (
-              <div key={k} className="border-b border-line pb-2"><dt className="text-xs text-ash">{k}</dt><dd className="mt-0.5">{v || <span className="text-[#b3261e]">Chưa nhập</span>}</dd></div>
+              <div key={k} className="border-b border-vua pb-2"><dt className="text-xs text-tro">{k}</dt><dd className="mt-0.5">{v || <span className="text-doson">Chưa nhập</span>}</dd></div>
             ))}
-            <div className="sm:col-span-2"><dt className="text-xs text-ash">Mô tả</dt><dd className="mt-0.5 whitespace-pre-line">{form.specifications}</dd></div>
+            <div className="sm:col-span-2"><dt className="text-xs text-tro">Mô tả</dt><dd className="mt-0.5 whitespace-pre-line">{form.specifications}</dd></div>
           </dl>
         )}
 
