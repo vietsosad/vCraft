@@ -31,10 +31,17 @@ export async function requireArtisan(opts: { verified?: boolean } = {}) {
   return user as SessionUser & { artisanId: string };
 }
 
-/** Dùng trong trang (server component): chưa đăng nhập thì chuyển tới /login?next=… */
+/** Cổng đăng nhập đúng cho một khu: mỗi vai trò một cửa riêng. */
+export function loginPortalFor(roles: UserRole[]) {
+  if (roles.length === 1 && roles[0] === "ADMIN") return "/login/admin";
+  if (roles.length === 1 && roles[0] === "ARTISAN") return "/login/artisan";
+  return "/login";
+}
+
+/** Dùng trong trang (server component): chưa đăng nhập thì chuyển tới cổng đăng nhập của khu đó. */
 export async function pageRequireRole(path: string, ...roles: UserRole[]): Promise<SessionUser> {
   const user = await getCurrentUser();
-  if (!user) redirect(`/login?next=${encodeURIComponent(path)}`);
+  if (!user) redirect(`${loginPortalFor(roles)}?next=${encodeURIComponent(path)}`);
   if (roles.length && !roles.includes(user.role)) redirect(`/forbidden?from=${encodeURIComponent(path)}`);
   return user;
 }

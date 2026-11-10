@@ -37,7 +37,7 @@ const INITIAL: FormState = {
  * Đăng ký hộ nghề 3 bước. Mỗi bước kiểm tra bằng đúng schema Zod mà server dùng.
  * Bản nháp (trừ mật khẩu và CCCD) được tự lưu để quay lại không mất dữ liệu.
  */
-export default function RegisterArtisanPage() {
+export function ArtisanRegisterForm() {
   const router = useRouter();
   const toast = useToast();
   const [step, setStep] = useState(0);
@@ -90,14 +90,10 @@ export default function RegisterArtisanPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-12">
-      <p className="eyebrow">Hộ gia đình · Nghệ nhân</p>
-      <h1 className="mt-3 text-4xl md:text-5xl">Đăng ký hộ nghề</h1>
-      <p className="mt-2 text-ash">Ban quản lý sẽ đối chiếu với danh sách hộ làm nghề trong làng trước khi cấp huy hiệu xác thực, để tránh hàng nhái trà trộn.</p>
+    <div>
+      <div className="mb-8"><Stepper steps={STEPS} current={step} /></div>
 
-      <div className="my-8"><Stepper steps={STEPS} current={step} /></div>
-
-      <div className="rounded-[var(--radius-tile)] border border-line bg-white/70 p-6 shadow-soft">
+      <div className="rounded-[var(--radius-tile)] border border-vua bg-su/70 p-6 shadow-soft">
         {step === 0 && (
           <div className="space-y-4">
             <Field label="Họ và tên chủ hộ / nghệ nhân" htmlFor="name" error={errors.name} required>
@@ -128,25 +124,25 @@ export default function RegisterArtisanPage() {
               </Field>
             </div>
             <fieldset>
-              <legend className="mb-2 text-sm font-medium">Dòng men sở trường <span className="text-terracotta">*</span></legend>
+              <legend className="mb-2 text-sm font-medium">Dòng men sở trường <span className="text-datnung">*</span></legend>
               <div className="flex flex-wrap gap-2">
                 {GLAZE_KEYS.map((g) => {
                   const on = form.specialties.includes(g);
                   return (
                     <button key={g} type="button" aria-pressed={on} onClick={() => set("specialties", on ? form.specialties.filter((x) => x !== g) : [...form.specialties, g])}
-                      className={cn("inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm", on ? "border-ink bg-ink text-kaolin" : "border-line bg-white")}>
+                      className={cn("inline-flex items-center gap-1.5 rounded-[4px] border px-3 py-1.5 text-sm", on ? "border-muc bg-dem text-giay" : "border-vua bg-su")}>
                       <span className="size-2.5 rounded-full" style={{ background: GLAZES[g].color }} /> {GLAZES[g].label}
                     </button>
                   );
                 })}
               </div>
-              {errors.specialties && <p role="alert" className="mt-1.5 text-[13px] text-[#b3261e]">{errors.specialties}</p>}
+              {errors.specialties && <p role="alert" className="mt-1.5 text-[13px] text-doson">{errors.specialties}</p>}
             </fieldset>
             <div>
-              <p className="mb-2 text-sm font-medium">Vị trí xưởng trên bản đồ <span className="text-terracotta">*</span></p>
-              <p className="mb-2 text-xs text-ash">Kéo ghim đỏ hoặc bấm vào bản đồ – địa chỉ sẽ tự điền.</p>
+              <p className="mb-2 text-sm font-medium">Vị trí xưởng trên bản đồ <span className="text-datnung">*</span></p>
+              <p className="mb-2 text-xs text-tro">Kéo ghim đỏ hoặc bấm vào bản đồ – địa chỉ sẽ tự điền.</p>
               <LocationPicker lat={form.latitude} lng={form.longitude} onChange={(v) => setForm((f) => ({ ...f, latitude: v.latitude, longitude: v.longitude, address: v.address ?? f.address }))} />
-              {(errors.latitude || errors.longitude) && <p role="alert" className="mt-1.5 text-[13px] text-[#b3261e]">{errors.latitude || errors.longitude}</p>}
+              {(errors.latitude || errors.longitude) && <p role="alert" className="mt-1.5 text-[13px] text-doson">{errors.latitude || errors.longitude}</p>}
             </div>
             <Field label="Địa chỉ" htmlFor="address" error={errors.address} required hint="Tự điền theo ghim, có thể sửa lại cho chính xác">
               <Input id="address" value={form.address} onChange={(e) => set("address", e.target.value)} invalid={!!errors.address} />
@@ -156,7 +152,7 @@ export default function RegisterArtisanPage() {
 
         {step === 2 && (
           <div className="space-y-4">
-            <p className="flex gap-2 rounded-md bg-celadon-soft/60 p-3 text-sm text-celadon">
+            <p className="flex gap-2 rounded-md bg-ngoc-nhat/60 p-3 text-sm text-ngoc">
               <ShieldCheck className="mt-0.5 size-4 shrink-0" />
               Số CCCD được mã hóa AES-256 trước khi lưu, ảnh minh chứng lưu ở vùng riêng tư và chỉ Ban quản lý xem được.
             </p>
@@ -164,9 +160,9 @@ export default function RegisterArtisanPage() {
               <Input id="nationalId" inputMode="numeric" autoComplete="off" value={form.nationalId} onChange={(e) => set("nationalId", e.target.value.replace(/\D/g, "").slice(0, 12))} invalid={!!errors.nationalId} placeholder="12 chữ số" />
             </Field>
             <div>
-              <p className="mb-2 text-sm font-medium">Ảnh minh chứng <span className="text-terracotta">*</span></p>
+              <p className="mb-2 text-sm font-medium">Ảnh minh chứng <span className="text-datnung">*</span></p>
               <ImageUploader value={form.proofDocuments} onChange={(v) => set("proofDocuments", v)} max={4} purpose="proof" privateMode label="Giấy xác nhận của thôn / Hội làng nghề, ảnh xưởng" />
-              {errors.proofDocuments && <p role="alert" className="mt-1.5 text-[13px] text-[#b3261e]">{errors.proofDocuments}</p>}
+              {errors.proofDocuments && <p role="alert" className="mt-1.5 text-[13px] text-doson">{errors.proofDocuments}</p>}
             </div>
             <Field label="Giới thiệu ngắn về xưởng" htmlFor="proofNote" hint="Không bắt buộc – sẽ thành câu chuyện ban đầu trên trang xưởng">
               <Textarea id="proofNote" value={form.proofNote} onChange={(e) => set("proofNote", e.target.value)} maxLength={500} />

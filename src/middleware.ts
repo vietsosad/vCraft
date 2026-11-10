@@ -1,21 +1,24 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 /**
- * Middleware chạy trước mọi request tới khu vực cần đăng nhập.
- * Chỉ kiểm tra nhanh sự tồn tại của cookie phiên để chuyển hướng sớm tới /login?next=…;
- * việc xác thực phiên và kiểm tra vai trò thật sự diễn ra ở server (getCurrentUser, requireRole).
+ * Middleware chạy trước mọi request tới khu cần đăng nhập.
+ * Chỉ kiểm tra nhanh cookie phiên để chuyển sớm tới đúng cổng đăng nhập của khu:
+ * /dashboard/admin → /login/admin, /dashboard/artisan → /login/artisan, /account → /login.
+ * Việc xác thực phiên và kiểm tra vai trò thật sự diễn ra ở server (getCurrentUser, requireRole).
  */
 export function middleware(req: NextRequest) {
-  const hasSession = req.cookies.has("vcraft_session");
-  if (!hasSession) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/login";
-    url.search = `?next=${encodeURIComponent(req.nextUrl.pathname + req.nextUrl.search)}`;
-    return NextResponse.redirect(url);
-  }
-  return NextResponse.next();
+  if (req.cookies.has("vcraft_session")) return NextResponse.next();
+  const { pathname, search } = req.nextUrl;
+  const url = req.nextUrl.clone();
+  url.pathname = pathname.startsWith("/dashboard/admin")
+    ? "/login/admin"
+    : pathname.startsWith("/dashboard/artisan")
+      ? "/login/artisan"
+      : "/login";
+  url.search = `?next=${encodeURIComponent(pathname + search)}`;
+  return NextResponse.redirect(url);
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/b2b-quotes/new", "/notifications"],
+  matcher: ["/dashboard/:path*", "/account/:path*", "/account"],
 };

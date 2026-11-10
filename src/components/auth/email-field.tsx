@@ -26,7 +26,7 @@ export function EmailField({ value, onChange, error, onError }: { value: string;
   }
 
   return (
-    <Field label="Email" htmlFor="email" error={error} required hint={available ? <span className="inline-flex items-center gap-1 text-celadon"><CheckCircle2 className="size-3.5" /> Email dùng được</span> : undefined}>
+    <Field label="Email" htmlFor="email" error={error} required hint={available ? <span className="inline-flex items-center gap-1 text-ngoc"><CheckCircle2 className="size-3.5" /> Email dùng được</span> : undefined}>
       <Input id="email" type="email" autoComplete="email" value={value} invalid={!!error} onBlur={check}
         onChange={(e) => { onChange(e.target.value); setAvailable(false); }} placeholder="ban@vidu.vn" />
     </Field>

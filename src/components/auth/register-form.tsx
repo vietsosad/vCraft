@@ -11,7 +11,7 @@ import { EmailField } from "@/components/auth/email-field";
 import { PasswordMeter } from "@/components/auth/password-meter";
 import { useToast } from "@/components/ui/toast";
 
-export default function RegisterPage() {
+export function RegisterForm() {
   const router = useRouter();
   const toast = useToast();
   const [form, setForm] = useState({ name: "", email: "", phone: "", organization: "", password: "" });
@@ -32,8 +32,8 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       await api("/api/auth/register", { body: parsed.data });
-      toast({ kind: "success", title: "Tạo tài khoản thành công", description: "Bạn đã có thể gửi yêu cầu báo giá sỉ." });
-      router.push("/b2b-quotes");
+      toast({ kind: "success", title: "Tạo tài khoản thành công", description: "Bạn đã có thể đặt sỉ, đặt lịch nặn gốm và lưu tác phẩm yêu thích." });
+      router.push("/account");
       router.refresh();
     } catch (err) {
       if (err instanceof ApiError) {
@@ -46,11 +46,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mx-auto max-w-md px-4 py-12">
-      <p className="eyebrow">Khách hàng · Khách sỉ</p>
-      <h1 className="mt-3 text-4xl md:text-5xl">Tạo tài khoản</h1>
-      <p className="mb-8 mt-2 text-ash">Để đặt hàng sỉ, theo dõi đơn và nhận thông báo từ các xưởng.</p>
-      <form onSubmit={onSubmit} noValidate className="space-y-4">
+    <form onSubmit={onSubmit} noValidate className="space-y-4">
         <Field label="Họ và tên" htmlFor="name" error={errors.name} required>
           <Input id="name" autoComplete="name" value={form.name} invalid={!!errors.name} onChange={(e) => set("name")(e.target.value)} onBlur={() => validateField("name")} />
         </Field>
@@ -66,10 +62,9 @@ export default function RegisterPage() {
         </Field>
         <PasswordMeter value={form.password} />
         <Button type="submit" size="lg" className="w-full" loading={loading}>Tạo tài khoản</Button>
-        <p className="text-center text-sm text-ash">
-          Bạn là hộ làm gốm? <Link href="/register/artisan" className="text-terracotta hover:underline">Đăng ký hộ nghề</Link>
+        <p className="text-center text-sm text-tro">
+          Bạn là hộ làm gốm? <Link href="/register/artisan" className="text-datnung hover:underline">Đăng ký hộ nghề</Link>
         </p>
-      </form>
-    </div>
+    </form>
   );
 }
