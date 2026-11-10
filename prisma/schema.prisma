@@ -65,6 +65,15 @@ enum HeritageKind {
   MARKET
 }
 
+/// Lịch trải nghiệm nặn gốm tại xưởng
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+  CANCELLED
+  COMPLETED
+}
+
 enum NewsCategory {
   NGUYEN_LIEU
   LICH_CUP_DIEN
@@ -94,6 +103,10 @@ model User {
   notifications  Notification[]
   statusChanges  QuoteStatusHistory[]
   auditLogs      AuditLog[]
+  favorites      Favorite[]
+  reviews        Review[]
+  bookings       ExperienceBooking[]
+  resetTokens    PasswordResetToken[]
 }
 
 /// Phiên đăng nhập phía server. Cookie chỉ chứa token ngẫu nhiên, CSDL lưu bản băm SHA-256.
@@ -143,7 +156,11 @@ model ArtisanProfile {
   /// [MediaImage]
   workshopImages     Json               @default("[]")
   coverImage         Json?
-  ratingAvg          Float              @default(4.5)
+  /// Điểm trung bình và số lượt đánh giá thật (cập nhật khi có đánh giá mới)
+  ratingAvg          Float              @default(0)
+  ratingCount        Int                @default(0)
+  /// Số khách tối đa cho một khung giờ trải nghiệm
+  experienceCapacity Int                @default(12)
   verificationStatus VerificationStatus @default(PENDING)
   verificationNote   String?
   verifiedAt         DateTime?
@@ -159,6 +176,9 @@ model ArtisanProfile {
   batches     ProductBatch[]
   bids        QuoteBid[]
   invitations QuoteInvitation[]
+  favoritedBy Favorite[]
+  reviews     Review[]
+  bookings    ExperienceBooking[]
 
   @@index([verificationStatus])
 }
@@ -184,6 +204,7 @@ model Product {
   searchText     String        @default("")
   currentBatchId String?
   currentBatch   ProductBatch? @relation(fields: [currentBatchId], references: [id], onDelete: SetNull)
+  favoritedBy    Favorite[]
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
 
@@ -218,6 +239,7 @@ model ProductBatch {
   quoteRequest      QuoteRequest? @relation(fields: [quoteRequestId], references: [id], onDelete: SetNull)
   allocatedQuantity Int?
   products          Product[]
+  scans             ScanEvent[]
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
@@ -252,6 +274,7 @@ model QuoteRequest {
   invitations      QuoteInvitation[]
   allocatedBatches ProductBatch[]
   history          QuoteStatusHistory[]
+  reviews          Review[]
 
   @@index([status])
   @@index([buyerId])
@@ -370,4 +393,93 @@ model AuditLog {
 model Counter {
   key   String @id
   value Int    @default(0)
+}
+
+/// Sản phẩm hoặc xưởng khách hàng đã lưu. Mỗi bản ghi trỏ tới đúng một trong hai.
+model Favorite {
+  id        String          @id @default(cuid())
+  userId    String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String?
+  product   Product?        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  artisanId String?
+  artisan   ArtisanProfile? @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  createdAt DateTime        @default(now())
+
+  @@unique([userId, productId])
+  @@unique([userId, artisanId])
+  @@index([userId])
+}
+
+/// Đánh giá xưởng: chỉ được viết sau khi đơn sỉ đã giao (xưởng trúng thầu) hoặc buổi trải nghiệm đã hoàn tất.
+model Review {
+  id             String             @id @default(cuid())
+  artisanId      String
+  artisan        ArtisanProfile     @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  authorId       String
+  author         User               @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  quoteRequestId String?
+  quoteRequest   QuoteRequest?      @relation(fields: [quoteRequestId], references: [id], onDelete: SetNull)
+  bookingId      String?            @unique
+  booking        ExperienceBooking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  rating         Int
+  comment        String             @db.Text
+  artisanReply   String?            @db.Text
+  repliedAt      DateTime?
+  createdAt      DateTime           @default(now())
+
+  @@unique([quoteRequestId, artisanId])
+  @@index([artisanId, createdAt])
+}
+
+/// Đặt lịch trải nghiệm nặn gốm tại xưởng
+model ExperienceBooking {
+  id           String         @id @default(cuid())
+  code         String         @unique
+  artisanId    String
+  artisan      ArtisanProfile @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  userId       String
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  visitDate    DateTime       @db.Date
+  /// Khung giờ bắt đầu "HH:MM"
+  slot         String
+  guests       Int
+  contactName  String
+  contactPhone String
+  note         String?
+  /// Giá mỗi khách tại thời điểm đặt × số khách
+  totalVnd     Int
+  status       BookingStatus  @default(PENDING)
+  artisanNote  String?
+  version      Int            @default(1)
+  review       Review?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([artisanId, visitDate])
+  @@index([userId])
+}
+
+/// Mã đặt lại mật khẩu: chỉ lưu bản băm, dùng một lần, hết hạn sau 30 phút.
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}
+
+/// Mỗi lượt quét QR một lô – dùng để vẽ biểu đồ lượt quét theo ngày.
+model ScanEvent {
+  id        String       @id @default(cuid())
+  batchId   String
+  batch     ProductBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  createdAt DateTime     @default(now())
+
+  @@index([batchId, createdAt])
+  @@index([createdAt])
 }
