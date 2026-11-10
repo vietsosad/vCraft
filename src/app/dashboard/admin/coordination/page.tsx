@@ -30,7 +30,7 @@ export default async function CoordinationPage() {
     <div className="space-y-5">
       <div>
         <h2 className="text-3xl">Điều phối đơn sỉ</h2>
-        <p className="text-sm text-ash">BQL xem được mọi chào giá, mời thêm xưởng khi đơn ít người chào và theo dõi tiến độ từng hộ được phân bổ.</p>
+        <p className="text-sm text-tro">BQL xem được mọi chào giá, mời thêm xưởng khi đơn ít người chào và theo dõi tiến độ từng hộ được phân bổ.</p>
       </div>
       {quotes.map((q) => {
         const committed = q.bids.filter((b) => b.status === "PENDING").reduce((s, b) => s + b.committedQuantity, 0);
@@ -41,17 +41,17 @@ export default async function CoordinationPage() {
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <Link href={`/b2b-quotes/${q.requestCode}`} className="font-mono text-sm text-cobalt hover:underline">{q.requestCode}</Link>
+                  <Link href={`/dashboard/admin/coordination/${q.requestCode}`} className="font-mono text-sm text-lam hover:underline">{q.requestCode}</Link>
                   <QuoteStatusBadge status={q.status} />
-                  <span className="font-mono text-[11px] text-ash">v{q.version}</span>
+                  <span className="font-mono text-[11px] text-tro">v{q.version}</span>
                 </div>
-                <p className="mt-1 font-display text-xl">{q.title}</p>
-                <p className="text-sm text-ash">{q.organizationName} · {formatNumber(q.quantity)} sp · {GLAZES[q.preferredGlaze].label} · cập nhật {formatDate(q.updatedAt, true)}</p>
+                <p className="mt-1 font-serif text-xl">{q.title}</p>
+                <p className="text-sm text-tro">{q.organizationName} · {formatNumber(q.quantity)} sp · {GLAZES[q.preferredGlaze].label} · cập nhật {formatDate(q.updatedAt, true)}</p>
               </div>
               {open && (
                 <div className="text-right text-sm">
-                  <p>Đã chào nhận <strong className={committed >= q.quantity ? "text-celadon" : "text-terracotta"}>{formatNumber(committed)}</strong> / {formatNumber(q.quantity)} sp</p>
-                  <p className="text-xs text-ash">{q.invitations.length} xưởng được mời · {q.bids.length} chào giá</p>
+                  <p>Đã chào nhận <strong className={committed >= q.quantity ? "text-ngoc" : "text-datnung"}>{formatNumber(committed)}</strong> / {formatNumber(q.quantity)} sp</p>
+                  <p className="text-xs text-tro">{q.invitations.length} xưởng được mời · {q.bids.length} chào giá</p>
                 </div>
               )}
             </div>
@@ -59,7 +59,7 @@ export default async function CoordinationPage() {
             {open && q.bids.length > 0 && (
               <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
                 {q.bids.map((b) => (
-                  <li key={b.id} className="rounded-md border border-line bg-white/80 p-3 text-sm">
+                  <li key={b.id} className="rounded-md border border-vua bg-su/80 p-3 text-sm">
                     <p className="font-medium">{b.artisan.workshopName}</p>
                     <p className="font-mono text-xs">{formatVnd(b.offeredPricePerUnit)} · {formatNumber(b.committedQuantity)} sp · {b.estimatedDays} ngày</p>
                   </li>
@@ -74,10 +74,10 @@ export default async function CoordinationPage() {
                   const n = asStages(b.productionStages).length;
                   const late = q.status === "IN_PRODUCTION" && n < 3;
                   return (
-                    <li key={b.batchCode} className="rounded-md border border-line bg-white/80 p-3 text-sm">
+                    <li key={b.batchCode} className="rounded-md border border-vua bg-su/80 p-3 text-sm">
                       <div className="flex items-center justify-between gap-2"><span className="font-medium">{b.artisan.workshopName}</span><Badge tone={b.status === "COMPLETED" ? "celadon" : late ? "terracotta" : "gold"}>{b.status === "COMPLETED" ? "Hoàn tất" : late ? "Cần đôn đốc" : "Đang làm"}</Badge></div>
-                      <p className="font-mono text-xs text-ash">{b.batchCode} · {formatNumber(b.allocatedQuantity ?? 0)} sp · {n}/6 công đoạn</p>
-                      <div className="mt-1.5 h-1.5 overflow-hidden rounded bg-bisque"><div className="h-full bg-terracotta" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
+                      <p className="font-mono text-xs text-tro">{b.batchCode} · {formatNumber(b.allocatedQuantity ?? 0)} sp · {n}/6 công đoạn</p>
+                      <div className="mt-1.5 h-1.5 overflow-hidden rounded bg-nga-dam"><div className="h-full bg-datnung" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
                     </li>
                   );
                 })}

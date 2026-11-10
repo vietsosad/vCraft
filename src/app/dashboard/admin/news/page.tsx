@@ -16,13 +16,13 @@ export default async function AdminNewsPage() {
         <h2 className="text-3xl">Tin tức cộng đồng</h2>
         <ButtonLink href="/dashboard/admin/news/new" variant="cobalt"><Plus className="size-4" /> Đăng tin</ButtonLink>
       </div>
-      <ul className="divide-y divide-line rounded-[var(--radius-tile)] border border-line bg-white/70">
+      <ul className="divide-y divide-vua rounded-[var(--radius-tile)] border border-vua bg-su/70">
         {news.map((n) => (
           <li key={n.id}>
-            <Link href={`/dashboard/admin/news/${n.id}`} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 hover:bg-bisque/40">
+            <Link href={`/dashboard/admin/news/${n.id}`} className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 hover:bg-nga-dam/40">
               <div className="min-w-0">
                 <p className="font-medium">{n.title}</p>
-                <p className="text-xs text-ash">{NEWS_CATEGORIES[n.category]} · {n.author.name} · {formatDate(n.publishedAt)}</p>
+                <p className="text-xs text-tro">{NEWS_CATEGORIES[n.category]} · {n.author.name} · {formatDate(n.publishedAt)}</p>
               </div>
               <div className="flex gap-1.5">
                 {n.isUrgent && <Badge tone="terracotta">Khẩn</Badge>}

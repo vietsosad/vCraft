@@ -77,8 +77,8 @@ export function NewsEditor({ id, initial }: { id?: string; initial?: NewsForm })
         <Checkbox label="Tin khẩn" description="Ghim banner trên trang chủ, gửi thông báo tới mọi hộ nghề" checked={form.isUrgent} onChange={(e) => set("isUrgent", e.target.checked)} />
         <Checkbox label="Đăng công khai" checked={form.isPublished} onChange={(e) => set("isPublished", e.target.checked)} />
       </div>
-      <div className="flex justify-between border-t border-line pt-4">
-        {id ? <Button variant="ghost" className="text-terracotta" onClick={() => setConfirmDelete(true)}><Trash2 className="size-4" /> Xóa tin</Button> : <span />}
+      <div className="flex justify-between border-t border-vua pt-4">
+        {id ? <Button variant="ghost" className="text-datnung" onClick={() => setConfirmDelete(true)}><Trash2 className="size-4" /> Xóa tin</Button> : <span />}
         <Button variant="cobalt" onClick={save} loading={saving}>{id ? "Lưu thay đổi" : "Đăng tin"}</Button>
       </div>
       <ConfirmDialog open={confirmDelete} onClose={() => setConfirmDelete(false)} onConfirm={remove} title="Xóa tin này?" danger confirmLabel="Xóa">Tin sẽ bị gỡ khỏi bản tin làng.</ConfirmDialog>

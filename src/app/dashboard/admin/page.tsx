@@ -1,90 +1,93 @@
 import Link from "next/link";
 import type { QuoteStatus } from "@prisma/client";
+import { ArrowRight, ClipboardCheck, Download } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { getStats } from "@/lib/services/admin-service";
-import { QUOTE_FLOW, QUOTE_STATUS, GLAZES, GLAZE_KEYS } from "@/lib/constants";
-import { formatNumber, formatVnd, timeAgo } from "@/lib/format";
-import { Card, Stat } from "@/components/ui/primitives";
+import { villageStats } from "@/lib/services/stats-service";
+import { QUOTE_FLOW, QUOTE_STATUS } from "@/lib/constants";
+import { formatNumber, timeAgo } from "@/lib/format";
+import { auditLabel } from "@/lib/audit-labels";
+import { Card, PageHeader, Stat } from "@/components/ui/primitives";
+import { ButtonLink } from "@/components/ui/button";
+import { CountUp } from "@/components/motion/count-up";
+import { BarList, DailyColumns, StackedColumns } from "@/components/charts/charts";
 
 export const dynamic = "force-dynamic";
 
-const ACTION_LABEL: Record<string, string> = {
-  ARTISAN_APPROVED: "Duyệt hộ nghề", ARTISAN_REJECTED: "Từ chối hồ sơ", USER_SUSPENDED: "Khóa tài khoản", USER_REACTIVATED: "Mở khóa tài khoản",
-  NEWS_CREATED: "Đăng tin", NEWS_UPDATED: "Sửa tin", NEWS_DELETED: "Xóa tin", QUOTE_ACCEPTED: "Chốt đơn sỉ", QUOTE_INVITE: "Mời thêm xưởng",
-};
-
 export default async function AdminOverview() {
-  const [stats, byGlaze, topBatches, logs] = await Promise.all([
+  const [stats, v, logs, pendingApps] = await Promise.all([
     getStats(),
-    prisma.product.groupBy({ by: ["glazeType"], where: { isPublished: true }, _count: { _all: true } }),
-    prisma.productBatch.findMany({ orderBy: { scanCount: "desc" }, take: 5, include: { artisan: { select: { workshopName: true } } } }),
-    prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 8, include: { actor: { select: { name: true } } } }),
+    villageStats(),
+    prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 7, include: { actor: { select: { name: true } } } }),
+    prisma.artisanProfile.findMany({ where: { verificationStatus: "PENDING" }, select: { id: true, workshopName: true, createdAt: true }, take: 3 }),
   ]);
-  const maxQuotes = Math.max(1, ...QUOTE_FLOW.map((s) => stats.quotesByStatus[s] ?? 0));
-  const maxGlaze = Math.max(1, ...byGlaze.map((g) => g._count._all));
-  const maxScan = Math.max(1, ...topBatches.map((b) => b.scanCount));
 
   return (
     <div className="space-y-8">
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-5">
-        <Stat label="Hộ nghề xác thực" value={stats.artisans} />
-        <Link href="/dashboard/admin/approvals" className="block"><Stat label="Hồ sơ chờ duyệt" value={<span className={stats.pending ? "text-terracotta" : ""}>{stats.pending}</span>} hint="Bấm để duyệt" /></Link>
-        <Stat label="Tác phẩm công khai" value={stats.products} />
-        <Stat label="Lượt quét QR" value={formatNumber(stats.scans)} hint={`${stats.batches} lô sản xuất`} />
-        <Stat label="Giá trị đơn sỉ đã chốt" value={<span className="text-3xl">{formatVnd(stats.orderValue)}</span>} />
+      <PageHeader
+        title="Toàn cảnh làng nghề"
+        description="Số liệu 30 ngày gần nhất của cả làng: lượt quét QR, đơn sỉ, hộ nghề mới và khách đến trải nghiệm."
+        actions={<ButtonLink href="/dashboard/admin/reports" variant="outline"><Download className="size-4" /> Xuất báo cáo</ButtonLink>}
+      />
+
+      {pendingApps.length > 0 && (
+        <Link href="/dashboard/admin/approvals" data-reveal className="tile glaze tile-dat flex items-center gap-4 p-4 text-giay">
+          <ClipboardCheck className="size-6 shrink-0" aria-hidden />
+          <span className="flex-1">
+            <span className="block font-semibold">{pendingApps.length} hồ sơ hộ nghề đang chờ duyệt</span>
+            <span className="block text-sm text-giay/80">{pendingApps.map((a) => a.workshopName).join(", ")} · gửi {timeAgo(pendingApps[0].createdAt)}</span>
+          </span>
+          <ArrowRight className="size-5" aria-hidden />
+        </Link>
+      )}
+
+      <div className="mosaic grid-cols-2 lg:grid-cols-4">
+        <Stat tone="ngoc" label="Hộ nghề xác thực" value={<CountUp value={stats.artisans} />} hint={`${stats.products} tác phẩm công khai`} />
+        <Stat label="Lượt quét QR (30 ngày)" value={<CountUp value={v.scans30} />} hint={`${formatNumber(stats.scans)} lượt từ trước tới nay`} />
+        <Stat label="Giá trị đơn sỉ đã chốt" value={<span className="text-[2rem]"><CountUp value={v.gmv} format="vnd" /></span>} hint={`${formatNumber(v.unitsAllocated)} sản phẩm đã phân bổ`} />
+        <Stat label="Khách đã đặt trải nghiệm" value={<CountUp value={v.guests} />} hint={`${v.bookings.COMPLETED ?? 0} buổi đã diễn ra`} />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <Card className="p-6">
+        <h2 className="font-serif text-2xl font-bold normal-case">Lượt quét QR mỗi ngày</h2>
+        <p className="mb-4 text-sm text-tro">Mỗi lượt quét là một khách kiểm tra nguồn gốc ngay tại quầy hoặc tại nhà.</p>
+        <DailyColumns data={v.scans} label="Lượt quét QR mỗi ngày, 30 ngày gần nhất" unit="lượt quét" />
+      </Card>
+
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card className="p-6">
-          <h2 className="text-2xl">Yêu cầu báo giá theo trạng thái</h2>
-          <ul className="mt-5 space-y-3">
-            {(QUOTE_FLOW as QuoteStatus[]).map((s) => {
-              const n = stats.quotesByStatus[s] ?? 0;
-              return (
-                <li key={s} className="grid grid-cols-[150px_1fr_32px] items-center gap-3 text-sm">
-                  <span className="text-ash">{QUOTE_STATUS[s].label}</span>
-                  <span className="h-3 overflow-hidden rounded-full bg-bisque"><span className="block h-full rounded-full bg-cobalt" style={{ width: `${(n / maxQuotes) * 100}%` }} /></span>
-                  <span className="text-right font-mono">{n}</span>
-                </li>
-              );
-            })}
-          </ul>
+          <h2 className="font-serif text-2xl font-bold normal-case">Đăng ký mới theo tuần</h2>
+          <p className="mb-4 text-sm text-tro">8 tuần gần nhất.</p>
+          <StackedColumns
+            label="Đăng ký mới theo tuần, khách hàng và hộ nghề"
+            series={[{ name: "Khách hàng", color: "var(--chart-1)" }, { name: "Hộ nghề", color: "var(--chart-2)" }]}
+            data={v.registrations.map((r) => ({ x: r.week, values: [r.BUYER, r.ARTISAN] }))}
+          />
         </Card>
         <Card className="p-6">
-          <h2 className="text-2xl">Tác phẩm theo dòng men</h2>
-          <ul className="mt-5 space-y-3">
-            {GLAZE_KEYS.map((g) => {
-              const n = byGlaze.find((x) => x.glazeType === g)?._count._all ?? 0;
-              return (
-                <li key={g} className="grid grid-cols-[150px_1fr_32px] items-center gap-3 text-sm">
-                  <span className="flex items-center gap-1.5 text-ash"><span className="size-2.5 rounded-full" style={{ background: GLAZES[g].color }} />{GLAZES[g].label}</span>
-                  <span className="h-3 overflow-hidden rounded-full bg-bisque"><span className="block h-full rounded-full bg-terracotta" style={{ width: `${(n / maxGlaze) * 100}%` }} /></span>
-                  <span className="text-right font-mono">{n}</span>
-                </li>
-              );
-            })}
-          </ul>
+          <h2 className="font-serif text-2xl font-bold normal-case">Yêu cầu báo giá theo trạng thái</h2>
+          <p className="mb-5 text-sm text-tro">Theo máy trạng thái của sàn báo giá.</p>
+          <BarList
+            label="Số yêu cầu báo giá theo trạng thái"
+            items={([...QUOTE_FLOW, "CANCELLED"] as QuoteStatus[]).map((s) => ({ label: QUOTE_STATUS[s].label, value: v.quotesByStatus[s] ?? 0 }))}
+          />
         </Card>
         <Card className="p-6">
-          <h2 className="text-2xl">Lô được quét nhiều nhất</h2>
-          <ul className="mt-5 space-y-3">
-            {topBatches.map((b) => (
-              <li key={b.id} className="text-sm">
-                <div className="flex justify-between gap-2"><Link href={`/trace/${b.batchCode}`} className="truncate hover:text-terracotta">{b.batchTitle}</Link><span className="font-mono">{formatNumber(b.scanCount)}</span></div>
-                <div className="mt-1 h-1.5 overflow-hidden rounded bg-bisque"><div className="h-full bg-celadon" style={{ width: `${(b.scanCount / maxScan) * 100}%` }} /></div>
-                <p className="mt-0.5 text-xs text-ash">{b.artisan.workshopName} · {b.batchCode}</p>
-              </li>
-            ))}
-          </ul>
+          <h2 className="font-serif text-2xl font-bold normal-case">Xưởng nhận nhiều đơn sỉ nhất</h2>
+          <p className="mb-5 text-sm text-tro">Tổng số sản phẩm được phân bổ khi khách chốt.</p>
+          <BarList label="Số sản phẩm được phân bổ theo xưởng" color="var(--chart-3)" items={v.topWorkshops.map((t) => ({ label: t.name, value: t.units }))} />
         </Card>
         <Card className="p-6">
-          <h2 className="text-2xl">Nhật ký thao tác</h2>
-          <ul className="mt-5 divide-y divide-line text-sm">
-            {logs.length === 0 && <li className="py-3 text-ash">Chưa có thao tác nào.</li>}
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-serif text-2xl font-bold normal-case">Nhật ký thao tác</h2>
+            <Link href="/dashboard/admin/audit" className="inline-flex items-center gap-1 text-sm font-semibold text-ngoc">Tất cả <ArrowRight className="size-4" /></Link>
+          </div>
+          <ul className="divide-y divide-vua text-sm">
+            {logs.length === 0 && <li className="py-3 text-tro">Chưa có thao tác nào.</li>}
             {logs.map((l) => (
               <li key={l.id} className="flex justify-between gap-3 py-2.5">
-                <span><strong>{l.actor?.name ?? "Hệ thống"}</strong> · {ACTION_LABEL[l.action] ?? l.action}</span>
-                <span className="shrink-0 text-xs text-ash">{timeAgo(l.createdAt)}</span>
+                <span><strong>{l.actor?.name ?? "Hệ thống"}</strong> · {auditLabel(l.action)}</span>
+                <span className="shrink-0 text-xs text-tro">{timeAgo(l.createdAt)}</span>
               </li>
             ))}
           </ul>

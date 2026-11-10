@@ -29,13 +29,13 @@ export function ApprovalActions({ id, status, note }: { id: string; status: "PEN
   }
 
   if (status === "APPROVED") {
-    return <Card className="space-y-3 p-6 text-center"><VerifiedSeal className="mx-auto" /><p className="text-sm text-ash">Hồ sơ đã được duyệt. Xưởng đang hiển thị công khai.</p></Card>;
+    return <Card className="space-y-3 p-6 text-center"><VerifiedSeal className="mx-auto" /><p className="text-sm text-tro">Hồ sơ đã được duyệt. Xưởng đang hiển thị công khai.</p></Card>;
   }
 
   return (
     <Card className="space-y-4 p-6">
       <div className="flex items-center justify-between"><p className="font-medium">Quyết định</p><Badge tone={status === "PENDING" ? "gold" : "terracotta"}>{status === "PENDING" ? "Chờ duyệt" : "Đã từ chối"}</Badge></div>
-      {note && <p className="rounded bg-bisque p-2 text-xs text-ash">Ghi chú trước: {note}</p>}
+      {note && <p className="rounded bg-nga-dam p-2 text-xs text-tro">Ghi chú trước: {note}</p>}
       <label htmlFor="reason" className="block text-sm font-medium">Ghi chú / lý do từ chối</label>
       <Textarea id="reason" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Bắt buộc khi từ chối, tối thiểu 10 ký tự để hộ nghề biết cần bổ sung gì" />
       <div className="grid gap-2">

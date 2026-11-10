@@ -29,7 +29,7 @@ export function SuspendButton({ id, suspended, name }: { id: string; suspended: 
 
   return (
     <>
-      <Button size="sm" variant={suspended ? "outline" : "ghost"} className={suspended ? "" : "text-terracotta"} onClick={() => setOpen(true)}>{suspended ? "Mở khóa" : "Tạm khóa"}</Button>
+      <Button size="sm" variant={suspended ? "outline" : "ghost"} className={suspended ? "" : "text-datnung"} onClick={() => setOpen(true)}>{suspended ? "Mở khóa" : "Tạm khóa"}</Button>
       <ConfirmDialog open={open} onClose={() => setOpen(false)} onConfirm={confirm} loading={busy} danger={!suspended} title={suspended ? "Mở khóa tài khoản?" : "Tạm khóa tài khoản?"} confirmLabel={suspended ? "Mở khóa" : "Khóa"}>
         {suspended ? `${name} sẽ đăng nhập lại được.` : `${name} sẽ bị đăng xuất khỏi mọi thiết bị, sản phẩm của xưởng (nếu có) bị ẩn khỏi trang công khai.`}
       </ConfirmDialog>

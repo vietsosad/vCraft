@@ -30,13 +30,13 @@ export function InviteArtisans({ code, artisans }: { code: string; artisans: { i
   }
 
   return (
-    <div className="mt-4 rounded-md border border-dashed border-cobalt/40 bg-cobalt/[0.04] p-3">
-      <p className="text-sm font-medium text-cobalt">Chưa đủ công suất – mời thêm xưởng:</p>
+    <div className="mt-4 rounded-md border border-dashed border-lam/40 bg-lam/[0.04] p-3">
+      <p className="text-sm font-medium text-lam">Chưa đủ công suất – mời thêm xưởng:</p>
       <div className="mt-2 flex flex-wrap gap-2">
         {artisans.map((a) => (
-          <label key={a.id} className="flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-xs">
-            <input type="checkbox" className="accent-cobalt" checked={picked.includes(a.id)} onChange={(e) => setPicked(e.target.checked ? [...picked, a.id] : picked.filter((x) => x !== a.id))} />
-            {a.workshopName} <span className="text-ash">({formatNumber(a.maxMonthlyCapacity)}/th)</span>
+          <label key={a.id} className="flex items-center gap-1.5 rounded-[4px] border border-vua bg-su px-3 py-1 text-xs">
+            <input type="checkbox" className="accent-lam" checked={picked.includes(a.id)} onChange={(e) => setPicked(e.target.checked ? [...picked, a.id] : picked.filter((x) => x !== a.id))} />
+            {a.workshopName} <span className="text-tro">({formatNumber(a.maxMonthlyCapacity)}/th)</span>
           </label>
         ))}
       </div>

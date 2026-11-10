@@ -22,11 +22,11 @@ export default async function ApprovalsPage({ searchParams }: { searchParams: Pr
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="text-3xl">Kiểm duyệt hộ nghề</h2>
-          <p className="text-sm text-ash">Đối chiếu minh chứng với danh sách hộ làm nghề trước khi cấp huy hiệu – chặn hàng nhái trà trộn.</p>
+          <p className="text-sm text-tro">Đối chiếu minh chứng với danh sách hộ làm nghề trước khi cấp huy hiệu – chặn hàng nhái trà trộn.</p>
         </div>
-        <div className="flex gap-1 rounded-full border border-line bg-white/70 p-1 text-sm">
+        <div className="flex gap-1 rounded-[8px] border border-vua bg-su p-1 text-sm">
           {(Object.keys(TONE) as (keyof typeof TONE)[]).map((s) => (
-            <Link key={s} href={`/dashboard/admin/approvals?status=${s}`} className={`rounded-full px-3 py-1 ${s === filter ? "bg-cobalt text-kaolin" : "text-ash hover:text-ink"}`}>{TONE[s][0]}</Link>
+            <Link key={s} href={`/dashboard/admin/approvals?status=${s}`} className={`rounded-[5px] px-3 py-1 ${s === filter ? "bg-lam text-on" : "text-tro hover:text-muc"}`}>{TONE[s][0]}</Link>
           ))}
         </div>
       </div>
@@ -36,15 +36,15 @@ export default async function ApprovalsPage({ searchParams }: { searchParams: Pr
         <ul className="space-y-3">
           {rows.map((r) => (
             <li key={r.id}>
-              <Link href={`/dashboard/admin/approvals/${r.id}`} className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-tile)] border border-line bg-white/70 p-5 hover:border-cobalt/40">
+              <Link href={`/dashboard/admin/approvals/${r.id}`} className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-5 hover:border-lam/40">
                 <div>
-                  <p className="font-display text-xl">{r.workshopName}</p>
-                  <p className="text-sm text-ash">{r.user.name} · dòng họ {r.clanName} · {r.user.email}</p>
-                  <p className="text-xs text-ash">{r.address} · {r.specialties.map((s) => GLAZES[s].label).join(", ")}</p>
+                  <p className="font-serif text-xl">{r.workshopName}</p>
+                  <p className="text-sm text-tro">{r.user.name} · dòng họ {r.clanName} · {r.user.email}</p>
+                  <p className="text-xs text-tro">{r.address} · {r.specialties.map((s) => GLAZES[s].label).join(", ")}</p>
                 </div>
                 <div className="text-right">
                   <Badge tone={TONE[r.verificationStatus][1]}>{TONE[r.verificationStatus][0]}</Badge>
-                  <p className="mt-1 text-xs text-ash">Gửi {formatDate(r.createdAt, true)}</p>
+                  <p className="mt-1 text-xs text-tro">Gửi {formatDate(r.createdAt, true)}</p>
                 </div>
               </Link>
             </li>
