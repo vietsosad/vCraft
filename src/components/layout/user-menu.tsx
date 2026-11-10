@@ -3,83 +3,102 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown, LayoutDashboard, LogOut, ShieldCheck, Store, FileText } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown, LogOut, Globe } from "lucide-react";
 import { api } from "@/lib/api-client";
+import { cn } from "@/lib/cn";
+import { ZONES, type Role } from "./zones";
 
-const ROLE_LABEL = { BUYER: "Khách hàng", ARTISAN: "Nghệ nhân", ADMIN: "Ban quản lý" } as const;
-
+/** Menu tài khoản: chỉ liệt kê các mục thuộc khu của vai trò người dùng. */
 export function UserMenu({
   user,
+  align = "right",
+  showSiteLink = false,
 }: {
-  user: { name: string; email: string; role: keyof typeof ROLE_LABEL; status: string };
+  user: { name: string; email: string; role: Role; status: string };
+  align?: "right" | "left";
+  showSiteLink?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const zone = ZONES[user.role];
 
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("click", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
   }, []);
 
   async function logout() {
     await api("/api/auth/logout", { method: "POST" });
-    router.push("/");
+    router.push(zone.loginHref);
     router.refresh();
   }
 
-  const links =
-    user.role === "ADMIN"
-      ? [{ href: "/dashboard/admin", label: "Bảng điều phối BQL", icon: ShieldCheck }]
-      : user.role === "ARTISAN"
-        ? [
-            { href: "/dashboard/artisan", label: "Xưởng của tôi", icon: Store },
-            { href: "/dashboard/artisan/quotes", label: "Cơ hội báo giá", icon: FileText },
-          ]
-        : [{ href: "/b2b-quotes", label: "Yêu cầu báo giá của tôi", icon: LayoutDashboard }];
-
-  const initials = user.name
-    .split(" ")
-    .slice(-2)
-    .map((w) => w[0])
-    .join("")
-    .toUpperCase();
+  const initials = user.name.split(" ").slice(-2).map((w) => w[0]).join("").toUpperCase();
 
   return (
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-full border border-line bg-white/70 py-1 pl-1 pr-2.5 hover:border-ink/30"
+        className="flex items-center gap-2 rounded-[var(--radius-tile)] border border-vua bg-su py-1 pl-1 pr-2 transition hover:border-muc/30"
         aria-expanded={open}
         aria-haspopup="menu"
+        aria-label={`Tài khoản ${user.name}`}
       >
-        <span className="grid size-8 place-items-center rounded-full bg-cobalt font-mono text-xs text-kaolin">{initials}</span>
-        <span className="hidden max-w-32 truncate text-sm md:block">{user.name}</span>
-        <ChevronDown className="size-4 text-ash" />
+        <span className={cn("grid size-8 place-items-center rounded-[4px] text-xs font-bold text-giay", zone.avatar)}>{initials}</span>
+        <span className="hidden max-w-32 truncate text-sm font-medium md:block">{user.name}</span>
+        <ChevronDown className={cn("size-4 text-tro transition-transform duration-300", open && "rotate-180")} />
       </button>
-      {open && (
-        <div role="menu" className="absolute right-0 top-12 w-64 overflow-hidden rounded-lg border border-line bg-white shadow-lift">
-          <div className="border-b border-line bg-bisque/60 px-4 py-3">
-            <p className="truncate text-sm font-semibold">{user.name}</p>
-            <p className="truncate text-xs text-ash">{user.email}</p>
-            <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-terracotta">
-              {ROLE_LABEL[user.role]}
-              {user.status === "PENDING" && " · chờ duyệt"}
-            </p>
-          </div>
-          {links.map((l) => (
-            <Link key={l.href} href={l.href} role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-bisque">
-              <l.icon className="size-4 text-ash" /> {l.label}
-            </Link>
-          ))}
-          <button onClick={logout} role="menuitem" className="flex w-full items-center gap-2.5 border-t border-line px-4 py-2.5 text-left text-sm hover:bg-bisque">
-            <LogOut className="size-4 text-ash" /> Đăng xuất
-          </button>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            role="menu"
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -4, scale: 0.98, transition: { duration: 0.12 } }}
+            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className={cn(
+              "absolute top-12 z-50 w-72 origin-top overflow-hidden rounded-[8px] border border-vua bg-su shadow-lift",
+              align === "right" ? "right-0" : "left-0",
+            )}
+          >
+            <div className={cn("px-4 py-3 text-giay", zone.band)}>
+              <p className="truncate text-sm font-semibold">{user.name}</p>
+              <p className="truncate text-xs opacity-80">{user.email}</p>
+              <p className="mt-1.5 inline-flex rounded-[3px] bg-giay/15 px-1.5 py-0.5 text-[11px] font-semibold">
+                {zone.roleLabel}
+                {user.status === "PENDING" && " · chờ duyệt"}
+              </p>
+            </div>
+            <div className="py-1">
+              {zone.menu.map((l) => (
+                <Link key={l.href} href={l.href} role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-nga-dam">
+                  <l.icon className="size-4 text-tro" /> {l.label}
+                </Link>
+              ))}
+              {showSiteLink && (
+                <Link href="/" role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-nga-dam">
+                  <Globe className="size-4 text-tro" /> Xem trang triển lãm
+                </Link>
+              )}
+            </div>
+            <button onClick={logout} role="menuitem" className="flex w-full items-center gap-2.5 border-t border-vua px-4 py-2.5 text-left text-sm hover:bg-nga-dam">
+              <LogOut className="size-4 text-tro" /> Đăng xuất
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

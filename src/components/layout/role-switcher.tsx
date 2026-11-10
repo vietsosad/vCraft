@@ -9,15 +9,15 @@ import { useToast } from "@/components/ui/toast";
 
 /** Các vai trò demo. Mỗi vai trò đăng nhập bằng tài khoản seed thật (có phiên, có phân quyền). */
 const PERSONAS = [
-  { key: "guest", label: "Du khách", email: null, landing: "/" },
-  { key: "buyer", label: "Khách sỉ · ĐH Công nghệ", email: "lan.uet@vcraft.test", landing: "/b2b-quotes" },
-  { key: "artisan", label: "Nghệ nhân · Xưởng Ông Tư", email: "ongtu@vcraft.test", landing: "/dashboard/artisan" },
-  { key: "artisan2", label: "Nghệ nhân · Hưng Phát", email: "hungphat@vcraft.test", landing: "/dashboard/artisan" },
-  { key: "admin", label: "Ban quản lý", email: "admin@vcraft.test", landing: "/dashboard/admin" },
+  { key: "guest", label: "Du khách", zone: "Công khai", email: null, landing: "/", dot: "bg-giay" },
+  { key: "buyer", label: "Khách sỉ · ĐH Công nghệ", zone: "Khu khách hàng", email: "lan.uet@vcraft.test", landing: "/account", dot: "bg-[#8fb1ec]" },
+  { key: "artisan", label: "Nghệ nhân · Xưởng Ông Tư", zone: "Khu xưởng", email: "ongtu@vcraft.test", landing: "/dashboard/artisan", dot: "bg-[#ec9a72]" },
+  { key: "artisan2", label: "Nghệ nhân · Hưng Phát", zone: "Khu xưởng", email: "hungphat@vcraft.test", landing: "/dashboard/artisan", dot: "bg-[#ec9a72]" },
+  { key: "admin", label: "Ban quản lý", zone: "Bảng điều phối", email: "admin@vcraft.test", landing: "/dashboard/admin", dot: "bg-[#8fc7b1]" },
 ] as const;
 
 /**
- * Thanh "Chế độ Demo Vấn đáp": chuyển vai trò bằng 1 cú bấm.
+ * Thanh "Demo vấn đáp": chuyển vai trò bằng một cú bấm và đưa thẳng tới khu riêng của vai trò đó.
  * Chỉ hiển thị khi DEMO_MODE=true; API phía server cũng từ chối nếu không bật chế độ này.
  */
 export function RoleSwitcher({ currentEmail }: { currentEmail: string | null }) {
@@ -32,7 +32,7 @@ export function RoleSwitcher({ currentEmail }: { currentEmail: string | null }) 
     setBusy(persona.key);
     try {
       await api("/api/auth/demo-login", { body: { persona: persona.key } });
-      toast({ kind: "info", title: `Đã chuyển sang vai trò: ${persona.label}` });
+      toast({ kind: "info", title: `Đã chuyển sang: ${persona.label}`, description: persona.zone });
       startTransition(() => {
         router.push(persona.landing);
         router.refresh();
@@ -45,12 +45,12 @@ export function RoleSwitcher({ currentEmail }: { currentEmail: string | null }) 
   }
 
   return (
-    <div className="no-print border-b border-cobalt/20 bg-cobalt text-kaolin">
-      <div className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto px-4 py-1.5 text-xs md:px-6">
-        <span className="flex shrink-0 items-center gap-1.5 font-mono uppercase tracking-widest text-kaolin/70">
-          <Presentation className="size-3.5" /> Demo vấn đáp
+    <div className="demo-bar no-print sticky top-0 z-[650] h-9 bg-dem text-giay">
+      <div className="mx-auto flex h-full max-w-[1440px] items-center gap-3 overflow-x-auto px-4 text-xs md:px-6 [scrollbar-width:none]">
+        <span className="flex shrink-0 items-center gap-1.5 font-semibold text-giay/60">
+          <Presentation className="size-3.5" aria-hidden /> Demo vấn đáp
         </span>
-        <div className="flex gap-1">
+        <div className="flex gap-1" role="group" aria-label="Chuyển vai trò demo">
           {PERSONAS.map((p) => (
             <button
               key={p.key}
@@ -58,11 +58,12 @@ export function RoleSwitcher({ currentEmail }: { currentEmail: string | null }) 
               disabled={pending || busy !== null}
               aria-pressed={current === p.key}
               className={cn(
-                "shrink-0 rounded-full px-3 py-1 transition",
-                current === p.key ? "bg-kaolin text-cobalt" : "text-kaolin/85 hover:bg-white/10",
+                "flex shrink-0 items-center gap-1.5 rounded-[4px] px-2.5 py-1 transition duration-200",
+                current === p.key ? "bg-giay text-[#121823]" : "text-giay/80 hover:bg-giay/10 hover:text-giay",
                 busy === p.key && "animate-pulse",
               )}
             >
+              <span className={cn("size-1.5 rounded-full", p.dot, current === p.key && "ring-2 ring-[#121823]/15")} aria-hidden />
               {p.label}
             </button>
           ))}

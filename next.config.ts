@@ -47,6 +47,8 @@ const nextConfig: NextConfig = {
       { source: "/tin-tuc/:slug", destination: "/news/:slug" },
       { source: "/dat-hang-si", destination: "/b2b-quotes" },
       { source: "/dat-hang-si/:code", destination: "/b2b-quotes/:code" },
+      { source: "/tai-khoan", destination: "/account" },
+      { source: "/quet-qr", destination: "/scan" },
     ];
   },
   async redirects() {
@@ -55,6 +57,9 @@ const nextConfig: NextConfig = {
       { source: "/dang-nhap", destination: "/login", permanent: true },
       { source: "/dang-ky", destination: "/register", permanent: true },
       { source: "/quan-tri", destination: "/dashboard/admin", permanent: true },
+      { source: "/b2b-quotes/new", destination: "/account/quotes/new", permanent: false },
+      { source: "/dang-nhap/nghe-nhan", destination: "/login/artisan", permanent: true },
+      { source: "/dang-nhap/ban-quan-ly", destination: "/login/admin", permanent: true },
     ];
   },
 };

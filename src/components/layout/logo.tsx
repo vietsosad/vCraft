@@ -1,20 +1,29 @@
 import Link from "next/link";
+import { cn } from "@/lib/cn";
 
-/** Logo vCraft: chữ "v" cách điệu thành dáng chén nhìn nghiêng, nét men lam. */
-export function Logo({ compact = false }: { compact?: boolean }) {
+/** Dấu hiệu vCraft: viên gốm men lam, nét "v" là dáng chén nhìn nghiêng, gạch đất nung là chân đế. */
+export function LogoMark({ className, tone = "lam" }: { className?: string; tone?: "lam" | "datnung" | "ngoc" }) {
+  const fill = tone === "datnung" ? "#8f3f1d" : tone === "ngoc" ? "#2f5c4d" : "#1f4e9a";
   return (
-    <Link href="/" className="group inline-flex items-center gap-2.5" aria-label="vCraft – về trang chủ">
-      <svg viewBox="0 0 40 40" className="size-9 shrink-0" aria-hidden>
-        <rect width="40" height="40" rx="7" fill="#1d3557" />
-        <path d="M9 12c3 0 4.5 1 6.2 5.6L20 29l4.8-11.4C26.5 13 28 12 31 12" fill="none" stroke="#f9f6f0" strokeWidth="2.6" strokeLinecap="round" />
-        <path d="M13 31.5h14" stroke="#b84a39" strokeWidth="2.2" strokeLinecap="round" />
-      </svg>
+    <svg viewBox="0 0 40 40" className={cn("size-9 shrink-0", className)} aria-hidden>
+      <rect width="40" height="40" rx="6" fill={fill} />
+      <path d="M2 2h36" stroke="#fff" strokeOpacity=".22" strokeWidth="1.2" />
+      <path d="M9 12c3 0 4.5 1 6.2 5.6L20 29l4.8-11.4C26.5 13 28 12 31 12" fill="none" stroke="#fffdf8" strokeWidth="2.6" strokeLinecap="round" />
+      <path d="M13 32h14" stroke={tone === "datnung" ? "#f3c8a8" : "#ee8a43"} strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function Logo({ compact = false, tone = "lam", sub = "Làng gốm Bát Tràng", href = "/", className }: { compact?: boolean; tone?: "lam" | "datnung" | "ngoc"; sub?: string; href?: string; className?: string }) {
+  return (
+    <Link href={href} className={cn("group inline-flex items-center gap-2.5", className)} aria-label="vCraft – về trang chủ">
+      <LogoMark tone={tone} className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-rotate-6" />
       {!compact && (
         <span className="leading-none">
-          <span className="block font-display text-[1.65rem] font-semibold tracking-tight">
-            v<span className="text-terracotta">Craft</span>
+          <span className="block font-serif text-[1.55rem] font-extrabold tracking-tight">
+            v<span className="text-datnung">Craft</span>
           </span>
-          <span className="hidden font-mono text-[9.5px] uppercase tracking-[0.22em] text-ash sm:block">Làng gốm Bát Tràng</span>
+          <span className="mt-0.5 hidden text-[10.5px] font-semibold tracking-wide text-tro sm:block">{sub}</span>
         </span>
       )}
     </Link>
