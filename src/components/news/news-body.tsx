@@ -2,7 +2,7 @@
 export function NewsBody({ content }: { content: string }) {
   const blocks = content.split(/\n{2,}/);
   return (
-    <div className="prose-vcraft text-[17px] leading-relaxed text-ink/85">
+    <div className="prose-vcraft text-[17px] leading-relaxed text-muc/85">
       {blocks.map((block, i) => {
         const lines = block.split("\n");
         if (lines.every((l) => l.trim().startsWith("- "))) {

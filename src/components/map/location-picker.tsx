@@ -34,12 +34,12 @@ export function LocationPicker({ lat, lng, onChange }: { lat: number; lng: numbe
 
   return (
     <div>
-      <div className="h-64 overflow-hidden rounded-[var(--radius-tile)] border border-line">
+      <div className="h-64 overflow-hidden rounded-[var(--radius-tile)] border border-vua">
         <PickerMap lat={lat} lng={lng} onPick={pick} />
       </div>
-      <p className="mt-1.5 flex items-center gap-1.5 font-mono text-xs text-ash">
-        <MapPin className="size-3.5 text-terracotta" /> {lat.toFixed(6)}, {lng.toFixed(6)}
-        {resolving && <span className="text-terracotta">· đang tìm địa chỉ…</span>}
+      <p className="mt-1.5 flex items-center gap-1.5 font-mono text-xs text-tro">
+        <MapPin className="size-3.5 text-datnung" /> {lat.toFixed(6)}, {lng.toFixed(6)}
+        {resolving && <span className="text-datnung">· đang tìm địa chỉ…</span>}
       </p>
     </div>
   );

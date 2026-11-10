@@ -20,13 +20,13 @@ export default async function NewsDetailPage({ params }: Props) {
   if (!n) notFound();
   return (
     <article className="mx-auto max-w-3xl px-4 py-12">
-      <Link href="/news" className="text-sm text-ash hover:text-ink">← Bản tin làng</Link>
-      <p className="mt-6 font-mono text-xs uppercase tracking-wider text-terracotta">{n.isUrgent && "Khẩn · "}{NEWS_CATEGORIES[n.category]} · {formatDate(n.publishedAt)}</p>
-      <h1 className="mt-3 text-4xl md:text-5xl">{n.title}</h1>
-      <p className="mt-4 text-lg text-ash">{n.excerpt}</p>
-      <VImage image={asImage(n.coverImage)} ratio="16/9" priority sizes="(max-width: 768px) 100vw, 768px" className="mt-8 rounded-[var(--radius-tile)]" />
+      <Link href="/news" className="text-sm text-tro hover:text-muc">← Bản tin làng</Link>
+      <p className={`mt-8 text-sm font-semibold ${n.isUrgent ? "text-doson" : "text-tro"}`}>{n.isUrgent && "Khẩn · "}{NEWS_CATEGORIES[n.category]} · {formatDate(n.publishedAt)}</p>
+      <h1 className="mt-3 font-serif text-4xl font-bold normal-case leading-tight md:text-5xl">{n.title}</h1>
+      <p className="mt-4 text-lg text-tro">{n.excerpt}</p>
+      <VImage image={asImage(n.coverImage)} ratio="16/9" priority sizes="(max-width: 768px) 100vw, 768px" className="tile mt-8" />
       <div className="mt-8"><NewsBody content={n.content} /></div>
-      <p className="mt-10 border-t border-line pt-4 text-sm text-ash">{n.author.name} · {n.author.organization}</p>
+      <p className="mt-10 border-t border-vua pt-4 text-sm text-tro">{n.author.name} · {n.author.organization}</p>
     </article>
   );
 }

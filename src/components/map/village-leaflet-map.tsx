@@ -17,9 +17,9 @@ export const VILLAGE_CENTER: [number, number] = [20.9762, 105.9135];
  * không bị lỗi mất file khi đóng gói. Xưởng đang mở cửa có vòng sóng men ngọc lan tỏa.
  */
 function vaseIcon(open: boolean, active: boolean) {
-  const fill = open ? "#3B6E5C" : "#8b8478";
+  const fill = open ? "#2f5c4d" : "#8b8478";
   const ring = open
-    ? `<span style="position:absolute;left:50%;top:62%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:9999px;background:#3B6E5C;opacity:.5" class="animate-pulse-ring"></span>`
+    ? `<span style="position:absolute;left:50%;top:62%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:9999px;background:#2f5c4d;opacity:.5" class="animate-pulse-ring"></span>`
     : "";
   return L.divIcon({
     className: "",
@@ -28,8 +28,8 @@ function vaseIcon(open: boolean, active: boolean) {
     popupAnchor: [0, -38],
     html: `<div style="position:relative;width:34px;height:44px;transform:scale(${active ? 1.25 : 1});transition:transform .2s">${ring}
       <svg viewBox="0 0 34 44" width="34" height="44" style="position:relative;filter:drop-shadow(0 3px 4px rgba(24,22,21,.35))">
-        <path d="M12 2h10v4c0 1.5 1 2.5 2.4 3.6C28 12.4 31 16.6 31 22c0 8.5-6.2 15-14 15S3 30.5 3 22c0-5.4 3-9.6 6.6-12.4C11 8.5 12 7.5 12 6z" fill="${fill}" stroke="#F9F6F0" stroke-width="2"/>
-        <path d="M8 22c3 2.6 6 2.6 9 0s6-2.6 9 0" fill="none" stroke="#F9F6F0" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
+        <path d="M12 2h10v4c0 1.5 1 2.5 2.4 3.6C28 12.4 31 16.6 31 22c0 8.5-6.2 15-14 15S3 30.5 3 22c0-5.4 3-9.6 6.6-12.4C11 8.5 12 7.5 12 6z" fill="${fill}" stroke="#fffdf8" stroke-width="2"/>
+        <path d="M8 22c3 2.6 6 2.6 9 0s6-2.6 9 0" fill="none" stroke="#fffdf8" stroke-width="1.6" stroke-linecap="round" opacity=".9"/>
         <path d="M17 37v6" stroke="${fill}" stroke-width="2"/>
       </svg></div>`,
   });
@@ -41,7 +41,7 @@ function heritageIcon(active: boolean) {
     iconSize: [30, 30],
     iconAnchor: [15, 15],
     popupAnchor: [0, -14],
-    html: `<div style="width:30px;height:30px;transform:scale(${active ? 1.25 : 1});border-radius:6px;background:#B84A39;border:2px solid #F9F6F0;box-shadow:0 3px 6px rgba(24,22,21,.35);display:grid;place-items:center;color:#F9F6F0;font:600 13px var(--font-cormorant),serif">◆</div>`,
+    html: `<div style="width:30px;height:30px;transform:scale(${active ? 1.25 : 1});border-radius:6px;background:#8f3f1d;border:2px solid #fffdf8;box-shadow:0 3px 6px rgba(24,22,21,.35);display:grid;place-items:center;color:#fffdf8;font:600 13px var(--font-cormorant),serif">◆</div>`,
   });
 }
 
@@ -76,7 +76,7 @@ export default function VillageLeafletMap({
 }) {
   const markers = useRef(new Map<string, L.Marker>());
   const meIcon = useMemo(
-    () => L.divIcon({ className: "", iconSize: [18, 18], html: `<div style="width:18px;height:18px;border-radius:9999px;background:#1D3557;border:3px solid #fff;box-shadow:0 0 0 6px rgba(29,53,87,.2)"></div>` }),
+    () => L.divIcon({ className: "", iconSize: [18, 18], html: `<div style="width:18px;height:18px;border-radius:9999px;background:#1f4e9a;border:3px solid #fff;box-shadow:0 0 0 6px rgba(29,53,87,.2)"></div>` }),
     [],
   );
 
@@ -104,21 +104,21 @@ export default function VillageLeafletMap({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={w.coverImage.src} alt="" className="h-28 w-full object-cover" />
               )}
-              <div className="space-y-1.5 border-t-4 border-dashed border-kaolin bg-kaolin p-3.5">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-terracotta">Vé tham quan · {w.artisanTitle}</p>
-                <p className="font-display text-xl leading-tight text-ink">{w.workshopName}</p>
-                <p className="text-xs text-ash">{w.artisanName}</p>
-                <p className={`text-xs font-medium ${w.openState.isOpenNow ? "text-celadon" : "text-ash"}`}>● {w.openState.label}</p>
-                <p className="text-xs text-ink/80">
+              <div className="space-y-1.5 border-t-4 border-dashed border-giay bg-nga p-3.5">
+                <p className="text-[11px] font-semibold text-datnung">Vé tham quan · {w.artisanTitle}</p>
+                <p className="font-serif text-xl leading-tight text-muc">{w.workshopName}</p>
+                <p className="text-xs text-tro">{w.artisanName}</p>
+                <p className={`text-xs font-medium ${w.openState.isOpenNow ? "text-ngoc" : "text-tro"}`}>● {w.openState.label}</p>
+                <p className="text-xs text-muc/80">
                   {w.specialties.map((s) => GLAZES[s].label).join(" · ")}
                   {w.experienceOffered && <><br />Trải nghiệm chuốt gốm: <strong>{formatVnd(w.experiencePriceVnd)}</strong></>}
                 </p>
                 <div className="grid grid-cols-2 gap-1.5 pt-1.5">
-                  <Link href={`/artisans/${w.slug}`} className="rounded bg-terracotta px-2 py-1.5 text-center text-xs !text-kaolin">Xem xưởng</Link>
-                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${w.latitude},${w.longitude}`} target="_blank" rel="noreferrer" className="rounded border border-ink/20 px-2 py-1.5 text-center text-xs !text-ink">Chỉ đường</a>
-                  <button onClick={() => onAskAi(`Xưởng ${w.workshopName} có đang mở cửa không, làm dòng men gì và nên đến lúc nào?`)} className="rounded border border-cobalt/30 px-2 py-1.5 text-xs text-cobalt">Hỏi AI về xưởng</button>
+                  <Link href={`/artisans/${w.slug}`} className="rounded bg-datnung px-2 py-1.5 text-center text-xs !text-on">Xem xưởng</Link>
+                  <a href={`https://www.google.com/maps/dir/?api=1&destination=${w.latitude},${w.longitude}`} target="_blank" rel="noreferrer" className="rounded border border-muc/20 px-2 py-1.5 text-center text-xs !text-muc">Chỉ đường</a>
+                  <button onClick={() => onAskAi(`Xưởng ${w.workshopName} có đang mở cửa không, làm dòng men gì và nên đến lúc nào?`)} className="rounded border border-lam/30 px-2 py-1.5 text-xs text-lam">Hỏi AI về xưởng</button>
                   {w.acceptsWholesale ? (
-                    <Link href="/b2b-quotes/new" className="rounded bg-cobalt px-2 py-1.5 text-center text-xs !text-kaolin">Gửi yêu cầu sỉ</Link>
+                    <Link href="/b2b-quotes/new" className="rounded bg-lam px-2 py-1.5 text-center text-xs !text-on">Gửi yêu cầu sỉ</Link>
                   ) : <span />}
                 </div>
               </div>
@@ -144,13 +144,13 @@ export default function VillageLeafletMap({
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={h.image.src} alt="" className="h-28 w-full object-cover" />
               )}
-              <div className="space-y-1.5 bg-kaolin p-3.5">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-terracotta">Điểm di sản</p>
-                <p className="font-display text-xl leading-tight text-ink">{h.name}</p>
-                <p className="text-xs text-ink/80">{h.description}</p>
-                {h.openingHours && <p className="text-xs text-ash">Giờ mở cửa: {h.openingHours}</p>}
-                {h.ticketInfo && <p className="text-xs text-ash">{h.ticketInfo}</p>}
-                <a href={`https://www.google.com/maps/dir/?api=1&destination=${h.latitude},${h.longitude}`} target="_blank" rel="noreferrer" className="mt-1 block rounded border border-ink/20 px-2 py-1.5 text-center text-xs !text-ink">Chỉ đường</a>
+              <div className="space-y-1.5 bg-nga p-3.5">
+                <p className="text-[11px] font-semibold text-datnung">Điểm di sản</p>
+                <p className="font-serif text-xl leading-tight text-muc">{h.name}</p>
+                <p className="text-xs text-muc/80">{h.description}</p>
+                {h.openingHours && <p className="text-xs text-tro">Giờ mở cửa: {h.openingHours}</p>}
+                {h.ticketInfo && <p className="text-xs text-tro">{h.ticketInfo}</p>}
+                <a href={`https://www.google.com/maps/dir/?api=1&destination=${h.latitude},${h.longitude}`} target="_blank" rel="noreferrer" className="mt-1 block rounded border border-muc/20 px-2 py-1.5 text-center text-xs !text-muc">Chỉ đường</a>
               </div>
             </div>
           </Popup>

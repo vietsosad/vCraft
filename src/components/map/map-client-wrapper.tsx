@@ -13,7 +13,7 @@ export const VillageMap = dynamic(() => import("./village-leaflet-map"), {
   loading: () => (
     <div className="relative h-full w-full">
       <Skeleton className="absolute inset-0 rounded-none" />
-      <p className="absolute inset-0 grid place-items-center font-mono text-xs text-ash">Đang tải bản đồ làng…</p>
+      <p className="absolute inset-0 grid place-items-center text-sm text-tro">Đang tải bản đồ làng…</p>
     </div>
   ),
 });

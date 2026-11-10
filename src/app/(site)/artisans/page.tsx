@@ -11,19 +11,22 @@ export default async function ArtisansPage() {
   const workshops = await listWorkshops();
   const open = workshops.filter((w) => w.openState.isOpenNow).length;
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
+    <div className="mx-auto max-w-[1440px] px-4 py-12 md:px-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="eyebrow">Những người giữ lửa</p>
-          <h1 className="mt-3 text-5xl md:text-6xl">Nghệ nhân & xưởng</h1>
-          <p className="mt-3 max-w-2xl text-ash">
+          <h1 className="title-lg">Nghệ nhân & xưởng</h1>
+          <p className="mt-3 max-w-2xl text-tro">
             {workshops.length} hộ nghề đã được Ban quản lý xác thực, {open} xưởng đang mở cửa đón khách lúc này.
           </p>
         </div>
         <ButtonLink href="/map" variant="outline">Xem trên bản đồ</ButtonLink>
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {workshops.map((w) => <ArtisanCard key={w.slug} a={{ ...w, coverImage: asImage(w.coverImage) }} />)}
+        {workshops.map((w, i) => (
+          <div key={w.slug} data-reveal style={{ ["--d" as string]: `${(i % 3) * 80}ms` }}>
+            <ArtisanCard a={{ ...w, coverImage: asImage(w.coverImage) }} />
+          </div>
+        ))}
       </div>
     </div>
   );

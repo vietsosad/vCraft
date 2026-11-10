@@ -61,7 +61,7 @@ export function SearchBox({ value, onSubmit }: { value: string; onSubmit: (q: st
         }}
       >
         <label htmlFor="product-search" className="sr-only">Tìm tác phẩm hoặc xưởng</label>
-        <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-ash" />
+        <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-tro" />
         <input
           id="product-search"
           role="combobox"
@@ -81,16 +81,16 @@ export function SearchBox({ value, onSubmit }: { value: string; onSubmit: (q: st
             if (e.key === "Escape") setOpen(false);
           }}
           placeholder="Tìm “binh hut loc”, “men ngoc”, tên xưởng…"
-          className="h-12 w-full rounded-full border border-line bg-white pl-10 pr-4 text-[15px] focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/15"
+          className="h-12 w-full rounded-[var(--radius-tile)] border border-vua bg-su pl-10 pr-4 text-[15px] focus:border-lam focus:outline-none focus:ring-2 focus:ring-lam/15"
         />
       </form>
       {open && items.length > 0 && (
-        <ul id={listId} role="listbox" className="absolute inset-x-0 top-14 z-30 overflow-hidden rounded-lg border border-line bg-white shadow-lift">
+        <ul id={listId} role="listbox" className="absolute inset-x-0 top-14 z-30 animate-rise overflow-hidden rounded-[8px] border border-vua bg-su shadow-lift">
           {items.map((it, i) => (
             <li key={it.href} role="option" aria-selected={i === active}>
-              <Link href={it.href} className={`flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-bisque ${i === active ? "bg-bisque" : ""}`}>
+              <Link href={it.href} className={`flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-nga-dam ${i === active ? "bg-nga-dam" : ""}`}>
                 <span className="truncate">{it.label}</span>
-                <span className="shrink-0 font-mono text-xs text-ash">{it.meta}</span>
+                <span className="shrink-0 text-xs text-tro">{it.meta}</span>
               </Link>
             </li>
           ))}

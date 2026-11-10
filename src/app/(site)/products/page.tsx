@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import { productQuerySchema } from "@/lib/validators/catalog";
 import { listProducts } from "@/lib/services/catalog-service";
 import { ProductExplorer } from "@/components/exhibition/product-explorer";
+import { getCurrentUser } from "@/lib/auth/session";
+import { favoriteIds } from "@/lib/services/engagement-service";
 
 export const metadata: Metadata = {
   title: "Phòng triển lãm",
@@ -23,13 +25,14 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
       orderBy: { workshopName: "asc" },
     }),
   ]);
+  const user = await getCurrentUser();
+  const favs = user?.role === "BUYER" ? (await favoriteIds(user.id)).products : [];
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-12 md:px-6">
-      <p className="eyebrow">Phòng triển lãm số</p>
-      <h1 className="mt-3 text-5xl md:text-6xl">Tác phẩm của làng</h1>
-      <p className="mt-3 max-w-2xl text-ash">
-        Duyệt theo phân loại hoặc theo hộ gia đình. Tác phẩm gắn nhãn <span className="text-celadon">Truy xuất</span> có nhật ký sản xuất
+    <div className="mx-auto max-w-[1440px] px-4 py-12 md:px-6">
+      <h1 className="title-lg">Tác phẩm của làng</h1>
+      <p className="mt-3 max-w-2xl text-tro">
+        Duyệt theo phân loại hoặc theo hộ gia đình. Tác phẩm gắn nhãn <span className="font-semibold text-ngoc">Có nhật ký lô</span> có nhật ký sản xuất
         đầy đủ từ ngày ngâm đất.
       </p>
       <div className="mt-10">
@@ -38,6 +41,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
             initialItems={result.items}
             initialMeta={{ total: result.total, page: result.page, pageSize: result.pageSize, pageCount: result.pageCount }}
             artisans={artisans}
+            favoriteIds={favs}
+            canFav={!user ? "guest" : user.role === "BUYER"}
           />
         </Suspense>
       </div>

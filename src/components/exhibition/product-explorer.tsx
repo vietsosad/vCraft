@@ -23,10 +23,12 @@ const PRICE_PRESETS = [
  * Phòng triển lãm: mọi thao tác lọc / sắp xếp / xem thêm đều gọi GET /api/products (JSON)
  * và cập nhật lưới sản phẩm tại chỗ – không tải lại trang. Bộ lọc đồng bộ lên URL nên chia sẻ được.
  */
-export function ProductExplorer({ initialItems, initialMeta, artisans }: {
+export function ProductExplorer({ initialItems, initialMeta, artisans, favoriteIds = [], canFav = "guest" }: {
   initialItems: ProductCardData[];
   initialMeta: Meta;
   artisans: { slug: string; workshopName: string }[];
+  favoriteIds?: string[];
+  canFav?: boolean | "guest";
 }) {
   const router = useRouter();
   const params = useSearchParams();
@@ -89,7 +91,7 @@ export function ProductExplorer({ initialItems, initialMeta, artisans }: {
   const priceKey = `${filters.minPrice}-${filters.maxPrice}`;
 
   const chip = (active: boolean) =>
-    cn("rounded-full border px-3 py-1.5 text-sm transition", active ? "border-ink bg-ink text-kaolin" : "border-line bg-white/70 hover:border-ink/40");
+    cn("rounded-[4px] border px-3 py-1.5 text-sm transition duration-200", active ? "border-lam bg-lam text-on shadow-soft" : "border-vua bg-su hover:-translate-y-px hover:border-muc/40");
 
   return (
     <div>
@@ -103,13 +105,13 @@ export function ProductExplorer({ initialItems, initialMeta, artisans }: {
             id="sort"
             value={filters.sort || "newest"}
             onChange={(e) => setFilter({ sort: e.target.value === "newest" ? undefined : e.target.value })}
-            className="h-12 rounded-full border border-line bg-white px-4 text-sm"
+            className="h-12 rounded-[var(--radius-tile)] border border-vua bg-su px-4 text-sm"
           >
             <option value="newest">Mới ra lò</option>
             <option value="price_asc">Giá tăng dần</option>
             <option value="price_desc">Giá giảm dần</option>
           </select>
-          <Button variant="outline" className="h-12 rounded-full lg:hidden" onClick={() => setShowFilters((v) => !v)} aria-expanded={showFilters}>
+          <Button variant="outline" className="h-12 lg:hidden" onClick={() => setShowFilters((v) => !v)} aria-expanded={showFilters}>
             <SlidersHorizontal className="size-4" /> Bộ lọc{activeCount ? ` (${activeCount})` : ""}
           </Button>
         </div>
@@ -118,7 +120,7 @@ export function ProductExplorer({ initialItems, initialMeta, artisans }: {
       <div className="mt-8 grid gap-10 lg:grid-cols-[240px_1fr]">
         <aside className={cn("space-y-7 lg:block", showFilters ? "block" : "hidden")} aria-label="Bộ lọc">
           <fieldset>
-            <legend className="eyebrow mb-3">Phân loại</legend>
+            <legend className="label mb-3">Phân loại</legend>
             <div className="flex flex-wrap gap-2">
               <button className={chip(!filters.category)} onClick={() => setFilter({ category: undefined })}>Tất cả</button>
               {CATEGORIES.map((c) => (
@@ -129,26 +131,26 @@ export function ProductExplorer({ initialItems, initialMeta, artisans }: {
             </div>
           </fieldset>
           <fieldset>
-            <legend className="eyebrow mb-3">Dòng men</legend>
+            <legend className="label mb-3">Dòng men</legend>
             <div className="flex flex-wrap gap-2">
               {GLAZE_KEYS.map((g) => (
                 <button key={g} className={cn(chip(filters.glaze === g), "inline-flex items-center gap-1.5")} onClick={() => setFilter({ glaze: filters.glaze === g ? undefined : g })}>
-                  <span className="size-2.5 rounded-full ring-1 ring-ink/10" style={{ background: GLAZES[g].color }} />
+                  <span className="size-3 rounded-[2px] ring-1 ring-muc/10" style={{ background: GLAZES[g].color }} />
                   {GLAZES[g].label}
                 </button>
               ))}
             </div>
           </fieldset>
           <fieldset>
-            <legend className="eyebrow mb-3">Hộ gia đình</legend>
+            <legend className="label mb-3">Hộ gia đình</legend>
             <label htmlFor="artisan-filter" className="sr-only">Chọn xưởng</label>
-            <select id="artisan-filter" value={filters.artisan} onChange={(e) => setFilter({ artisan: e.target.value || undefined })} className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm">
+            <select id="artisan-filter" value={filters.artisan} onChange={(e) => setFilter({ artisan: e.target.value || undefined })} className="w-full rounded-[var(--radius-tile)] border border-vua bg-su px-3 py-2 text-sm">
               <option value="">Tất cả xưởng</option>
               {artisans.map((a) => <option key={a.slug} value={a.slug}>{a.workshopName}</option>)}
             </select>
           </fieldset>
           <fieldset>
-            <legend className="eyebrow mb-3">Khoảng giá</legend>
+            <legend className="label mb-3">Khoảng giá</legend>
             <div className="flex flex-col gap-2">
               {PRICE_PRESETS.map((p) => {
                 const key = `${p.min ?? ""}-${p.max ?? ""}`;
@@ -161,23 +163,23 @@ export function ProductExplorer({ initialItems, initialMeta, artisans }: {
             </div>
           </fieldset>
           <fieldset className="space-y-2">
-            <legend className="eyebrow mb-3">Khác</legend>
+            <legend className="label mb-3">Khác</legend>
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="accent-terracotta" checked={filters.unique === "1"} onChange={(e) => setFilter({ unique: e.target.checked ? "1" : undefined })} /> Chỉ tác phẩm độc bản
+              <input type="checkbox" className="size-4 accent-lam" checked={filters.unique === "1"} onChange={(e) => setFilter({ unique: e.target.checked ? "1" : undefined })} /> Chỉ tác phẩm độc bản
             </label>
             <label className="flex items-center gap-2 text-sm">
-              <input type="checkbox" className="accent-terracotta" checked={filters.traceable === "1"} onChange={(e) => setFilter({ traceable: e.target.checked ? "1" : undefined })} /> Có tem truy xuất QR
+              <input type="checkbox" className="size-4 accent-lam" checked={filters.traceable === "1"} onChange={(e) => setFilter({ traceable: e.target.checked ? "1" : undefined })} /> Có tem truy xuất QR
             </label>
           </fieldset>
           {activeCount > 0 && (
-            <button onClick={() => router.replace("/products", { scroll: false })} className="inline-flex items-center gap-1 text-sm text-terracotta">
+            <button onClick={() => router.replace("/products", { scroll: false })} className="inline-flex items-center gap-1 text-sm font-semibold text-lam">
               <X className="size-4" /> Xóa bộ lọc
             </button>
           )}
         </aside>
 
         <div aria-live="polite" aria-busy={loading}>
-          <p className="mb-5 text-sm text-ash">
+          <p className="mb-5 text-sm text-tro">
             {loading ? "Đang tải…" : `${meta.total} tác phẩm`}
             {filters.q && ` cho “${filters.q}”`}
           </p>
@@ -200,7 +202,11 @@ export function ProductExplorer({ initialItems, initialMeta, artisans }: {
           ) : (
             <>
               <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3">
-                {items.map((p, i) => <ProductCard key={p.slug} p={p} priority={i < 3} />)}
+                {items.map((p, i) => (
+                  <div key={p.slug} className="animate-tile-set" style={{ ["--d" as string]: `${(i % 12) * 45}ms`, ["--rot" as string]: "0deg" }}>
+                    <ProductCard p={p} priority={i < 3} favorite={{ on: !!p.id && favoriteIds.includes(p.id), can: canFav }} />
+                  </div>
+                ))}
               </div>
               {meta.page < meta.pageCount && (
                 <div className="mt-12 text-center">

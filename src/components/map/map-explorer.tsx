@@ -64,12 +64,12 @@ export function MapExplorer({ initial }: { initial: { workshops: MapWorkshop[]; 
   const openCount = data.workshops.filter((w) => w.openState.isOpenNow).length;
 
   return (
-    <div className="grid h-[calc(100dvh-64px-30px)] min-h-[560px] grid-rows-[auto_1fr] md:h-[calc(100dvh-72px-30px)] lg:grid-cols-[400px_1fr] lg:grid-rows-1">
-      <div className="flex max-h-[45dvh] flex-col border-b border-line bg-kaolin lg:max-h-none lg:border-b-0 lg:border-r">
-        <div className="space-y-3 border-b border-line p-4">
+    <div className="grid h-[calc(100dvh-64px-var(--demo-h))] min-h-[560px] grid-rows-[auto_1fr] md:h-[calc(100dvh-72px-var(--demo-h))] grid-cols-1 lg:grid-cols-[400px_minmax(0,1fr)] lg:grid-rows-1">
+      <div className="flex min-w-0 max-h-[45dvh] flex-col border-b border-vua bg-nga lg:max-h-none lg:border-b-0 lg:border-r">
+        <div className="space-y-3 border-b border-vua p-4">
           <div>
             <h1 className="text-3xl">Bản đồ làng nghề</h1>
-            <p className="text-sm text-ash">{data.workshops.length} xưởng · <span className="text-celadon">{openCount} đang mở cửa</span> · giờ Việt Nam</p>
+            <p className="text-sm text-tro">{data.workshops.length} xưởng · <span className="text-ngoc">{openCount} đang mở cửa</span> · giờ Việt Nam</p>
           </div>
           <div className="flex flex-wrap gap-1.5">
             {FILTERS.map((f) => (
@@ -77,21 +77,21 @@ export function MapExplorer({ initial }: { initial: { workshops: MapWorkshop[]; 
                 key={f.key}
                 aria-pressed={filters[f.key]}
                 onClick={() => setFilters((p) => ({ ...p, [f.key]: !p[f.key] }))}
-                className={cn("rounded-full border px-3 py-1.5 text-xs transition", filters[f.key] ? "border-celadon bg-celadon text-kaolin" : "border-line bg-white/70 hover:border-ink/40")}
+                className={cn("rounded-[4px] border px-3 py-1.5 text-xs transition", filters[f.key] ? "border-ngoc bg-ngoc text-on" : "border-vua bg-su/70 hover:border-muc/40")}
               >
                 {f.label}
               </button>
             ))}
-            <button aria-pressed={showHeritage} onClick={() => setShowHeritage((v) => !v)} className={cn("inline-flex items-center gap-1 rounded-full border px-3 py-1.5 text-xs", showHeritage ? "border-terracotta bg-terracotta text-kaolin" : "border-line bg-white/70")}>
+            <button aria-pressed={showHeritage} onClick={() => setShowHeritage((v) => !v)} className={cn("inline-flex items-center gap-1 rounded-[4px] border px-3 py-1.5 text-xs", showHeritage ? "border-datnung bg-datnung text-on" : "border-vua bg-su/70")}>
               <Landmark className="size-3" /> Di tích
             </button>
-            <button onClick={locate} className="inline-flex items-center gap-1 rounded-full border border-line bg-white/70 px-3 py-1.5 text-xs hover:border-ink/40">
+            <button onClick={locate} className="inline-flex items-center gap-1 rounded-[4px] border border-vua bg-su/70 px-3 py-1.5 text-xs hover:border-muc/40">
               <LocateFixed className="size-3" /> Vị trí của tôi
             </button>
           </div>
         </div>
-        <ul className={cn("flex-1 divide-y divide-line overflow-y-auto", loading && "opacity-60")} aria-live="polite">
-          {data.workshops.length === 0 && <li className="p-6 text-center text-sm text-ash">Không có xưởng nào khớp bộ lọc lúc này.</li>}
+        <ul className={cn("flex-1 divide-y divide-vua overflow-y-auto", loading && "opacity-60")} aria-live="polite">
+          {data.workshops.length === 0 && <li className="p-6 text-center text-sm text-tro">Không có xưởng nào khớp bộ lọc lúc này.</li>}
           {data.workshops.map((w) => (
             <li
               key={w.slug}
@@ -99,14 +99,14 @@ export function MapExplorer({ initial }: { initial: { workshops: MapWorkshop[]; 
                 if (el) listRefs.current.set(w.slug, el);
               }}
             >
-              <button onClick={() => setFocus(w.slug)} className={cn("flex w-full gap-3 p-3.5 text-left transition hover:bg-bisque/70", focus === w.slug && "bg-bisque")}>
+              <button onClick={() => setFocus(w.slug)} className={cn("flex w-full gap-3 p-3.5 text-left transition hover:bg-nga-dam/70", focus === w.slug && "bg-nga-dam")}>
                 <VImage image={w.coverImage} ratio="1/1" sizes="72px" className="w-[72px] shrink-0 rounded" />
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate font-display text-lg leading-tight">{w.workshopName}</span>
-                  <span className="block truncate text-xs text-ash">{w.artisanTitle} {w.artisanName}</span>
-                  <span className={cn("mt-1 block text-xs", w.openState.isOpenNow ? "text-celadon" : "text-ash")}>● {w.openState.label}</span>
+                  <span className="block truncate font-serif text-lg leading-tight">{w.workshopName}</span>
+                  <span className="block truncate text-xs text-tro">{w.artisanTitle} {w.artisanName}</span>
+                  <span className={cn("mt-1 block text-xs", w.openState.isOpenNow ? "text-ngoc" : "text-tro")}>● {w.openState.label}</span>
                   <span className="mt-1 flex gap-1">
-                    {w.specialties.map((s) => <span key={s} title={GLAZES[s].label} className="size-2.5 rounded-full ring-1 ring-ink/10" style={{ background: GLAZES[s].color }} />)}
+                    {w.specialties.map((s) => <span key={s} title={GLAZES[s].label} className="size-2.5 rounded-[2px] ring-1 ring-muc/10" style={{ background: GLAZES[s].color }} />)}
                   </span>
                 </span>
               </button>
@@ -114,11 +114,11 @@ export function MapExplorer({ initial }: { initial: { workshops: MapWorkshop[]; 
           ))}
           {showHeritage && data.heritage.map((h) => (
             <li key={h.slug}>
-              <button onClick={() => setFocus(h.slug)} className={cn("flex w-full items-center gap-3 p-3.5 text-left hover:bg-bisque/70", focus === h.slug && "bg-bisque")}>
-                <span className="grid size-9 shrink-0 place-items-center rounded bg-terracotta text-kaolin"><Landmark className="size-4" /></span>
+              <button onClick={() => setFocus(h.slug)} className={cn("flex w-full items-center gap-3 p-3.5 text-left hover:bg-nga-dam/70", focus === h.slug && "bg-nga-dam")}>
+                <span className="grid size-9 shrink-0 place-items-center rounded bg-datnung text-on"><Landmark className="size-4" /></span>
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-medium">{h.name}</span>
-                  <span className="block truncate text-xs text-ash">{h.openingHours ? `Mở ${h.openingHours}` : "Di sản làng"}</span>
+                  <span className="block truncate text-xs text-tro">{h.openingHours ? `Mở ${h.openingHours}` : "Di sản làng"}</span>
                 </span>
               </button>
             </li>

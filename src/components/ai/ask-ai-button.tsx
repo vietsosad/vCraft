@@ -10,7 +10,7 @@ export function AskAiButton({ question, label = "Hỏi Sứ giả AI", className
     <button
       type="button"
       onClick={() => askConcierge(question)}
-      className={cn("inline-flex items-center gap-1.5 rounded-full border border-cobalt/30 px-3.5 py-2 text-sm text-cobalt transition hover:bg-cobalt hover:text-kaolin", className)}
+      className={cn("inline-flex items-center gap-1.5 rounded-[4px] border border-lam/30 px-3.5 py-2 text-sm text-lam transition hover:bg-lam hover:text-on", className)}
     >
       <Sparkles className="size-4" /> {label}
     </button>

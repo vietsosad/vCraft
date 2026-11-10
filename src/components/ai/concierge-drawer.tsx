@@ -22,7 +22,7 @@ function renderRich(text: string): ReactNode[] {
     const bullet = line.startsWith("- ");
     const body = bullet ? line.slice(2) : line;
     const parts = body.split(/(\*\*[^*]+\*\*|_[^_]+_)/g).map((p, j) =>
-      p.startsWith("**") ? <strong key={j}>{p.slice(2, -2)}</strong> : p.startsWith("_") && p.endsWith("_") && p.length > 2 ? <em key={j} className="text-ash">{p.slice(1, -1)}</em> : p,
+      p.startsWith("**") ? <strong key={j}>{p.slice(2, -2)}</strong> : p.startsWith("_") && p.endsWith("_") && p.length > 2 ? <em key={j} className="text-tro">{p.slice(1, -1)}</em> : p,
     );
     if (bullet) return <li key={i} className="ml-4 list-disc">{parts}</li>;
     return line ? <p key={i}>{parts}</p> : <div key={i} className="h-2" />;
@@ -116,17 +116,17 @@ export function ConciergeDrawer() {
       <button
         onClick={() => setOpen(true)}
         className={cn(
-          "no-print group fixed bottom-5 right-5 z-[600] flex size-14 items-center justify-center gap-2 rounded-full bg-cobalt text-kaolin shadow-lift transition-all hover:w-auto hover:bg-cobalt-soft hover:px-5",
+          "no-print tile tile-lam group fixed bottom-5 right-5 z-[600] hidden size-14 items-center justify-center gap-2 rounded-[10px] text-giay shadow-lift transition-all duration-300 hover:w-auto hover:px-5 md:flex",
           open && "pointer-events-none opacity-0",
         )}
         aria-label="Mở trợ lý AI vCraft"
       >
-        <Sparkles className="size-5 text-ember" />
+        <Sparkles className="size-5 text-[#f5c9a6]" />
         <span className="hidden text-sm font-medium group-hover:inline">Hỏi Sứ giả AI</span>
       </button>
 
       <div
-        className={cn("fixed inset-0 z-[700] bg-ink/30 transition-opacity", open ? "opacity-100" : "pointer-events-none opacity-0")}
+        className={cn("fixed inset-0 z-[700] bg-dem/30 transition-opacity", open ? "opacity-100" : "pointer-events-none opacity-0")}
         onClick={() => setOpen(false)}
         aria-hidden
       />
@@ -135,16 +135,16 @@ export function ConciergeDrawer() {
         aria-modal="true"
         aria-label="Trợ lý AI vCraft"
         className={cn(
-          "fixed inset-y-0 right-0 z-[710] flex w-full max-w-md flex-col bg-kaolin shadow-lift transition-transform duration-300",
+          "fixed inset-y-0 right-0 z-[710] flex w-full max-w-md flex-col bg-nga shadow-lift transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
           open ? "translate-x-0" : "translate-x-full",
         )}
       >
-        <div className="flex items-center justify-between border-b border-line bg-cobalt px-5 py-4 text-kaolin">
+        <div className="tile-lam flex items-center justify-between px-5 py-4 text-giay">
           <div>
-            <p className="font-display text-xl">Sứ giả Tinh hoa Bát Tràng</p>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-kaolin/70">AI tra cứu dữ liệu sống của làng</p>
+            <p className="font-serif text-xl font-bold">Sứ giả Tinh hoa Bát Tràng</p>
+            <p className="text-xs text-giay/75">Trợ lý AI tra cứu dữ liệu sống của làng</p>
           </div>
-          <button onClick={() => setOpen(false)} aria-label="Đóng trợ lý" className="rounded-full p-1.5 hover:bg-white/10">
+          <button onClick={() => setOpen(false)} aria-label="Đóng trợ lý" className="grid size-9 place-items-center rounded-[var(--radius-tile)] hover:bg-giay/10">
             <X className="size-5" />
           </button>
         </div>
@@ -152,10 +152,10 @@ export function ConciergeDrawer() {
         <div ref={listRef} className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {messages.length === 0 && (
             <div>
-              <p className="text-sm text-ash">Hỏi bất cứ điều gì về xưởng, dòng men, nguồn gốc lô hay đơn sỉ. Thử một câu:</p>
+              <p className="text-sm text-tro">Hỏi bất cứ điều gì về xưởng, dòng men, nguồn gốc lô hay đơn sỉ. Thử một câu:</p>
               <div className="mt-3 flex flex-col gap-2">
                 {SUGGESTIONS.map((s) => (
-                  <button key={s} onClick={() => ask(s)} className="rounded-lg border border-line bg-white/70 px-3 py-2.5 text-left text-sm hover:border-terracotta/50">
+                  <button key={s} onClick={() => ask(s)} className="tile glaze bg-su px-3 py-2.5 text-left text-sm">
                     {s}
                   </button>
                 ))}
@@ -164,7 +164,7 @@ export function ConciergeDrawer() {
           )}
           {messages.map((m, i) =>
             m.role === "user" ? (
-              <div key={i} className="ml-auto max-w-[85%] rounded-2xl rounded-br-sm bg-terracotta px-4 py-2.5 text-sm text-kaolin">
+              <div key={i} className="ml-auto max-w-[85%] animate-rise rounded-[10px] rounded-br-[3px] bg-lam px-4 py-2.5 text-sm text-on">
                 {m.content}
               </div>
             ) : (
@@ -172,30 +172,30 @@ export function ConciergeDrawer() {
                 {!!m.tools?.length && (
                   <div className="flex flex-wrap gap-1.5">
                     {m.tools.map((t, j) => (
-                      <span key={j} className="inline-flex items-center gap-1 rounded-full bg-cobalt/10 px-2 py-0.5 font-mono text-[10.5px] text-cobalt">
+                      <span key={j} className="inline-flex items-center gap-1 rounded-[4px] bg-lam/10 px-2 py-0.5 font-mono text-[10.5px] text-lam">
                         <Database className="size-3" /> {t}
                       </span>
                     ))}
                   </div>
                 )}
-                <div className="space-y-1 rounded-2xl rounded-bl-sm border border-line bg-white px-4 py-3 text-sm leading-relaxed">
-                  {m.content ? renderRich(m.content) : <span className="inline-flex gap-1 text-ash">Đang tra cứu<span className="animate-pulse">…</span></span>}
+                <div className="space-y-1 rounded-2xl rounded-bl-sm border border-vua bg-su px-4 py-3 text-sm leading-relaxed">
+                  {m.content ? renderRich(m.content) : <span className="inline-flex gap-1 text-tro">Đang tra cứu<span className="animate-pulse">…</span></span>}
                 </div>
                 {!!m.cards?.length && (
                   <div className="grid gap-1.5">
                     {m.cards.map((c, j) => (
-                      <Link key={j} href={c.href} onClick={() => setOpen(false)} className="flex items-center gap-2.5 rounded-lg border border-line bg-bisque/60 px-3 py-2 hover:border-terracotta/50">
-                        <MapPin className="size-4 shrink-0 text-terracotta" />
+                      <Link key={j} href={c.href} onClick={() => setOpen(false)} className="flex items-center gap-2.5 rounded-lg border border-vua bg-nga-dam/60 px-3 py-2 hover:border-datnung/50">
+                        <MapPin className="size-4 shrink-0 text-datnung" />
                         <span className="min-w-0">
                           <span className="block truncate text-sm font-medium">{c.title}</span>
-                          <span className="block truncate text-xs text-ash">{c.subtitle}</span>
+                          <span className="block truncate text-xs text-tro">{c.subtitle}</span>
                         </span>
                       </Link>
                     ))}
                   </div>
                 )}
                 {m.mode && (
-                  <p className="font-mono text-[10px] text-ash/70">
+                  <p className="font-mono text-[10px] text-tro/70">
                     {m.mode === "claude" ? "Trả lời bởi Claude, số liệu từ CSDL vCraft" : "Chế độ tra cứu cục bộ – số liệu trực tiếp từ CSDL vCraft"}
                   </p>
                 )}
@@ -204,7 +204,7 @@ export function ConciergeDrawer() {
           )}
         </div>
 
-        <form onSubmit={onSubmit} className="flex gap-2 border-t border-line bg-white/60 p-3">
+        <form onSubmit={onSubmit} className="flex gap-2 border-t border-vua bg-su/60 p-3">
           <label htmlFor="ai-input" className="sr-only">Câu hỏi cho trợ lý</label>
           <input
             id="ai-input"
@@ -212,9 +212,9 @@ export function ConciergeDrawer() {
             onChange={(e) => setInput(e.target.value)}
             maxLength={2000}
             placeholder="Ví dụ: xưởng nào đang mở cửa?"
-            className="flex-1 rounded-full border border-line bg-white px-4 py-2.5 text-sm focus:border-terracotta focus:outline-none"
+            className="flex-1 rounded-[4px] border border-vua bg-su px-4 py-2.5 text-sm focus:border-datnung focus:outline-none"
           />
-          <button type="submit" disabled={busy || !input.trim()} className="grid size-11 place-items-center rounded-full bg-terracotta text-kaolin disabled:opacity-40" aria-label="Gửi câu hỏi">
+          <button type="submit" disabled={busy || !input.trim()} className="grid size-11 place-items-center rounded-full bg-datnung text-on disabled:opacity-40" aria-label="Gửi câu hỏi">
             <Send className="size-4" />
           </button>
         </form>
