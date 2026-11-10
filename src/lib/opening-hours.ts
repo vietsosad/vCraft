@@ -29,7 +29,7 @@ export function vietnamNow(now = new Date()): { day: number; minutes: number } {
   return { day, minutes: hour * 60 + Number(get("minute")) };
 }
 
-function parseRange(range: string): [number, number] {
+export function parseRange(range: string): [number, number] {
   const [start, end] = range.split("-").map((t) => {
     const [h, m] = t.trim().split(":").map(Number);
     return h * 60 + (m || 0);
@@ -37,7 +37,7 @@ function parseRange(range: string): [number, number] {
   return [start, end];
 }
 
-function hhmm(minutes: number) {
+export function hhmm(minutes: number) {
   return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
 }
 

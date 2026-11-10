@@ -136,6 +136,12 @@ export async function getTrace(code: string) {
 
 /** Ghi nhận một lượt quét QR (tăng nguyên tử). */
 export async function recordScan(code: string) {
-  const res = await prisma.productBatch.updateMany({ where: { batchCode: code }, data: { scanCount: { increment: 1 } } });
-  return res.count > 0;
+  const batch = await prisma.productBatch.findUnique({ where: { batchCode: code }, select: { id: true } });
+  if (!batch) return false;
+  // Tăng bộ đếm tổng và ghi một lượt quét có thời điểm (để vẽ biểu đồ theo ngày)
+  await prisma.$transaction([
+    prisma.productBatch.update({ where: { id: batch.id }, data: { scanCount: { increment: 1 } } }),
+    prisma.scanEvent.create({ data: { batchId: batch.id } }),
+  ]);
+  return true;
 }

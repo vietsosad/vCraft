@@ -27,9 +27,14 @@ export const phoneSchema = z
 
 export const nameSchema = z.string().trim().min(2, "Họ tên cần ít nhất 2 ký tự.").max(80);
 
+/** Ba cổng đăng nhập riêng cho ba vai trò. */
+export const PORTALS = ["customer", "artisan", "admin"] as const;
+export type Portal = (typeof PORTALS)[number];
+
 export const loginSchema = z.object({
   email: emailSchema,
   password: z.string().min(1, "Vui lòng nhập mật khẩu."),
+  portal: z.enum(PORTALS).default("customer"),
 });
 export type LoginInput = z.infer<typeof loginSchema>;
 

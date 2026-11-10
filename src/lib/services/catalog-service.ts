@@ -91,7 +91,7 @@ export async function listWorkshops(filter: { openNow?: boolean; experience?: bo
       id: true, slug: true, workshopName: true, artisanName: true, artisanTitle: true, tagline: true, address: true,
       latitude: true, longitude: true, isOpenForVisit: true, openingHours: true, openDays: true,
       experienceOffered: true, experiencePriceVnd: true, acceptsWholesale: true, maxMonthlyCapacity: true,
-      specialties: true, coverImage: true, establishedYear: true, generation: true, ratingAvg: true,
+      specialties: true, coverImage: true, establishedYear: true, generation: true, ratingAvg: true, ratingCount: true,
       _count: { select: { products: { where: { isPublished: true } } } },
     },
   });
