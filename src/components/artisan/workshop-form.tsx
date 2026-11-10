@@ -46,7 +46,7 @@ export function WorkshopForm({ initial }: { initial: Form }) {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <Card className="space-y-4 p-6">
         <h3 className="text-2xl">Giới thiệu</h3>
         <Field label="Tên xưởng" htmlFor="workshopName" error={errors.workshopName} required>
@@ -73,13 +73,13 @@ export function WorkshopForm({ initial }: { initial: Form }) {
               const on = form.specialties.includes(g);
               return (
                 <button key={g} type="button" aria-pressed={on} onClick={() => set("specialties", on ? form.specialties.filter((x) => x !== g) : [...form.specialties, g])}
-                  className={cn("inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm", on ? "border-ink bg-ink text-kaolin" : "border-line bg-white")}>
+                  className={cn("inline-flex items-center gap-1.5 rounded-[4px] border px-3 py-1.5 text-sm", on ? "border-muc bg-dem text-giay" : "border-vua bg-su")}>
                   <span className="size-2.5 rounded-full" style={{ background: GLAZES[g].color }} /> {GLAZES[g].label}
                 </button>
               );
             })}
           </div>
-          {errors.specialties && <p className="mt-1 text-[13px] text-[#b3261e]">{errors.specialties}</p>}
+          {errors.specialties && <p className="mt-1 text-[13px] text-doson">{errors.specialties}</p>}
         </fieldset>
         <div>
           <p className="mb-2 text-sm font-medium">Chứng nhận chất lượng</p>
@@ -89,7 +89,7 @@ export function WorkshopForm({ initial }: { initial: Form }) {
                 <Input aria-label="Tên chứng nhận" value={c.name} onChange={(e) => set("certifications", form.certifications.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))} placeholder="Tên chứng nhận" />
                 <Input aria-label="Nơi cấp" value={c.issuer} onChange={(e) => set("certifications", form.certifications.map((x, j) => (j === i ? { ...x, issuer: e.target.value } : x)))} placeholder="Nơi cấp" />
                 <Input aria-label="Năm" type="number" value={c.year} onChange={(e) => set("certifications", form.certifications.map((x, j) => (j === i ? { ...x, year: Number(e.target.value) } : x)))} />
-                <button type="button" aria-label="Xóa chứng nhận" onClick={() => set("certifications", form.certifications.filter((_, j) => j !== i))} className="text-ash hover:text-terracotta"><X className="size-4" /></button>
+                <button type="button" aria-label="Xóa chứng nhận" onClick={() => set("certifications", form.certifications.filter((_, j) => j !== i))} className="text-tro hover:text-datnung"><X className="size-4" /></button>
               </li>
             ))}
           </ul>
@@ -109,7 +109,7 @@ export function WorkshopForm({ initial }: { initial: Form }) {
             <div className="flex gap-1.5">
               {DAYS.map((d, i) => {
                 const on = form.openDays.includes(i);
-                return <button key={d} type="button" aria-pressed={on} onClick={() => set("openDays", on ? form.openDays.filter((x) => x !== i) : [...form.openDays, i].sort())} className={cn("size-10 rounded-full border text-sm", on ? "border-celadon bg-celadon text-kaolin" : "border-line bg-white")}>{d}</button>;
+                return <button key={d} type="button" aria-pressed={on} onClick={() => set("openDays", on ? form.openDays.filter((x) => x !== i) : [...form.openDays, i].sort())} className={cn("size-10 rounded-full border text-sm", on ? "border-ngoc bg-ngoc text-on" : "border-vua bg-su")}>{d}</button>;
               })}
             </div>
           </fieldset>
@@ -128,7 +128,7 @@ export function WorkshopForm({ initial }: { initial: Form }) {
         </Card>
         <Card className="space-y-3 p-6">
           <h3 className="text-2xl">Ảnh xưởng</h3>
-          <p className="text-xs text-ash">Ảnh đầu tiên là ảnh bìa trên trang xưởng và bản đồ.</p>
+          <p className="text-xs text-tro">Ảnh đầu tiên là ảnh bìa trên trang xưởng và bản đồ.</p>
           <ImageUploader value={form.workshopImages} onChange={(v) => set("workshopImages", v)} max={30} purpose="workshop" />
         </Card>
       </div>

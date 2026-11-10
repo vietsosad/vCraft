@@ -104,38 +104,38 @@ export function BatchManager({ batch }: { batch: BatchView }) {
   const missing = REQUIRED_STAGE_KEYS.filter((k) => !doneKeys.has(k));
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_300px]">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]">
       <div className="space-y-8">
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="font-mono text-sm text-terracotta">{batch.batchCode}</span>
+            <span className="font-mono text-sm text-datnung">{batch.batchCode}</span>
             <Badge tone={locked ? "celadon" : "gold"}>{locked ? <><Lock className="size-3" /> Đã khóa {batch.lockedAt ? formatDate(batch.lockedAt) : ""}</> : "Đang sản xuất"}</Badge>
             {batch.quote && <Badge tone="cobalt">Đơn {batch.quote.requestCode}</Badge>}
           </div>
           <h2 className="mt-2 text-3xl">{batch.batchTitle}</h2>
-          <p className="text-sm text-ash">{formatNumber(batch.quantityProduced)} sản phẩm · {formatNumber(batch.scanCount)} lượt quét QR</p>
+          <p className="text-sm text-tro">{formatNumber(batch.quantityProduced)} sản phẩm · {formatNumber(batch.scanCount)} lượt quét QR</p>
         </div>
 
         <section>
           <h3 className="mb-4 text-2xl">Nhật ký ({batch.stages.length} mốc)</h3>
           {batch.stages.length === 0 ? (
-            <p className="rounded-[var(--radius-tile)] border border-dashed border-line p-6 text-center text-sm text-ash">Mỗi mẻ gốm là một câu chuyện. Hãy ghi lại công đoạn đầu tiên.</p>
+            <p className="rounded-[var(--radius-tile)] border border-dashed border-vua p-6 text-center text-sm text-tro">Mỗi mẻ gốm là một câu chuyện. Hãy ghi lại công đoạn đầu tiên.</p>
           ) : (
-            <ol className="relative space-y-4 border-l-2 border-terracotta/30 pl-6">
+            <ol className="relative space-y-4 border-l-2 border-datnung/30 pl-6">
               {batch.stages.map((s) => (
                 <li key={s.id} className="relative">
-                  <span className="absolute -left-[33px] top-1 grid size-4 place-items-center rounded-full bg-terracotta ring-4 ring-kaolin" />
-                  <div className="rounded-[var(--radius-tile)] border border-line bg-white/80 p-4">
+                  <span className="absolute -left-[33px] top-1 grid size-4 place-items-center rounded-full bg-datnung ring-4 ring-nga" />
+                  <div className="rounded-[var(--radius-tile)] border border-vua bg-su/80 p-4">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
-                        <p className="font-mono text-xs text-ash">{formatDate(s.occurredAt, true)}{s.temperatureC ? ` · ${formatNumber(s.temperatureC)}°C` : ""}</p>
-                        <p className="font-display text-xl">{s.title}</p>
+                        <p className="font-mono text-xs text-tro">{formatDate(s.occurredAt, true)}{s.temperatureC ? ` · ${formatNumber(s.temperatureC)}°C` : ""}</p>
+                        <p className="font-serif text-xl">{s.title}</p>
                       </div>
                       {!locked && (
-                        <button onClick={() => removeStage(s.id)} className="text-ash hover:text-terracotta" aria-label={`Xóa mốc ${s.title}`}><Trash2 className="size-4" /></button>
+                        <button onClick={() => removeStage(s.id)} className="text-tro hover:text-datnung" aria-label={`Xóa mốc ${s.title}`}><Trash2 className="size-4" /></button>
                       )}
                     </div>
-                    <p className="mt-1 text-sm text-ink/75">{s.description}</p>
+                    <p className="mt-1 text-sm text-muc/75">{s.description}</p>
                     <div className="mt-3 flex gap-2">
                       {s.images.slice(0, 4).map((img, i) => <VImage key={img.src + i} image={img} ratio="1/1" sizes="80px" className="w-20 rounded" />)}
                     </div>
@@ -147,8 +147,8 @@ export function BatchManager({ batch }: { batch: BatchView }) {
         </section>
 
         <Card className="space-y-4 p-6">
-          <h3 className="flex items-center gap-2 text-2xl"><Plus className="size-5 text-terracotta" /> {locked ? "Thêm ghi chú bổ sung" : "Ghi công đoạn mới"}</h3>
-          {locked && <p className="text-sm text-ash">Nhật ký đã khóa: không sửa hay xóa được mốc cũ. Ghi chú bổ sung được đánh dấu riêng với thời điểm ghi nhận.</p>}
+          <h3 className="flex items-center gap-2 text-2xl"><Plus className="size-5 text-datnung" /> {locked ? "Thêm ghi chú bổ sung" : "Ghi công đoạn mới"}</h3>
+          {locked && <p className="text-sm text-tro">Nhật ký đã khóa: không sửa hay xóa được mốc cũ. Ghi chú bổ sung được đánh dấu riêng với thời điểm ghi nhận.</p>}
           {!locked && (
             <Field label="Công đoạn" htmlFor="stage-key" hint={nextTemplate ? `Gợi ý tiếp theo: ${nextTemplate.title}` : "Đã đủ 6 công đoạn chuẩn"}>
               <Select id="stage-key" value={form.key} onChange={(e) => applyTemplate(e.target.value)}>
@@ -169,15 +169,15 @@ export function BatchManager({ batch }: { batch: BatchView }) {
             </Field>
             <Field label="Nhiệt độ (°C)" htmlFor="stage-temp" error={errors.temperatureC} hint="Chỉ nhập với công đoạn nung">
               <div className="relative">
-                <Flame className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-kiln" />
+                <Flame className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-vangrom" />
                 <Input id="stage-temp" type="number" className="pl-9" value={form.temperatureC} onChange={(e) => setForm({ ...form, temperatureC: e.target.value ? Number(e.target.value) : "" })} />
               </div>
             </Field>
           </div>
           <div>
-            <p className="mb-2 text-sm font-medium">Ảnh minh chứng <span className="text-terracotta">*</span></p>
+            <p className="mb-2 text-sm font-medium">Ảnh minh chứng <span className="text-datnung">*</span></p>
             <ImageUploader value={form.images} onChange={(images) => setForm({ ...form, images })} max={6} purpose="stage" label="Chụp hoặc chọn ảnh công đoạn (tối đa 6)" />
-            {errors.images && <p role="alert" className="mt-1.5 text-[13px] text-[#b3261e]">{errors.images}</p>}
+            {errors.images && <p role="alert" className="mt-1.5 text-[13px] text-doson">{errors.images}</p>}
           </div>
           <div className="flex justify-end"><Button onClick={addStage} loading={saving}>{locked ? "Thêm ghi chú" : "Lưu vào nhật ký"}</Button></div>
         </Card>
@@ -185,23 +185,23 @@ export function BatchManager({ batch }: { batch: BatchView }) {
 
       <aside className="space-y-4 lg:sticky lg:top-28 lg:self-start">
         <Card className="p-5 text-center">
-          <p className="eyebrow">Mã QR của lô</p>
+          <p className="label">Mã QR của lô</p>
           <Image src={batch.qrCodeDataUrl} alt={`QR ${batch.batchCode}`} width={200} height={200} unoptimized className="mx-auto mt-3" />
           <p className="font-mono text-sm">{batch.batchCode}</p>
           <div className="mt-4 grid grid-cols-2 gap-2">
-            <a href={`/api/me/batches/${batch.batchCode}/qr?format=svg`} className="inline-flex items-center justify-center gap-1 rounded border border-ink/20 py-2 text-xs hover:bg-bisque"><Download className="size-3.5" /> SVG</a>
-            <a href={`/api/me/batches/${batch.batchCode}/qr?format=png`} className="inline-flex items-center justify-center gap-1 rounded border border-ink/20 py-2 text-xs hover:bg-bisque"><Download className="size-3.5" /> PNG</a>
+            <a href={`/api/me/batches/${batch.batchCode}/qr?format=svg`} className="inline-flex items-center justify-center gap-1 rounded border border-muc/20 py-2 text-xs hover:bg-nga-dam"><Download className="size-3.5" /> SVG</a>
+            <a href={`/api/me/batches/${batch.batchCode}/qr?format=png`} className="inline-flex items-center justify-center gap-1 rounded border border-muc/20 py-2 text-xs hover:bg-nga-dam"><Download className="size-3.5" /> PNG</a>
           </div>
           <div className="mt-2 grid gap-2">
             <ButtonLink href={`/dashboard/artisan/batches/${batch.batchCode}/labels`} variant="outline" size="sm"><Printer className="size-4" /> In tem dán sản phẩm</ButtonLink>
-            <Link href={`/trace/${batch.batchCode}`} target="_blank" className="inline-flex items-center justify-center gap-1 text-sm text-terracotta">Xem trang truy xuất <ExternalLink className="size-3.5" /></Link>
+            <Link href={`/trace/${batch.batchCode}`} target="_blank" className="inline-flex items-center justify-center gap-1 text-sm text-datnung">Xem trang truy xuất <ExternalLink className="size-3.5" /></Link>
           </div>
         </Card>
         {!locked && (
           <Card className="p-5">
             <p className="font-medium">Hoàn tất lô</p>
-            <p className="mt-1 text-sm text-ash">Cần có mốc “Nung hoàn thiện” và “Ra lò, kiểm định”. Sau khi hoàn tất, nhật ký bị khóa vĩnh viễn.</p>
-            {missing.length > 0 && <p className="mt-2 text-xs text-terracotta">Còn thiếu: {missing.map((k) => STAGE_TEMPLATES.find((t) => t.key === k)?.title).join(", ")}</p>}
+            <p className="mt-1 text-sm text-tro">Cần có mốc “Nung hoàn thiện” và “Ra lò, kiểm định”. Sau khi hoàn tất, nhật ký bị khóa vĩnh viễn.</p>
+            {missing.length > 0 && <p className="mt-2 text-xs text-datnung">Còn thiếu: {missing.map((k) => STAGE_TEMPLATES.find((t) => t.key === k)?.title).join(", ")}</p>}
             <Button className="mt-3 w-full" variant="celadon" disabled={missing.length > 0} onClick={() => setConfirmComplete(true)}><Lock className="size-4" /> Hoàn tất & khóa nhật ký</Button>
           </Card>
         )}

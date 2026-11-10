@@ -15,16 +15,16 @@ export default async function LabelsPage({ params }: { params: Promise<{ code: s
   return (
     <div>
       <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-ash">Xem trước {count} tem cho lô {batch.batchCode}. Dùng giấy decal A4, in tỷ lệ 100%.</p>
+        <p className="text-sm text-tro">Xem trước {count} tem cho lô {batch.batchCode}. Dùng giấy decal A4, in tỷ lệ 100%.</p>
         <PrintButton label="In tem" />
       </div>
-      <div className="grid grid-cols-4 gap-[4mm] bg-white p-[8mm]" style={{ width: "210mm" }}>
+      <div className="grid grid-cols-4 gap-[4mm] bg-su p-[8mm]" style={{ width: "210mm" }}>
         {Array.from({ length: count }).map((_, i) => (
-          <div key={i} className="flex flex-col items-center justify-center border border-dashed border-ink/30 p-[2mm] text-center" style={{ width: "40mm", height: "50mm" }}>
+          <div key={i} className="flex flex-col items-center justify-center border border-dashed border-muc/30 p-[2mm] text-center" style={{ width: "40mm", height: "50mm" }}>
             <Image src={batch.qrCodeDataUrl} alt="" width={110} height={110} unoptimized style={{ width: "30mm", height: "30mm" }} />
             <p className="mt-[1mm] font-mono text-[7pt] leading-tight">{batch.batchCode}</p>
             <p className="text-[6.5pt] leading-tight">{batch.artisan.workshopName}</p>
-            <p className="mt-[0.5mm] border border-terracotta px-[1mm] font-mono text-[5.5pt] uppercase text-terracotta">BQL Bát Tràng xác thực</p>
+            <p className="mt-[0.5mm] border border-datnung px-[1mm] font-mono text-[5.5pt] uppercase text-datnung">BQL Bát Tràng xác thực</p>
           </div>
         ))}
       </div>

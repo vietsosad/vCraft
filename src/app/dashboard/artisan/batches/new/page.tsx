@@ -44,7 +44,7 @@ export default function NewBatchPage() {
   return (
     <Card className="mx-auto max-w-2xl space-y-4 p-6">
       <h2 className="text-3xl">Mở lô sản xuất mới</h2>
-      <p className="text-sm text-ash">Mã lô dạng <span className="font-mono">BT-{new Date().getFullYear()}-LAM-009</span> và mã QR được hệ thống tự sinh.</p>
+      <p className="text-sm text-tro">Mã lô dạng <span className="font-mono">BT-{new Date().getFullYear()}-LAM-009</span> và mã QR được hệ thống tự sinh.</p>
       <Field label="Tên lô" htmlFor="batchTitle" error={errors.batchTitle} required>
         <Input id="batchTitle" value={form.batchTitle} onChange={set("batchTitle")} invalid={!!errors.batchTitle} placeholder="Bình men lam vẽ sen – mẻ tháng 11" />
       </Field>

@@ -97,9 +97,9 @@ export function ProductForm({ id, initial, batches, verified }: { id?: string; i
         <Textarea id="story" rows={4} value={form.story} onChange={(e) => set("story", e.target.value)} invalid={!!errors.story} />
       </Field>
       <div>
-        <p className="mb-2 text-sm font-medium">Ảnh sản phẩm <span className="text-terracotta">*</span></p>
+        <p className="mb-2 text-sm font-medium">Ảnh sản phẩm <span className="text-datnung">*</span></p>
         <ImageUploader value={form.images} onChange={(v) => set("images", v)} max={12} purpose="product" />
-        {errors.images && <p role="alert" className="mt-1.5 text-[13px] text-[#b3261e]">{errors.images}</p>}
+        {errors.images && <p role="alert" className="mt-1.5 text-[13px] text-doson">{errors.images}</p>}
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Gắn vào lô sản xuất (truy xuất QR)" htmlFor="batch" hint="Mọi sản phẩm cùng lô dùng chung mã QR của lô">
@@ -116,8 +116,8 @@ export function ProductForm({ id, initial, batches, verified }: { id?: string; i
         <Checkbox label="Tác phẩm độc bản" description="Chỉ có một chiếc duy nhất" checked={form.isUniquePiece} onChange={(e) => set("isUniquePiece", e.target.checked)} />
         <Checkbox label="Hiển thị công khai" description={verified ? "Bỏ chọn để lưu nháp" : "Cần được BQL duyệt xưởng trước"} disabled={!verified} checked={form.isPublished && verified} onChange={(e) => set("isPublished", e.target.checked)} />
       </div>
-      <div className="flex flex-wrap justify-between gap-2 border-t border-line pt-5">
-        {id ? <Button variant="ghost" onClick={() => setConfirmDelete(true)} className="text-terracotta"><Trash2 className="size-4" /> Xóa</Button> : <span />}
+      <div className="flex flex-wrap justify-between gap-2 border-t border-vua pt-5">
+        {id ? <Button variant="ghost" onClick={() => setConfirmDelete(true)} className="text-datnung"><Trash2 className="size-4" /> Xóa</Button> : <span />}
         <Button onClick={save} loading={saving}>{id ? "Lưu thay đổi" : "Thêm sản phẩm"}</Button>
       </div>
       <ConfirmDialog open={confirmDelete} onClose={() => setConfirmDelete(false)} onConfirm={remove} title="Xóa sản phẩm?" danger confirmLabel="Xóa">

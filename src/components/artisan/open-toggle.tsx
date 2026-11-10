@@ -36,13 +36,13 @@ export function OpenToggle({ initial, label: initialLabel }: { initial: boolean;
         aria-label="Nhận khách tham quan"
         onClick={toggle}
         disabled={busy}
-        className={cn("relative h-8 w-14 shrink-0 rounded-full transition", on ? "bg-celadon" : "bg-ash/40")}
+        className={cn("relative h-8 w-14 shrink-0 rounded-full transition", on ? "bg-ngoc" : "bg-tro/40")}
       >
-        <span className={cn("absolute top-1 size-6 rounded-full bg-white shadow transition-all", on ? "left-7" : "left-1")} />
+        <span className={cn("absolute top-1 size-6 rounded-full bg-su shadow transition-all", on ? "left-7" : "left-1")} />
       </button>
       <div>
         <p className="font-medium">{on ? "Đang nhận khách tham quan" : "Tạm ngừng nhận khách"}</p>
-        <p className="text-sm text-ash">{label}</p>
+        <p className="text-sm text-tro">{label}</p>
       </div>
     </div>
   );

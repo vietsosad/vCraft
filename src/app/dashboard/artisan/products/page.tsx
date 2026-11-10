@@ -26,11 +26,11 @@ export default async function ArtisanProductsPage() {
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((p) => (
             <li key={p.id}>
-              <Link href={`/dashboard/artisan/products/${p.id}`} className="flex gap-3 rounded-[var(--radius-tile)] border border-line bg-white/70 p-3 hover:border-terracotta/40">
+              <Link href={`/dashboard/artisan/products/${p.id}`} className="flex gap-3 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-3 hover:border-datnung/40">
                 <VImage image={asImages(p.images)[0]} ratio="1/1" sizes="88px" className="w-[88px] shrink-0 rounded" />
                 <div className="min-w-0">
-                  <p className="truncate font-display text-lg leading-tight">{p.name}</p>
-                  <p className="text-xs text-ash">{GLAZES[p.glazeType].label} · {categoryLabel(p.category)}</p>
+                  <p className="truncate font-serif text-lg leading-tight">{p.name}</p>
+                  <p className="text-xs text-tro">{GLAZES[p.glazeType].label} · {categoryLabel(p.category)}</p>
                   <p className="mt-1 font-mono text-sm">{formatVnd(p.priceVnd)}</p>
                   <div className="mt-1 flex flex-wrap gap-1">
                     <Badge tone={p.isPublished ? "celadon" : "ash"}>{p.isPublished ? "Công khai" : "Nháp"}</Badge>
