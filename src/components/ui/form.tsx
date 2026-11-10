@@ -2,7 +2,7 @@ import { forwardRef, type InputHTMLAttributes, type ReactNode, type SelectHTMLAt
 import { cn } from "@/lib/cn";
 
 const control =
-  "w-full rounded-[var(--radius-tile)] border border-line bg-white/80 px-3.5 py-2.5 text-[15px] text-ink placeholder:text-ash/60 transition focus:border-terracotta focus:bg-white focus:outline-none focus:ring-2 focus:ring-terracotta/15 disabled:opacity-60 aria-[invalid=true]:border-[#b3261e] aria-[invalid=true]:ring-[#b3261e]/15";
+  "w-full rounded-[var(--radius-tile)] border border-vua bg-su/80 px-3.5 py-2.5 text-[15px] text-muc placeholder:text-tro/60 transition focus:border-datnung focus:bg-su focus:outline-none focus:ring-2 focus:ring-datnung/15 disabled:opacity-60 aria-[invalid=true]:border-doson aria-[invalid=true]:ring-doson/15";
 
 /** Nhãn + ô nhập + thông báo lỗi tiếng Việt, gắn aria đầy đủ. */
 export function Field({
@@ -24,17 +24,17 @@ export function Field({
 }) {
   return (
     <div className={cn("space-y-1.5", className)}>
-      <label htmlFor={htmlFor} className="block text-sm font-medium text-ink">
+      <label htmlFor={htmlFor} className="block text-sm font-medium text-muc">
         {label}
-        {required && <span className="ml-0.5 text-terracotta" aria-hidden>*</span>}
+        {required && <span className="ml-0.5 text-datnung" aria-hidden>*</span>}
       </label>
       {children}
       {error ? (
-        <p id={`${htmlFor}-error`} role="alert" className="text-[13px] text-[#b3261e]">
+        <p id={`${htmlFor}-error`} role="alert" className="text-[13px] text-doson">
           {error}
         </p>
       ) : hint ? (
-        <p className="text-[13px] text-ash">{hint}</p>
+        <p className="text-[13px] text-tro">{hint}</p>
       ) : null}
     </div>
   );
@@ -98,10 +98,10 @@ export function Checkbox({
 }: InputHTMLAttributes<HTMLInputElement> & { label: string; description?: string }) {
   return (
     <label className={cn("flex cursor-pointer items-start gap-3", className)}>
-      <input type="checkbox" className="mt-1 size-4 accent-terracotta" {...props} />
+      <input type="checkbox" className="mt-1 size-4 accent-datnung" {...props} />
       <span>
         <span className="block text-sm font-medium">{label}</span>
-        {description && <span className="block text-[13px] text-ash">{description}</span>}
+        {description && <span className="block text-[13px] text-tro">{description}</span>}
       </span>
     </label>
   );

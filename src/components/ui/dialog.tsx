@@ -19,14 +19,14 @@ export function Dialog({ open, onClose, title, children, footer }: { open: boole
       ref={ref}
       onClose={onClose}
       onCancel={onClose}
-      className="m-auto w-[min(92vw,520px)] rounded-lg border border-line bg-kaolin p-0 text-ink shadow-lift backdrop:bg-ink/40"
+      className="vc-dialog m-auto w-[min(92vw,520px)] rounded-[10px] border border-vua bg-nga p-0 text-muc shadow-lift backdrop:bg-dem/45 backdrop:backdrop-blur-[2px]"
     >
-      <div className="flex items-center justify-between border-b border-line px-5 py-4">
-        <h2 className="font-display text-2xl">{title}</h2>
-        <button onClick={onClose} aria-label="Đóng" className="rounded p-1 hover:bg-bisque"><X className="size-5" /></button>
+      <div className="flex items-center justify-between border-b border-vua px-5 py-4">
+        <h2 className="font-serif text-2xl font-bold normal-case">{title}</h2>
+        <button onClick={onClose} aria-label="Đóng" className="grid size-9 place-items-center rounded-[var(--radius-tile)] hover:bg-nga-dam"><X className="size-5" /></button>
       </div>
       <div className="px-5 py-4 text-sm">{children}</div>
-      {footer && <div className="flex justify-end gap-2 border-t border-line px-5 py-3">{footer}</div>}
+      {footer && <div className="flex justify-end gap-2 border-t border-vua px-5 py-3">{footer}</div>}
     </dialog>
   );
 }

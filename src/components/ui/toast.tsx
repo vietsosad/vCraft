@@ -28,26 +28,32 @@ export function ToastProvider({ children }: { children: ReactNode }) {
             key={t.id}
             role={t.kind === "error" ? "alert" : "status"}
             className={cn(
-              "pointer-events-auto flex animate-fade-up items-start gap-3 rounded-lg border bg-white p-4 shadow-lift",
-              t.kind === "success" && "border-celadon/40",
-              t.kind === "error" && "border-terracotta/50",
-              t.kind === "info" && "border-cobalt/30",
+              "pointer-events-auto relative flex animate-rise items-start gap-3 overflow-hidden rounded-[8px] border bg-su p-4 shadow-lift",
+              t.kind === "success" && "border-ngoc/40",
+              t.kind === "error" && "border-doson/45",
+              t.kind === "info" && "border-lam/30",
             )}
           >
-            {t.kind === "success" && <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-celadon" />}
-            {t.kind === "error" && <AlertTriangle className="mt-0.5 size-5 shrink-0 text-terracotta" />}
-            {t.kind === "info" && <Info className="mt-0.5 size-5 shrink-0 text-cobalt" />}
+            {t.kind === "success" && <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-ngoc" />}
+            {t.kind === "error" && <AlertTriangle className="mt-0.5 size-5 shrink-0 text-doson" />}
+            {t.kind === "info" && <Info className="mt-0.5 size-5 shrink-0 text-lam" />}
             <div className="min-w-0 flex-1">
               <p className="text-sm font-semibold">{t.title}</p>
-              {t.description && <p className="mt-0.5 text-[13px] text-ash">{t.description}</p>}
+              {t.description && <p className="mt-0.5 text-[13px] text-tro">{t.description}</p>}
             </div>
             <button
               aria-label="Đóng thông báo"
               onClick={() => setItems((prev) => prev.filter((x) => x.id !== t.id))}
-              className="text-ash hover:text-ink"
+              className="text-tro hover:text-muc"
             >
               <X className="size-4" />
             </button>
+            {/* Vạch thời gian: co dần cho tới khi thông báo tự đóng */}
+            <span
+              aria-hidden
+              className={cn("absolute inset-x-0 bottom-0 h-[3px] origin-left", t.kind === "success" ? "bg-ngoc" : t.kind === "error" ? "bg-doson" : "bg-lam")}
+              style={{ animation: `toast-drain ${t.kind === "error" ? 7000 : 4500}ms linear forwards` }}
+            />
           </div>
         ))}
       </div>

@@ -22,7 +22,7 @@ export function VImage({
   imgClassName?: string;
 }) {
   return (
-    <div className={cn("relative overflow-hidden bg-bisque-deep", className)} style={{ aspectRatio: ratio }}>
+    <div className={cn("relative overflow-hidden bg-nga-sau", className)} style={{ aspectRatio: ratio }}>
       {image ? (
         <Image
           src={image.src}

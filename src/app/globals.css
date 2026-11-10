@@ -1,126 +1,341 @@
 @import "tailwindcss";
 
 /*
- * Design system "Bát Tràng Digital Exhibition"
- * Bảng màu chiết xuất từ chất liệu: cao lanh, xương gốm mộc, gạch đỏ Bảo tàng Gốm,
- * men lam coban, men ngọc, lửa lò nung và mực tàu đánh rạn.
+ * Thế giới "Con đường gốm sứ" – mỗi xưởng, mỗi tác phẩm, mỗi lô là một viên gốm men
+ * gắn vào cùng một lưới mạch vữa của làng. Tên token theo PRODUCT.md (lam, ngà, đất nung…).
+ *
+ * - nga / nga-dam / nga-sau: nền men ngà và các lớp sâu hơn
+ * - su: mặt thẻ trắng sứ;  vua: mạch vữa (đường kẻ, viền)
+ * - muc: chữ chính;  tro: chữ phụ
+ * - lam, datnung, ngoc, vangrom, doson: men màu; *-nen: mảng nền lớn luôn đậm
+ * - on: chữ đặt trên nút/khối men màu;  giay: chữ luôn sáng (trên ảnh, nền đêm);  dem: nền luôn tối
  */
-@theme {
-  --color-kaolin: #f9f6f0;
-  --color-bisque: #f1ece1;
-  --color-bisque-deep: #e6dfcf;
-  --color-terracotta: #b84a39;
-  --color-terracotta-dark: #9a3b2b;
-  --color-cobalt: #1d3557;
-  --color-cobalt-soft: #2c4a72;
-  --color-celadon: #3b6e5c;
-  --color-celadon-soft: #dbe8e1;
-  --color-kiln: #d97706;
-  --color-ember: #fa903e;
-  --color-ink: #181615;
-  --color-ash: #575b5f;
-  --color-line: #ddd5c4;
+@theme static {
+  --color-nga: #f7f2e8;
+  --color-nga-dam: #efe7d6;
+  --color-nga-sau: #e4d9c3;
+  --color-su: #fffdf8;
+  --color-vua: #d9cdb7;
+  --color-muc: #1c1a17;
+  --color-tro: #655e54;
 
-  --font-display: var(--font-cormorant), "Times New Roman", serif;
-  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --color-lam: #1f4e9a;
+  --color-lam-dam: #163a73;
+  --color-lam-sang: #2b5fb4;
+  --color-lam-nhat: #dfe7f4;
+  --color-lam-nen: #1f4e9a;
+
+  --color-datnung: #a34a23;
+  --color-datnung-dam: #84391a;
+  --color-datnung-nhat: #f4e2d7;
+  --color-datnung-nen: #8f3f1d;
+
+  --color-ngoc: #3b6f5e;
+  --color-ngoc-sang: #5e8f7b;
+  --color-ngoc-nhat: #dcebe3;
+  --color-ngoc-nen: #2f5c4d;
+
+  --color-vangrom: #c8962e;
+  --color-vangrom-dam: #84600f;
+  --color-doson: #b3261e;
+  --color-doson-dam: #8e1d17;
+  --color-lua: #ee8a43;
+
+  --color-on: #fffdf8;
+  --color-giay: #fffdf8;
+  --color-dem: #121823;
+
+  /* Màu biểu đồ: đã chạy bộ kiểm tra (độ sáng, độ bão hòa, mù màu, tương phản) trên nền sứ */
+  --chart-1: #1f4e9a;
+  --chart-2: #a34a23;
+  --chart-3: #00866a;
+  --chart-4: #b8861a;
+
+  --font-display: var(--font-phudu), "Be Vietnam Pro", system-ui, sans-serif;
+  --font-serif: var(--font-alegreya), Georgia, serif;
+  --font-sans: var(--font-bevietnam), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
   --radius-tile: 6px;
-  --shadow-soft: 0 1px 2px rgb(24 22 21 / 0.04), 0 8px 24px -12px rgb(24 22 21 / 0.18);
-  --shadow-lift: 0 2px 4px rgb(24 22 21 / 0.06), 0 18px 40px -18px rgb(24 22 21 / 0.35);
+  --shadow-soft: 0 1px 2px rgb(28 26 23 / 0.05), 0 8px 22px -14px rgb(28 26 23 / 0.28);
+  --shadow-lift: 0 2px 4px rgb(28 26 23 / 0.06), 0 22px 44px -22px rgb(28 26 23 / 0.45);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
-  --animate-fade-up: fade-up 0.6s ease-out both;
+  --animate-tile-set: tile-set 0.85s var(--ease-out-expo) var(--d, 0ms) both;
+  --animate-rise: rise 0.5s var(--ease-out-expo) both;
+  --animate-pop: pop 0.45s var(--ease-out-expo) both;
 
   @keyframes pulse-ring {
     0% { transform: scale(0.6); opacity: 0.75; }
     100% { transform: scale(2.4); opacity: 0; }
   }
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+  /* Viên gốm được "gắn" vào mạch vữa: hơi lệch, hơi xoay rồi ăn khớp vào lưới */
+  @keyframes tile-set {
+    0% { opacity: 0; transform: translate3d(var(--tx, 0), var(--ty, 18px), 0) rotate(var(--rot, -3deg)) scale(0.92); filter: saturate(0.4) brightness(1.15); }
+    60% { opacity: 1; filter: saturate(1) brightness(1); }
+    100% { opacity: 1; transform: none; filter: none; }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.6); }
+    55% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+}
+
+/* Chế độ tối "lò đêm": men vẫn sáng trên nền lò; nút men màu chuyển sang tông sáng với chữ tối */
+@layer theme {
+  :root[data-theme="dark"] {
+    /* lò đêm: nền than ấm như lòng lò đã tắt lửa, mạch vữa màu tro nung */
+    --color-nga: #120f0d;
+    --color-nga-dam: #1a1511;
+    --color-nga-sau: #261e18;
+    --color-su: #1d1713;
+    --color-vua: #3b3028;
+    --color-muc: #f1e7d7;
+    --color-tro: #b3a491;
+    --color-lam: #94b4ee;
+    --color-lam-dam: #b3caf4;
+    --color-lam-sang: #a6c1f2;
+    --color-lam-nhat: #1c2333;
+    --color-lam-nen: #1d3d72;
+    --color-datnung: #ec9a72;
+    --color-datnung-dam: #f3b393;
+    --color-datnung-nhat: #3a2318;
+    --color-datnung-nen: #7a3519;
+    --color-ngoc: #8fc7b1;
+    --color-ngoc-sang: #78b29c;
+    --color-ngoc-nhat: #172a23;
+    --color-ngoc-nen: #24493d;
+    --color-vangrom: #e2b552;
+    --color-vangrom-dam: #ecc874;
+    --color-doson: #f08a80;
+    --color-doson-dam: #f5a49c;
+    --color-on: #10151e;
+    --chart-1: #5a84d6;
+    --chart-2: #c8602e;
+    --chart-3: #1aa585;
+    --chart-4: #b5841d;
+    --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 22px -14px rgb(0 0 0 / 0.7);
+    --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 22px 44px -22px rgb(0 0 0 / 0.85);
+    color-scheme: dark;
   }
 }
 
 @layer base {
+  /* Chiều cao thanh demo vấn đáp (chỉ có khi DEMO_MODE) – các thanh dính đặt ngay dưới nó */
+  :root { --demo-h: 0px; }
+  :root:has(.demo-bar) { --demo-h: 36px; }
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+    scrollbar-color: var(--color-vua) transparent;
   }
   body {
-    background: var(--color-kaolin);
-    color: var(--color-ink);
+    background: var(--color-nga);
+    color: var(--color-muc);
     font-family: var(--font-sans);
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
-  h1, h2, h3, .font-display {
+  h1, h2, h3 { text-wrap: balance; }
+  /* Tiêu đề trang và tiêu đề khu: biển hiệu ghép gốm (Phudu, chữ hoa) */
+  h1, h2 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
-    line-height: 1.12;
+    text-transform: uppercase;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.005em;
   }
+  /* Tiêu đề nhỏ: giọng kể Alegreya */
+  h3 { font-family: var(--font-serif); font-weight: 700; line-height: 1.2; }
+  p { text-wrap: pretty; }
   ::selection {
-    background: var(--color-terracotta);
-    color: var(--color-kaolin);
+    background: var(--color-lam);
+    color: var(--color-on);
   }
   :focus-visible {
-    outline: 2px solid var(--color-terracotta);
+    outline: 2px solid var(--color-lam);
     outline-offset: 2px;
     border-radius: 4px;
   }
   input, select, textarea, button { font: inherit; }
+  fieldset { min-width: 0; }
+  input, textarea { caret-color: var(--color-datnung); }
+  a { text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--color-vua); border-radius: 6px; border: 2px solid var(--color-nga); }
+  ::-webkit-scrollbar-track { background: transparent; }
 }
 
 @layer components {
-  /* Vân men rạn rất mờ cho nền các khối lớn */
-  .crackle-bg {
-    background-color: var(--color-bisque);
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23181615' stroke-opacity='0.06' stroke-width='1'%3E%3Cpath d='M0 40 L38 52 L60 20 L104 34 L132 0'/%3E%3Cpath d='M38 52 L30 98 L70 120 L60 20'/%3E%3Cpath d='M70 120 L118 104 L104 34'/%3E%3Cpath d='M118 104 L160 80 L200 96 L240 70'/%3E%3Cpath d='M160 80 L150 30 L190 10'/%3E%3Cpath d='M30 98 L0 130'/%3E%3Cpath d='M70 120 L64 170 L20 190 L0 240'/%3E%3Cpath d='M64 170 L112 186 L118 104'/%3E%3Cpath d='M112 186 L170 160 L200 96'/%3E%3Cpath d='M170 160 L210 200 L240 190'/%3E%3Cpath d='M112 186 L120 240'/%3E%3Cpath d='M210 200 L196 240'/%3E%3C/g%3E%3C/svg%3E");
+  /* ---------- Chữ ---------- */
+  /* Biển hiệu ghép gốm: Phudu chữ hoa, khít, dấu tiếng Việt chắc */
+  .font-display {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: -0.005em;
+    line-height: 0.98;
+    font-weight: 800;
   }
-  /* Vạch phân cách hoa văn sóng nước men lam */
+  /* Giọng kể: tên tác phẩm, tên xưởng, lời nghệ nhân */
+  .font-serif { font-family: var(--font-serif); letter-spacing: -0.005em; line-height: 1.18; }
+  .title-xl { font-family: var(--font-display); text-transform: uppercase; font-weight: 800; line-height: 0.95; font-size: clamp(2.6rem, 6.4vw, 5.4rem); }
+  .title-lg { font-family: var(--font-display); text-transform: uppercase; font-weight: 800; line-height: 1; font-size: clamp(2rem, 4vw, 3.2rem); }
+  .title-md { font-family: var(--font-display); text-transform: uppercase; font-weight: 700; line-height: 1.02; font-size: clamp(1.5rem, 2.4vw, 2rem); }
+  /* Nhãn nhóm (legend, cột chân trang, tiêu đề thẻ) – không dùng làm dòng kicker trên tiêu đề */
+  .label { font-family: var(--font-sans); text-transform: none; line-height: 1.4; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em; color: var(--color-tro); }
+  .tabular { font-variant-numeric: tabular-nums lining-nums; }
+  .code { font-family: var(--font-mono); font-size: 0.8em; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Lưới mạch vữa ---------- */
+  .grout {
+    --cell: 72px;
+    background-color: var(--color-nga);
+    background-image:
+      linear-gradient(var(--color-vua) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-vua) 1px, transparent 1px);
+    background-size: var(--cell) var(--cell);
+    background-position: -1px -1px;
+  }
+  /* Mạch vữa giữa các viên trong một bức ghép: khoảng hở đúng bằng mạch */
+  .mosaic { display: grid; gap: 6px; background: var(--color-vua); padding: 6px; border-radius: 10px; }
+
+  /* ---------- Viên gốm ---------- */
+  .tile {
+    position: relative;
+    isolation: isolate;
+    border-radius: var(--radius-tile);
+    overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.28),
+      inset 0 -2px 0 rgb(0 0 0 / 0.08),
+      var(--shadow-soft);
+  }
+  /* Bóng men lướt qua khi rê chuột: vệt sáng đi theo con trỏ */
+  .glaze::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(closest-side, rgb(255 255 255 / 0.42), rgb(255 255 255 / 0) 70%);
+    transform: translate(calc(var(--mx, -60%) - 50%), calc(var(--my, -60%) - 50%));
+    left: 50%; top: 50%; width: 60%; height: 60%;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-out-expo);
+    mix-blend-mode: soft-light;
+  }
+  .glaze:hover::after { opacity: 1; }
+  .glaze { transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo); }
+  .glaze:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.08), var(--shadow-lift); }
+
+  /* Viên hoa văn: mây – sóng men lam vẽ tay */
+  .tile-hoavan {
+    background-color: var(--color-su);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%231f4e9a' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M0 48c8 0 8-10 16-10s8 10 16 10 8-10 16-10 8 10 16 10' opacity='.85'/%3E%3Cpath d='M0 60c8 0 8-10 16-10s8 10 16 10 8-10 16-10 8 10 16 10' opacity='.45'/%3E%3Cpath d='M14 22c0-6 8-8 11-3 2-5 11-4 10 3 5 0 6 7 0 8H15c-6 0-6-8-1-8z' opacity='.7'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 64px 64px;
+  }
+  /* Viên men rạn: vết rạn mực tàu trên men ngà */
+  .tile-ran {
+    background-color: #e6d9bf;
+    background-image: url("/textures/crackle.svg"), radial-gradient(120% 90% at 20% 0%, rgb(255 255 255 / 0.35), transparent 60%);
+    background-size: 240px 240px, auto;
+  }
+  /* Viên sen: hoa sen men lam trên nền sứ */
+  .tile-sen {
+    background-color: var(--color-su);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%231f4e9a' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M48 70c-10-8-12-24 0-38 12 14 10 30 0 38z' fill='%231f4e9a' fill-opacity='.12'/%3E%3Cpath d='M48 70c-14 0-26-10-26-24 12 0 22 8 26 24zM48 70c14 0 26-10 26-24-12 0-22 8-26 24z'/%3E%3Cpath d='M30 76h36' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 96px 96px;
+    background-position: center;
+  }
+  .tile-dat {
+    background-color: var(--color-datnung-nen);
+    background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1.2px);
+    background-size: 7px 7px;
+  }
+  .tile-ngoc {
+    background-color: var(--color-ngoc-nen);
+    background-image: radial-gradient(120% 90% at 20% 0%, rgb(255 255 255 / 0.18), transparent 60%);
+  }
+  .tile-lam {
+    background-color: var(--color-lam-nen);
+    background-image: radial-gradient(120% 90% at 15% 0%, rgb(255 255 255 / 0.16), transparent 55%);
+  }
+
+  /* Viền sóng nước men lam làm vạch phân cách */
   .wave-divider {
     height: 14px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'%3E%3Cpath d='M0 10 Q7 0 14 10 T28 10 T42 10 T56 10' fill='none' stroke='%231d3557' stroke-opacity='0.45' stroke-width='1.4'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='14' viewBox='0 0 56 14'%3E%3Cpath d='M0 10 Q7 0 14 10 T28 10 T42 10 T56 10' fill='none' stroke='%231f4e9a' stroke-opacity='.5' stroke-width='1.5'/%3E%3C/svg%3E");
     background-repeat: repeat-x;
   }
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-terracotta);
+  /* Nền vân men rạn rất mờ cho khối trống */
+  .crackle-bg {
+    background-color: var(--color-nga-dam);
+    background-image: url("/textures/crackle-faint.svg");
+    background-size: 360px 360px;
   }
-  .tabular {
-    font-variant-numeric: tabular-nums;
+
+  /* ---------- Gắn viên khi cuộn tới ---------- */
+  /* Mặc định luôn hiện; chỉ ẩn để chờ khi JS đã chạy (html.js) */
+  .js [data-reveal]:not([data-in]) { opacity: 0; }
+  .js [data-reveal][data-in] { animation: tile-set 0.8s var(--ease-out-expo) both; animation-delay: var(--d, 0ms); }
+  .js [data-reveal="wipe"][data-in] { animation: wipe 0.9s var(--ease-out-expo) both; animation-delay: var(--d, 0ms); }
+  @keyframes wipe {
+    from { clip-path: inset(0 0 100% 0 round var(--radius-tile)); opacity: 1; }
+    to { clip-path: inset(0 0 0 0 round var(--radius-tile)); opacity: 1; }
   }
+
+  .prose-vcraft { max-width: 68ch; }
   .prose-vcraft p { margin: 0 0 1em; }
-  .prose-vcraft h2 { font-size: 1.6rem; margin: 1.4em 0 0.5em; }
+  .prose-vcraft h2 { font-family: var(--font-serif); font-weight: 700; font-size: 1.6rem; margin: 1.4em 0 0.5em; }
   .prose-vcraft ul { list-style: disc; padding-left: 1.3em; margin-bottom: 1em; }
-  .prose-vcraft strong { color: var(--color-ink); }
+  .prose-vcraft strong { color: var(--color-muc); }
 }
 
+/* Hộp thoại: trồi lên và nền mờ dần */
+dialog.vc-dialog[open] { animation: dialog-in 0.32s var(--ease-out-expo) both; }
+dialog.vc-dialog[open]::backdrop { animation: backdrop-in 0.32s ease-out both; }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scanline { 0%, 100% { top: 8%; } 50% { top: 90%; } }
+@keyframes toast-drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
 /* Leaflet: popup kiểu "vé triển lãm" */
-.leaflet-container { font-family: var(--font-sans); background: #efe9dc; }
-.leaflet-popup-content-wrapper { border-radius: 8px; padding: 0; overflow: hidden; box-shadow: var(--shadow-lift); }
+.leaflet-container { font-family: var(--font-sans); background: var(--color-nga-dam); }
+.leaflet-popup-content-wrapper { border-radius: 8px; padding: 0; overflow: hidden; box-shadow: var(--shadow-lift); background: var(--color-su); color: var(--color-muc); }
+.leaflet-popup-tip { background: var(--color-su); }
 .leaflet-popup-content { margin: 0; width: 260px !important; line-height: 1.45; }
 .leaflet-popup-content p { margin: 0 !important; }
 .leaflet-popup-content img { display: block; }
 .leaflet-tile-pane { filter: sepia(0.18) saturate(0.9); }
+:root[data-theme="dark"] .leaflet-tile-pane { filter: invert(0.92) hue-rotate(180deg) saturate(0.55) brightness(0.9); }
+:root[data-theme="dark"] .leaflet-bar a { background: var(--color-su); color: var(--color-muc); border-color: var(--color-vua); }
+
+/* Chuyển chế độ sáng/tối bằng View Transition: vòng men lan ra từ nút bấm */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .glaze:hover { transform: none; }
 }
 
 @media print {
-  header, footer, .no-print { display: none !important; }
-  body { background: white; }
-  /* Các mốc dùng hiệu ứng hiện dần khi cuộn – khi in phải hiện đầy đủ */
+  header, footer, nav, .no-print { display: none !important; }
+  body { background: white; color: black; }
+  .js [data-reveal] { opacity: 1 !important; animation: none !important; clip-path: none !important; }
   li [style*="opacity"] { opacity: 1 !important; transform: none !important; }
 }
