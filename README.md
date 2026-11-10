@@ -24,35 +24,56 @@ vCraft là nền tảng web của **Ban quản lý (BQL) làng gốm Bát Tràng
 
 ## 2. Tính năng theo vai trò
 
-**Khách hàng / du khách**
+Ba vai trò làm việc ở **ba khu riêng**, mỗi khu có cổng đăng nhập, thanh bên, màu men và trang chủ riêng. Tài khoản đăng nhập nhầm cổng sẽ được chỉ sang cổng đúng thay vì tạo phiên.
+
+| Khu | Cổng đăng nhập | Địa chỉ | Màu men |
+|---|---|---|---|
+| Khách hàng (khách lẻ, khách sỉ, du khách) | `/login` | `/account` | Lam Bát Tràng |
+| Nghệ nhân / hộ nghề | `/login/artisan` | `/dashboard/artisan` | Đất nung |
+| Ban quản lý | `/login/admin` | `/dashboard/admin` | Men ngọc trên nền mực |
+
+**Khu công khai (ai cũng xem được)**
 - Phòng triển lãm: lọc theo phân loại, dòng men, hộ gia đình, khoảng giá, độc bản, có truy xuất. Mọi thao tác gọi `GET /api/products` và cập nhật lưới tại chỗ, bộ lọc nằm trên URL.
 - Tìm kiếm không dấu kèm gợi ý tức thì ("binh hut loc" ra "Bình hút lộc").
 - Bản đồ làng nghề chia đôi màn hình: ghim SVG hình bình gốm, vòng sóng men ngọc khi xưởng **đang mở cửa** (tính theo giờ Việt Nam), popup kiểu vé tham quan, chỉ đường, điểm di sản.
-- Quét QR trên sản phẩm: link ngắn `/q/{mã-lô}` chuyển hướng 302 tới trang kể chuyện `/trace/{mã-lô}` với "mạch lửa lò nung".
+- Quét QR: link ngắn `/q/{mã-lô}` chuyển tới trang truy xuất `/trace/{mã-lô}` có "mạch lửa lò nung" và **đồng hồ nhiệt lò** (kim chạy có quán tính theo công đoạn đang xem). Trang `/scan` quét tem bằng camera ngay trên web (BarcodeDetector hoặc jsQR), tải ảnh tem hoặc nhập mã tay.
+- Gian trưng bày xưởng: câu chuyện, ảnh xưởng, **đặt lịch nặn gốm**, **đánh giá thật** của khách, tác phẩm.
 - Trợ lý AI "Sứ giả Tinh hoa Bát Tràng" trả lời bằng dữ liệu sống của làng.
+- Chế độ sáng/tối (nhớ lựa chọn, đổi bằng hiệu ứng lan vòng tròn).
 
-**Khách sỉ**
-- Tạo yêu cầu báo giá qua 4 bước. Bản nháp tự lưu, thông tin tổ chức điền sẵn, tự tính tổng ngân sách.
-- Phòng đấu thầu: so sánh chào giá, **gợi ý phân bổ tối ưu chi phí**, chốt một hoặc nhiều xưởng, theo dõi tiến độ từng lô, xác nhận nhận hàng.
-- Nút **"Mô phỏng xung đột đồng thời"** gửi hai yêu cầu chốt cùng lúc để thấy đúng một yêu cầu thành công, yêu cầu kia nhận `409 Conflict`.
+**Khách hàng – `/account`**
+- Tổng quan: đơn sỉ đang chạy, lịch nặn gốm sắp tới, tác phẩm đã lưu, việc chờ đánh giá, thông báo mới.
+- Đơn đặt sỉ: tạo yêu cầu 4 bước (nháp tự lưu), phòng đấu thầu so sánh chào giá, **gợi ý phân bổ tối ưu chi phí**, chốt nhiều xưởng, theo dõi lô, nút **"Mô phỏng xung đột đồng thời"** (một yêu cầu thành công, yêu cầu kia nhận `409`).
+- **Lịch trải nghiệm**: chọn ngày mở cửa → khung 2 tiếng còn chỗ → số khách; chỗ trống được kiểm tra lại trong giao dịch Serializable nên hai người không đặt quá sức chứa. Hủy lịch, nhận thông báo khi xưởng xác nhận.
+- **Đã lưu**: tác phẩm và xưởng yêu thích (cập nhật lạc quan).
+- **Đánh giá**: chỉ đánh giá được sau đơn sỉ đã giao (xưởng trúng thầu) hoặc buổi trải nghiệm đã diễn ra, mỗi lần một đánh giá.
+- Hồ sơ & bảo mật: sửa thông tin, đổi mật khẩu (đăng xuất mọi thiết bị khác), xem thiết bị đang đăng nhập.
 
-**Nghệ nhân / hộ nghề**
+**Nghệ nhân – `/dashboard/artisan`**
 - Đăng ký 3 bước: kéo ghim trên bản đồ để chọn vị trí (địa chỉ tự điền), tải minh chứng ở vùng riêng tư, số CCCD được mã hóa.
 - Hồ sơ xưởng, công tắc "đang nhận khách" (bản đồ cập nhật ngay), sản phẩm nhiều ảnh.
-- Lô sản xuất: mã lô và QR tự sinh, thêm mốc theo mẫu 6 công đoạn kèm ảnh minh chứng, hoàn tất thì **khóa nhật ký**, in tem QR khổ A4.
-- Hộp cơ hội báo giá: lý do được mời, chào giá kín, sửa giá theo `version`, rút chào giá.
+- Lô sản xuất: mã lô và QR tự sinh, thêm mốc theo mẫu 6 công đoạn kèm ảnh, hoàn tất thì **khóa nhật ký**, in tem QR khổ A4.
+- Cơ hội báo giá: lý do được mời, chào giá kín, sửa giá theo `version`, rút chào giá.
+- **Lịch trải nghiệm**: xác nhận / từ chối / đánh dấu đã diễn ra (khóa lạc quan theo `version`, không cho "hoàn tất" trước ngày hẹn).
+- **Đánh giá**: điểm trung bình, phân bố sao, trả lời từng đánh giá.
+- **Thống kê**: lượt quét QR 30 ngày, tỉ lệ trúng chào giá, doanh thu sỉ, khách đã đón; xuất CSV lô, chào giá, lịch hẹn.
+- Trên điện thoại có thanh tab dưới đáy, vùng bấm 56px để thao tác một tay.
 
-**Ban quản lý**
+**Ban quản lý – `/dashboard/admin`**
+- Toàn cảnh làng: lượt quét QR mỗi ngày, đăng ký mới theo tuần, yêu cầu báo giá theo trạng thái, xưởng nhận nhiều đơn sỉ nhất.
 - Kiểm duyệt hộ nghề (xem minh chứng riêng tư, CCCD đã che), cấp huy hiệu *Hộ nghề xác thực*, tạm khóa tài khoản.
-- Bảng điều phối đơn sỉ toàn làng: xem mọi chào giá, mời thêm xưởng khi thiếu công suất, cảnh báo lô chậm.
-- Đăng tin cộng đồng. Tin khẩn hiện banner và gửi thông báo tới mọi hộ.
-- Thống kê và nhật ký thao tác.
+- Điều phối đơn sỉ toàn làng: phòng báo giá riêng trong khu, xem mọi chào giá, mời thêm xưởng.
+- Đăng tin cộng đồng; tin khẩn hiện banner và gửi thông báo tới mọi hộ.
+- **Báo cáo & xuất CSV** (UTF-8 có BOM, mở thẳng bằng Excel): yêu cầu báo giá, hộ nghề, lô, lịch trải nghiệm, nhật ký.
+- **Nhật ký hoạt động** lọc theo loại hành động, phân trang.
+
+**Mọi tài khoản**: quên mật khẩu (`/forgot-password`, mã dùng một lần, hết hạn 30 phút, chỉ lưu bản băm; ở chế độ demo đường dẫn hiện ngay trên màn hình vì chưa nối dịch vụ email).
 
 ## 3. Bốn yêu cầu kỹ thuật của đề bài
 
 | Yêu cầu | Cài đặt |
 |---|---|
-| **4.1 Nhật ký sản xuất & QR** | `ProductBatch.productionStages` là mảng mốc (thời điểm, mô tả, nhiệt độ, ảnh). QR sinh ở backend bằng `qrcode` (mức sửa lỗi H). Mọi sản phẩm cùng lô dùng chung QR. Lô hoàn tất thì khóa, sửa hay xóa mốc trả `409 BATCH_LOCKED`. → `src/lib/services/batch-service.ts`, `src/app/trace/[batchCode]` |
+| **4.1 Nhật ký sản xuất & QR** | `ProductBatch.productionStages` là mảng mốc (thời điểm, mô tả, nhiệt độ, ảnh). QR sinh ở backend bằng `qrcode` (mức sửa lỗi H). Mọi sản phẩm cùng lô dùng chung QR. Lô hoàn tất thì khóa, sửa hay xóa mốc trả `409 BATCH_LOCKED`. → `src/lib/services/batch-service.ts`, `src/app/(site)/trace/[batchCode]`, `src/components/trace/*` |
 | **4.2 Máy trạng thái báo giá & khóa bản ghi** | `DRAFT_REQUEST → SENT_TO_ARTISANS → ARTISANS_BIDDING → BUYER_ACCEPTED → IN_PRODUCTION → DELIVERED` (thêm `CANCELLED`). Bảng chuyển trạng thái ở `quote-machine.ts`. Mọi chuyển trạng thái chạy trong **giao dịch Serializable** (tự thử lại khi gặp P2034), dùng `updateMany(where: { status, version })` (khóa lạc quan); lệch phiên bản thì trả `409`. → `src/lib/services/quotation-service.ts` |
 | **4.3 Bản đồ số** | `react-leaflet` nạp qua `next/dynamic({ ssr: false })` trong lớp bọc client, ghim `L.divIcon` SVG, popup, bộ lọc. Tile đi qua proxy nội bộ `/tiles` có bộ đệm đĩa. → `src/components/map/*` |
 | **4.4 Đa phương tiện** | `POST /api/upload` xử lý song song nhiều ảnh bằng `sharp`: kiểm tra định dạng thật, tự xoay EXIF, xóa metadata/GPS, resize 1200px WebP q82, thêm bản thu nhỏ 480px và ảnh mờ 16px. Giao diện hiện dung lượng trước → sau. → `src/lib/services/media-service.ts` |
@@ -62,7 +83,8 @@ vCraft là nền tảng web của **Ban quản lý (BQL) làng gốm Bát Tràng
 | Lớp | Công nghệ |
 |---|---|
 | Khung | Next.js 15 (App Router), React 19, TypeScript strict |
-| Giao diện | Tailwind CSS 4, Framer Motion, Lucide, font Cormorant Garamond · Plus Jakarta Sans · JetBrains Mono |
+| Giao diện | Tailwind CSS 4, Framer Motion, Lucide; font Phudu (biển hiệu) · Alegreya (tên, lời kể) · Be Vietnam Pro (nội dung) · JetBrains Mono (mã lô). Thiết kế xem `DESIGN.md` |
+| Biểu đồ | SVG viết tay, bảng màu đã kiểm tra mù màu và tương phản cho cả chế độ sáng/tối |
 | Dữ liệu | PostgreSQL 16, Prisma ORM 6 |
 | Bản đồ | Leaflet + react-leaflet, dữ liệu OpenStreetMap |
 | Ảnh, QR | sharp, qrcode |
@@ -78,11 +100,13 @@ public/seed/            62 ảnh tư liệu đã tối ưu + manifest.json (ghi 
 scripts/                fetch-seed-images.ts – tải lại ảnh mẫu từ Wikimedia Commons
 src/
   app/                  trang (Server Components) và REST API (app/api/**/route.ts)
-    api/                auth, products, workshops, quotes, bids, me/*, admin/*, upload, chat, geocode
-    trace/  q/  map/    truy xuất QR, link ngắn, bản đồ
-    dashboard/artisan   khu làm việc nghệ nhân
-    dashboard/admin     khu điều phối Ban quản lý
-  components/           ui · layout · exhibition · map · trace · quotes · artisan · admin · ai
+    api/                auth, products, workshops, quotes, bids, bookings, reviews, favorites, account, me/*, admin/*, upload, chat
+    (site)/             khu công khai: trang chủ, triển lãm, xưởng, bản đồ, truy xuất, quét QR, bản tin
+    (auth)/             ba cổng đăng nhập, đăng ký, quên/đặt lại mật khẩu
+    account/            khu khách hàng
+    dashboard/artisan   khu nghệ nhân
+    dashboard/admin     khu Ban quản lý
+  components/           ui · layout (zone-shell) · motion · charts · engagement · exhibition · map · trace · quotes · artisan · admin · ai
   lib/
     services/           nghiệp vụ: quotation, batch, catalog, product, admin, media, storage, qr, allocation…
     validators/         schema Zod dùng chung cho biểu mẫu và API
@@ -112,15 +136,16 @@ Bản production: `npm run build && npm start`.
 
 ### Tài khoản demo
 
-Mật khẩu chung `Vcraft@2026`. Khi `DEMO_MODE=true`, thanh xanh trên cùng cho phép đổi vai trò bằng một cú bấm.
+Mật khẩu chung `Vcraft@2026`. Khi `DEMO_MODE=true`, thanh demo trên cùng cho phép đổi vai trò bằng một cú bấm và đưa thẳng tới khu của vai trò đó.
 
-| Vai trò | Email | Dùng để demo |
-|---|---|---|
-| Ban quản lý | `admin@vcraft.test` | Duyệt hồ sơ, điều phối, đăng tin |
-| Khách sỉ | `lan.uet@vcraft.test` | `RFQ-UET-2026-5000` (5.000 cốc, đang nhận 4 chào giá, v2) |
-| Nghệ nhân | `ongtu@vcraft.test` | Lô `BT-2026-LAM-006` đang làm; được mời `RFQ-2026-0005` |
-| Nghệ nhân | `hungphat@vcraft.test` | Xưởng sỉ công suất lớn |
-| Nghệ nhân chờ duyệt | `moidangky@vcraft.test` | Hồ sơ trong hàng đợi kiểm duyệt |
+| Vai trò | Cổng | Email | Dùng để demo |
+|---|---|---|---|
+| Ban quản lý | `/login/admin` | `admin@vcraft.test` | Duyệt hồ sơ, điều phối, đăng tin, báo cáo CSV |
+| Khách sỉ | `/login` | `lan.uet@vcraft.test` | `RFQ-UET-2026-5000` (5.000 cốc, 4 chào giá); lịch nặn gốm đã xác nhận; 2 việc chờ đánh giá |
+| Khách du lịch | `/login` | `minh@vcraft.test` | Đơn Tết đang sản xuất; lịch 12 khách đang chờ Ông Tư xác nhận |
+| Nghệ nhân | `/login/artisan` | `ongtu@vcraft.test` | Lô `BT-2026-LAM-006` đang làm; mời `RFQ-2026-0005`; lịch hẹn chờ xác nhận |
+| Nghệ nhân | `/login/artisan` | `hungphat@vcraft.test` | Xưởng sỉ công suất lớn |
+| Nghệ nhân chờ duyệt | `/login/artisan` | `moidangky@vcraft.test` | Hồ sơ trong hàng đợi kiểm duyệt |
 
 Các xưởng và nghệ nhân trong dữ liệu mẫu là **hư cấu**, đặt tại tọa độ thật quanh làng. Các điểm di sản công cộng (Bảo tàng Gốm, Lò bầu cổ, Đình, Chợ gốm) dùng tên thật.
 
@@ -145,9 +170,9 @@ Các xưởng và nghệ nhân trong dữ liệu mẫu là **hư cấu**, đặt
 
 | Tiêu chí | Ở đâu trong sản phẩm |
 |---|---|
-| Chức năng (0,35) | Đủ 3 vai trò, 4 yêu cầu kỹ thuật. Thêm: gợi ý phân bổ, demo xung đột 409, in tem QR, đếm lượt quét, thông báo, trợ lý AI có công cụ CSDL |
-| Thiết kế logic (0,1) | Biểu mẫu nhiều bước có thanh bước, dòng thời gian trạng thái, hộp thoại xác nhận, trạng thái rỗng có hướng dẫn, điều hướng theo vai trò |
-| Giao diện (0,2) | Design system "Bát Tràng Digital Exhibition", ảnh thật, scrollytelling, responsive từ 360px |
+| Chức năng (0,35) | Đủ 3 vai trò ở 3 khu riêng, 4 yêu cầu kỹ thuật. Thêm: đặt lịch nặn gốm, đánh giá có kiểm chứng, yêu thích, thống kê và xuất CSV, nhật ký hoạt động, quên mật khẩu, quét QR bằng camera, chế độ tối, gợi ý phân bổ, demo xung đột 409, in tem QR, thông báo, trợ lý AI |
+| Thiết kế logic (0,1) | Ba cổng đăng nhập theo vai trò, biểu mẫu nhiều bước có thanh bước, dòng thời gian trạng thái, hộp thoại xác nhận, trạng thái rỗng có hướng dẫn, thanh tab một tay cho nghệ nhân |
+| Giao diện (0,2) | Thế giới "Con đường gốm sứ" (`DESIGN.md`): lưới mạch vữa, viên men lam/ngọc/đất nung, bức ghép tự gắn viên ở trang chủ, bóng men theo con trỏ, đồng hồ nhiệt lò, chế độ sáng/tối, ảnh thật, responsive từ 360px, tôn trọng `prefers-reduced-motion` |
 | Hiệu năng / AJAX (0,1) | Lọc, gợi ý, chào giá, chốt, thông báo (hỏi lại mỗi 20 giây), bản đồ, upload, chat streaming đều dùng `fetch` + JSON, không tải lại trang |
 | Phong cách lập trình (0,05) | Route Handler mỏng → service → Prisma. Mẫu State, Strategy (`StorageProvider`), Singleton (Prisma), Chain (middleware) |
 | Nhập liệu (0,05) | Schema Zod dùng chung, kiểm tra email bất đồng bộ, định dạng tiền, chuẩn hóa NFC và số điện thoại, tự điền địa chỉ từ ghim |

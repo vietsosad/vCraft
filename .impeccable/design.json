@@ -1,0 +1,883 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T15:34:02.540Z",
+  "title": "Design System: vCraft",
+  "extensions": {
+    "colorMeta": {
+      "nga": {
+        "role": "neutral",
+        "displayName": "Men ngà",
+        "canonical": "#f7f2e8",
+        "oklch": "oklch(96.2% 0.014 84.6)",
+        "darkTheme": "#120f0d",
+        "tonalRamp": [
+          "#0e0b05",
+          "#28251d",
+          "#46423a",
+          "#656158",
+          "#868279",
+          "#a9a49b",
+          "#cdc9bf",
+          "#f3eee4"
+        ]
+      },
+      "nga-dam": {
+        "role": "neutral",
+        "displayName": "Ngà đậm",
+        "canonical": "#efe7d6",
+        "oklch": "oklch(93.0% 0.024 85.8)",
+        "darkTheme": "#1a1511",
+        "tonalRamp": [
+          "#100a02",
+          "#2a2417",
+          "#484133",
+          "#676052",
+          "#898272",
+          "#aca494",
+          "#d0c8b8",
+          "#f6eedd"
+        ]
+      },
+      "nga-sau": {
+        "role": "neutral",
+        "displayName": "Ngà sâu",
+        "canonical": "#e4d9c3",
+        "oklch": "oklch(88.8% 0.032 84.6)",
+        "darkTheme": "#261e18",
+        "tonalRamp": [
+          "#110a00",
+          "#2c2412",
+          "#4a412e",
+          "#6a604d",
+          "#8b816d",
+          "#aea48f",
+          "#d3c8b2",
+          "#f7edd9"
+        ]
+      },
+      "su": {
+        "role": "neutral",
+        "displayName": "Sứ trắng",
+        "canonical": "#fffdf8",
+        "oklch": "oklch(99.4% 0.007 88.6)",
+        "darkTheme": "#1d1713",
+        "tonalRamp": [
+          "#0c0b08",
+          "#262521",
+          "#43423e",
+          "#63615d",
+          "#84827e",
+          "#a7a5a0",
+          "#cbc9c4",
+          "#f0eee9"
+        ]
+      },
+      "vua": {
+        "role": "neutral",
+        "displayName": "Mạch vữa",
+        "canonical": "#d9cdb7",
+        "oklch": "oklch(85.2% 0.033 82.8)",
+        "darkTheme": "#3b3028",
+        "tonalRamp": [
+          "#120a00",
+          "#2d2412",
+          "#4b412e",
+          "#6a604c",
+          "#8c816d",
+          "#afa48e",
+          "#d4c8b2",
+          "#f8edda"
+        ]
+      },
+      "muc": {
+        "role": "neutral",
+        "displayName": "Mực tàu",
+        "canonical": "#1c1a17",
+        "oklch": "oklch(21.9% 0.007 78.2)",
+        "darkTheme": "#f1e7d7",
+        "tonalRamp": [
+          "#0d0b08",
+          "#272522",
+          "#44423e",
+          "#63615d",
+          "#84827e",
+          "#a7a5a1",
+          "#cbc9c4",
+          "#f1eeea"
+        ]
+      },
+      "tro": {
+        "role": "neutral",
+        "displayName": "Tro",
+        "canonical": "#655e54",
+        "oklch": "oklch(48.5% 0.018 76.9)",
+        "darkTheme": "#b3a491",
+        "tonalRamp": [
+          "#0f0a04",
+          "#2a241b",
+          "#474137",
+          "#676056",
+          "#898177",
+          "#aca499",
+          "#d0c8bc",
+          "#f5ede1"
+        ]
+      },
+      "lam": {
+        "role": "primary",
+        "displayName": "Men lam Bát Tràng",
+        "canonical": "#1f4e9a",
+        "oklch": "oklch(43.6% 0.135 259.7)",
+        "darkTheme": "#94b4ee",
+        "tonalRamp": [
+          "#000826",
+          "#002058",
+          "#0d3d88",
+          "#2f5fac",
+          "#5081d2",
+          "#7aa6ec",
+          "#aecbf8",
+          "#e4efff"
+        ]
+      },
+      "lam-dam": {
+        "role": "primary",
+        "displayName": "Lam đậm",
+        "canonical": "#163a73",
+        "oklch": "oklch(35.7% 0.107 259.4)",
+        "darkTheme": "#b3caf4",
+        "tonalRamp": [
+          "#000826",
+          "#002057",
+          "#1c407a",
+          "#3b619d",
+          "#5b83c2",
+          "#7da6e8",
+          "#aecbf8",
+          "#e3efff"
+        ]
+      },
+      "lam-sang": {
+        "role": "primary",
+        "displayName": "Lam sáng (hover)",
+        "canonical": "#2b5fb4",
+        "oklch": "oklch(49.7% 0.146 259.8)",
+        "darkTheme": "#a6c1f2",
+        "tonalRamp": [
+          "#000826",
+          "#002058",
+          "#053c8e",
+          "#2a5eb3",
+          "#4b81d9",
+          "#7ba6ec",
+          "#aecbf8",
+          "#e4efff"
+        ]
+      },
+      "lam-nhat": {
+        "role": "primary",
+        "displayName": "Lam nhạt (nền nhãn)",
+        "canonical": "#dfe7f4",
+        "oklch": "oklch(92.6% 0.020 260.2)",
+        "darkTheme": "#1c2333",
+        "tonalRamp": [
+          "#070b13",
+          "#20252f",
+          "#3c424d",
+          "#5b626d",
+          "#7c838e",
+          "#9ea6b2",
+          "#c2cad6",
+          "#e7effc"
+        ]
+      },
+      "lam-nen": {
+        "role": "primary",
+        "displayName": "Lam nền (mảng luôn đậm)",
+        "canonical": "#1f4e9a",
+        "oklch": "oklch(43.6% 0.135 259.7)",
+        "darkTheme": "#1d3d72",
+        "tonalRamp": [
+          "#000826",
+          "#002058",
+          "#0d3d88",
+          "#2f5fac",
+          "#5081d2",
+          "#7aa6ec",
+          "#aecbf8",
+          "#e4efff"
+        ]
+      },
+      "datnung": {
+        "role": "secondary",
+        "displayName": "Đất nung",
+        "canonical": "#a34a23",
+        "oklch": "oklch(51.7% 0.129 42.4)",
+        "darkTheme": "#ec9a72",
+        "tonalRamp": [
+          "#1f0000",
+          "#4c0500",
+          "#762000",
+          "#9b431b",
+          "#c1653f",
+          "#e18c6b",
+          "#f2bba5",
+          "#ffe9e0"
+        ]
+      },
+      "datnung-dam": {
+        "role": "secondary",
+        "displayName": "Đất nung đậm",
+        "canonical": "#84391a",
+        "oklch": "oklch(44.1% 0.112 41.4)",
+        "darkTheme": "#f3b393",
+        "tonalRamp": [
+          "#1f0000",
+          "#4c0500",
+          "#702704",
+          "#95482a",
+          "#ba6a4b",
+          "#e08c6d",
+          "#f2bba6",
+          "#ffe9e0"
+        ]
+      },
+      "datnung-nhat": {
+        "role": "secondary",
+        "displayName": "Đất nung nhạt",
+        "canonical": "#f4e2d7",
+        "oklch": "oklch(92.4% 0.025 53.7)",
+        "darkTheme": "#3a2318",
+        "tonalRamp": [
+          "#130803",
+          "#2f221a",
+          "#4d3f36",
+          "#6d5e54",
+          "#8f7f75",
+          "#b2a197",
+          "#d7c5bb",
+          "#fdeadf"
+        ]
+      },
+      "datnung-nen": {
+        "role": "secondary",
+        "displayName": "Đất nung nền",
+        "canonical": "#8f3f1d",
+        "oklch": "oklch(46.8% 0.118 41.8)",
+        "darkTheme": "#7a3519",
+        "tonalRamp": [
+          "#1f0000",
+          "#4c0500",
+          "#732500",
+          "#974625",
+          "#bd6847",
+          "#e18c6c",
+          "#f2bba6",
+          "#ffe9e0"
+        ]
+      },
+      "ngoc": {
+        "role": "tertiary",
+        "displayName": "Men ngọc",
+        "canonical": "#3b6f5e",
+        "oklch": "oklch(50.0% 0.063 170.4)",
+        "darkTheme": "#8fc7b1",
+        "tonalRamp": [
+          "#001207",
+          "#002e21",
+          "#164d3d",
+          "#396d5c",
+          "#5a8f7d",
+          "#7db29f",
+          "#a0d7c3",
+          "#ddf5ec"
+        ]
+      },
+      "ngoc-sang": {
+        "role": "tertiary",
+        "displayName": "Ngọc sáng",
+        "canonical": "#5e8f7b",
+        "oklch": "oklch(60.9% 0.061 166.8)",
+        "darkTheme": "#78b29c",
+        "tonalRamp": [
+          "#001206",
+          "#002e1e",
+          "#1b4c3b",
+          "#3c6d5a",
+          "#5d8e7a",
+          "#80b29d",
+          "#a3d7c1",
+          "#ddf5ea"
+        ]
+      },
+      "ngoc-nhat": {
+        "role": "tertiary",
+        "displayName": "Ngọc nhạt",
+        "canonical": "#dcebe3",
+        "oklch": "oklch(92.7% 0.019 162.9)",
+        "darkTheme": "#172a23",
+        "tonalRamp": [
+          "#040e09",
+          "#1d2822",
+          "#39453f",
+          "#58655e",
+          "#79867f",
+          "#9ba9a2",
+          "#bfcdc5",
+          "#e4f3eb"
+        ]
+      },
+      "ngoc-nen": {
+        "role": "tertiary",
+        "displayName": "Ngọc nền",
+        "canonical": "#2f5c4d",
+        "oklch": "oklch(43.8% 0.056 169.9)",
+        "darkTheme": "#24493d",
+        "tonalRamp": [
+          "#001207",
+          "#002e21",
+          "#1e4c3d",
+          "#3f6c5c",
+          "#608e7d",
+          "#82b1a0",
+          "#a5d6c3",
+          "#ddf5eb"
+        ]
+      },
+      "vangrom": {
+        "role": "tertiary",
+        "displayName": "Vàng rơm",
+        "canonical": "#c8962e",
+        "oklch": "oklch(70.3% 0.130 81.3)",
+        "darkTheme": "#e2b552",
+        "tonalRamp": [
+          "#180600",
+          "#3e1b00",
+          "#633600",
+          "#865700",
+          "#a97900",
+          "#c99d4a",
+          "#e1c595",
+          "#f8edda"
+        ]
+      },
+      "vangrom-dam": {
+        "role": "tertiary",
+        "displayName": "Vàng rơm đậm",
+        "canonical": "#84600f",
+        "oklch": "oklch(51.3% 0.101 81.4)",
+        "darkTheme": "#ecc874",
+        "tonalRamp": [
+          "#180600",
+          "#3d1c00",
+          "#5c3a00",
+          "#7e5a03",
+          "#a17c33",
+          "#c59f57",
+          "#e1c595",
+          "#f8edda"
+        ]
+      },
+      "doson": {
+        "role": "tertiary",
+        "displayName": "Đỏ son (triện)",
+        "canonical": "#b3261e",
+        "oklch": "oklch(50.1% 0.178 28.7)",
+        "darkTheme": "#f08a80",
+        "tonalRamp": [
+          "#200000",
+          "#4d0001",
+          "#7f0706",
+          "#b0221b",
+          "#cf5749",
+          "#e3897c",
+          "#f4b8af",
+          "#ffe8e4"
+        ]
+      },
+      "doson-dam": {
+        "role": "tertiary",
+        "displayName": "Đỏ son đậm",
+        "canonical": "#8e1d17",
+        "oklch": "oklch(42.4% 0.149 28.5)",
+        "darkTheme": "#f5a49c",
+        "tonalRamp": [
+          "#200000",
+          "#4d0001",
+          "#7f0807",
+          "#a5352b",
+          "#cc594c",
+          "#e3897c",
+          "#f4b8af",
+          "#ffe8e4"
+        ]
+      },
+      "lua": {
+        "role": "tertiary",
+        "displayName": "Lửa (huy hiệu đếm)",
+        "canonical": "#ee8a43",
+        "oklch": "oklch(72.8% 0.148 53.2)",
+        "tonalRamp": [
+          "#1e0100",
+          "#490b00",
+          "#791d00",
+          "#9e4100",
+          "#c56411",
+          "#dc905f",
+          "#efbd9e",
+          "#ffeadd"
+        ]
+      },
+      "on": {
+        "role": "neutral",
+        "displayName": "Chữ trên men",
+        "canonical": "#fffdf8",
+        "oklch": "oklch(99.4% 0.007 88.6)",
+        "darkTheme": "#10151e",
+        "tonalRamp": [
+          "#0c0b08",
+          "#262521",
+          "#43423e",
+          "#63615d",
+          "#84827e",
+          "#a7a5a0",
+          "#cbc9c4",
+          "#f0eee9"
+        ]
+      },
+      "giay": {
+        "role": "neutral",
+        "displayName": "Giấy (chữ luôn sáng)",
+        "canonical": "#fffdf8",
+        "oklch": "oklch(99.4% 0.007 88.6)",
+        "tonalRamp": [
+          "#0c0b08",
+          "#262521",
+          "#43423e",
+          "#63615d",
+          "#84827e",
+          "#a7a5a0",
+          "#cbc9c4",
+          "#f0eee9"
+        ]
+      },
+      "dem": {
+        "role": "neutral",
+        "displayName": "Đêm (nền luôn tối)",
+        "canonical": "#121823",
+        "oklch": "oklch(20.8% 0.024 262.3)",
+        "tonalRamp": [
+          "#060b15",
+          "#1f2531",
+          "#3b424f",
+          "#5a626f",
+          "#7b8391",
+          "#9da5b4",
+          "#c1cad9",
+          "#e6efff"
+        ]
+      },
+      "chart-1": {
+        "role": "data",
+        "displayName": "Biểu đồ 1 · lam",
+        "canonical": "#1f4e9a",
+        "oklch": "oklch(43.6% 0.135 259.7)",
+        "darkTheme": "#5a84d6",
+        "tonalRamp": [
+          "#000826",
+          "#002058",
+          "#0d3d88",
+          "#2f5fac",
+          "#5081d2",
+          "#7aa6ec",
+          "#aecbf8",
+          "#e4efff"
+        ]
+      },
+      "chart-2": {
+        "role": "data",
+        "displayName": "Biểu đồ 2 · đất nung",
+        "canonical": "#a34a23",
+        "oklch": "oklch(51.7% 0.129 42.4)",
+        "darkTheme": "#c8602e",
+        "tonalRamp": [
+          "#1f0000",
+          "#4c0500",
+          "#762000",
+          "#9b431b",
+          "#c1653f",
+          "#e18c6b",
+          "#f2bba5",
+          "#ffe9e0"
+        ]
+      },
+      "chart-3": {
+        "role": "data",
+        "displayName": "Biểu đồ 3 · ngọc lục",
+        "canonical": "#00866a",
+        "oklch": "oklch(55.2% 0.108 171.3)",
+        "darkTheme": "#1aa585",
+        "tonalRamp": [
+          "#001308",
+          "#00341e",
+          "#00533a",
+          "#007459",
+          "#26977a",
+          "#52bb9c",
+          "#9ad9c3",
+          "#ddf5ec"
+        ]
+      },
+      "chart-4": {
+        "role": "data",
+        "displayName": "Biểu đồ 4 · vàng đồng",
+        "canonical": "#b8861a",
+        "oklch": "oklch(65.3% 0.128 80.5)",
+        "darkTheme": "#b5841d",
+        "tonalRamp": [
+          "#190600",
+          "#3f1a00",
+          "#643600",
+          "#865600",
+          "#aa7800",
+          "#ca9d4b",
+          "#e1c595",
+          "#f9edda"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Biển hiệu lớn (Phudu)",
+        "purpose": "Tiêu đề lớn nhất khu triển lãm; luôn chữ hoa.",
+        "textTransform": "uppercase"
+      },
+      "headline": {
+        "displayName": "Tiêu đề mục (Phudu)",
+        "purpose": "SectionHeading, h1/h2 mặc định, trang lỗi; chữ hoa.",
+        "textTransform": "uppercase"
+      },
+      "title": {
+        "displayName": "Tiêu đề trang khu làm việc (Phudu)",
+        "purpose": "PageHeader trong ba khu vai trò; chữ hoa.",
+        "textTransform": "uppercase"
+      },
+      "numeral": {
+        "displayName": "Số lớn",
+        "purpose": "Ô số liệu, số xưởng đang mở, nhiệt độ lò."
+      },
+      "narrative": {
+        "displayName": "Giọng kể (Alegreya)",
+        "purpose": "h3, tên tác phẩm, tên xưởng, tiêu đề hộp thoại và khối trống."
+      },
+      "body": {
+        "displayName": "Chữ làm việc (Be Vietnam Pro)",
+        "purpose": "Văn bản giao diện; văn bản dài tối đa 68ch."
+      },
+      "label": {
+        "displayName": "Nhãn nhóm",
+        "purpose": "Legend, cột chân trang, tiêu đề thẻ; màu tro; không làm kicker."
+      },
+      "code": {
+        "displayName": "Mã (JetBrains Mono)",
+        "purpose": "Mã lô, mã yêu cầu báo giá."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-soft",
+        "value": "0 1px 2px rgb(28 26 23 / 0.05), 0 8px 22px -14px rgb(28 26 23 / 0.28)",
+        "darkValue": "0 1px 2px rgb(0 0 0 / 0.3), 0 8px 22px -14px rgb(0 0 0 / 0.7)",
+        "purpose": "Mặc định cho thẻ, viên gốm, nút men."
+      },
+      {
+        "name": "shadow-lift",
+        "value": "0 2px 4px rgb(28 26 23 / 0.06), 0 22px 44px -22px rgb(28 26 23 / 0.45)",
+        "darkValue": "0 2px 4px rgb(0 0 0 / 0.3), 0 22px 44px -22px rgb(0 0 0 / 0.85)",
+        "purpose": "Viên đang hover, hộp thoại, thông báo nổi, tooltip, popup bản đồ."
+      },
+      {
+        "name": "tile-bevel",
+        "value": "inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.08)",
+        "purpose": "Gờ men trên mọi viên, chồng với shadow-soft."
+      },
+      {
+        "name": "button-glaze",
+        "value": "inset 0 1px 0 rgb(255 255 255/0.22), inset 0 -2px 0 rgb(0 0 0/0.12), var(--shadow-soft)",
+        "purpose": "Nút men màu khi nghỉ."
+      },
+      {
+        "name": "button-pressed",
+        "value": "inset 0 2px 3px rgb(0 0 0/0.2)",
+        "purpose": "Nút men khi ấn, kèm translateY(1px)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Đường cong chung cho gắn viên, hover men, hộp thoại, ngăn kéo, đổi chế độ."
+      },
+      {
+        "name": "tile-set",
+        "value": "0.85s ease-out-expo, delay var(--d); từ translate(--tx,--ty) rotate(--rot) scale(0.92) saturate(0.4)",
+        "purpose": "Viên gốm gắn vào mạch vữa (bức ghép mở màn, trang lỗi; data-reveal dùng 0.8s)."
+      },
+      {
+        "name": "wipe",
+        "value": "0.9s ease-out-expo, clip-path inset từ trên xuống, bo theo --radius-tile",
+        "purpose": "Hiện khối bằng data-reveal=\"wipe\"."
+      },
+      {
+        "name": "rise",
+        "value": "0.5s ease-out-expo, translateY(10px) → none",
+        "purpose": "Nội dung khu làm việc, thông báo nổi."
+      },
+      {
+        "name": "pop",
+        "value": "0.45s ease-out-expo, scale 0.6 → 1.18 → 1",
+        "purpose": "Phản hồi bật nhỏ."
+      },
+      {
+        "name": "pulse-ring",
+        "value": "2.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite, scale 0.6 → 2.4",
+        "purpose": "Tín hiệu sống: xưởng đang mở, bước hiện tại."
+      },
+      {
+        "name": "glaze-hover",
+        "value": "0.45s ease-out-expo, translateY(-2px) + shadow-lift; vệt sáng radial soft-light theo --mx/--my",
+        "purpose": "Bóng men lướt trên viên tương tác."
+      },
+      {
+        "name": "dialog-in",
+        "value": "0.32s ease-out-expo, translateY(14px) scale(0.98) → none",
+        "purpose": "Hộp thoại trồi lên; nền mờ dần cùng lúc."
+      },
+      {
+        "name": "toast-drain",
+        "value": "4500ms (lỗi 7000ms) linear, scaleX 1 → 0",
+        "purpose": "Vạch thời gian của thông báo nổi."
+      },
+      {
+        "name": "theme-reveal",
+        "value": "520ms ease-out-expo, clip-path circle lan từ nút bấm (View Transition)",
+        "purpose": "Đổi sáng/tối."
+      },
+      {
+        "name": "nav-spring",
+        "value": "spring stiffness 420-460, damping 34-38",
+        "purpose": "Viên chỉ mục trượt trên điều hướng và thanh bên."
+      },
+      {
+        "name": "kiln-needle",
+        "value": "lò xo k=70, giảm chấn c=11 (dưới tới hạn)",
+        "purpose": "Kim đồng hồ lò vươn tới, vọt nhẹ rồi dừng."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation/transition 0.01ms, không nhấc khi hover, kim nhảy thẳng, data-reveal hiện ngay",
+        "purpose": "Đường thay thế bắt buộc."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px",
+        "note": "thanh bên khu làm việc xuất hiện"
+      }
+    ],
+    "textures": [
+      {
+        "name": "grout",
+        "value": "lưới 1px var(--color-vua), ô 72px trên nền nga"
+      },
+      {
+        "name": "mosaic",
+        "value": "grid gap 6px, padding 6px, nền vua, góc 10px"
+      },
+      {
+        "name": "tile-hoavan",
+        "value": "mây sóng lam, ô 64px trên su"
+      },
+      {
+        "name": "tile-sen",
+        "value": "hoa sen lam, ô 96px trên su"
+      },
+      {
+        "name": "tile-ran",
+        "value": "/textures/crackle.svg 240px trên #e6d9bf (tạo bởi scripts/make-crackle.mjs)"
+      },
+      {
+        "name": "crackle-bg",
+        "value": "/textures/crackle-faint.svg 360px trên nga-dam"
+      },
+      {
+        "name": "tile-dat",
+        "value": "datnung-nen, chấm hạt 7px"
+      },
+      {
+        "name": "wave-divider",
+        "value": "sóng nước lam cao 14px lặp ngang"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Nút men lam (Primary)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Hành động chính trên mọi khu: viên men lam có gờ sáng, lún 1px khi ấn.",
+      "html": "<button class=\"ds-btn-primary\">Gửi yêu cầu báo giá <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border: 0; border-radius: var(--radius-tile, 6px); font-family: var(--font-sans); font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color .2s, box-shadow .2s, transform .2s, border-color .2s, filter .2s; background: var(--color-lam); color: var(--color-on); box-shadow: inset 0 1px 0 rgb(255 255 255/0.22), inset 0 -2px 0 rgb(0 0 0/0.12), var(--shadow-soft); } .ds-btn-primary:hover { background: var(--color-lam-sang); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(1px); box-shadow: inset 0 2px 3px rgb(0 0 0/0.2); }"
+    },
+    {
+      "name": "Nút đất nung (Earth)",
+      "kind": "button",
+      "refersTo": "button-earth",
+      "description": "Hành động thứ hai mang men đất nung, nhất là trong khu nghệ nhân.",
+      "html": "<button class=\"ds-btn-earth\">Tạo lô mới</button>",
+      "css": ".ds-btn-earth { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border: 0; border-radius: var(--radius-tile, 6px); font-family: var(--font-sans); font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color .2s, box-shadow .2s, transform .2s, border-color .2s, filter .2s; background: var(--color-datnung); color: var(--color-on); box-shadow: inset 0 1px 0 rgb(255 255 255/0.22), inset 0 -2px 0 rgb(0 0 0/0.12), var(--shadow-soft); } .ds-btn-earth:hover { background: var(--color-datnung-dam); } .ds-btn-earth:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-btn-earth:active { transform: translateY(1px); box-shadow: inset 0 2px 3px rgb(0 0 0/0.2); }"
+    },
+    {
+      "name": "Nút viền (Outline)",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Hành động phụ trên nền ngà: nền sứ mờ, viền mực 20%.",
+      "html": "<button class=\"ds-btn-outline\">Xem bản đồ làng</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border: 0; border-radius: var(--radius-tile, 6px); font-family: var(--font-sans); font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color .2s, box-shadow .2s, transform .2s, border-color .2s, filter .2s; background: color-mix(in srgb, var(--color-su) 60%, transparent); color: var(--color-muc); border: 1px solid color-mix(in srgb, var(--color-muc) 20%, transparent); } .ds-btn-outline:hover { background: var(--color-su); border-color: color-mix(in srgb, var(--color-muc) 45%, transparent); } .ds-btn-outline:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-btn-outline:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Nút ma (Ghost)",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Hủy trong hộp thoại, nút biểu tượng ở đầu trang.",
+      "html": "<button class=\"ds-btn-ghost\">Hủy</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 44px; padding: 0 20px; border: 0; border-radius: var(--radius-tile, 6px); font-family: var(--font-sans); font-size: 15px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background-color .2s, box-shadow .2s, transform .2s, border-color .2s, filter .2s; background: transparent; color: var(--color-muc); } .ds-btn-ghost:hover { background: var(--color-nga-dam); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ô nhập",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Nhãn phía trên, mặt sứ, focus viền đất nung với vầng sáng 15%.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Số lượng cần đặt<span class=\"ds-req\">*</span></span><input class=\"ds-input\" placeholder=\"Ví dụ: 500 chiếc\" /></label>",
+      "css": ".ds-field { display: grid; gap: 6px; font-family: var(--font-sans); } .ds-field-label { font-size: 14px; font-weight: 500; color: var(--color-muc); } .ds-req { color: var(--color-datnung); margin-left: 2px; } .ds-input { width: 100%; border: 1px solid var(--color-vua); border-radius: var(--radius-tile, 6px); background: color-mix(in srgb, var(--color-su) 80%, transparent); padding: 10px 14px; font: inherit; font-size: 15px; color: var(--color-muc); caret-color: var(--color-datnung); transition: border-color .15s, background .15s, box-shadow .15s; } .ds-input::placeholder { color: color-mix(in srgb, var(--color-tro) 60%, transparent); } .ds-input:focus { outline: none; border-color: var(--color-datnung); background: var(--color-su); box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-datnung) 15%, transparent); }"
+    },
+    {
+      "name": "Nhãn trạng thái có dấu hình",
+      "kind": "chip",
+      "refersTo": "badge-lam",
+      "description": "Trạng thái mang cả hình dấu lẫn màu: tròn đang chạy, thoi cần xử lý, vuông đã xong, vòng đã đóng.",
+      "html": "<span class=\"ds-badge ds-badge-lam\"><i class=\"ds-mark ds-dot\"></i>Đang báo giá</span> <span class=\"ds-badge ds-badge-dat\"><i class=\"ds-mark ds-diamond\"></i>Chờ duyệt</span> <span class=\"ds-badge ds-badge-ngoc\"><i class=\"ds-mark ds-square\"></i>Hoàn tất</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 4px; font-family: var(--font-sans); font-size: 12px; font-weight: 600; white-space: nowrap; } .ds-badge-lam { background: var(--color-lam-nhat); color: var(--color-lam); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-lam) 25%, transparent); } .ds-badge-dat { background: var(--color-datnung-nhat); color: var(--color-datnung); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-datnung) 25%, transparent); } .ds-badge-ngoc { background: var(--color-ngoc-nhat); color: var(--color-ngoc); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-ngoc) 30%, transparent); } .ds-mark { display: inline-block; width: 7px; height: 7px; background: currentColor; } .ds-dot { border-radius: 999px; } .ds-diamond { transform: rotate(45deg); border-radius: 1px; } .ds-square { border-radius: 1px; }"
+    },
+    {
+      "name": "Thẻ sứ",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Mặt sứ trắng, viền mạch vữa, góc 8px, bóng mềm.",
+      "html": "<div class=\"ds-card\"><p class=\"ds-card-title\">Bình hút lộc men lam</p><p class=\"ds-card-meta\">Xưởng Ông Tư · <span class=\"ds-code\">BT-2026-RAN-001</span></p></div>",
+      "css": ".ds-card { background: var(--color-su); border: 1px solid var(--color-vua); border-radius: 8px; box-shadow: var(--shadow-soft); padding: 20px; color: var(--color-muc); max-width: 320px; } .ds-card-title { margin: 0; font-family: var(--font-serif); font-weight: 700; font-size: 1.25rem; line-height: 1.2; } .ds-card-meta { margin: 6px 0 0; font-family: var(--font-sans); font-size: 14px; color: var(--color-tro); } .ds-code { font-family: var(--font-mono); font-size: .8em; letter-spacing: .02em; }"
+    },
+    {
+      "name": "Ô số liệu viên lam",
+      "kind": "custom",
+      "refersTo": "stat-tile-lam",
+      "description": "Viên gốm men lam có gờ men, số Phudu lớn, chữ giấy; hover nhấc 2px kèm bóng men.",
+      "html": "<div class=\"ds-stat\"><p class=\"ds-stat-label\">Yêu cầu báo giá đang mở</p><p class=\"ds-stat-value\">12</p><p class=\"ds-stat-hint\">3 yêu cầu mới trong tuần</p></div>",
+      "css": ".ds-stat { position: relative; overflow: hidden; padding: 20px; border-radius: var(--radius-tile, 6px); background-color: var(--color-lam-nen); background-image: radial-gradient(120% 90% at 15% 0%, rgb(255 255 255 / 0.16), transparent 55%); color: var(--color-giay); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.08), var(--shadow-soft); max-width: 260px; transition: transform .45s cubic-bezier(0.16,1,0.3,1), box-shadow .45s cubic-bezier(0.16,1,0.3,1); } .ds-stat:hover { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.3), inset 0 -2px 0 rgb(0 0 0 / 0.08), var(--shadow-lift); } .ds-stat-label { margin: 0; font-family: var(--font-sans); font-size: 14px; font-weight: 500; opacity: .8; } .ds-stat-value { margin: 8px 0 0; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; font-size: 2.6rem; line-height: 1; font-variant-numeric: tabular-nums lining-nums; } .ds-stat-hint { margin: 8px 0 0; font-family: var(--font-sans); font-size: 12px; opacity: .75; }"
+    },
+    {
+      "name": "Bức ghép mạch vữa",
+      "kind": "custom",
+      "refersTo": "mosaic",
+      "description": "Lưới viên gốm khe 6px trên nền vữa, góc ngoài 10px; viên biển hiệu lam giữ tiêu đề Phudu.",
+      "html": "<div class=\"ds-mosaic\"><div class=\"ds-tile ds-sign\"><h2 class=\"ds-sign-title\">Tinh hoa làng nghề</h2></div><div class=\"ds-tile ds-ngoc\"></div><div class=\"ds-tile ds-dat\"></div><div class=\"ds-tile ds-su\"></div></div>",
+      "css": ".ds-mosaic { display: grid; grid-template-columns: 2fr 1fr; grid-auto-rows: 72px; gap: 6px; padding: 6px; background: var(--color-vua); border-radius: 10px; max-width: 420px; } .ds-tile { border-radius: var(--radius-tile, 6px); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.28), inset 0 -2px 0 rgb(0 0 0 / 0.08), var(--shadow-soft); } .ds-sign { grid-row: span 2; display: flex; align-items: flex-end; padding: 16px; color: var(--color-giay); background-color: var(--color-lam-nen); background-image: radial-gradient(120% 90% at 15% 0%, rgb(255 255 255 / 0.16), transparent 55%); } .ds-sign-title { margin: 0; font-family: var(--font-display); font-weight: 800; text-transform: uppercase; line-height: .95; font-size: 1.8rem; } .ds-ngoc { background-color: var(--color-ngoc-nen); background-image: radial-gradient(120% 90% at 20% 0%, rgb(255 255 255 / 0.18), transparent 60%); } .ds-dat { background-color: var(--color-datnung-nen); background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1.2px); background-size: 7px 7px; } .ds-su { grid-column: span 2; background: var(--color-su); }"
+    },
+    {
+      "name": "Điều hướng công khai",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Mục 15px mực 65%; mục đang xem mực đặc với viên đất nung 5px ở mép dưới.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-link is-active\" aria-current=\"page\">Triển lãm</a><a href=\"#\" class=\"ds-nav-link\">Nghệ nhân</a><a href=\"#\" class=\"ds-nav-link\">Bản đồ làng</a><a href=\"#\" class=\"ds-nav-link\">Đặt hàng sỉ</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 2px; align-items: center; height: 64px; padding: 0 16px; background: color-mix(in srgb, var(--color-nga) 88%, transparent); border-bottom: 1px solid var(--color-vua); font-family: var(--font-sans); } .ds-nav-link { position: relative; padding: 8px 12px; border-radius: var(--radius-tile, 6px); font-size: 15px; font-weight: 500; text-decoration: none; color: color-mix(in srgb, var(--color-muc) 65%, transparent); transition: color .2s; } .ds-nav-link:hover { color: var(--color-muc); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-nav-link.is-active { color: var(--color-muc); } .ds-nav-link.is-active::after { content: \"\"; position: absolute; left: 12px; right: 12px; bottom: -12px; height: 5px; border-radius: 2px; background: var(--color-datnung); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Con đường gốm sứ",
+    "overview": "vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tác phẩm, mỗi lô hàng là một viên gốm men được gắn vào cùng một lưới mạch vữa của làng. Nền là men ngà, có lưới mạch vữa xám ấm kẻ ngang dọc nhìn thấy được; những mảng lớn được tráng men thành viên gốm (men lam Bát Tràng, men ngọc, đất nung), xen giữa là viên hoa văn mây sóng lam vẽ tay, viên men rạn và viên sen. Xác thực được đóng bằng triện son. Hệ thống từ chối mô-típ \"chợ thủ công nền kem, chữ có chân, điểm nhấn đất nung\" quen thuộc: ở đây màu men chiếm trọn mảng, không chỉ làm điểm nhấn.\n\nMật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Ba khu làm việc theo vai trò (khách hàng, nghệ nhân, Ban quản lý) gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Chế độ tối \"lò đêm\" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.\n\nChuyển động kể đúng một câu chuyện vật liệu: viên gốm được \"gắn\" vào mạch vữa (hơi lệch, hơi xoay rồi ăn khớp), bóng men lướt theo con trỏ khi rê lên viên, kim đồng hồ lò có quán tính và giảm chấn thật. Mọi chuyển động đều có đường thay thế khi người dùng giảm chuyển động.",
+    "keyCharacteristics": [
+      "Nền men ngà với lưới mạch vữa 72px nhìn thấy được; các khối gắn vào bức ghép cách nhau đúng một mạch vữa 6px.",
+      "Màu men là mảng, không phải viền: lam, đất nung, men ngọc phủ trọn viên biển hiệu, thanh bên, ô số liệu.",
+      "Góc viên gốm 4-8px; không có khối bo tròn lớn kiểu viên thuốc.",
+      "Bốn giọng chữ có vai rõ ràng: Phudu chữ hoa cho biển hiệu, Alegreya cho tên và lời kể, Be Vietnam Pro cho chữ làm việc, JetBrains Mono cho mã lô.",
+      "Trạng thái được mang bằng cả hình dấu lẫn màu.",
+      "Triện son là con dấu duy nhất của sự xác thực."
+    ],
+    "rules": [
+      {
+        "name": "Quy tắc Men phủ mảng",
+        "body": "Men màu xuất hiện dưới dạng viên gốm phủ kín (biển hiệu, thanh bên, ô số liệu, nút), không làm đường viền mảnh hay chữ nhấn rải rác. Một màn hình có một men chủ, các men khác là viên điểm xuyết.",
+        "section": "colors"
+      },
+      {
+        "name": "Quy tắc Triện son",
+        "body": "`doson` thuộc về con dấu xác thực, lỗi và hành động phá hủy. Không có vai trò nào khác.",
+        "section": "colors"
+      },
+      {
+        "name": "Quy tắc Chữ trên men",
+        "body": "Trên khối men đổi theo chế độ thì dùng `on`; trên viên `*-nen`, ảnh hoặc nền `dem` thì dùng `giay`. Không đặt `muc` lên men đậm.",
+        "section": "colors"
+      },
+      {
+        "name": "Quy tắc Biển hiệu",
+        "body": "Phudu chỉ dùng chữ hoa và chỉ cho tiêu đề, số lớn và chữ trên triện; không bao giờ cho đoạn văn.",
+        "section": "typography"
+      },
+      {
+        "name": "Quy tắc Không dòng mồi",
+        "body": "Tiêu đề đứng một mình. Nhãn nhóm không được đặt làm dòng chữ nhỏ phía trên tiêu đề.",
+        "section": "typography"
+      },
+      {
+        "name": "Quy tắc Viên nằm trên vữa",
+        "body": "Bóng đổ luôn mềm, ấm và có độ lan âm; không dùng bóng lệch cứng. Độ sâu đến từ gờ men trước, bóng sau.",
+        "section": "elevation"
+      },
+      {
+        "name": "Quy tắc Bóng men",
+        "body": "Viên tương tác được thì phản hồi hover bằng vệt sáng lướt theo con trỏ (hòa trộn `soft-light`) và nhấc 2px; khi giảm chuyển động thì không nhấc.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** đặt nội dung chính của khu công khai trên nền `nga` với lưới mạch vữa, và gom các khối liên quan vào bức ghép khe 6px nền `vua`.",
+      "**Do** dùng góc 6px cho viên, nút, ô nhập; 8px cho thẻ; 10px cho bức ghép và hộp thoại.",
+      "**Do** mang trạng thái bằng cả hình dấu (tròn, thoi, vuông, vòng) lẫn màu.",
+      "**Do** dùng triện son `doson` cho mọi dấu hiệu \"đã được Ban quản lý xác thực\".",
+      "**Do** giữ mỗi khu làm việc trong men của nó: khách hàng lam, nghệ nhân đất nung, Ban quản lý đêm với điểm ngọc.",
+      "**Do** dùng `on` cho chữ trên men đổi theo chế độ và `giay` cho chữ trên viên `*-nen`, ảnh, nền đêm.",
+      "**Do** cho mọi chuyển động một đường thay thế khi `prefers-reduced-motion: reduce`.",
+      "**Do** dùng `--chart-1..4` cho mọi chuỗi dữ liệu, cột rộng tối đa 24px, đầu cột bo 4px, kèm bảng số liệu.",
+      "**Do** giữ mục tiêu bấm từ 44px trở lên, 56px cho tab điện thoại."
+    ],
+    "donts": [
+      "**Don't** dựng giao diện kiểu chợ thủ công nền kem, chữ có chân và một điểm nhấn đất nung; men màu phải phủ mảng.",
+      "**Don't** đặt dòng chữ nhỏ (kicker) phía trên tiêu đề; `.label` chỉ dùng cho nhãn nhóm.",
+      "**Don't** dùng Phudu cho đoạn văn hoặc ở chữ thường.",
+      "**Don't** dùng bóng đổ cứng, lệch; bóng luôn mềm với độ lan âm.",
+      "**Don't** bo góc lớn kiểu viên thuốc cho nút hay thẻ.",
+      "**Don't** dùng `doson` để trang trí.",
+      "**Don't** viết màu dữ liệu lên chữ trong biểu đồ."
+    ]
+  }
+}
