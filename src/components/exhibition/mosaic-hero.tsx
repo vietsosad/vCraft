@@ -36,7 +36,7 @@ export function MosaicHero({
   const opening = m ? { time: m[1], when: m[2] || "hôm nay" } : null;
 
   return (
-    <section aria-label="Giới thiệu vCraft" className="grout px-3 pb-10 pt-4 sm:px-4 md:px-6 md:pt-5">
+    <section aria-label="Giới thiệu vCraft" className="grout overflow-hidden px-3 pb-10 pt-4 sm:px-4 md:px-6 md:pt-5">
       <div className="mosaic mx-auto max-w-[1440px] grid-flow-row-dense grid-cols-6 auto-rows-[minmax(64px,auto)] md:grid-cols-12 md:auto-rows-[minmax(clamp(56px,6.2vw,92px),auto)]">
         {/* Viên biển hiệu */}
         <div
@@ -63,13 +63,13 @@ export function MosaicHero({
         </div>
 
         {/* Cột trái */}
-        <Link href={p(0).href} aria-label={p(0).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-start-1 md:row-start-1" style={{ ...delay(3), ...set(-4, -18, 10) }}>
+        <Link data-parallax="0.16" data-parallax-anchor="top" href={p(0).href} aria-label={p(0).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-start-1 md:row-start-1" style={{ ...delay(3), ...set(-4, -18, 10) }}>
           <VImage image={p(0).image} ratio="auto" sizes="25vw" priority className="h-full" imgClassName="h-full" />
         </Link>
-        <span aria-hidden className="tile tile-hoavan col-span-1 row-span-1 hidden animate-tile-set md:col-start-1 md:row-start-3 md:block" style={{ ...delay(3), ...set(5, -10, 12) }} />
-        <span aria-hidden className="tile tile-dat col-span-1 row-span-1 hidden animate-tile-set md:col-start-2 md:row-start-3 md:block" style={{ ...delay(2), ...set(-3, -8, 16) }} />
+        <span data-parallax="0.22" data-parallax-anchor="top" aria-hidden className="tile tile-hoavan col-span-1 row-span-1 hidden animate-tile-set md:col-start-1 md:row-start-3 md:block" style={{ ...delay(3), ...set(5, -10, 12) }} />
+        <span data-parallax="0.12" data-parallax-anchor="top" aria-hidden className="tile tile-dat col-span-1 row-span-1 hidden animate-tile-set md:col-start-2 md:row-start-3 md:block" style={{ ...delay(2), ...set(-3, -8, 16) }} />
         <Link
-          href="/map"
+ data-parallax="0.08" data-parallax-anchor="top"          href="/map"
           className="tile glaze tile-ngoc col-span-3 row-span-2 flex animate-tile-set flex-col justify-between p-4 text-giay md:col-span-1 md:col-start-3 md:row-span-3 md:row-start-3"
           style={{ ...delay(1), ...set(3, -6, 12) }}
         >
@@ -100,14 +100,14 @@ export function MosaicHero({
             </span>
           )}
         </Link>
-        <Link href={p(1).href} aria-label={p(1).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-1 md:row-start-4" style={{ ...delay(3), ...set(-2, -14, 18) }}>
+        <Link data-parallax="0.18" data-parallax-anchor="top" href={p(1).href} aria-label={p(1).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-1 md:row-start-4" style={{ ...delay(3), ...set(-2, -14, 18) }}>
           <VImage image={p(1).image} ratio="auto" sizes="20vw" className="h-full" imgClassName="h-full" />
         </Link>
-        <span aria-hidden className="tile tile-ran col-span-3 row-span-1 hidden animate-tile-set md:col-start-1 md:row-start-6 md:block" style={{ ...delay(4), ...set(-5, -20, 18) }} />
+        <span data-parallax="0.1" data-parallax-anchor="top" aria-hidden className="tile tile-ran col-span-3 row-span-1 hidden animate-tile-set md:col-start-1 md:row-start-6 md:block" style={{ ...delay(4), ...set(-5, -20, 18) }} />
 
         {/* Hàng dưới viên biển hiệu */}
         <Link
-          href={`/trace/${traceCode}`}
+ data-parallax="0.04" data-parallax-anchor="top"          href={`/trace/${traceCode}`}
           className="tile glaze col-span-6 row-span-1 flex animate-tile-set items-center gap-4 bg-su p-4 md:col-span-3 md:col-start-4 md:row-start-6"
           style={{ ...delay(1), ...set(2, 0, 20) }}
         >
@@ -117,8 +117,8 @@ export function MosaicHero({
             <span className="code text-tro">{traceCode} · 6 công đoạn</span>
           </span>
         </Link>
-        <span aria-hidden className="tile tile-sen col-span-1 row-span-1 hidden animate-tile-set md:col-start-7 md:row-start-6 md:block" style={{ ...delay(1), ...set(-3, 0, 18) }} />
-        <Link href="/artisans" className="tile glaze col-span-6 row-span-1 flex animate-tile-set items-center gap-3 bg-su px-4 py-3 md:col-span-2 md:col-start-8 md:row-start-6" style={{ ...delay(2), ...set(4, 6, 16) }}>
+        <span data-parallax="0.1" data-parallax-anchor="top" aria-hidden className="tile tile-sen col-span-1 row-span-1 hidden animate-tile-set md:col-start-7 md:row-start-6 md:block" style={{ ...delay(1), ...set(-3, 0, 18) }} />
+        <Link data-parallax="0.05" data-parallax-anchor="top" href="/artisans" className="tile glaze col-span-6 row-span-1 flex animate-tile-set items-center gap-3 bg-su px-4 py-3 md:col-span-2 md:col-start-8 md:row-start-6" style={{ ...delay(2), ...set(4, 6, 16) }}>
           <svg viewBox="0 0 24 24" className="size-8 shrink-0 -rotate-3 text-doson" aria-hidden>
             <rect x="1.5" y="1.5" width="21" height="21" rx="2.5" fill="currentColor" />
             <rect x="4" y="4" width="16" height="16" rx="1" fill="none" stroke="#fffdf8" strokeWidth="1.1" />
@@ -128,15 +128,15 @@ export function MosaicHero({
         </Link>
 
         {/* Cột phải */}
-        <Link href={p(3).href} aria-label={p(3).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-start-10 md:row-span-3 md:row-start-1" style={{ ...delay(2), ...set(4, 18, 10) }}>
+        <Link data-parallax="0.2" data-parallax-anchor="top" href={p(3).href} aria-label={p(3).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-start-10 md:row-span-3 md:row-start-1" style={{ ...delay(2), ...set(4, 18, 10) }}>
           <VImage image={hands} ratio="auto" sizes="25vw" priority className="h-full" imgClassName="h-full" />
         </Link>
-        <span aria-hidden className="tile tile-ngoc col-span-1 row-span-1 hidden animate-tile-set md:col-start-10 md:row-start-4 md:block" style={{ ...delay(3), ...set(-4, 12, 14) }} />
-        <Link href={p(4).href} aria-label={p(4).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-11 md:row-start-4" style={{ ...delay(3), ...set(5, 20, 14) }}>
+        <span data-parallax="0.26" data-parallax-anchor="top" aria-hidden className="tile tile-ngoc col-span-1 row-span-1 hidden animate-tile-set md:col-start-10 md:row-start-4 md:block" style={{ ...delay(3), ...set(-4, 12, 14) }} />
+        <Link data-parallax="0.14" data-parallax-anchor="top" href={p(4).href} aria-label={p(4).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-11 md:row-start-4" style={{ ...delay(3), ...set(5, 20, 14) }}>
           <VImage image={p(4).image} ratio="auto" sizes="18vw" className="h-full" imgClassName="h-full" />
         </Link>
-        <span aria-hidden className="tile tile-hoavan col-span-1 row-span-2 hidden animate-tile-set md:col-start-10 md:row-start-5 md:block" style={{ ...delay(4), ...set(-3, 14, 20) }} />
-        <Link href={p(5).href} aria-label={p(5).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-11 md:row-span-1 md:row-start-6" style={{ ...delay(4), ...set(4, 22, 18) }}>
+        <span data-parallax="0.24" data-parallax-anchor="top" aria-hidden className="tile tile-hoavan col-span-1 row-span-2 hidden animate-tile-set md:col-start-10 md:row-start-5 md:block" style={{ ...delay(4), ...set(-3, 14, 20) }} />
+        <Link data-parallax="0.12" data-parallax-anchor="top" href={p(5).href} aria-label={p(5).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-11 md:row-span-1 md:row-start-6" style={{ ...delay(4), ...set(4, 22, 18) }}>
           <VImage image={p(5).image} ratio="auto" sizes="18vw" className="h-full" imgClassName="h-full" />
         </Link>
       </div>

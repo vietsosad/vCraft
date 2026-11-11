@@ -36,7 +36,7 @@ export function ProductCard({
   return (
     <article className="group relative">
       <Link href={`/products/${p.slug}`} className="block">
-        <div className="tile glaze bg-nga-sau">
+        <div className="tile glaze bg-nga-sau" data-tilt>
           <VImage
             image={p.image}
             priority={priority}
