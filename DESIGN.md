@@ -356,6 +356,17 @@ Mặt số sứ cung 240°, vạch mực, cung `chart-2` chỉ phủ vùng trên
 - Đổi sáng/tối: lớp men mới lan ra thành vòng tròn từ chính nút bấm (View Transition, 520ms).
 - Phần tử `[data-reveal]` gắn vào khi cuộn tới; chỉ ẩn chờ khi `html.js` đã được đặt, và tự hiện sau 2,5 giây nếu quan sát viên lỗi.
 
+### Chuyển động khi cuộn (khu công khai)
+- **Cuộn mượt:** Lenis (`lerp` 0.09) chỉ ở khu công khai; tắt khi giảm chuyển động, cảm ứng giữ cuộn gốc, hộp thoại và bản đồ dùng `data-lenis-prevent`.
+- **Tách lớp bức ghép:** viên trong bức ghép mở màn có `data-parallax` + `data-parallax-anchor="top"`, bay lên nhanh hơn viên biển hiệu theo `scrollY` (0.04–0.26); chỉ từ 768px trở lên. Parallax dùng thuộc tính `translate`, không đụng `transform` của `tile-set`.
+- **Sáu thế kỷ bên sông Cái:** đoạn cuộn dính, dải 7 mốc lịch sử trượt ngang (Framer `useScroll` + `useSpring`), năm viết bằng Phudu viền nét `#f5c9a6`, mặt trống đồng Đông Sơn (`DrumFace`) xoay 0→140° theo cuộn, thanh viên thắp dần. Dưới 900px hoặc giảm chuyển động: xếp dọc.
+- **Chữ hiện từng từ:** `RevealText` (`data-reveal="words"`), mỗi từ trồi lên khỏi khe có lề cho dấu tiếng Việt chồng, trễ 55ms mỗi từ; câu nguyên vẹn nằm trong `sr-only`.
+- **Ảnh mở bằng mặt nạ:** `data-reveal="mask"` – lớp con cắt từ dưới lên (1,1s), ảnh thu từ 1,15 về 1.
+- **Nét tự vẽ:** `WaveRule` (sóng nước) và `[data-progress]` cấp biến `--p` 0→1; sáu công đoạn (`.fire-steps`) thắp màu lửa lần lượt theo `--p`.
+- **Dải chữ chạy:** tên các làng gốm Việt Nam (`VillageMarquee`, 60s một vòng, dừng khi rê chuột).
+- **Nghiêng 3D:** viên tác phẩm `[data-tilt]` nghiêng tối đa ±3,5° theo con trỏ.
+- **Khúc nghỉ ca dao:** "Ước gì anh lấy được nàng / Để anh mua gạch Bát Tràng về xây" trên nền tường than trôi chậm và mặt trống đồng mờ.
+
 ## Do's and Don'ts
 
 ### Do:
