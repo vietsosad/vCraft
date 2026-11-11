@@ -1,5 +1,6 @@
 import type { HTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { RevealText } from "@/components/motion/reveal-text";
 
 type Tone = "terracotta" | "cobalt" | "celadon" | "gold" | "ash" | "ink" | "danger";
 
@@ -100,8 +101,8 @@ export function SectionHeading({
   return (
     <div className={cn("flex flex-col gap-4 md:flex-row md:items-end md:justify-between", className)}>
       <div className="max-w-2xl">
-        <h2 className="title-lg">{title}</h2>
-        {description && <p className="mt-3 max-w-xl text-tro">{description}</p>}
+        {typeof title === "string" ? <RevealText as="h2" text={title} className="title-lg" /> : <h2 className="title-lg">{title}</h2>}
+        {description && <p data-reveal style={{ ["--d" as string]: "180ms", ["--rot" as string]: "0deg" }} className="mt-3 max-w-xl text-tro">{description}</p>}
       </div>
       {action}
     </div>
