@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowRight, FilePlus2, Users, Scale, Lock, Factory, Truck } from "lucide-react";
@@ -39,7 +40,7 @@ export default async function WholesaleLanding() {
         <div className="mosaic mx-auto max-w-[1440px] grid-cols-1 md:grid-cols-12">
           <div className="tile tile-lam animate-tile-set flex flex-col justify-between gap-10 p-8 text-giay md:col-span-7 md:p-12">
             <div>
-              <h1 className="title-xl !text-[clamp(2.4rem,5.4vw,4.6rem)]">Một yêu cầu, cả làng chào giá</h1>
+              <RevealText as="h1" text="Một yêu cầu, cả làng chào giá" delay={200} className="title-xl block !text-[clamp(2.4rem,5.4vw,4.6rem)]" />
               <p className="mt-5 max-w-xl text-[17px] text-giay/85">
                 Gửi một yêu cầu báo giá, hệ thống mời đúng các xưởng có sở trường và đủ công suất. Bạn so sánh chào giá kín, chốt và chia đơn
                 cho nhiều hộ cùng làm. Mỗi phần đơn có lô sản xuất và mã QR riêng.

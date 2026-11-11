@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import Link from "next/link";
 import type { NewsCategory } from "@prisma/client";
 import { prisma } from "@/lib/db";
@@ -22,7 +23,7 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
 
   return (
     <div className="mx-auto max-w-[1200px] px-4 py-12 md:px-6">
-      <h1 className="title-lg">Bản tin làng</h1>
+      <RevealText as="h1" text="Bản tin làng" className="title-lg block" />
       <p className="mt-3 max-w-2xl text-tro">Thông báo chính thức của Ban quản lý làng nghề: giá nguyên liệu, lịch cúp điện, chính sách hỗ trợ và sự kiện.</p>
       <nav className="mt-8 flex flex-wrap gap-2" aria-label="Chuyên mục">
         <Link href="/news" className={cn("rounded-[4px] border px-4 py-1.5 text-sm transition", !active ? "border-lam bg-lam text-on" : "border-vua bg-su hover:border-muc/40")}>Tất cả</Link>

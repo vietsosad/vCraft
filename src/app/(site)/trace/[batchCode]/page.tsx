@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -49,12 +50,12 @@ export default async function TracePage({ params }: Props) {
     <article>
       {/* Phần đầu */}
       <header className="relative overflow-hidden bg-dem text-giay">
-        <div className="absolute inset-0 opacity-45">
+        <div data-parallax="0.25" className="absolute inset-x-0 -inset-y-[15%] opacity-45">
           <VImage image={cover} ratio="auto" priority sizes="100vw" className="h-full" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-muc via-muc/70 to-muc/30" />
         <div className="relative mx-auto max-w-5xl px-4 pb-14 pt-16 md:px-6 md:pt-24">
-                    <h1 className="title-xl max-w-4xl !text-[clamp(2.3rem,5.4vw,4.6rem)]">{b.batchTitle}</h1>
+                    <RevealText as="h1" text={b.batchTitle} className="title-xl block max-w-4xl !text-[clamp(2.3rem,5.4vw,4.6rem)]" />
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-[4px] bg-giay/10 px-3 py-1.5 text-sm"><span className="code text-[#f5c9a6]">{b.batchCode}</span></span>
             {verified && <VerifiedSeal className="rounded-[4px] bg-giay px-2 py-1 text-doson" label="Xác thực bởi BQL làng gốm Bát Tràng" />}
@@ -130,7 +131,7 @@ export default async function TracePage({ params }: Props) {
           )}
         </div>
         <aside className="tile relative h-fit overflow-visible bg-su p-5 text-center">
-          {verified && <SealStamp className="absolute -right-5 -top-6 size-20" />}
+          {verified && <SealStamp className="absolute -top-6 right-1 size-20 sm:-right-5" />}
           <p className="label">Chứng nhận QR của lô</p>
           <Image src={b.qrCodeDataUrl} alt={`Mã QR ${b.batchCode}`} width={200} height={200} unoptimized className="mx-auto mt-3" />
           <p className="code mt-2 block text-sm">{b.batchCode}</p>

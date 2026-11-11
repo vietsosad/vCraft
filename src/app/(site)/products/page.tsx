@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import { Suspense } from "react";
 import { prisma } from "@/lib/db";
 import { productQuerySchema } from "@/lib/validators/catalog";
@@ -30,7 +31,7 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
 
   return (
     <div className="mx-auto max-w-[1440px] px-4 py-12 md:px-6">
-      <h1 className="title-lg">Tác phẩm của làng</h1>
+      <RevealText as="h1" text="Tác phẩm của làng" className="title-lg block" />
       <p className="mt-3 max-w-2xl text-tro">
         Duyệt theo phân loại hoặc theo hộ gia đình. Tác phẩm gắn nhãn <span className="font-semibold text-ngoc">Có nhật ký lô</span> có nhật ký sản xuất
         đầy đủ từ ngày ngâm đất.

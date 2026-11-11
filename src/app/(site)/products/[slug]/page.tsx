@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -73,7 +74,7 @@ export default async function ProductPage({ params }: Props) {
             </Link>
             {p.isUniquePiece && <span className="rounded-[4px] bg-dem px-2.5 py-1 text-xs font-semibold text-giay">Độc bản</span>}
           </div>
-          <h1 className="mt-4 font-serif text-4xl font-bold normal-case leading-tight md:text-5xl">{p.name}</h1>
+          <RevealText as="h1" text={p.name} className="mt-4 block font-serif text-4xl font-bold normal-case leading-tight md:text-5xl" />
           <p className="mt-4 font-display text-3xl tabular">{formatVnd(p.priceVnd)}</p>
           <p className="mt-6 text-[17px] leading-relaxed text-muc/80">{p.story}</p>
 

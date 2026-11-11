@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import { listWorkshops } from "@/lib/services/catalog-service";
 import { asImage } from "@/lib/types";
 import { ArtisanCard } from "@/components/exhibition/artisan-card";
@@ -14,7 +15,7 @@ export default async function ArtisansPage() {
     <div className="mx-auto max-w-[1440px] px-4 py-12 md:px-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="title-lg">Nghệ nhân & xưởng</h1>
+          <RevealText as="h1" text="Nghệ nhân & xưởng" className="title-lg block" />
           <p className="mt-3 max-w-2xl text-tro">
             {workshops.length} hộ nghề đã được Ban quản lý xác thực, {open} xưởng đang mở cửa đón khách lúc này.
           </p>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { RevealText } from "@/components/motion/reveal-text";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MapPin, Clock, Award, Phone, Users, Factory, QrCode, Navigation } from "lucide-react";
@@ -72,7 +73,7 @@ export default async function ArtisanPage({ params }: Props) {
           <div className="tile tile-dat animate-tile-set col-span-6 flex flex-col justify-between gap-6 p-6 text-giay md:col-span-5 md:p-8" style={{ ["--d" as string]: "120ms" }}>
             <div>
               <div className="flex items-start justify-between gap-3">
-                <h1 className="title-xl !text-[clamp(2.4rem,5vw,4.4rem)]">{w.workshopName}</h1>
+                <RevealText as="h1" text={w.workshopName} delay={250} className="title-xl block !text-[clamp(2.4rem,5vw,4.4rem)]" />
                 <FavoriteButton artisanId={w.id} initial={fav.artisans.includes(w.id)} canFavorite={canFav} className="shrink-0" />
               </div>
               <p className="mt-3 text-giay/85">
