@@ -66,7 +66,7 @@ export function MosaicHero({
         <Link data-parallax="0.16" data-parallax-anchor="top" href={p(0).href} aria-label={p(0).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-start-1 md:row-start-1" style={{ ...delay(3), ...set(-4, -18, 10) }}>
           <VImage image={p(0).image} ratio="auto" sizes="25vw" priority className="h-full" imgClassName="h-full" />
         </Link>
-        <span data-parallax="0.22" data-parallax-anchor="top" aria-hidden className="tile tile-hoavan col-span-1 row-span-1 hidden animate-tile-set md:col-start-1 md:row-start-3 md:block" style={{ ...delay(3), ...set(5, -10, 12) }} />
+        <span data-parallax="0.22" data-parallax-anchor="top" aria-hidden className="tile tile-hoavan flow col-span-1 row-span-1 hidden animate-tile-set md:col-start-1 md:row-start-3 md:block" style={{ ...delay(3), ...set(5, -10, 12) }} />
         <span data-parallax="0.12" data-parallax-anchor="top" aria-hidden className="tile tile-dat col-span-1 row-span-1 hidden animate-tile-set md:col-start-2 md:row-start-3 md:block" style={{ ...delay(2), ...set(-3, -8, 16) }} />
         <Link
  data-parallax="0.08" data-parallax-anchor="top"          href="/map"
@@ -135,7 +135,7 @@ export function MosaicHero({
         <Link data-parallax="0.14" data-parallax-anchor="top" href={p(4).href} aria-label={p(4).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-11 md:row-start-4" style={{ ...delay(3), ...set(5, 20, 14) }}>
           <VImage image={p(4).image} ratio="auto" sizes="18vw" className="h-full" imgClassName="h-full" />
         </Link>
-        <span data-parallax="0.24" data-parallax-anchor="top" aria-hidden className="tile tile-hoavan col-span-1 row-span-2 hidden animate-tile-set md:col-start-10 md:row-start-5 md:block" style={{ ...delay(4), ...set(-3, 14, 20) }} />
+        <span data-parallax="0.24" data-parallax-anchor="top" aria-hidden className="tile tile-hoavan flow col-span-1 row-span-2 hidden animate-tile-set md:col-start-10 md:row-start-5 md:block" style={{ ...delay(4), ...set(-3, 14, 20) }} />
         <Link data-parallax="0.12" data-parallax-anchor="top" href={p(5).href} aria-label={p(5).name} className="tile glaze col-span-3 row-span-2 animate-tile-set md:col-span-2 md:col-start-11 md:row-span-1 md:row-start-6" style={{ ...delay(4), ...set(4, 22, 18) }}>
           <VImage image={p(5).image} ratio="auto" sizes="18vw" className="h-full" imgClassName="h-full" />
         </Link>

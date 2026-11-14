@@ -15,7 +15,9 @@ import { ProductCard } from "@/components/exhibition/product-card";
 import { ArtisanCard } from "@/components/exhibition/artisan-card";
 import { GlazeExplorer } from "@/components/exhibition/glaze-explorer";
 import { MosaicHero } from "@/components/exhibition/mosaic-hero";
-import { HistoryScroll, type Era } from "@/components/exhibition/history-scroll";
+import { HistoryJourney, type Era } from "@/components/exhibition/history-journey";
+import { MuralBand } from "@/components/exhibition/mural-band";
+import { JourneyRail } from "@/components/motion/journey-rail";
 import { VillageMarquee, WaveRule, DrumFace } from "@/components/motion/ornaments";
 import { RevealText } from "@/components/motion/reveal-text";
 import { cn } from "@/lib/cn";
@@ -29,59 +31,106 @@ const VISIBLE = { verificationStatus: "APPROVED" as const, user: { status: "ACTI
 const VILLAGES = ["Bát Tràng", "Chu Đậu", "Phù Lãng", "Thổ Hà", "Hương Canh", "Bàu Trúc", "Thanh Hà", "Biên Hòa", "Lái Thiêu"];
 
 /**
- * Sáu thế kỷ của làng – nội dung lịch sử viết thận trọng theo truyền ngôn và hiện vật bảo tàng,
- * chú thích ảnh lấy đúng từ nguồn Wikimedia Commons (xem /credits).
+ * "Xuôi dòng sông Cái": một ngày trôi trên sông là sáu thế kỷ của làng. Mỗi chặng có màu nền riêng theo thời khắc
+ * (ground), màu chữ (ink) và màu nhấn (accent). Chặng cuối dùng lại màu nền trang để nối liền với phần sau.
+ * Nội dung lịch sử viết thận trọng theo truyền ngôn và hiện vật bảo tàng; chú thích ảnh lấy đúng từ nguồn
+ * Wikimedia Commons (xem /credits).
  */
 const ERAS: Era[] = [
   {
+    era: "Thế kỷ XI–XIV",
+    time: "Trước bình minh",
+    title: "Men ngọc, hoa nâu thời Lý – Trần",
+    body: "Trước khi làng thành tên, gốm Đại Việt đã có men ngọc xanh trong và gốm hoa nâu khắc dây lá, cánh sen. Đó là vốn nghề mà các làng gốm ven sông về sau kế thừa.",
+    image: manifest["tran-brown-jar"],
+    caption: "Thạp gốm hoa nâu thời Trần, thế kỷ XIII–XIV – Bảo tàng Lịch sử Quốc gia",
+    ground: "#1f4a40",
+    ink: "light",
+    accent: "#f0dcae",
+  },
+  {
     era: "Thế kỷ XIV–XV",
+    time: "Bình minh",
     title: "Đất trắng bên sông Cái",
     body: "Theo truyền ngôn, thợ gốm làng Bồ Bát (Thanh Hóa) theo sông ra bãi bồi ven sông Hồng, gặp mạch đất sét trắng và lập phường gốm Bạch Thổ. Cái tên Bát Tràng ra đời từ đó.",
     image: manifest["clay-heap"],
     caption: "Đất sét thô tập kết chờ xử lý tại Bát Tràng",
+    ground: "#7a3519",
+    ink: "light",
+    accent: "#f8d7b8",
   },
   {
     era: "Thế kỷ XV",
+    time: "Buổi sáng",
     title: "Men lam theo thuyền ra biển",
     body: "Đồ gốm men lam Đại Việt theo các thuyền buôn tới Đông Nam Á và xa hơn. Nét bút lông coban trên men trắng trở thành gương mặt của gốm Việt.",
     image: manifest["chu-dau-jar"],
     caption: "Bình men lam Chu Đậu, thế kỷ XV – Bảo tàng Lịch sử Quốc gia",
+    ground: "#1b458f",
+    via: "#24524a",
+    ink: "light",
+    accent: "#f5c9a6",
   },
   {
     era: "Thế kỷ XVI",
+    time: "Giữa trưa",
     title: "Minh văn trên đồ thờ",
-    body: "Thời Mạc, nhiều cây đèn, lư hương men lam được khắc minh văn ghi năm làm, người cung tiến và cả tên người thợ – những dòng chữ còn đọc được đến hôm nay.",
+    body: "Thời Mạc, nhiều cây đèn, lư hương men lam được khắc minh văn ghi năm làm, người cung tiến và cả tên người thợ. Những dòng chữ ấy còn đọc được đến hôm nay.",
     image: manifest["lamp-stand-2"],
     caption: "Cây đèn thờ men lam thời Mạc, năm 1589 – Bảo tàng Lịch sử Quốc gia",
+    ground: "#efe7d6",
+    ink: "dark",
+    accent: "#1f4e9a",
   },
   {
     era: "Thế kỷ XIX",
+    time: "Xế chiều",
     title: "Chóe, lư triều Nguyễn",
     body: "Lò Bát Tràng làm chóe, lư hương, bát đĩa cho cả cung đình lẫn nhà dân. Men rạn đánh mực tàu và men lam vẽ linh vật, phong cảnh đều có mặt trong các bảo tàng.",
     image: manifest["storage-jar"],
-    caption: "Chóe men lam Bát Tràng, niên hiệu Gia Long (1802–1819)",
+    caption: "Chóe men lam Bát Tràng, niên hiệu Gia Long (1802–1819) – Bảo tàng Lịch sử Quốc gia",
+    ground: "#7a5512",
+    ink: "light",
+    accent: "#fbe6b4",
   },
   {
     era: "Thế kỷ XX",
+    time: "Đêm",
     title: "Tường than, ngõ cổ",
     body: "Than được đóng bánh, dán lên tường phơi khô để đốt lò. Những bức tường loang lổ ấy vẫn còn trong ngõ làng, như dấu tay của nhiều đời thợ.",
     image: manifest["coal-wall"],
     caption: "Bức tường dán bánh than trong làng cổ Bát Tràng",
+    ground: "#1b1815",
+    ink: "light",
+    accent: "#f5c9a6",
   },
   {
     era: "2010",
+    time: "Rạng đông",
     title: "Con đường gốm sứ",
-    body: "Bức tranh gốm ghép dài gần bốn cây số chạy dọc đê sông Hồng, phần lớn làm từ gốm Bát Tràng, được ghi nhận là bức tranh gốm ghép dài nhất thế giới.",
-    mosaic: true,
+    body: "Bức tranh ghép gốm dài gần bốn cây số dọc đê sông Hồng hoàn thành dịp Đại lễ 1000 năm Thăng Long, phần lớn làm từ gốm Bát Tràng, và được Guinness ghi nhận là bức tranh ghép gốm lớn nhất thế giới.",
+    image: manifest["mural-thanglong"],
+    caption: "Mảng ghép Thăng Long – Hà Nội 1010–2010 trên Con đường gốm sứ",
+    ground: "#163a73",
+    ink: "light",
+    accent: "#f5c9a6",
   },
   {
     era: "Hôm nay",
+    time: "Sáng nay",
     title: "Mỗi lô một tem",
     body: "Các hộ nghề ghi nhật ký từng mẻ gốm, Ban quản lý xác thực, và mỗi lô có một mã QR. Khách quét tem là thấy cả hành trình của món đồ trong tay.",
-    image: manifest["market-hall"],
-    caption: "Chợ gốm Bát Tràng",
+    image: manifest["dinh-gate"],
+    caption: "Cổng đình làng Bát Tràng",
+    ground: "page",
+    ink: "page",
+    accent: "#a34a23",
   },
 ];
+
+/** Hai hàng ảnh thật của Con đường gốm sứ ven sông Hồng. */
+const MURAL_TOP = ["mural-dragon-boat", "mural-bamboo", "mural-gate", "mural-dancers", "mural-boat"] as const;
+const MURAL_BOTTOM = ["mural-festival", "mural-lotus-lady", "mural-cyclist", "mural-farmers", "mural-dragon"] as const;
 
 /**
  * Lửa lên dần qua sáu công đoạn: từ màu đất sét sẫm tới màu gạch nung đỏ lửa.
@@ -150,22 +199,32 @@ export default async function HomePage() {
         </Link>
       )}
 
-      <MosaicHero pieces={pieces} hands={manifest["hands-wheel"]} openNow={openNow} nextOpen={nextOpen} verified={verified} traceCode={batches[0]?.batchCode ?? "BT-2026-RAN-001"} />
+      <div id="buc-ghep" data-chapter="Bức ghép">
+        <MosaicHero pieces={pieces} hands={manifest["hands-wheel"]} openNow={openNow} nextOpen={nextOpen} verified={verified} traceCode={batches[0]?.batchCode ?? "BT-2026-RAN-001"} />
+      </div>
 
-      <div className="border-y border-vua bg-nga py-6 text-muc/85">
+      <div className="py-6 text-muc/85">
         <VillageMarquee items={VILLAGES} />
       </div>
 
-      <HistoryScroll eras={ERAS} />
+      <HistoryJourney
+        intro={{
+          image: manifest["river-evening"],
+          caption: "Thuyền neo bên bờ sông Hồng, Hà Nội, khoảng 1915. Ảnh màu autochrome của Léon Busy, bộ sưu tập Albert Kahn.",
+        }}
+        eras={ERAS}
+      />
+
+      <MuralBand top={MURAL_TOP.map((k) => manifest[k])} bottom={MURAL_BOTTOM.map((k) => manifest[k])} />
 
       {/* Dòng men */}
-      <section className="mx-auto max-w-[1440px] px-4 py-20 md:px-6 md:py-28">
+      <section id="dong-men" data-chapter="Năm dòng men" className="mx-auto max-w-[1440px] px-4 py-20 md:px-6 md:py-28">
         <SectionHeading title="Nhất xương, nhì da, thứ ba đến lửa" description="Năm dòng men làm nên tên tuổi Bát Tràng. Chọn một viên men để xem nó khác các dòng còn lại thế nào." className="mb-12" />
         <GlazeExplorer samples={samples} />
       </section>
 
       {/* Tác phẩm */}
-      <section className="crackle-bg py-20 md:py-28">
+      <section id="tac-pham" data-chapter="Tác phẩm" className="crackle-bg fade-edges py-24 md:py-36">
         <div className="mx-auto max-w-[1440px] px-4 md:px-6">
           <SectionHeading
             title="Tác phẩm mới ra lò"
@@ -184,7 +243,7 @@ export default async function HomePage() {
       </section>
 
       {/* Truy xuất: lửa lên dần qua sáu công đoạn */}
-      <section className="mx-auto max-w-[1440px] px-4 py-20 md:px-6 md:py-28">
+      <section id="cong-doan" data-chapter="Sáu công đoạn" className="mx-auto max-w-[1440px] px-4 py-20 md:px-6 md:py-28">
         <SectionHeading
           title="Sáu công đoạn, sáu bằng chứng"
           description="Mỗi lô gốm lưu nhật ký có ảnh thật ở từng công đoạn. Khi ra lò, nhật ký được khóa và in thành tem QR dùng chung cho cả lô."
@@ -223,7 +282,7 @@ export default async function HomePage() {
       </section>
 
       {/* Nghệ nhân */}
-      <section className="bg-nga-dam py-20 md:py-28">
+      <section id="nghe-nhan" data-chapter="Người giữ lửa" className="fade-edges bg-nga-dam py-24 md:py-36">
         <div className="mx-auto max-w-[1440px] px-4 md:px-6">
           <SectionHeading title="Những người giữ lửa" description="Mỗi gian trưng bày là câu chuyện của một dòng họ làm gốm." action={<ButtonLink href="/artisans" variant="outline">Tất cả nghệ nhân <ArrowRight className="size-4" /></ButtonLink>} className="mb-12" />
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -237,7 +296,7 @@ export default async function HomePage() {
       </section>
 
       {/* Khúc nghỉ: ca dao */}
-      <section aria-label="Ca dao về Bát Tràng" className="relative overflow-hidden bg-dem py-28 text-giay md:py-40">
+      <section data-progress="through" aria-label="Ca dao về Bát Tràng" className="kiln-door relative mt-10 overflow-hidden bg-dem py-28 text-giay md:py-44">
         <div data-parallax="0.18" className="absolute inset-x-0 -inset-y-[20%] opacity-35">
           <VImage image={manifest["coal-wall"]} ratio="auto" sizes="100vw" className="h-full" imgClassName="h-full" />
         </div>
@@ -255,7 +314,7 @@ export default async function HomePage() {
       <div className="mx-auto max-w-[1440px] px-4 md:px-6"><WaveRule className="my-16" /></div>
 
       {/* Trải nghiệm nặn gốm */}
-      <section className="mx-auto max-w-[1440px] px-4 py-20 md:px-6 md:py-28">
+      <section id="trai-nghiem" data-chapter="Nặn gốm" className="mx-auto max-w-[1440px] px-4 py-20 md:px-6 md:py-28">
         <div className="mosaic grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
           <div className="tile tile-hoavan relative flex flex-col justify-between gap-10 p-8 md:p-12">
             <div className="max-w-lg rounded-[8px] bg-su/92 p-6 shadow-soft backdrop-blur-[2px] md:p-8">
@@ -290,7 +349,7 @@ export default async function HomePage() {
       </section>
 
       {/* Đặt hàng sỉ */}
-      <section className="mx-auto max-w-[1440px] px-4 md:px-6">
+      <section id="dat-si" data-chapter="Đặt hàng sỉ" className="mx-auto max-w-[1440px] px-4 md:px-6">
         <div className="mosaic grid-cols-1 lg:grid-cols-[1.2fr_1fr]">
           <div className="tile tile-lam p-8 text-giay md:p-12">
             <h2 className="title-lg">Cần 5.000 chiếc cốc trong một tháng?</h2>
@@ -327,7 +386,7 @@ export default async function HomePage() {
       <div className="mx-auto max-w-[1440px] px-4 md:px-6"><WaveRule className="mt-20" tone="datnung" /></div>
 
       {/* Bản tin */}
-      <section className="mx-auto max-w-[1440px] px-4 pt-20 md:px-6 md:pt-28">
+      <section id="ban-tin" data-chapter="Bản tin" className="mx-auto max-w-[1440px] px-4 pt-20 md:px-6 md:pt-28">
         <SectionHeading title="Từ Ban quản lý" description="Giá nguyên liệu, lịch cúp điện, chính sách và sự kiện của làng." action={<ButtonLink href="/news" variant="ghost">Tất cả tin <ArrowRight className="size-4" /></ButtonLink>} className="mb-10" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {news.map((n, i) => (
@@ -344,6 +403,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+      <JourneyRail />
     </>
   );
 }
