@@ -29,7 +29,7 @@ colors:
   lua: "#ee8a43"
   on: "#fffdf8"
   giay: "#fffdf8"
-  dem: "#121823"
+  dem: "#0f1b38"
   chart-1: "#1f4e9a"
   chart-2: "#a34a23"
   chart-3: "#00866a"
@@ -359,13 +359,24 @@ Mặt số sứ cung 240°, vạch mực, cung `chart-2` chỉ phủ vùng trên
 ### Chuyển động khi cuộn (khu công khai)
 - **Cuộn mượt:** Lenis (`lerp` 0.09) chỉ ở khu công khai; tắt khi giảm chuyển động, cảm ứng giữ cuộn gốc, hộp thoại và bản đồ dùng `data-lenis-prevent`.
 - **Tách lớp bức ghép:** viên trong bức ghép mở màn có `data-parallax` + `data-parallax-anchor="top"`, bay lên nhanh hơn viên biển hiệu theo `scrollY` (0.04–0.26); chỉ từ 768px trở lên. Parallax dùng thuộc tính `translate`, không đụng `transform` của `tile-set`.
-- **Sáu thế kỷ bên sông Cái:** đoạn cuộn dính, dải 7 mốc lịch sử trượt ngang (Framer `useScroll` + `useSpring`), năm viết bằng Phudu viền nét `#f5c9a6`, mặt trống đồng Đông Sơn (`DrumFace`) xoay 0→140° theo cuộn, thanh viên thắp dần. Dưới 900px hoặc giảm chuyển động: xếp dọc.
+- **Xuôi dòng sông Cái (`HistoryJourney`):** đoạn cuộn dính, 9 chặng trượt ngang như cuộn tranh, cuộn 1:1 không thêm lò xo (Lenis đã làm mượt). "Một ngày trên sông là sáu thế kỷ của làng": nền đổi màu liền mạch theo thời khắc, bắt đầu và kết thúc bằng đúng `nga` của trang nên không có đường cắt.
+  - Kịch bản màu: `nga` (nhổ neo) → `#1f4a40` men ngọc (trước bình minh, Lý–Trần) → `#7a3519` đất (bình minh) → `#1b458f` men lam (buổi sáng, đi qua `#24524a` để không pha thành tím) → `#efe7d6` men trắng (giữa trưa, chữ tối) → `#7a5512` hổ phách (xế chiều) → `#1b1815` than (đêm) → `#163a73` (rạng đông, 2010) → `nga` (sáng nay).
+  - Mỗi chặng giữ màu của mình ở 30% đầu và cuối mỗi quãng, chỉ chuyển ở 40% giữa; màu chữ đổi nhanh đúng lúc nền vượt ngưỡng sáng/tối để luôn đọc được.
+  - Mặt trống đồng Đông Sơn (`DrumFace`) là mặt trời: mọc bên trái, lên đỉnh, lặn bên phải, khuất về đêm (trăng khuyết hiện), mọc lại lúc rạng đông.
+  - Sông: ba lớp sóng (`WaveLayer`) trôi liên tục với tốc độ khác nhau; thuyền nan (`Sampan`) dập dềnh, chạy dọc theo tiến độ và dừng đúng trên nhãn chặng đang xem.
+  - Hiện vật nằm trong khung vòm (`.arch`, hốc khám thờ/cửa lò bầu); khi tới giữa màn hình khung lớn dần, thẳng lại, ảnh bên trong trôi ngược nhẹ, năm viết bằng Phudu viền nét theo màu nhấn của chặng.
+  - Dưới 900px hoặc giảm chuyển động: các chặng xếp dọc, nền vẫn đổi màu theo cuộn.
+- **Con đường gốm sứ (`MuralBand`):** hai hàng ảnh thật của bức tranh ghép gốm ven sông Hồng trôi ngược chiều nhau theo `--p` (`data-progress="through"`), trên nền `dem`.
+- **Chuyển tiếp giữa các khúc:** `.fade-edges` làm mép khúc có vân/nền khác mờ dần vào `nga` (110px); khúc ca dao dùng `.kiln-door` mở từ ô bo tròn ra tràn màn hình theo cuộn.
+- **Thanh chỉ chặng (`JourneyRail`):** từ 1280px, mỗi khúc có `[data-chapter]` là một viên nhỏ ở mép phải; viên đang xem sáng lên, rê chuột hiện tên, bấm để cuộn tới.
+- **Sóng nước sống:** viên `tile-hoavan.flow` trôi hoa văn 64px mỗi 14 giây.
 - **Chữ hiện từng từ:** `RevealText` (`data-reveal="words"`), mỗi từ trồi lên khỏi khe có lề cho dấu tiếng Việt chồng, trễ 55ms mỗi từ; câu nguyên vẹn nằm trong `sr-only`.
 - **Ảnh mở bằng mặt nạ:** `data-reveal="mask"` – lớp con cắt từ dưới lên (1,1s), ảnh thu từ 1,15 về 1.
 - **Nét tự vẽ:** `WaveRule` (sóng nước) và `[data-progress]` cấp biến `--p` 0→1; sáu công đoạn (`.fire-steps`) thắp màu lửa lần lượt theo `--p`.
 - **Dải chữ chạy:** tên các làng gốm Việt Nam (`VillageMarquee`, 60s một vòng, dừng khi rê chuột).
 - **Nghiêng 3D:** viên tác phẩm `[data-tilt]` nghiêng tối đa ±3,5° theo con trỏ.
-- **Khúc nghỉ ca dao:** "Ước gì anh lấy được nàng / Để anh mua gạch Bát Tràng về xây" trên nền tường than trôi chậm và mặt trống đồng mờ.
+- **Khúc nghỉ ca dao:** "Ước gì anh lấy được nàng / Để anh mua gạch Bát Tràng về xây" trên nền tường than trôi chậm và mặt trống đồng mờ, mở kiểu cửa lò.
+- **Màu tối chung `dem`:** chàm đậm `#0f1b38` (cùng họ với men lam) cho chân trang, khúc nghỉ, dải tranh, thanh bên Ban quản lý.
 
 ## Do's and Don'ts
 

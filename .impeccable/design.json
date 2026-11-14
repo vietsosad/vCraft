@@ -464,7 +464,7 @@
       "dem": {
         "role": "neutral",
         "displayName": "Đêm (nền luôn tối)",
-        "canonical": "#121823",
+        "canonical": "#0f1b38",
         "oklch": "oklch(20.8% 0.024 262.3)",
         "tonalRamp": [
           "#060b15",

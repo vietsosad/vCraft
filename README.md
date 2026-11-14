@@ -96,7 +96,7 @@ Ba vai trò làm việc ở **ba khu riêng**, mỗi khu có cổng đăng nhậ
 
 ```text
 prisma/                 schema.prisma, migrations, seed.ts (dữ liệu mẫu Bát Tràng)
-public/seed/            62 ảnh tư liệu đã tối ưu + manifest.json (ghi công)
+public/seed/            89 ảnh tư liệu đã tối ưu + manifest.json (ghi công): xưởng, hiện vật bảo tàng, Con đường gốm sứ, sông Hồng khoảng 1915
 scripts/                fetch-seed-images.ts – tải lại ảnh mẫu từ Wikimedia Commons
 src/
   app/                  trang (Server Components) và REST API (app/api/**/route.ts)
