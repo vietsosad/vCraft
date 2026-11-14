@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { cn } from "@/lib/cn";
 
 /**
@@ -82,6 +83,56 @@ export function VillageMarquee({ items, className }: { items: string[]; classNam
   return (
     <div className={cn("overflow-hidden", className)}>
       <div className="marquee">{row("a")}{row("b")}</div>
+    </div>
+  );
+}
+
+/**
+ * Thuyền nan sông Hồng: thân cong, mui cót vòm, cột buồm và cánh buồm chiếu có nẹp tre –
+ * dáng những con thuyền neo ở bến sông trong các tấm ảnh màu đầu thế kỷ XX.
+ */
+export function Sampan({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 120" className={className} aria-hidden fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M78 96V8" />
+      <path d="M82 14 128 27l-6 50-40 6z" fill="currentColor" fillOpacity=".16" />
+      <path d="m82 31 43 6M82 47l42 6M82 63l41 6" strokeWidth="1.3" />
+      <path d="M34 93c2-16 12-25 26-25s22 9 24 25" fill="currentColor" fillOpacity=".12" />
+      <path d="M45 91c1-9 7-15 15-15s14 6 15 15" strokeWidth="1.3" />
+      <path d="M8 88c14 6 30 8 50 8h46c20 0 36-4 48-12-6 17-22 27-44 27H50C30 111 14 103 8 88z" fill="currentColor" fillOpacity=".24" />
+      <path d="m24 84-15 27" />
+    </svg>
+  );
+}
+
+/** Trăng khuyết cho chặng đêm của hành trình. */
+export function Crescent({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 60 60" className={className} aria-hidden>
+      <path d="M40 6a26 26 0 1 0 14 34A21 21 0 0 1 40 6z" fill="currentColor" />
+    </svg>
+  );
+}
+
+/**
+ * Một lớp sóng nước lặp vô hạn (chu kỳ 240px), trôi liên tục bằng CSS (.river-flow).
+ * Xếp ba lớp với biên độ, độ mờ và tốc độ khác nhau để tạo chiều sâu mặt sông.
+ */
+export function WaveLayer({ className, amplitude = 10, strokeWidth = 2, duration = 18 }: { className?: string; amplitude?: number; strokeWidth?: number; duration?: number }) {
+  const id = useId().replace(/:/g, "");
+  const a = amplitude;
+  return (
+    <div className={cn("overflow-hidden", className)} aria-hidden>
+      <div className="river-flow h-full w-[calc(100%+480px)]" style={{ ["--river-s" as string]: `${duration}s` }}>
+        <svg width="100%" height="100%" preserveAspectRatio="none">
+          <defs>
+            <pattern id={id} width="240" height="48" patternUnits="userSpaceOnUse">
+              <path d={`M0 24 C 40 ${24 - a}, 80 ${24 - a}, 120 24 S 200 ${24 + a}, 240 24`} fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="48" fill={`url(#${id})`} />
+        </svg>
+      </div>
     </div>
   );
 }

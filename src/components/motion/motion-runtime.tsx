@@ -9,15 +9,21 @@ import { usePathname } from "next/navigation";
  *    Mặc định luôn hiện; chỉ ẩn chờ khi html có lớp .js (đặt bởi script khởi động).
  * 2. Parallax: [data-parallax="0.15"] trôi lệch theo tốc độ riêng khi cuộn (dùng thuộc tính `translate`
  *    để không đụng `transform` của hiệu ứng gắn viên).
- * 3. Tiến độ: [data-progress] nhận biến --p từ 0 tới 1 khi đi qua màn hình (vẽ hoa văn, thắp lửa…).
+ * 3. Tiến độ: [data-progress] nhận biến --p từ 0 tới 1 khi đi vào màn hình (vẽ hoa văn, thắp lửa…);
+ *    [data-progress="through"] chạy 0 → 1 suốt quãng phần tử đi ngang qua màn hình (dải tranh trôi, cửa lò mở).
  * 4. "Bóng men": vệt sáng trên viên .glaze đi theo con trỏ; [data-tilt] nghiêng 3D nhẹ.
- * Một vòng requestAnimationFrame duy nhất, chỉ chạy khi có cuộn; tắt hết khi người dùng giảm chuyển động.
+ *
+ * Hiệu năng: danh sách phần tử được gom một lần mỗi trang (và khi DOM đổi), chỉ phần tử đang ở gần
+ * màn hình mới được đo; một vòng requestAnimationFrame duy nhất, chỉ chạy khi có cuộn.
+ * Người dùng giảm chuyển động: không parallax, mọi tiến độ đặt sẵn về 1.
  */
 export function MotionRuntime() {
   const pathname = usePathname();
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* ---- 1. Gắn viên ---- */
     const io = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
@@ -29,10 +35,63 @@ export function MotionRuntime() {
       },
       { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
     );
+
+    /* ---- 2 + 3. Parallax và tiến độ: chỉ theo dõi phần tử gần màn hình ---- */
+    const near = new Set<HTMLElement>();
+    const nearIo = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) near.add(e.target as HTMLElement);
+          else near.delete(e.target as HTMLElement);
+        }
+        schedule();
+      },
+      { rootMargin: "35% 0px 35% 0px" },
+    );
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      const narrow = window.innerWidth < 768;
+      const y = window.scrollY;
+      for (const el of near) {
+        if (el.dataset.parallax !== undefined) {
+          const speed = Number(el.dataset.parallax) || 0.1;
+          if (el.dataset.parallaxAnchor === "top") {
+            // Bức ghép mở màn: đứng yên khi chưa cuộn rồi tách lớp dần; màn hẹp giữ nguyên vì nó cao hơn màn hình
+            el.style.translate = narrow ? "" : `0 ${(-y * speed).toFixed(1)}px`;
+          } else {
+            const r = el.getBoundingClientRect();
+            el.style.translate = `0 ${((r.top + r.height / 2 - vh / 2) * -speed).toFixed(1)}px`;
+          }
+        }
+        if (el.dataset.progress !== undefined) {
+          const r = el.getBoundingClientRect();
+          let p: number;
+          if (el.dataset.progress === "through") {
+            p = (vh - r.top) / (vh + r.height);
+          } else {
+            const span = Math.max(1, Number(el.dataset.progress) || vh * 0.6);
+            p = (vh * 0.9 - r.top) / span;
+          }
+          el.style.setProperty("--p", Math.min(1, Math.max(0, p)).toFixed(4));
+        }
+      }
+    };
+    function schedule() {
+      if (!raf && !reduce) raf = requestAnimationFrame(update);
+    }
+
     const scan = (root: ParentNode) => {
       root.querySelectorAll<HTMLElement>("[data-reveal]:not([data-in])").forEach((el) => {
         if (reduce) el.dataset.in = "";
         else io.observe(el);
+      });
+      root.querySelectorAll<HTMLElement>("[data-parallax], [data-progress]").forEach((el) => {
+        if (reduce) {
+          if (el.dataset.progress !== undefined) el.style.setProperty("--p", "1");
+        } else nearIo.observe(el);
       });
     };
     scan(document);
@@ -40,6 +99,7 @@ export function MotionRuntime() {
       for (const m of muts) m.addedNodes.forEach((n) => n instanceof HTMLElement && scan(n.parentElement ?? n));
     });
     mo.observe(document.body, { childList: true, subtree: true });
+
     // Lưới an toàn: sau 2,5 giây mọi phần tử đã trong màn hình mà còn chờ đều hiện
     const t = window.setTimeout(
       () =>
@@ -49,49 +109,16 @@ export function MotionRuntime() {
       2500,
     );
 
-    // Parallax + tiến độ cuộn
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const vh = window.innerHeight;
-      document.querySelectorAll<HTMLElement>("[data-parallax]").forEach((el) => {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) return;
-        // Bức ghép mở màn chỉ tách lớp trên màn rộng; màn hẹp nó cao hơn màn hình nên giữ nguyên
-        if (el.dataset.parallaxAnchor === "top" && window.innerWidth < 768) {
-          el.style.translate = "";
-          return;
-        }
-        const speed = Number(el.dataset.parallax) || 0.1;
-        // anchor="top": tính từ đầu trang (bức ghép mở màn đứng yên khi chưa cuộn, rồi tách lớp dần)
-        const offset = el.dataset.parallaxAnchor === "top" ? -window.scrollY * speed : (r.top + r.height / 2 - vh / 2) * -speed;
-        el.style.translate = `0 ${offset.toFixed(1)}px`;
-      });
-      document.querySelectorAll<HTMLElement>("[data-progress]").forEach((el) => {
-        const r = el.getBoundingClientRect();
-        const start = vh * 0.9;
-        const span = Math.max(1, Number(el.dataset.progress) || vh * 0.6);
-        const p = Math.min(1, Math.max(0, (start - r.top) / span));
-        el.style.setProperty("--p", p.toFixed(3));
-      });
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    if (!reduce) {
-      update();
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll);
-    } else {
-      document.querySelectorAll<HTMLElement>("[data-progress]").forEach((el) => el.style.setProperty("--p", "1"));
-    }
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
 
     return () => {
       io.disconnect();
+      nearIo.disconnect();
       mo.disconnect();
       window.clearTimeout(t);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
       cancelAnimationFrame(raf);
     };
   }, [pathname]);
