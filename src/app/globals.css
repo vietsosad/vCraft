@@ -43,7 +43,7 @@
 
   --color-on: #fffdf8;
   --color-giay: #fffdf8;
-  --color-dem: #121823;
+  --color-dem: #0f1b38;
 
   /* Màu biểu đồ: đã chạy bộ kiểm tra (độ sáng, độ bão hòa, mù màu, tương phản) trên nền sứ */
   --chart-1: #1f4e9a;
@@ -243,6 +243,8 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%231f4e9a' stroke-width='2.2' stroke-linecap='round'%3E%3Cpath d='M0 48c8 0 8-10 16-10s8 10 16 10 8-10 16-10 8 10 16 10' opacity='.85'/%3E%3Cpath d='M0 60c8 0 8-10 16-10s8 10 16 10 8-10 16-10 8 10 16 10' opacity='.45'/%3E%3Cpath d='M14 22c0-6 8-8 11-3 2-5 11-4 10 3 5 0 6 7 0 8H15c-6 0-6-8-1-8z' opacity='.7'/%3E%3C/g%3E%3C/svg%3E");
     background-size: 64px 64px;
   }
+  .tile-hoavan.flow { animation: hoavan-flow 14s linear infinite; }
+  @keyframes hoavan-flow { to { background-position: 64px 0; } }
   /* Viên men rạn: vết rạn mực tàu trên men ngà */
   .tile-ran {
     background-color: #e6d9bf;
@@ -329,6 +331,26 @@
   /* Sáu công đoạn: viên sáng dần theo lửa khi cuộn qua (--p của danh sách, --k của từng viên) */
   .fire-steps > li { --lit: clamp(0, (var(--p, 1) - var(--k, 0)) * 7, 1); filter: grayscale(calc(0.85 - var(--lit) * 0.85)) brightness(calc(0.82 + var(--lit) * 0.18)); transform: translateY(calc((1 - var(--lit)) * 14px)); transition: filter 0.5s ease-out, transform 0.6s var(--ease-out-expo); }
 
+  /* Mép khúc mờ dần vào nền ngà thay cho đường cắt thẳng */
+  .fade-edges { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 110px, #000 calc(100% - 110px), transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 110px, #000 calc(100% - 110px), transparent 100%); }
+
+  /* "Cửa lò mở": khối tối mở dần từ một ô bo tròn ra tràn màn hình theo tiến độ cuộn (--p) */
+  .kiln-door { --o: clamp(0, var(--p, 1) * 2.4, 1); clip-path: inset(calc((1 - var(--o)) * 9%) calc((1 - var(--o)) * 9%) round calc((1 - var(--o)) * 56px)); }
+
+  /* Dải tranh gốm sứ: hai hàng trôi ngược chiều nhau theo cuộn */
+  .mural-row { display: flex; gap: 6px; width: max-content; will-change: translate; }
+  .mural-row.to-left { translate: calc(var(--p, 0.5) * -22%) 0; }
+  .mural-row.to-right { translate: calc(-22% + var(--p, 0.5) * 22%) 0; }
+
+  /* Khung vòm: hốc khám thờ / cửa lò bầu cho hiện vật trong cuộn tranh lịch sử */
+  .arch { border-radius: 9999px 9999px 10px 10px; overflow: hidden; }
+
+  /* Sông Cái: sóng trôi liên tục, thuyền dập dềnh */
+  .river-flow { animation: river-flow var(--river-s, 18s) linear infinite; }
+  @keyframes river-flow { to { transform: translateX(-240px); } }
+  .boat-bob { animation: boat-bob 3.6s ease-in-out infinite; transform-origin: 50% 85%; }
+  @keyframes boat-bob { 0%, 100% { transform: rotate(-1.6deg) translateY(0); } 50% { transform: rotate(1.4deg) translateY(-3px); } }
+
   .prose-vcraft { max-width: 68ch; }
   .prose-vcraft p { margin: 0 0 1em; }
   .prose-vcraft h2 { font-family: var(--font-serif); font-weight: 700; font-size: 1.6rem; margin: 1.4em 0 0.5em; }
@@ -375,8 +397,10 @@ html.lenis, html.lenis body { height: auto; }
   .glaze:hover, .glaze[data-tilt]:hover { transform: none; }
   .js [data-reveal="words"] .w > span, .js [data-reveal="mask"] img { transform: none; scale: 1; }
   .js [data-reveal="mask"] > * { clip-path: none; }
-  .marquee { animation: none; }
+  .marquee, .tile-hoavan.flow, .river-flow, .boat-bob { animation: none; }
   .fire-steps > li { filter: none; transform: none; }
+  .kiln-door { clip-path: none; }
+  .mural-row { translate: none !important; }
   [data-parallax] { translate: none !important; }
 }
 

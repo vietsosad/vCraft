@@ -7,7 +7,7 @@ const BAND = ["tile-lam", "tile-hoavan", "tile-ran", "tile-dat", "tile-sen", "ti
 export function Footer() {
   return (
     <footer className="mt-24 bg-dem text-giay/75">
-      <div aria-hidden className="grid grid-cols-6 gap-[5px] bg-[#0b0f16] p-[5px] sm:grid-cols-12">
+      <div aria-hidden className="grid grid-cols-6 gap-[5px] bg-[#0a1226] p-[5px] sm:grid-cols-12">
         {BAND.map((t, i) => (
           <span key={i} data-reveal style={{ ["--d" as string]: `${i * 45}ms` }} className={`tile h-10 rounded-[4px] md:h-14 ${t} ${i >= 6 ? "hidden sm:block" : ""}`} />
         ))}

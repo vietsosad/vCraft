@@ -59,11 +59,11 @@ export function RoleSwitcher({ currentEmail }: { currentEmail: string | null }) 
               aria-pressed={current === p.key}
               className={cn(
                 "flex shrink-0 items-center gap-1.5 rounded-[4px] px-2.5 py-1 transition duration-200",
-                current === p.key ? "bg-giay text-[#121823]" : "text-giay/80 hover:bg-giay/10 hover:text-giay",
+                current === p.key ? "bg-giay text-dem" : "text-giay/80 hover:bg-giay/10 hover:text-giay",
                 busy === p.key && "animate-pulse",
               )}
             >
-              <span className={cn("size-1.5 rounded-full", p.dot, current === p.key && "ring-2 ring-[#121823]/15")} aria-hidden />
+              <span className={cn("size-1.5 rounded-full", p.dot, current === p.key && "ring-2 ring-dem/15")} aria-hidden />
               {p.label}
             </button>
           ))}
