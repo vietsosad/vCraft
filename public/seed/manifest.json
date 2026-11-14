@@ -804,5 +804,356 @@
       "license": "CC0",
       "url": "https://commons.wikimedia.org/wiki/File:Vietnam_14th_C_-_Celadon_jar_Museum_of_Asian_Civilisation.jpg"
     }
+  },
+  "mural-boat": {
+    "src": "/seed/mural-boat.webp",
+    "width": 1400,
+    "height": 670,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABQAgCdASoQAAgAA4BaJYgCdH8GJ/gdl2hdrAAA/ltXlNdkPO6dGvkyucyfcxqvbcvmjhy3Y3MJfBIkMOjDq1NzBZeZGp2GK1tR8vG7v7DLW09BGgAAAA==",
+    "alt": "Thuyền buôn trên Con đường gốm sứ ven sông Hồng",
+    "credit": {
+      "title": "2017 11 25 142218 Vietnam Hanoi Ceramic-Mosaic-Mural copy 27.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_142218_Vietnam_Hanoi_Ceramic-Mosaic-Mural_copy_27.jpg"
+    }
+  },
+  "mural-dragon-boat": {
+    "src": "/seed/mural-dragon-boat.webp",
+    "width": 1400,
+    "height": 752,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAkAA4BaJYgCdAEVDd/GZgAA/n6usd23B+uukCvKfR4e+SB+Rg5gsvJiFSJ0ABPQetJBCXBBnQ0uFX9c64xw0/rJPAAA",
+    "alt": "Thuyền rồng và người xưa trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 141702 Vietnam Hanoi Ceramic-Mosaic-Mural 01.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_141702_Vietnam_Hanoi_Ceramic-Mosaic-Mural_01.jpg"
+    }
+  },
+  "mural-gate": {
+    "src": "/seed/mural-gate.webp",
+    "width": 1400,
+    "height": 849,
+    "blurDataURL": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAQCdASoQAAoAA4BaJbACdAC9/U7RFgAA/f0a3vsWpcyB7J1hFcbd/xcAYIamRPOaOhgPKzrk2xCPejeQurHiJ48gpWzg7PKsJlecfrjxZX20ajH9x74NHa7imzdjNYjjZWUh/uSyAAAA",
+    "alt": "Cổng thành ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 142218 Vietnam Hanoi Ceramic-Mosaic-Mural copy 18.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_142218_Vietnam_Hanoi_Ceramic-Mosaic-Mural_copy_18.jpg"
+    }
+  },
+  "mural-dancers": {
+    "src": "/seed/mural-dancers.webp",
+    "width": 1400,
+    "height": 844,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoQAAoAA4BaJbACdAENogj2PNAAAPYexxPFguo+thzMLeOUUbtzI8CFvPetWmazxdlaEHUg8bCMzE/8ItNCfb4Uc7v2ZDRnamIVnJZY70Jlw8awAAA=",
+    "alt": "Điệu múa quạt ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 142218 Vietnam Hanoi Ceramic-Mosaic-Mural copy 15.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_142218_Vietnam_Hanoi_Ceramic-Mosaic-Mural_copy_15.jpg"
+    }
+  },
+  "mural-cyclist": {
+    "src": "/seed/mural-cyclist.webp",
+    "width": 1400,
+    "height": 936,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoQAAsAA4BaJQBOgMXh1b/2VZxNIAD94c9ZA6aZDnbM3n7qhRF+3v5ygMNw6pW10VxYZmFAZv/hVPScI0dXefg4gBm7711LFMMJWUet9jxgLW2KMAA=",
+    "alt": "Người đạp xe ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "Hanoi Ceramic Mosaic Mural (14564194560).jpg",
+      "author": "Erwin Verbruggen from Amsterdam, The Netherlands",
+      "license": "CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Hanoi_Ceramic_Mosaic_Mural_(14564194560).jpg"
+    }
+  },
+  "mural-bamboo": {
+    "src": "/seed/mural-bamboo.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAwAA4BaJYgCdACXUq5gAAD1bZWoWHWTulmbctH+BeltafJW9UzrJER9Ja+It6J6dXVl/l6ua5SceEFJ4NYe7Cqb0qiuz+b4AA==",
+    "alt": "Khóm tre ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 01.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_150548_Vietnam_Hanoi_Ceramic-Mosaic-Mural_01.jpg"
+    }
+  },
+  "mural-lotus-lady": {
+    "src": "/seed/mural-lotus-lady.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABwAgCdASoQAAwAA4BaJaACdH8AgrCx1m70eUNgAP7cu9IuwNTpr6qXk2mfBwPB/DgcRTPDHPCVp6ZLIAKFkZSNXedp0I1pMSysJFAZ60LyFIFGR9ePH7eF9/mcDAjzu7Ua3tUN+7ekAA==",
+    "alt": "Thiếu nữ nâng sen ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 02.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_150548_Vietnam_Hanoi_Ceramic-Mosaic-Mural_02.jpg"
+    }
+  },
+  "mural-dragon": {
+    "src": "/seed/mural-dragon.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAwAA4BaJZACdAEPhWcn64AA/pG/fK1DlodKrkoqa3/sQsTD+fVhrCyHc/BCBM4lo+fxCUBFNOeRaMB/wzlObgAAAA==",
+    "alt": "Thuyền rồng ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 04.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_150548_Vietnam_Hanoi_Ceramic-Mosaic-Mural_04.jpg"
+    }
+  },
+  "mural-farmers": {
+    "src": "/seed/mural-farmers.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoQAAwAA4BaJbACdACkmOEMWjgAAPqSq4wjV1AiH43niJtsjeqkpIGwQt0bVCMdOr3ppEW+CuNXiifbcqudY3Co/xixATsp37IAPG3cWVFwAA==",
+    "alt": "Người nông dân đội nón ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 03.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_150548_Vietnam_Hanoi_Ceramic-Mosaic-Mural_03.jpg"
+    }
+  },
+  "mural-festival": {
+    "src": "/seed/mural-festival.webp",
+    "width": 1400,
+    "height": 1051,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAQCdASoQAAwAA4BaJYwCdADxzi1AAPlwCXaTCDo136KTlamHYLqtCwg+8bNjZ3hJPSvi/DsylTgX0mt8tPAo4CkSTZ2gAAA=",
+    "alt": "Hội thuyền ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 08.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_150548_Vietnam_Hanoi_Ceramic-Mosaic-Mural_08.jpg"
+    }
+  },
+  "mural-drummers": {
+    "src": "/seed/mural-drummers.webp",
+    "width": 1400,
+    "height": 1057,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoQAAwAA4BaJbACdAD0ZT00PEYAAM3ewsTHt79uoL/An3hsEBf3n6fzJq9wZIHlLcAkXZHLFQXx8MHWYaP+EMKARPiQDGChuKegSgJ4CrXQAA==",
+    "alt": "Hoa văn người đánh trống ghép gốm trên Con đường gốm sứ",
+    "credit": {
+      "title": "2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 06.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_150548_Vietnam_Hanoi_Ceramic-Mosaic-Mural_06.jpg"
+    }
+  },
+  "mural-street": {
+    "src": "/seed/mural-street.webp",
+    "width": 1400,
+    "height": 936,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAwAgCdASoQAAsAA4BaJQBOgMXhyZrRdTijgAD85MGe2rfhXHyfQmTZ56406PipbgcKhe3RoaRtPy9m9/JBc6sWECLXZtzZQYAccwacu0AgRmWwJ8XSYAAA",
+    "alt": "Con đường gốm sứ chạy dọc đê sông Hồng, Hà Nội",
+    "credit": {
+      "title": "Hanoi Ceramic Mosaic Mural (14727776036).jpg",
+      "author": "Erwin Verbruggen from Amsterdam, The Netherlands",
+      "license": "CC BY-SA 2.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Hanoi_Ceramic_Mosaic_Mural_(14727776036).jpg"
+    }
+  },
+  "mural-wall": {
+    "src": "/seed/mural-wall.webp",
+    "width": 1400,
+    "height": 854,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAQCdASoQAAoAA4BaJZQAAthx4LWLAAD+9iWYzfzznkdmLyE/2pneVF6FTdT8dGB/2+bEti6EBf4Be+1vnArSnWxwB697HgA=",
+    "alt": "Bức tường gốm sứ bên đường Hồng Hà, Hà Nội",
+    "credit": {
+      "title": "2017 11 25 142837 Vietnam Hanoi Ceramic-Mosaic-Mural x 20.jpg",
+      "author": "Diggers2004",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:2017_11_25_142837_Vietnam_Hanoi_Ceramic-Mosaic-Mural_x_20.jpg"
+    }
+  },
+  "mural-thanglong": {
+    "src": "/seed/mural-thanglong.webp",
+    "width": 1400,
+    "height": 1050,
+    "blurDataURL": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAwAA4BaJZACsH8ADTuM2ReoAPhiiq6IhpEqPYTbCHpbUIRLkw6xlz82WxPUZZxytLhZCAn+diyScS/MITVYmVKDGOAJGcvVcTm5/NvXiH5fZ9eHbzAA",
+    "alt": "Mảng ghép Thăng Long – Hà Nội 1010–2010 trên Con đường gốm sứ",
+    "credit": {
+      "title": "Con đường gốm sứ ven sông Hồng 021020091714-New.jpg",
+      "author": "Newone",
+      "license": "CC BY 3.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Con_%C4%91%C6%B0%E1%BB%9Dng_g%E1%BB%91m_s%E1%BB%A9_ven_s%C3%B4ng_H%E1%BB%93ng_021020091714-New.jpg"
+    }
+  },
+  "river-evening": {
+    "src": "/seed/river-evening.webp",
+    "width": 1400,
+    "height": 1038,
+    "blurDataURL": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoQAAwAA4BaJZQAAuaW1ytZgAD+t/IXIn+uL/bip5Z8V/XFv0OdhIgiAwVVA9ZgUzZhuP346PR9JuMoZEH5+fCmpIfcyAAA",
+    "alt": "Thuyền neo bên bờ sông Hồng buổi chiều, ảnh màu autochrome khoảng 1915",
+    "credit": {
+      "title": "Des sampans amarrés aux rives du Fleuve Rouge, le soir - A7332.jpg",
+      "author": "Busy Léon",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Des_sampans_amarr%C3%A9s_aux_rives_du_Fleuve_Rouge,_le_soir_-_A7332.jpg"
+    }
+  },
+  "river-sunset-bridge": {
+    "src": "/seed/river-sunset-bridge.webp",
+    "width": 1400,
+    "height": 1038,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAwAA4BaJZwAAuWucUllAAD2pJvKuPrEysxFNa2Ybfl6iSH5JqLkzHZN4Mu0l7w1jL7e2rhMyqY0y/BcVZLLgZjPEAooKwAAAA==",
+    "alt": "Thuyền trên sông Hồng trước cầu Long Biên lúc hoàng hôn, ảnh màu autochrome khoảng 1915",
+    "credit": {
+      "title": "Des sampans au soleil couchant sur le Fleuve Rouge devant le pont Doumer - A7334.jpg",
+      "author": "Busy Léon",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Des_sampans_au_soleil_couchant_sur_le_Fleuve_Rouge_devant_le_pont_Doumer_-_A7334.jpg"
+    }
+  },
+  "river-banks": {
+    "src": "/seed/river-banks.webp",
+    "width": 1400,
+    "height": 1038,
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoQAAwAA4BaJZQCdAEOvG7Y34AA/rI81H8CwVcdwnki4740xAr5cqEeAvpN+ZCvPIfuZUZbsupUSwMegAA=",
+    "alt": "Bến thuyền sông Hồng lúc hoàng hôn, ảnh màu autochrome khoảng 1915",
+    "credit": {
+      "title": "Des sampans au soleil couchant amarrés aux rives du Fleuve Rouge - A7335.jpg",
+      "author": "Busy Léon",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Des_sampans_au_soleil_couchant_amarr%C3%A9s_aux_rives_du_Fleuve_Rouge_-_A7335.jpg"
+    }
+  },
+  "river-morning": {
+    "src": "/seed/river-morning.webp",
+    "width": 1400,
+    "height": 1038,
+    "blurDataURL": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAQCdASoQAAwAA4BaJZwAAlxWTJ0WCgAA/k0dssDq1a9/CRkZRbsqwaFEnOT3fAyj70uX7k7uk9iHC19iBulF0fZdBN5eIONLV/QBs/4B2P1sJglrnzQAAAA=",
+    "alt": "Cầu Long Biên và thuyền bên bến sông Hồng buổi sáng, ảnh màu autochrome khoảng 1915",
+    "credit": {
+      "title": "Le pont Doumer et les sampans bordant les quais du Fleuve Rouge, le matin - A68951X.jpg",
+      "author": "Busy Léon",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Le_pont_Doumer_et_les_sampans_bordant_les_quais_du_Fleuve_Rouge,_le_matin_-_A68951X.jpg"
+    }
+  },
+  "river-cargo": {
+    "src": "/seed/river-cargo.webp",
+    "width": 1400,
+    "height": 1038,
+    "blurDataURL": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAQCdASoQAAwAA4BaJQBdgCHXc0OLwAD+ymnoQLaMMK1GIEovFYA5Iu3m2WP8REl0ploaisnm8vVvrQLKIBbQkQwetXR0H5nIKCVqbdPy8t0AAAA=",
+    "alt": "Thuyền chở hàng bên bờ sông Hồng, ảnh màu autochrome khoảng 1915",
+    "credit": {
+      "title": "Le transport des bananes sur les sampans au bord du Fleuve Rouge - A6695.jpg",
+      "author": "Busy Léon",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Le_transport_des_bananes_sur_les_sampans_au_bord_du_Fleuve_Rouge_-_A6695.jpg"
+    }
+  },
+  "river-postcard": {
+    "src": "/seed/river-postcard.webp",
+    "width": 1400,
+    "height": 1072,
+    "blurDataURL": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAAAQAgCdASoQAAwAA4BaJYwCdAEOv4rNzuQAAP3ZgXfoY7zqWK0aANrI2xroHpTsMMAht46Fnyfo56wAAAA=",
+    "alt": "Bến sông Hồng trên ảnh chụp đầu thế kỷ XX",
+    "credit": {
+      "title": "Vietnam - Tonkin - Bords du fleuve Rouge.jpg",
+      "author": "Raphael Moreau",
+      "license": "Public domain",
+      "url": "https://commons.wikimedia.org/wiki/File:Vietnam_-_Tonkin_-_Bords_du_fleuve_Rouge.jpg"
+    }
+  },
+  "ly-celadon-bowl": {
+    "src": "/seed/ly-celadon-bowl.webp",
+    "width": 1400,
+    "height": 1228,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAA4AA4BaJaACdAEfTi2CFAAA/uDN98FNfyINTF3m+Zrvog32qzozTICli+gpt9wd+iKBATBaV4kbsi7RbXFopFlAAA==",
+    "alt": "Bát men ngọc khắc hoa thời Lý, thế kỷ XI–XII",
+    "credit": {
+      "title": "Bowl, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05401.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bowl,_celadon_glaze_ceramic_-_L%C3%BD_dynasty,_11th-12th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05401.JPG"
+    }
+  },
+  "ly-crackle-teapot": {
+    "src": "/seed/ly-crackle-teapot.webp",
+    "width": 1400,
+    "height": 1199,
+    "blurDataURL": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAA4AA4BaJZQAAsQg7VajOWqEAP7Imw3wrYQox0L/ZC0Gcu2Y8125R8RrMpNHGtCGdWmEts+XRt3jfd43R3qzF7jDKsAAAAA=",
+    "alt": "Ấm men trắng rạn thời Lý, thế kỷ XI–XII",
+    "credit": {
+      "title": "Teapot, crackled white glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05394.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Teapot,_crackled_white_glaze_ceramic_-_L%C3%BD_dynasty,_11th-12th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05394.JPG"
+    }
+  },
+  "tran-brown-jar": {
+    "src": "/seed/tran-brown-jar.webp",
+    "width": 1400,
+    "height": 2100,
+    "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoLABAAA4BaJbACdAEOovsSzAD+6roUhDfniklcG6rLgyGv3VpQKqBBTQHYNtOqxouGxorfjIVwrVmsKoR/IE66eX3RdIFpR3X54golZKAAAA==",
+    "alt": "Thạp gốm hoa nâu thời Trần, thế kỷ XIII–XIV",
+    "credit": {
+      "title": "Jar for domestic use, Tran dynasty, 13th-14th century AD, brown pattern ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05509.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Jar_for_domestic_use,_Tran_dynasty,_13th-14th_century_AD,_brown_pattern_ceramic_-_National_Museum_of_Vietnamese_History_-_Hanoi,_Vietnam_-_DSC05509.JPG"
+    }
+  },
+  "tran-ivory-jar": {
+    "src": "/seed/tran-ivory-jar.webp",
+    "width": 1400,
+    "height": 1598,
+    "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAQCdASoOABAAA4BaJQBOgCHgJeeRwAD+67zqRVrMdAffcDe3ZpyhONfMkhdXvuRuEAqx2CzE4UYoIufUmfwhqPQe4cYFB2dkPavJJ1Bs88vWmLahnAAA",
+    "alt": "Thạp men trắng ngà vẽ nâu thời Trần, thế kỷ XIII–XIV",
+    "credit": {
+      "title": "Cylindrical jar, ivory white glaze ceramic decorated with brown patterns - Tran dynasty, 13th-14th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05363.JPG",
+      "author": "Daderot",
+      "license": "CC0",
+      "url": "https://commons.wikimedia.org/wiki/File:Cylindrical_jar,_ivory_white_glaze_ceramic_decorated_with_brown_patterns_-_Tran_dynasty,_13th-14th_century_AD_-_Vietnam_National_Museum_of_Fine_Arts_-_Hanoi,_Vietnam_-_DSC05363.JPG"
+    }
+  },
+  "dinh-gate": {
+    "src": "/seed/dinh-gate.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAQCdASoQAAkAA4BaJQBOgBuryL/gAP3iQb+XPc+Y/A5e6wbALdfJr3kQgFgiM8PwezIpr7aBYHliN2wFjGYIII2pwr8VGAA=",
+    "alt": "Cổng đình làng Bát Tràng",
+    "credit": {
+      "title": "Bat Trang communal house (2018) 01.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat_Trang_communal_house_(2018)_01.jpg"
+    }
+  },
+  "dinh-dragon": {
+    "src": "/seed/dinh-dragon.webp",
+    "width": 1400,
+    "height": 2489,
+    "blurDataURL": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAQCdASoJABAAA4BaJZQC7ADZmqGmPAD6TVfov/COQ6OnDdaO4JLPeVoo+1funXxbsFcuhSfuJCPJa/uBgAAA",
+    "alt": "Bức phù điêu rồng ở đình Bát Tràng",
+    "credit": {
+      "title": "Bat Trang communal house (2018) 02.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat_Trang_communal_house_(2018)_02.jpg"
+    }
+  },
+  "dinh-hall": {
+    "src": "/seed/dinh-hall.webp",
+    "width": 1400,
+    "height": 788,
+    "blurDataURL": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAkAA4BaJQBOj+ADAs6l+ZAA/phcLq8FusKTRzn1FEf6XuGPRXbw1CxCOSGYJRF7REUnUH0LfIJf88L1AwAA",
+    "alt": "Sân đình làng Bát Tràng",
+    "credit": {
+      "title": "Bat Trang communal house (2018) 05.jpg",
+      "author": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "url": "https://commons.wikimedia.org/wiki/File:Bat_Trang_communal_house_(2018)_05.jpg"
+    }
   }
 }

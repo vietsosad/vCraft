@@ -1,64 +1,447 @@
 [
-  { "id": "hands-wheel", "title": "File:Bat-Trang-Ceramic-Village8.jpg", "alt": "Đôi tay nghệ nhân chuốt gốm trên bàn xoay" },
-  { "id": "hands-trim", "title": "File:Bat-Trang-Ceramic-Village11.jpg", "alt": "Nghệ nhân sửa hàng phơ, tỉa chân đế" },
-  { "id": "artisan-wheel", "title": "File:Bat-Trang-Ceramic-Village13.jpg", "alt": "Nghệ nhân vuốt dáng bình trên bàn xoay" },
-  { "id": "artisan-paint", "title": "File:Bat-Trang-Ceramic-Village6.jpg", "alt": "Nghệ nhân vẽ hoa văn lên cốt gốm mộc" },
-  { "id": "glazing-cups", "title": "File:Bat-Trang-Ceramic-Village10.jpg", "alt": "Nhúng men trắng cho lô cốc sứ" },
-  { "id": "bisque-teapots", "title": "File:Bat-Trang-Ceramic-Village7.jpg", "alt": "Ấm trà mộc chờ tráng men" },
-  { "id": "bisque-teapots-2", "title": "File:Bat-Trang-Ceramic-Village5.jpg", "alt": "Dãy ấm mộc sau sơ nung" },
-  { "id": "drying-greenware", "title": "File:Bat-Trang-Ceramic-Village3.jpg", "alt": "Phơi mộc trong xưởng" },
-  { "id": "workshop-floor", "title": "File:Bat-Trang-Ceramic-Village9.jpg", "alt": "Xưởng gốm với nhiều thợ đang làm việc" },
-  { "id": "workshop-molds", "title": "File:Bat-Trang-Ceramic-Village12.jpg", "alt": "Khuôn thạch cao và sản phẩm mộc trong xưởng" },
-  { "id": "bicycle-pottery", "title": "File:Bat-Trang-Ceramic-Village1.jpg", "alt": "Xe đạp thồ gốm trên phố Bát Tràng" },
-  { "id": "bicycle-pottery-2", "title": "File:Bat-Trang-Ceramic-Village16a.jpg", "alt": "Người dân chở gốm bằng xe đạp" },
-  { "id": "coal-wall", "title": "File:Bát Tràng, tường than.JPG", "alt": "Bức tường dán bánh than đặc trưng làng cổ Bát Tràng" },
-  { "id": "village-street", "title": "File:Bat Trang pottery and ceramics village in 2016 15.jpg", "alt": "Một góc đường làng Bát Tràng" },
-  { "id": "village-alley", "title": "File:Bat Trang pottery and ceramics village in 2016 07.jpg", "alt": "Ngõ nhỏ trong làng cổ" },
-  { "id": "clay-heap", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2699.JPG", "alt": "Đất sét thô tập kết chờ xử lý" },
-  { "id": "clay-processing", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2711.JPG", "alt": "Khu xử lý và luyện đất" },
-  { "id": "workshop-saggars", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2722.JPG", "alt": "Bao nung và dụng cụ trong xưởng" },
-  { "id": "kiln-loading", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2727.JPG", "alt": "Sản phẩm xếp trong lò chuẩn bị nung" },
-  { "id": "bisque-pieces", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2731.JPG", "alt": "Sản phẩm mộc trên bàn xoay" },
-  { "id": "market-hall", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2654.JPG", "alt": "Chợ gốm Bát Tràng" },
-  { "id": "big-jars", "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2676.JPG", "alt": "Chum lớn vẽ lam bày bán" },
-  { "id": "kiln-bw", "title": "File:Bat Trang porcelain.jpg", "alt": "Sản phẩm sứ trong lò nung" },
-  { "id": "shop-display", "title": "File:Bát Tràng DSC 0092.JPG", "alt": "Tủ trưng bày gốm men lam" },
-  { "id": "shop-table", "title": "File:Bát Tràng DSC 0091.JPG", "alt": "Bàn trưng bày gốm cổ" },
-  { "id": "shop-plates", "title": "File:Bát Tràng DSC 0095.JPG", "alt": "Đĩa gốm vẽ rồng phượng" },
-  { "id": "shop-blue-white", "title": "File:Bát Tràng DSC 0096.JPG", "alt": "Kệ bát đĩa men lam" },
-  { "id": "shop-vases", "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 33.jpg", "alt": "Lọ hoa và chóe men lam" },
-  { "id": "market-street", "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 61.jpg", "alt": "Dãy cửa hàng trong chợ gốm" },
-  { "id": "shop-white", "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 63.jpg", "alt": "Kệ gốm trắng ngà" },
-  { "id": "market-stalls", "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 71.jpg", "alt": "Quầy hàng gốm trong chợ" },
-  { "id": "cups-batch", "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 76.jpg", "alt": "Lô cốc gốm thành phẩm" },
-  { "id": "blue-lamp", "title": "File:Kerosene lamps in Vietnam (đèn dầu bằng sứ).JPG", "alt": "Đèn dầu sứ vẽ rồng men lam" },
-  { "id": "smoking-vase", "title": "File:Bình hút thuốc (device for smoking) 2.jpg", "alt": "Bình gốm men lam truyền thống" },
-  { "id": "crackle-lime-1", "title": "File:Bình vôi (lime container) 1.JPG", "alt": "Bình vôi men xanh hỏa biến" },
-  { "id": "crackle-lime-3", "title": "File:Bình vôi (lime container) 3.JPG", "alt": "Bình vôi men rạn quai rồng" },
-  { "id": "crackle-lime-4", "title": "File:Bình vôi (lime container) 4.JPG", "alt": "Bộ bình vôi men rạn" },
-  { "id": "crackle-lime-5", "title": "File:Bình vôi (lime container) 5.JPG", "alt": "Bình vôi men rạn đắp quai" },
-  { "id": "crackle-lime-6", "title": "File:Bình vôi (lime container) 6.JPG", "alt": "Bình men rạn xám tro" },
-  { "id": "incense-burner", "title": "File:Incense burner, Bat Trang ceramic - Nguyen dynasty, 19th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05333.JPG", "alt": "Lư hương men rạn vẽ lam" },
-  { "id": "paper-tube", "title": "File:Tube for papers, Bat Trang ceramic - Nguyen dynasty, 19th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05329.JPG", "alt": "Ống bút men rạn vẽ mây lam" },
-  { "id": "storage-jar", "title": "File:Storage jar with landscape and sacred animals, Bat Trang, Hanoi, Nguyen dynasty, Gia Long reign (1802-1819 AD), blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05640.JPG", "alt": "Chóe men lam vẽ phong cảnh và linh vật" },
-  { "id": "chu-dau-jar", "title": "File:Blue and white Chu Dau jar NMVH EDAV.jpg", "alt": "Bình men lam hoa dây" },
-  { "id": "lamp-stand", "title": "File:Lamp stand, Chu Dau kiln, Hai Duong province, Early Le dynasty, 15th century AD, blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05690.JPG", "alt": "Chân đèn men lam" },
-  { "id": "lamp-stand-2", "title": "File:Lamp stand, Quan Am pagoda, Hung Yen province, Mac dynasty, 2nd year of Hung Tri reign (1589 AD), blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05685.JPG", "alt": "Cây đèn thờ men lam" },
-  { "id": "lam-dish", "title": "File:Schotel met bloemranken, AK-RAK-1971-5.jpg", "alt": "Đĩa men lam hoa dây" },
-  { "id": "lam-bowl", "title": "File:Klokvormige kom met bloemranken, AK-RAK-1971-7.jpg", "alt": "Bát men lam hoa dây" },
-  { "id": "lam-jar-peony", "title": "File:Eivormige pot met pioenranken en vier oren, AK-RAK-1972-1.jpg", "alt": "Hũ men lam hoa mẫu đơn bốn tai" },
-  { "id": "lam-jar-small", "title": "File:Eivormige pot met bloemranken, AK-RAK-1987-5.jpg", "alt": "Hũ nhỏ men lam" },
-  { "id": "lam-jar-small-2", "title": "File:Eivormige pot met bloemranken, AK-RAK-1987-6.jpg", "alt": "Hũ men lam hoa cúc" },
-  { "id": "lam-fish-plate", "title": "File:Plat au décor de poisson, M.C. 2019-92(3).jpg", "alt": "Đĩa men lam vẽ cá" },
-  { "id": "lam-big-plate", "title": "File:Grand plat, M.C. 2020-23 (1 of 4).jpg", "alt": "Đĩa lớn men lam hoa sen" },
-  { "id": "lam-big-plate-side", "title": "File:Grand plat, M.C. 2020-23 (3 of 4).jpg", "alt": "Đĩa men lam nhìn nghiêng" },
-  { "id": "lam-tea-bowl", "title": "File:Bol, M.C. 2019-90 (1 of 4).jpg", "alt": "Bát trà men lam" },
-  { "id": "lam-tea-bowl-2", "title": "File:Bol, M.C. 2019-90 (2 of 4).jpg", "alt": "Bát trà men lam vẽ dây" },
-  { "id": "lam-kendi", "title": "File:Miniature Holy Water Container (Kendi) with Lotus Petals and Chrysanthemum Scrolls LACMA M.74.32.3.jpg", "alt": "Bình rót men lam cánh sen" },
-  { "id": "ngoc-dish", "title": "File:Dish, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05385.JPG", "alt": "Đĩa men ngọc khắc hoa" },
-  { "id": "ngoc-bowls", "title": "File:Bowls, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05388.JPG", "alt": "Đôi bát men ngọc" },
-  { "id": "ngoc-bowl", "title": "File:Bowl, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05398.JPG", "alt": "Bát men ngọc in hoa" },
-  { "id": "ngoc-plate", "title": "File:Dish for domestic use, Ly-Tran dynasty, 11th-14th century AD, celadon glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05519.JPG", "alt": "Đĩa men ngọc cánh sen" },
-  { "id": "ngoc-bowls-2", "title": "File:Bowls for domestic use, Ly-Tran dynasty, 11th-14th century AD, celadon glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05522.JPG", "alt": "Bộ bát men ngọc" },
-  { "id": "ngoc-jar", "title": "File:Vietnam 14th C - Celadon jar Museum of Asian Civilisation.jpg", "alt": "Hũ men ngọc đắp nổi" }
+ {
+  "id": "hands-wheel",
+  "title": "File:Bat-Trang-Ceramic-Village8.jpg",
+  "alt": "Đôi tay nghệ nhân chuốt gốm trên bàn xoay"
+ },
+ {
+  "id": "hands-trim",
+  "title": "File:Bat-Trang-Ceramic-Village11.jpg",
+  "alt": "Nghệ nhân sửa hàng phơ, tỉa chân đế"
+ },
+ {
+  "id": "artisan-wheel",
+  "title": "File:Bat-Trang-Ceramic-Village13.jpg",
+  "alt": "Nghệ nhân vuốt dáng bình trên bàn xoay"
+ },
+ {
+  "id": "artisan-paint",
+  "title": "File:Bat-Trang-Ceramic-Village6.jpg",
+  "alt": "Nghệ nhân vẽ hoa văn lên cốt gốm mộc"
+ },
+ {
+  "id": "glazing-cups",
+  "title": "File:Bat-Trang-Ceramic-Village10.jpg",
+  "alt": "Nhúng men trắng cho lô cốc sứ"
+ },
+ {
+  "id": "bisque-teapots",
+  "title": "File:Bat-Trang-Ceramic-Village7.jpg",
+  "alt": "Ấm trà mộc chờ tráng men"
+ },
+ {
+  "id": "bisque-teapots-2",
+  "title": "File:Bat-Trang-Ceramic-Village5.jpg",
+  "alt": "Dãy ấm mộc sau sơ nung"
+ },
+ {
+  "id": "drying-greenware",
+  "title": "File:Bat-Trang-Ceramic-Village3.jpg",
+  "alt": "Phơi mộc trong xưởng"
+ },
+ {
+  "id": "workshop-floor",
+  "title": "File:Bat-Trang-Ceramic-Village9.jpg",
+  "alt": "Xưởng gốm với nhiều thợ đang làm việc"
+ },
+ {
+  "id": "workshop-molds",
+  "title": "File:Bat-Trang-Ceramic-Village12.jpg",
+  "alt": "Khuôn thạch cao và sản phẩm mộc trong xưởng"
+ },
+ {
+  "id": "bicycle-pottery",
+  "title": "File:Bat-Trang-Ceramic-Village1.jpg",
+  "alt": "Xe đạp thồ gốm trên phố Bát Tràng"
+ },
+ {
+  "id": "bicycle-pottery-2",
+  "title": "File:Bat-Trang-Ceramic-Village16a.jpg",
+  "alt": "Người dân chở gốm bằng xe đạp"
+ },
+ {
+  "id": "coal-wall",
+  "title": "File:Bát Tràng, tường than.JPG",
+  "alt": "Bức tường dán bánh than đặc trưng làng cổ Bát Tràng"
+ },
+ {
+  "id": "village-street",
+  "title": "File:Bat Trang pottery and ceramics village in 2016 15.jpg",
+  "alt": "Một góc đường làng Bát Tràng"
+ },
+ {
+  "id": "village-alley",
+  "title": "File:Bat Trang pottery and ceramics village in 2016 07.jpg",
+  "alt": "Ngõ nhỏ trong làng cổ"
+ },
+ {
+  "id": "clay-heap",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2699.JPG",
+  "alt": "Đất sét thô tập kết chờ xử lý"
+ },
+ {
+  "id": "clay-processing",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2711.JPG",
+  "alt": "Khu xử lý và luyện đất"
+ },
+ {
+  "id": "workshop-saggars",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2722.JPG",
+  "alt": "Bao nung và dụng cụ trong xưởng"
+ },
+ {
+  "id": "kiln-loading",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2727.JPG",
+  "alt": "Sản phẩm xếp trong lò chuẩn bị nung"
+ },
+ {
+  "id": "bisque-pieces",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2731.JPG",
+  "alt": "Sản phẩm mộc trên bàn xoay"
+ },
+ {
+  "id": "market-hall",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2654.JPG",
+  "alt": "Chợ gốm Bát Tràng"
+ },
+ {
+  "id": "big-jars",
+  "title": "File:Xã Bát Tràng、鉢塲社 バチャン村 DSCF2676.JPG",
+  "alt": "Chum lớn vẽ lam bày bán"
+ },
+ {
+  "id": "kiln-bw",
+  "title": "File:Bat Trang porcelain.jpg",
+  "alt": "Sản phẩm sứ trong lò nung"
+ },
+ {
+  "id": "shop-display",
+  "title": "File:Bát Tràng DSC 0092.JPG",
+  "alt": "Tủ trưng bày gốm men lam"
+ },
+ {
+  "id": "shop-table",
+  "title": "File:Bát Tràng DSC 0091.JPG",
+  "alt": "Bàn trưng bày gốm cổ"
+ },
+ {
+  "id": "shop-plates",
+  "title": "File:Bát Tràng DSC 0095.JPG",
+  "alt": "Đĩa gốm vẽ rồng phượng"
+ },
+ {
+  "id": "shop-blue-white",
+  "title": "File:Bát Tràng DSC 0096.JPG",
+  "alt": "Kệ bát đĩa men lam"
+ },
+ {
+  "id": "shop-vases",
+  "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 33.jpg",
+  "alt": "Lọ hoa và chóe men lam"
+ },
+ {
+  "id": "market-street",
+  "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 61.jpg",
+  "alt": "Dãy cửa hàng trong chợ gốm"
+ },
+ {
+  "id": "shop-white",
+  "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 63.jpg",
+  "alt": "Kệ gốm trắng ngà"
+ },
+ {
+  "id": "market-stalls",
+  "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 71.jpg",
+  "alt": "Quầy hàng gốm trong chợ"
+ },
+ {
+  "id": "cups-batch",
+  "title": "File:Ceramics shop in Bát Tràng, Hanoi (1 March 2018) 76.jpg",
+  "alt": "Lô cốc gốm thành phẩm"
+ },
+ {
+  "id": "blue-lamp",
+  "title": "File:Kerosene lamps in Vietnam (đèn dầu bằng sứ).JPG",
+  "alt": "Đèn dầu sứ vẽ rồng men lam"
+ },
+ {
+  "id": "smoking-vase",
+  "title": "File:Bình hút thuốc (device for smoking) 2.jpg",
+  "alt": "Bình gốm men lam truyền thống"
+ },
+ {
+  "id": "crackle-lime-1",
+  "title": "File:Bình vôi (lime container) 1.JPG",
+  "alt": "Bình vôi men xanh hỏa biến"
+ },
+ {
+  "id": "crackle-lime-3",
+  "title": "File:Bình vôi (lime container) 3.JPG",
+  "alt": "Bình vôi men rạn quai rồng"
+ },
+ {
+  "id": "crackle-lime-4",
+  "title": "File:Bình vôi (lime container) 4.JPG",
+  "alt": "Bộ bình vôi men rạn"
+ },
+ {
+  "id": "crackle-lime-5",
+  "title": "File:Bình vôi (lime container) 5.JPG",
+  "alt": "Bình vôi men rạn đắp quai"
+ },
+ {
+  "id": "crackle-lime-6",
+  "title": "File:Bình vôi (lime container) 6.JPG",
+  "alt": "Bình men rạn xám tro"
+ },
+ {
+  "id": "incense-burner",
+  "title": "File:Incense burner, Bat Trang ceramic - Nguyen dynasty, 19th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05333.JPG",
+  "alt": "Lư hương men rạn vẽ lam"
+ },
+ {
+  "id": "paper-tube",
+  "title": "File:Tube for papers, Bat Trang ceramic - Nguyen dynasty, 19th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05329.JPG",
+  "alt": "Ống bút men rạn vẽ mây lam"
+ },
+ {
+  "id": "storage-jar",
+  "title": "File:Storage jar with landscape and sacred animals, Bat Trang, Hanoi, Nguyen dynasty, Gia Long reign (1802-1819 AD), blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05640.JPG",
+  "alt": "Chóe men lam vẽ phong cảnh và linh vật"
+ },
+ {
+  "id": "chu-dau-jar",
+  "title": "File:Blue and white Chu Dau jar NMVH EDAV.jpg",
+  "alt": "Bình men lam hoa dây"
+ },
+ {
+  "id": "lamp-stand",
+  "title": "File:Lamp stand, Chu Dau kiln, Hai Duong province, Early Le dynasty, 15th century AD, blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05690.JPG",
+  "alt": "Chân đèn men lam"
+ },
+ {
+  "id": "lamp-stand-2",
+  "title": "File:Lamp stand, Quan Am pagoda, Hung Yen province, Mac dynasty, 2nd year of Hung Tri reign (1589 AD), blue and white glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05685.JPG",
+  "alt": "Cây đèn thờ men lam"
+ },
+ {
+  "id": "lam-dish",
+  "title": "File:Schotel met bloemranken, AK-RAK-1971-5.jpg",
+  "alt": "Đĩa men lam hoa dây"
+ },
+ {
+  "id": "lam-bowl",
+  "title": "File:Klokvormige kom met bloemranken, AK-RAK-1971-7.jpg",
+  "alt": "Bát men lam hoa dây"
+ },
+ {
+  "id": "lam-jar-peony",
+  "title": "File:Eivormige pot met pioenranken en vier oren, AK-RAK-1972-1.jpg",
+  "alt": "Hũ men lam hoa mẫu đơn bốn tai"
+ },
+ {
+  "id": "lam-jar-small",
+  "title": "File:Eivormige pot met bloemranken, AK-RAK-1987-5.jpg",
+  "alt": "Hũ nhỏ men lam"
+ },
+ {
+  "id": "lam-jar-small-2",
+  "title": "File:Eivormige pot met bloemranken, AK-RAK-1987-6.jpg",
+  "alt": "Hũ men lam hoa cúc"
+ },
+ {
+  "id": "lam-fish-plate",
+  "title": "File:Plat au décor de poisson, M.C. 2019-92(3).jpg",
+  "alt": "Đĩa men lam vẽ cá"
+ },
+ {
+  "id": "lam-big-plate",
+  "title": "File:Grand plat, M.C. 2020-23 (1 of 4).jpg",
+  "alt": "Đĩa lớn men lam hoa sen"
+ },
+ {
+  "id": "lam-big-plate-side",
+  "title": "File:Grand plat, M.C. 2020-23 (3 of 4).jpg",
+  "alt": "Đĩa men lam nhìn nghiêng"
+ },
+ {
+  "id": "lam-tea-bowl",
+  "title": "File:Bol, M.C. 2019-90 (1 of 4).jpg",
+  "alt": "Bát trà men lam"
+ },
+ {
+  "id": "lam-tea-bowl-2",
+  "title": "File:Bol, M.C. 2019-90 (2 of 4).jpg",
+  "alt": "Bát trà men lam vẽ dây"
+ },
+ {
+  "id": "lam-kendi",
+  "title": "File:Miniature Holy Water Container (Kendi) with Lotus Petals and Chrysanthemum Scrolls LACMA M.74.32.3.jpg",
+  "alt": "Bình rót men lam cánh sen"
+ },
+ {
+  "id": "ngoc-dish",
+  "title": "File:Dish, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05385.JPG",
+  "alt": "Đĩa men ngọc khắc hoa"
+ },
+ {
+  "id": "ngoc-bowls",
+  "title": "File:Bowls, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05388.JPG",
+  "alt": "Đôi bát men ngọc"
+ },
+ {
+  "id": "ngoc-bowl",
+  "title": "File:Bowl, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05398.JPG",
+  "alt": "Bát men ngọc in hoa"
+ },
+ {
+  "id": "ngoc-plate",
+  "title": "File:Dish for domestic use, Ly-Tran dynasty, 11th-14th century AD, celadon glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05519.JPG",
+  "alt": "Đĩa men ngọc cánh sen"
+ },
+ {
+  "id": "ngoc-bowls-2",
+  "title": "File:Bowls for domestic use, Ly-Tran dynasty, 11th-14th century AD, celadon glazed ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05522.JPG",
+  "alt": "Bộ bát men ngọc"
+ },
+ {
+  "id": "ngoc-jar",
+  "title": "File:Vietnam 14th C - Celadon jar Museum of Asian Civilisation.jpg",
+  "alt": "Hũ men ngọc đắp nổi"
+ },
+ {
+  "id": "mural-boat",
+  "title": "File:2017 11 25 142218 Vietnam Hanoi Ceramic-Mosaic-Mural copy 27.jpg",
+  "alt": "Thuyền buôn trên Con đường gốm sứ ven sông Hồng"
+ },
+ {
+  "id": "mural-dragon-boat",
+  "title": "File:2017 11 25 141702 Vietnam Hanoi Ceramic-Mosaic-Mural 01.jpg",
+  "alt": "Thuyền rồng và người xưa trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-gate",
+  "title": "File:2017 11 25 142218 Vietnam Hanoi Ceramic-Mosaic-Mural copy 18.jpg",
+  "alt": "Cổng thành ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-dancers",
+  "title": "File:2017 11 25 142218 Vietnam Hanoi Ceramic-Mosaic-Mural copy 15.jpg",
+  "alt": "Điệu múa quạt ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-cyclist",
+  "title": "File:Hanoi Ceramic Mosaic Mural (14564194560).jpg",
+  "alt": "Người đạp xe ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-bamboo",
+  "title": "File:2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 01.jpg",
+  "alt": "Khóm tre ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-lotus-lady",
+  "title": "File:2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 02.jpg",
+  "alt": "Thiếu nữ nâng sen ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-dragon",
+  "title": "File:2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 04.jpg",
+  "alt": "Thuyền rồng ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-farmers",
+  "title": "File:2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 03.jpg",
+  "alt": "Người nông dân đội nón ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-festival",
+  "title": "File:2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 08.jpg",
+  "alt": "Hội thuyền ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-drummers",
+  "title": "File:2017 11 25 150548 Vietnam Hanoi Ceramic-Mosaic-Mural 06.jpg",
+  "alt": "Hoa văn người đánh trống ghép gốm trên Con đường gốm sứ"
+ },
+ {
+  "id": "mural-street",
+  "title": "File:Hanoi Ceramic Mosaic Mural (14727776036).jpg",
+  "alt": "Con đường gốm sứ chạy dọc đê sông Hồng, Hà Nội"
+ },
+ {
+  "id": "mural-wall",
+  "title": "File:2017 11 25 142837 Vietnam Hanoi Ceramic-Mosaic-Mural x 20.jpg",
+  "alt": "Bức tường gốm sứ bên đường Hồng Hà, Hà Nội"
+ },
+ {
+  "id": "mural-thanglong",
+  "title": "File:Con đường gốm sứ ven sông Hồng 021020091714-New.jpg",
+  "alt": "Mảng ghép Thăng Long – Hà Nội 1010–2010 trên Con đường gốm sứ"
+ },
+ {
+  "id": "river-evening",
+  "title": "File:Des sampans amarrés aux rives du Fleuve Rouge, le soir - A7332.jpg",
+  "alt": "Thuyền neo bên bờ sông Hồng buổi chiều, ảnh màu autochrome khoảng 1915"
+ },
+ {
+  "id": "river-sunset-bridge",
+  "title": "File:Des sampans au soleil couchant sur le Fleuve Rouge devant le pont Doumer - A7334.jpg",
+  "alt": "Thuyền trên sông Hồng trước cầu Long Biên lúc hoàng hôn, ảnh màu autochrome khoảng 1915"
+ },
+ {
+  "id": "river-banks",
+  "title": "File:Des sampans au soleil couchant amarrés aux rives du Fleuve Rouge - A7335.jpg",
+  "alt": "Bến thuyền sông Hồng lúc hoàng hôn, ảnh màu autochrome khoảng 1915"
+ },
+ {
+  "id": "river-morning",
+  "title": "File:Le pont Doumer et les sampans bordant les quais du Fleuve Rouge, le matin - A68951X.jpg",
+  "alt": "Cầu Long Biên và thuyền bên bến sông Hồng buổi sáng, ảnh màu autochrome khoảng 1915"
+ },
+ {
+  "id": "river-cargo",
+  "title": "File:Le transport des bananes sur les sampans au bord du Fleuve Rouge - A6695.jpg",
+  "alt": "Thuyền chở hàng bên bờ sông Hồng, ảnh màu autochrome khoảng 1915"
+ },
+ {
+  "id": "river-postcard",
+  "title": "File:Vietnam - Tonkin - Bords du fleuve Rouge.jpg",
+  "alt": "Bến sông Hồng trên ảnh chụp đầu thế kỷ XX"
+ },
+ {
+  "id": "ly-celadon-bowl",
+  "title": "File:Bowl, celadon glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05401.JPG",
+  "alt": "Bát men ngọc khắc hoa thời Lý, thế kỷ XI–XII"
+ },
+ {
+  "id": "ly-crackle-teapot",
+  "title": "File:Teapot, crackled white glaze ceramic - Lý dynasty, 11th-12th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05394.JPG",
+  "alt": "Ấm men trắng rạn thời Lý, thế kỷ XI–XII"
+ },
+ {
+  "id": "tran-brown-jar",
+  "title": "File:Jar for domestic use, Tran dynasty, 13th-14th century AD, brown pattern ceramic - National Museum of Vietnamese History - Hanoi, Vietnam - DSC05509.JPG",
+  "alt": "Thạp gốm hoa nâu thời Trần, thế kỷ XIII–XIV"
+ },
+ {
+  "id": "tran-ivory-jar",
+  "title": "File:Cylindrical jar, ivory white glaze ceramic decorated with brown patterns - Tran dynasty, 13th-14th century AD - Vietnam National Museum of Fine Arts - Hanoi, Vietnam - DSC05363.JPG",
+  "alt": "Thạp men trắng ngà vẽ nâu thời Trần, thế kỷ XIII–XIV"
+ },
+ {
+  "id": "dinh-gate",
+  "title": "File:Bat Trang communal house (2018) 01.jpg",
+  "alt": "Cổng đình làng Bát Tràng"
+ },
+ {
+  "id": "dinh-dragon",
+  "title": "File:Bat Trang communal house (2018) 02.jpg",
+  "alt": "Bức phù điêu rồng ở đình Bát Tràng"
+ },
+ {
+  "id": "dinh-hall",
+  "title": "File:Bat Trang communal house (2018) 05.jpg",
+  "alt": "Sân đình làng Bát Tràng"
+ }
 ]
