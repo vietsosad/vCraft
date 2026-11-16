@@ -107,6 +107,7 @@ model User {
   reviews        Review[]
   bookings       ExperienceBooking[]
   resetTokens    PasswordResetToken[]
+  scans          ScanEvent[]
 }
 
 /// Phiên đăng nhập phía server. Cookie chỉ chứa token ngẫu nhiên, CSDL lưu bản băm SHA-256.
@@ -478,8 +479,12 @@ model ScanEvent {
   id        String       @id @default(cuid())
   batchId   String
   batch     ProductBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  /// Người quét khi đã đăng nhập – để khách giữ "sổ truy xuất" những món mình đã kiểm chứng
+  userId    String?
+  user      User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt DateTime     @default(now())
 
   @@index([batchId, createdAt])
   @@index([createdAt])
+  @@index([userId, createdAt])
 }

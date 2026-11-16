@@ -42,7 +42,7 @@ export function QrScanner() {
       setFound(code);
       stop();
       if (navigator.vibrate) navigator.vibrate(60);
-      setTimeout(() => router.push(`/trace/${code}`), 650);
+      setTimeout(() => router.push(`/q/${encodeURIComponent(code)}`), 650);
       return true;
     },
     [router, stop],
