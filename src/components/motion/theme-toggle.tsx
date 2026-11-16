@@ -48,7 +48,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       onClick={toggle}
       aria-label={dark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối"}
       title={dark ? "Giao diện sáng" : "Giao diện tối"}
-      className={cn("grid size-10 place-items-center rounded-[var(--radius-tile)] text-muc/80 transition hover:bg-nga-dam hover:text-muc", className)}
+      className={cn("grid size-10 place-items-center rounded-[var(--radius-tile)] transition", className ?? "text-muc/80 hover:bg-nga-dam hover:text-muc")}
     >
       {dark ? <Sun className="size-[18px]" /> : <Moon className="size-[18px]" />}
     </button>

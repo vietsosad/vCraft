@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { pageRequireRole } from "@/lib/auth/guards";
-import { PageHeader } from "@/components/ui/primitives";
+import { DrawerHead } from "@/components/cabinet/drawer-head";
 import { QuoteWizard } from "@/components/quotes/quote-wizard";
 
 export const metadata: Metadata = { title: "Tạo yêu cầu báo giá" };
@@ -10,7 +10,7 @@ export default async function NewQuotePage({ searchParams }: { searchParams: Pro
   const sp = await searchParams;
   return (
     <div className="mx-auto max-w-3xl">
-      <PageHeader title="Tạo yêu cầu báo giá" description="Hệ thống mời các xưởng có sở trường và đủ công suất. Bản nháp được tự lưu trên trình duyệt." />
+      <DrawerHead title="Phiếu yêu cầu báo giá" description="Hệ thống mời các xưởng có sở trường và đủ công suất. Bản nháp được tự lưu trên trình duyệt." />
       <QuoteWizard
         defaults={{
           organizationName: user.organization ?? "",

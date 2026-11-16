@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, FileText, Heart, CalendarDays, Star, UserCog, Bell, Store, Package, Layers, BarChart3,
-  ShieldCheck, ClipboardCheck, Network, Newspaper, Users, ScrollText, type LucideIcon,
+  ShieldCheck, ClipboardCheck, Network, Newspaper, Users, ScrollText, Archive, QrCode, type LucideIcon,
 } from "lucide-react";
 
 export type Role = "BUYER" | "ARTISAN" | "ADMIN";
@@ -31,30 +31,32 @@ export type Zone = {
  */
 export const ZONES: Record<Role, Zone> = {
   BUYER: {
-    name: "Tài khoản của tôi",
+    name: "Tủ chè",
     roleLabel: "Khách hàng",
     home: "/account",
     loginHref: "/login",
     avatar: "bg-lam-nen",
     band: "tile-lam",
     tone: "lam",
+    // Mỗi mục là một ngăn của tủ chè (xem src/components/cabinet)
     nav: [
-      { href: "/account", label: "Tổng quan", short: "Tổng quan", icon: LayoutDashboard, exact: true },
-      { href: "/account/quotes", label: "Đơn đặt sỉ", short: "Đơn sỉ", icon: FileText },
-      { href: "/account/bookings", label: "Lịch trải nghiệm", short: "Lịch", icon: CalendarDays },
+      { href: "/account", label: "Tủ chè", short: "Tủ chè", icon: Archive, exact: true },
+      { href: "/account/quotes", label: "Đơn sỉ", short: "Đơn sỉ", icon: FileText, badgeKey: "quotes" },
+      { href: "/account/bookings", label: "Lịch hẹn", short: "Lịch hẹn", icon: CalendarDays },
       { href: "/account/favorites", label: "Đã lưu", short: "Đã lưu", icon: Heart },
+      { href: "/account/traces", label: "Truy xuất", short: "Truy xuất", icon: QrCode },
       { href: "/account/reviews", label: "Đánh giá", short: "Đánh giá", icon: Star, badgeKey: "reviews" },
-      { href: "/account/notifications", label: "Thông báo", short: "Thông báo", icon: Bell },
-      { href: "/account/profile", label: "Hồ sơ & bảo mật", short: "Hồ sơ", icon: UserCog },
+      { href: "/account/notifications", label: "Thư", short: "Thư", icon: Bell, badgeKey: "unread" },
+      { href: "/account/profile", label: "Hồ sơ", short: "Hồ sơ", icon: UserCog },
     ],
     menu: [
-      { href: "/account", label: "Tổng quan tài khoản", icon: LayoutDashboard },
-      { href: "/account/quotes", label: "Đơn đặt sỉ của tôi", icon: FileText },
-      { href: "/account/bookings", label: "Lịch trải nghiệm", icon: CalendarDays },
-      { href: "/account/favorites", label: "Tác phẩm & xưởng đã lưu", icon: Heart },
+      { href: "/account", label: "Tủ chè của tôi", icon: Archive },
+      { href: "/account/quotes", label: "Đơn đặt sỉ", icon: FileText },
+      { href: "/account/bookings", label: "Lịch hẹn nặn gốm", icon: CalendarDays },
+      { href: "/account/traces", label: "Sổ truy xuất", icon: QrCode },
       { href: "/account/profile", label: "Hồ sơ & bảo mật", icon: UserCog },
     ],
-    tabs: ["/account", "/account/quotes", "/account/bookings", "/account/favorites", "/account/profile"],
+    tabs: ["/account", "/account/quotes", "/account/bookings", "/account/favorites"],
   },
   ARTISAN: {
     name: "Xưởng của tôi",

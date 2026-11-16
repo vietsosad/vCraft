@@ -134,7 +134,7 @@ export async function pendingReviews(userId: string) {
  * Đặt lịch trải nghiệm
  * ========================================================================= */
 
-const SLOT_MINUTES = 120;
+export const SLOT_MINUTES = 120;
 
 /** Ngày "YYYY-MM-DD" → Date (UTC nửa đêm, khớp cột @db.Date). */
 function toDateOnly(iso: string) {

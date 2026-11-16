@@ -112,7 +112,7 @@ export function ZoneShell({
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <ThemeToggle className="lg:hidden" />
+              <ThemeToggle className="text-muc/80 hover:bg-nga-dam hover:text-muc lg:hidden" />
               <NotificationBell />
               <UserMenu user={user} showSiteLink />
             </div>

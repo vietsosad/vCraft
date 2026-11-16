@@ -1,0 +1,384 @@
+/*
+ * Tủ chè – khu riêng của khách hàng.
+ * Bức ghép của cổng đăng nhập hóa thành đồ gỗ: mạch là gỗ sơn then, ngăn lõm lót giấy ngà,
+ * cánh tủ là bốn viên hoa văn của cổng khách hàng, quai và khung tên bằng đồng.
+ */
+/* Mực son của con triện: đỏ son trên giấy sáng, son tươi hơn trên nền lò đêm */
+:root { --seal-ink: #b3261e; }
+:root[data-theme="dark"] { --seal-ink: #e8746a; }
+
+@layer components {
+  /* ---------- Chất liệu ---------- */
+  .lacquer {
+    background-color: var(--color-then);
+    background-image: url("/textures/lacquer.svg"), linear-gradient(180deg, rgb(255 236 200 / 0.05), transparent 40%);
+    background-size: 480px 240px, auto;
+    color: var(--color-giay);
+  }
+  .lacquer-face {
+    background-color: var(--color-then-2);
+    background-image: url("/textures/lacquer.svg");
+    background-size: 480px 240px;
+    color: var(--color-giay);
+  }
+  /* Giấy dó lót lòng ngăn */
+  .paper {
+    background-color: var(--color-su);
+    background-image: url("/textures/paper.svg");
+    background-size: 300px 300px;
+  }
+  .paper-nga {
+    background-color: var(--color-nga);
+    background-image: url("/textures/paper.svg");
+    background-size: 300px 300px;
+  }
+  /* Đồng thau: ánh kim chỉ dùng cho quai, khung tên, chốt cửa */
+  /* Khung chỉ vàng trên nền sơn then (vẽ vàng của sơn mài) – không giả ánh kim */
+  .brass {
+    background: var(--color-then);
+    box-shadow: inset 0 0 0 1px var(--color-chi);
+  }
+
+  /* Hồi văn: dải móc vuông chạy quanh nóc và chân tủ */
+  .hoi-van {
+    height: 12px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'%3E%3Cpath d='M0 11H20M14 11V1H2V8H10V4H6' fill='none' stroke='%23c9a24e' stroke-width='1.3'/%3E%3C/svg%3E");
+    background-size: 20px 12px;
+    /* round: co giãn để dải luôn dừng ở trọn một móc, không cụt giữa hoa văn */
+    background-repeat: round no-repeat;
+    opacity: 0.8;
+  }
+  .hoi-van.flip { transform: scaleY(-1); }
+
+  /* ---------- Hoành phi (đầu trang) ---------- */
+  .hoanh-phi {
+    box-shadow: inset 0 -1px 0 color-mix(in srgb, var(--color-chi) 55%, transparent), 0 10px 24px -18px rgb(20 12 8 / 0.8);
+  }
+
+  /* ---------- Nóc tủ: hàng mặt ngăn kéo (điều hướng) ---------- */
+  .cab-top {
+    border-radius: 12px 12px 0 0;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 30%, transparent), 0 30px 50px -40px rgb(20 12 8 / 0.8);
+  }
+  .drawer-face {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 78px;
+    padding: 12px 6px 9px;
+    border-radius: 4px;
+    color: var(--color-giay);
+    background-color: var(--color-then-2);
+    background-image: url("/textures/lacquer.svg");
+    background-size: 480px 240px;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 50%, transparent),
+      inset 0 0 0 5px rgb(0 0 0 / 0.16),
+      inset 0 1px 0 rgb(255 255 255 / 0.1),
+      0 1px 0 rgb(0 0 0 / 0.55);
+    transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s var(--ease-out-expo), background-color 0.3s ease-out;
+  }
+  .drawer-face:hover { transform: translateY(2px); }
+  .drawer-face:hover .pull-ring { animation: ring-swing 1.1s var(--ease-out-expo); }
+  .drawer-face[aria-current="page"] {
+    z-index: 1;
+    background-color: var(--color-lam-nen);
+    background-image: radial-gradient(120% 90% at 15% 0%, rgb(255 255 255 / 0.18), transparent 55%);
+    transform: translateY(8px) scale(1.04);
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 85%, transparent),
+      inset 0 1px 0 rgb(255 255 255 / 0.3),
+      0 18px 20px -12px rgb(10 6 4 / 0.8);
+  }
+  .pull-ring { transform-origin: 14px 5px; transform-box: view-box; }
+  @keyframes ring-swing {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(16deg); }
+    50% { transform: rotate(-9deg); }
+    75% { transform: rotate(4deg); }
+    100% { transform: rotate(0deg); }
+  }
+  /* Khung tên đồng: tấm thẻ giấy cài trong khung đồng trên mặt ngăn */
+  .brass-label {
+    display: inline-flex;
+    max-width: 100%;
+    padding: 3px;
+    border-radius: 3px;
+    background: var(--color-then);
+    box-shadow: inset 0 0 0 1px var(--color-chi);
+  }
+  .brass-label > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 3px 9px 2px;
+    border-radius: 2px;
+    background: var(--color-nga) url("/textures/paper.svg");
+    background-size: 300px 300px;
+    color: var(--color-muc);
+    font: 700 12px/1.15 var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  /* Dấu son đếm số việc trên mặt ngăn */
+  .seal-count {
+    position: absolute;
+    top: -7px;
+    right: -6px;
+    display: grid;
+    place-items: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 5px;
+    rotate: -8deg;
+    border-radius: 4px;
+    background: var(--seal-ink);
+    color: var(--color-on);
+    font: 800 12px/1 var(--font-display);
+    box-shadow: inset 0 0 0 2px var(--seal-ink), inset 0 0 0 3px var(--color-on);
+  }
+
+  /* ---------- Thân tủ ---------- */
+  .cab {
+    display: grid;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 0 0 6px 6px;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 28%, transparent);
+  }
+  /* Ngăn lõm: chỉ vàng quanh miệng ngăn, bóng gỗ đổ vào lòng ngăn từ mép trên */
+  .cab-cell {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-width: 0;
+    border-radius: 4px;
+    color: var(--color-muc);
+  }
+  .cab-cell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 75%, transparent),
+      inset 0 0 0 3px rgb(20 12 8 / 0.3),
+      inset 0 16px 20px -14px rgb(20 12 8 / 0.55),
+      inset 0 -12px 16px -16px rgb(20 12 8 / 0.45);
+  }
+  /* Thanh kệ sơn then viền vàng; đồ đặt trên kệ đổ bóng xuống mặt kệ */
+  .shelf-board {
+    position: relative;
+    z-index: 2;
+    height: 13px;
+    border-radius: 2px;
+    background-color: var(--color-then-2);
+    background-image: url("/textures/lacquer.svg");
+    background-size: 480px 240px;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-chi) 85%, transparent), inset 0 -2px 0 rgb(0 0 0 / 0.35), 0 9px 12px -6px rgb(20 12 8 / 0.5);
+  }
+  .on-shelf { filter: drop-shadow(0 9px 6px rgb(20 12 8 / 0.3)); transition: translate 0.5s var(--ease-out-expo), filter 0.5s var(--ease-out-expo); }
+  .on-shelf:hover { translate: 0 -5px; filter: drop-shadow(0 16px 10px rgb(20 12 8 / 0.26)); }
+  /* Khung ảnh đứng trên kệ: viền gỗ mảnh có chỉ vàng */
+  .frame-gilt {
+    padding: 3px;
+    border-radius: 3px;
+    background: var(--color-then-2);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 80%, transparent);
+  }
+
+  /* Chân tủ quỳ */
+  .cab-plinth { height: 18px; border-radius: 0 0 4px 4px; }
+
+  /* ---------- Cánh tủ: bốn viên hoa văn của cổng đăng nhập, mở một lần mỗi phiên ---------- */
+  .cab-door { display: none; }
+  :root[data-cabinet] .cab-door {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    perspective: 1600px;
+    pointer-events: none;
+  }
+  .cab-door > i {
+    position: relative;
+    display: block;
+    border-radius: 3px;
+    backface-visibility: hidden;
+    transform-origin: left center;
+    /* Khung cánh: thanh đứng, thanh ngang sơn then, chỉ vàng quanh tấm hoa văn */
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 70%, transparent),
+      inset 0 0 0 9px var(--color-then-2),
+      inset 0 0 0 10px var(--color-chi),
+      inset 0 0 0 14px rgb(20 12 8 / 0.2),
+      inset -14px 0 18px -14px rgb(20 12 8 / 0.6);
+  }
+  .cab-door > i + i {
+    transform-origin: right center;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 70%, transparent),
+      inset 0 0 0 9px var(--color-then-2),
+      inset 0 0 0 10px var(--color-chi),
+      inset 0 0 0 14px rgb(20 12 8 / 0.2),
+      inset 14px 0 18px -14px rgb(20 12 8 / 0.6);
+  }
+  /* Chốt đồng ở mép hai cánh gặp nhau */
+  .cab-door > i::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 9px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    translate: 0 -50%;
+    background: var(--color-chi);
+    box-shadow: 0 0 0 2px var(--color-then-2);
+  }
+  .cab-door > i + i::after { right: auto; left: 9px; }
+  :root[data-cabinet="opening"] .cab-door > i { animation: door-l 0.85s var(--ease-out-expo) var(--d, 0ms) forwards; }
+  :root[data-cabinet="opening"] .cab-door > i + i { animation-name: door-r; }
+  @keyframes door-l { to { transform: rotateY(-100deg); } }
+  @keyframes door-r { to { transform: rotateY(100deg); } }
+
+  /* ---------- Kéo ngăn: lòng ngăn trượt ra khi chuyển trang ---------- */
+  .drawer-out { animation: drawer-out 0.75s var(--ease-out-expo) both; }
+  @keyframes drawer-out {
+    0% { clip-path: inset(0 0 100% 0); translate: 0 -16px; opacity: 0.35; }
+    99% { clip-path: inset(0 0 0 0); translate: 0 0; opacity: 1; }
+    100% { clip-path: none; translate: none; opacity: 1; }
+  }
+  /* Hộp ngăn kéo của trang con: lòng giấy, thành gỗ mảnh */
+  .drawer-box {
+    border-radius: 0 0 8px 8px;
+    box-shadow:
+      inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 45%, transparent),
+      inset 6px 0 0 var(--color-then-2),
+      inset -6px 0 0 var(--color-then-2),
+      inset 0 -6px 0 var(--color-then-2),
+      inset 0 18px 24px -18px rgb(20 12 8 / 0.45),
+      0 30px 40px -34px rgb(20 12 8 / 0.7);
+  }
+
+  /* Điện thoại, máy tính bảng: không có hàng mặt ngăn phía trên nên hộp ngăn khép kín bốn thành */
+  @media (max-width: 1023.98px) {
+    .drawer-box {
+      border-radius: 8px;
+      box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 45%, transparent),
+        inset 0 6px 0 var(--color-then-2),
+        inset 6px 0 0 var(--color-then-2),
+        inset -6px 0 0 var(--color-then-2),
+        inset 0 -6px 0 var(--color-then-2),
+        inset 0 22px 24px -18px rgb(20 12 8 / 0.45),
+        0 30px 40px -34px rgb(20 12 8 / 0.7);
+    }
+  }
+
+  /* ---------- Tờ phiếu, tấm vé, lá thư ---------- */
+  /* Phiếu đặt hàng: cuống có hàng lỗ xé bên trái */
+  .slip {
+    position: relative;
+    border-radius: 4px;
+    padding-left: 26px;
+    box-shadow: 0 1px 0 rgb(28 18 12 / 0.08), 0 12px 22px -16px rgb(28 18 12 / 0.55);
+  }
+  .slip::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 9px;
+    width: 8px;
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--color-muc) 22%, transparent) 2.2px, transparent 2.8px);
+    background-size: 8px 13px;
+    background-repeat: repeat-y;
+  }
+  .slip::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 21px;
+    border-left: 1px dashed color-mix(in srgb, var(--color-muc) 18%, transparent);
+  }
+  /* Vé trải nghiệm: cuống ngày tháng, hai khuyết tròn ở đường xé */
+  .ticket {
+    --stub: 104px;
+    --notch: 10px;
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--stub) minmax(0, 1fr);
+    -webkit-mask:
+      radial-gradient(circle at var(--stub) 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) top / 100% 51% no-repeat,
+      radial-gradient(circle at var(--stub) 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) bottom / 100% 51% no-repeat;
+    mask:
+      radial-gradient(circle at var(--stub) 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) top / 100% 51% no-repeat,
+      radial-gradient(circle at var(--stub) 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) bottom / 100% 51% no-repeat;
+  }
+  .ticket::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--notch) + 4px);
+    bottom: calc(var(--notch) + 4px);
+    left: calc(var(--stub) - 1px);
+    border-left: 2px dashed color-mix(in srgb, var(--color-muc) 20%, transparent);
+  }
+  .ticket-shadow { filter: drop-shadow(0 12px 14px rgb(28 18 12 / 0.2)) drop-shadow(0 1px 1px rgb(28 18 12 / 0.14)); }
+  /* Vé đã dùng: lỗ bấm tròn trên cuống */
+  .ticket-punched::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-nga-sau);
+    box-shadow: inset 0 2px 3px rgb(0 0 0 / 0.35);
+  }
+  /* Dấu sáp trên lá thư chưa mở */
+  .wax {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    rotate: -6deg;
+    border-radius: 4px;
+    background: var(--seal-ink);
+    color: var(--color-on);
+    box-shadow: inset 0 0 0 2px var(--seal-ink), inset 0 0 0 3px var(--color-on);
+  }
+  .wax-open {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    rotate: -6deg;
+    border-radius: 4px;
+    border: 1.5px solid color-mix(in srgb, var(--seal-ink) 45%, transparent);
+    color: color-mix(in srgb, var(--seal-ink) 70%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-out { animation: none; }
+  .drawer-face[aria-current="page"] { transform: none; }
+  .on-shelf:hover { translate: none; }
+  :root[data-cabinet] .cab-door { display: none; }
+}
+
+@media print {
+  .lacquer, .lacquer-face, .cab-top, .hoanh-phi { background: none !important; color: black !important; box-shadow: none !important; }
+}

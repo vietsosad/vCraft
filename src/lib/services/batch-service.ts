@@ -134,14 +134,14 @@ export async function getTrace(code: string) {
   });
 }
 
-/** Ghi nhận một lượt quét QR (tăng nguyên tử). */
-export async function recordScan(code: string) {
+/** Ghi nhận một lượt quét QR (tăng nguyên tử). Khách đã đăng nhập thì lượt quét vào sổ truy xuất của họ. */
+export async function recordScan(code: string, userId?: string | null) {
   const batch = await prisma.productBatch.findUnique({ where: { batchCode: code }, select: { id: true } });
   if (!batch) return false;
   // Tăng bộ đếm tổng và ghi một lượt quét có thời điểm (để vẽ biểu đồ theo ngày)
   await prisma.$transaction([
     prisma.productBatch.update({ where: { id: batch.id }, data: { scanCount: { increment: 1 } } }),
-    prisma.scanEvent.create({ data: { batchId: batch.id } }),
+    prisma.scanEvent.create({ data: { batchId: batch.id, userId: userId ?? null } }),
   ]);
   return true;
 }

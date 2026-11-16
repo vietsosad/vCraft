@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-10T15:34:02.540Z",
+  "generatedAt": "2026-11-16T14:31:46.000Z",
   "title": "Design System: vCraft",
   "extensions": {
     "colorMeta": {
@@ -544,6 +544,87 @@
           "#e1c595",
           "#f9edda"
         ]
+      },
+      "then": {
+        "role": "neutral",
+        "displayName": "Sơn then",
+        "canonical": "#1e1511",
+        "oklch": "oklch(20.6% 0.017 45.1)",
+        "darkTheme": "#241a15",
+        "tonalRamp": [
+          "#110906",
+          "#2b221d",
+          "#483d38",
+          "#665b56",
+          "#897d78",
+          "#ab9e99",
+          "#d1c4be",
+          "#f9ebe5"
+        ],
+        "scope": "Tủ chè (khu khách hàng /account)"
+      },
+      "then-2": {
+        "role": "neutral",
+        "displayName": "Mặt ngăn sơn then",
+        "canonical": "#2b1f19",
+        "oklch": "oklch(25.2% 0.022 47.8)",
+        "darkTheme": "#33261f",
+        "tonalRamp": [
+          "#130804",
+          "#2d211b",
+          "#4a3c36",
+          "#685a53",
+          "#8c7d75",
+          "#ae9e96",
+          "#d4c3bb",
+          "#fcebe2"
+        ],
+        "scope": "Tủ chè (khu khách hàng /account)"
+      },
+      "chi": {
+        "role": "tertiary",
+        "displayName": "Chỉ vàng",
+        "canonical": "#c9a24e",
+        "oklch": "oklch(73.1% 0.112 84.4)",
+        "darkTheme": "#d6b263",
+        "tonalRamp": [
+          "#1f0100",
+          "#3c1b00",
+          "#5b3800",
+          "#7b5700",
+          "#9f7a1f",
+          "#c29b47",
+          "#e9c16e",
+          "#ffe995"
+        ],
+        "scope": "Tủ chè (khu khách hàng /account)"
+      },
+      "chi-nhat": {
+        "role": "tertiary",
+        "displayName": "Vàng nhạt chữ khắc",
+        "canonical": "#f3dc9f",
+        "darkTheme": "#f3dc9f",
+        "usage": "Chữ khắc trên sơn then: tên tủ ở hoành phi, chữ dưới khung tranh, tên bảng hiệu xưởng. Không dùng trên nền giấy.",
+        "scope": "Tủ chè (khu khách hàng /account)"
+      },
+      "seal-ink": {
+        "role": "tertiary",
+        "displayName": "Mực son (dấu Tủ chè)",
+        "canonical": "#b3261e",
+        "oklch": "oklch(50.1% 0.178 28.7)",
+        "darkTheme": "#e8746a",
+        "tonalRamp": [
+          "#3a0000",
+          "#600000",
+          "#860000",
+          "#ac1d17",
+          "#d64a3d",
+          "#fd6e5e",
+          "#ff9583",
+          "#ffd0c0"
+        ],
+        "scope": "Tủ chè (khu khách hàng /account)",
+        "note": "Biến CSS --seal-ink trong src/styles/cabinet.css (không qua @theme); cùng giá trị doson khi sáng."
       }
     },
     "typographyMeta": {
@@ -610,6 +691,47 @@
         "name": "button-pressed",
         "value": "inset 0 2px 3px rgb(0 0 0/0.2)",
         "purpose": "Nút men khi ấn, kèm translateY(1px)."
+      },
+      {
+        "name": "cab-recess",
+        "value": "inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 75%, transparent), inset 0 0 0 3px rgb(20 12 8 / 0.3), inset 0 16px 20px -14px rgb(20 12 8 / 0.55), inset 0 -12px 16px -16px rgb(20 12 8 / 0.45)",
+        "purpose": "Tủ chè: lòng ngăn lõm của thân tủ (lớp ::after trên mọi ngăn)."
+      },
+      {
+        "name": "drawer-face",
+        "value": "inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 50%, transparent), inset 0 0 0 5px rgb(0 0 0 / 0.16), inset 0 1px 0 rgb(255 255 255 / 0.1), 0 1px 0 rgb(0 0 0 / 0.55)",
+        "purpose": "Tủ chè: mặt ngăn kéo khi nghỉ."
+      },
+      {
+        "name": "drawer-face-current",
+        "value": "inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 85%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.3), 0 18px 20px -12px rgb(10 6 4 / 0.8)",
+        "purpose": "Tủ chè: ngăn đang mở, bị kéo ra."
+      },
+      {
+        "name": "shelf-board",
+        "value": "inset 0 1px 0 color-mix(in srgb, var(--color-chi) 85%, transparent), inset 0 -2px 0 rgb(0 0 0 / 0.35), 0 9px 12px -6px rgb(20 12 8 / 0.5)",
+        "purpose": "Tủ chè: thanh kệ."
+      },
+      {
+        "name": "on-shelf",
+        "value": "drop-shadow(0 9px 6px rgb(20 12 8 / 0.3))",
+        "hover": "drop-shadow(0 16px 10px rgb(20 12 8 / 0.26))",
+        "purpose": "Tủ chè: tác phẩm đứng trên kệ (filter, ôm theo ảnh tách nền)."
+      },
+      {
+        "name": "paper-slip",
+        "value": "0 1px 0 rgb(28 18 12 / 0.08), 0 12px 22px -16px rgb(28 18 12 / 0.55)",
+        "purpose": "Tủ chè: phiếu đặt hàng."
+      },
+      {
+        "name": "ticket",
+        "value": "drop-shadow(0 12px 14px rgb(28 18 12 / 0.2)) drop-shadow(0 1px 1px rgb(28 18 12 / 0.14))",
+        "purpose": "Tủ chè: vé trải nghiệm (bóng ôm theo khuyết)."
+      },
+      {
+        "name": "drawer-box",
+        "value": "inset 0 0 0 1px color-mix(in srgb, var(--color-chi) 45%, transparent), inset 6px 0 0 var(--color-then-2), inset -6px 0 0 var(--color-then-2), inset 0 -6px 0 var(--color-then-2), inset 0 18px 24px -18px rgb(20 12 8 / 0.45), 0 30px 40px -34px rgb(20 12 8 / 0.7)",
+        "purpose": "Tủ chè: lòng trang con; dưới 1024px thêm thành trên 6px."
       }
     ],
     "motion": [
@@ -677,6 +799,41 @@
         "name": "reduced-motion",
         "value": "animation/transition 0.01ms, không nhấc khi hover, kim nhảy thẳng, data-reveal hiện ngay",
         "purpose": "Đường thay thế bắt buộc."
+      },
+      {
+        "name": "cab-doors",
+        "value": "0.85s ease-out-expo forwards, rotateY ±100°, trễ var(--d) 0–330ms; sau 2 khung hình + 300ms dừng; dọn khi mọi Animation.finished, lưới an toàn 7s",
+        "purpose": "Tủ chè: mở cánh tủ lần đầu mỗi phiên ở /account (sessionStorage vc-tu-mo)."
+      },
+      {
+        "name": "drawer-out",
+        "value": "0.75s ease-out-expo both, clip-path inset(0 0 100% 0) → none, translate 0 -16px → none, opacity 0.35 → 1",
+        "purpose": "Tủ chè: lòng ngăn trượt ra khi chuyển sang mọi trang con trừ /account."
+      },
+      {
+        "name": "ring-swing",
+        "value": "1.1s ease-out-expo, rotate 0 → 16° → -9° → 4° → 0",
+        "purpose": "Tủ chè: vòng quai đung đưa khi rê lên mặt ngăn."
+      },
+      {
+        "name": "drawer-face-pull",
+        "value": "0.6s ease-out-expo (transform, box-shadow); hover translateY(2px); current translateY(8px) scale(1.04)",
+        "purpose": "Tủ chè: mặt ngăn lún và ngăn đang mở bị kéo ra."
+      },
+      {
+        "name": "on-shelf-lift",
+        "value": "0.5s ease-out-expo, translate 0 -5px + bóng giãn",
+        "purpose": "Tủ chè: tác phẩm trên kệ khi rê."
+      },
+      {
+        "name": "cab-more-sheet",
+        "value": "420ms cubic-bezier(0.16, 1, 0.3, 1), y 100% → 0; ngăn con trễ 50ms + 35ms mỗi ngăn",
+        "purpose": "Tủ chè: tấm 'Khác' trên điện thoại."
+      },
+      {
+        "name": "cab-reduced-motion",
+        "value": "không cánh tủ, không drawer-out, ngăn đang mở không transform, đồ trên kệ không nhấc",
+        "purpose": "Tủ chè: đường thay thế khi giảm chuyển động."
       }
     ],
     "breakpoints": [
@@ -726,6 +883,26 @@
       {
         "name": "wave-divider",
         "value": "sóng nước lam cao 14px lặp ngang"
+      },
+      {
+        "name": "lacquer",
+        "value": "/textures/lacquer.svg 480×240px trên then / then-2",
+        "purpose": "Tủ chè: vân sơn mài."
+      },
+      {
+        "name": "paper",
+        "value": "/textures/paper.svg 300×300px trên su (paper) hoặc nga (paper-nga)",
+        "purpose": "Tủ chè: giấy dó lót ngăn, đồ giấy."
+      },
+      {
+        "name": "hoi-van",
+        "value": "SVG móc vuông 20×12px nét chi 1.3, background-repeat round no-repeat, opacity 0.8; .flip lật dọc",
+        "purpose": "Tủ chè: dải hồi văn quanh nóc, chân tủ và dưới tiêu đề ngăn."
+      },
+      {
+        "name": "cutout",
+        "value": "/seed/cutout/*.webp + .webp.json (nguồn gốc, derivedFrom, processing); danh mục src/lib/cutouts.ts",
+        "purpose": "Tủ chè: tác phẩm đứng trên kệ; tách nền GrabCut + duyệt tay."
       }
     ]
   },
@@ -809,18 +986,51 @@
       "description": "Mục 15px mực 65%; mục đang xem mực đặc với viên đất nung 5px ở mép dưới.",
       "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-link is-active\" aria-current=\"page\">Triển lãm</a><a href=\"#\" class=\"ds-nav-link\">Nghệ nhân</a><a href=\"#\" class=\"ds-nav-link\">Bản đồ làng</a><a href=\"#\" class=\"ds-nav-link\">Đặt hàng sỉ</a></nav>",
       "css": ".ds-nav { display: flex; gap: 2px; align-items: center; height: 64px; padding: 0 16px; background: color-mix(in srgb, var(--color-nga) 88%, transparent); border-bottom: 1px solid var(--color-vua); font-family: var(--font-sans); } .ds-nav-link { position: relative; padding: 8px 12px; border-radius: var(--radius-tile, 6px); font-size: 15px; font-weight: 500; text-decoration: none; color: color-mix(in srgb, var(--color-muc) 65%, transparent); transition: color .2s; } .ds-nav-link:hover { color: var(--color-muc); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-nav-link.is-active { color: var(--color-muc); } .ds-nav-link.is-active::after { content: \"\"; position: absolute; left: 12px; right: 12px; bottom: -12px; height: 5px; border-radius: 2px; background: var(--color-datnung); }"
+    },
+    {
+      "name": "Mặt ngăn kéo (Tủ chè)",
+      "kind": "nav",
+      "refersTo": "drawer-face",
+      "description": "Điều hướng khu khách hàng: mặt ngăn sơn then có khung tên, quai chỉ vàng và dấu son đếm; ngăn đang mở là men lam bị kéo ra.",
+      "html": "<nav class=\"ds-cab-top\"><a class=\"ds-drawer\" href=\"#\"><span class=\"ds-brass-label\"><span>Đơn sỉ</span></span><svg viewBox=\"0 0 28 24\" width=\"21\" height=\"18\" aria-hidden=\"true\"><rect x=\"8.6\" y=\"1.6\" width=\"10.8\" height=\"5.8\" rx=\"1.6\" fill=\"var(--color-then)\" stroke=\"var(--color-chi)\" stroke-width=\"1.2\"/><path d=\"M14 5 C 6.5 5 6.5 21.5 14 21.5 C 21.5 21.5 21.5 5 14 5 Z\" fill=\"none\" stroke=\"var(--color-chi)\" stroke-width=\"2\"/></svg><span class=\"ds-seal-count\">3</span></a><a class=\"ds-drawer\" href=\"#\" aria-current=\"page\"><span class=\"ds-brass-label\"><span>Lịch hẹn</span></span><svg viewBox=\"0 0 28 24\" width=\"21\" height=\"18\" aria-hidden=\"true\"><rect x=\"8.6\" y=\"1.6\" width=\"10.8\" height=\"5.8\" rx=\"1.6\" fill=\"var(--color-then)\" stroke=\"var(--color-chi)\" stroke-width=\"1.2\"/><path d=\"M14 5 C 6.5 5 6.5 21.5 14 21.5 C 21.5 21.5 21.5 5 14 5 Z\" fill=\"none\" stroke=\"var(--color-chi)\" stroke-width=\"2\"/></svg></a></nav>",
+      "css": ".ds-cab-top { display: grid; grid-template-columns: repeat(2, 140px); gap: 8px; padding: 10px; border-radius: 12px 12px 0 0; background: var(--color-then, #1e1511); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-chi, #c9a24e) 30%, transparent); } .ds-drawer { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 78px; padding: 12px 6px 9px; border-radius: 4px; color: var(--color-giay); background: var(--color-then-2, #2b1f19); text-decoration: none; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-chi, #c9a24e) 50%, transparent), inset 0 0 0 5px rgb(0 0 0 / 0.16), inset 0 1px 0 rgb(255 255 255 / 0.1), 0 1px 0 rgb(0 0 0 / 0.55); transition: transform .6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .6s cubic-bezier(0.16, 1, 0.3, 1); } .ds-drawer:hover { transform: translateY(2px); } .ds-drawer:focus-visible { outline: 2px solid var(--color-chi, #c9a24e); outline-offset: 2px; } .ds-drawer[aria-current=page] { z-index: 1; background: var(--color-lam-nen) radial-gradient(120% 90% at 15% 0%, rgb(255 255 255 / 0.18), transparent 55%); transform: translateY(8px) scale(1.04); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-chi, #c9a24e) 85%, transparent), inset 0 1px 0 rgb(255 255 255 / 0.3), 0 18px 20px -12px rgb(10 6 4 / 0.8); } .ds-brass-label { display: inline-flex; padding: 3px; border-radius: 3px; background: var(--color-then, #1e1511); box-shadow: inset 0 0 0 1px var(--color-chi, #c9a24e); } .ds-brass-label > span { padding: 3px 9px 2px; border-radius: 2px; background: var(--color-nga); color: var(--color-muc); font: 700 12px/1.15 var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; } .ds-seal-count { position: absolute; top: -7px; right: -6px; display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 5px; rotate: -8deg; border-radius: 4px; background: var(--seal-ink, #b3261e); color: var(--color-on); font: 800 12px/1 var(--font-display); box-shadow: inset 0 0 0 2px var(--seal-ink, #b3261e), inset 0 0 0 3px var(--color-on); }"
+    },
+    {
+      "name": "Phiếu đặt hàng (Tủ chè)",
+      "kind": "card",
+      "refersTo": "order-slip",
+      "description": "Một đơn sỉ trên tờ giấy có cuống lỗ xé; thanh tiến độ năm chặng mang nghĩa bằng hình (đặc, gạch chéo, mờ).",
+      "html": "<article class=\"ds-slip\"><p class=\"ds-slip-code\">YC-2611-07</p><h3 class=\"ds-slip-title\">Bộ bát men lam cho nhà hàng</h3><ol class=\"ds-track\"><li class=\"done\"></li><li class=\"done\"></li><li class=\"current\"></li><li></li><li></li></ol></article>",
+      "css": ".ds-slip { position: relative; max-width: 380px; padding: 16px 16px 16px 30px; border-radius: 4px; background: var(--color-su); color: var(--color-muc); box-shadow: 0 1px 0 rgb(28 18 12 / 0.08), 0 12px 22px -16px rgb(28 18 12 / 0.55); transition: transform .5s cubic-bezier(0.16, 1, 0.3, 1); } .ds-slip:hover { transform: translateY(-2px); } .ds-slip::before { content: ''; position: absolute; top: 6px; bottom: 6px; left: 9px; width: 8px; background-image: radial-gradient(circle, color-mix(in srgb, var(--color-muc) 22%, transparent) 2.2px, transparent 2.8px); background-size: 8px 13px; } .ds-slip::after { content: ''; position: absolute; top: 0; bottom: 0; left: 21px; border-left: 1px dashed color-mix(in srgb, var(--color-muc) 18%, transparent); } .ds-slip-code { margin: 0; font: 400 0.9rem var(--font-mono); color: var(--color-lam); } .ds-slip-title { margin: 4px 0 12px; font: 700 1.4rem/1.15 var(--font-serif); text-transform: none; } .ds-track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 0; margin: 0; list-style: none; } .ds-track li { height: 10px; border-radius: 2px; background: color-mix(in srgb, var(--color-muc) 10%, transparent); } .ds-track li.done { background: var(--color-lam); } .ds-track li.current { background: repeating-linear-gradient(135deg, var(--color-lam) 0 3px, transparent 3px 6px); box-shadow: inset 0 0 0 1px var(--color-lam); }"
+    },
+    {
+      "name": "Vé trải nghiệm (Tủ chè)",
+      "kind": "card",
+      "refersTo": "visit-ticket",
+      "description": "Lịch hẹn nặn gốm: cuống ngày tháng, đường xé có hai khuyết tròn; cuống men lam khi đã xác nhận.",
+      "html": "<div class=\"ds-ticket-shadow\"><article class=\"ds-ticket\"><div class=\"ds-stub\"><span>Thứ bảy</span><b>22</b><span>tháng 11</span></div><div class=\"ds-ticket-body\"><h3>Xưởng gốm Minh Hải</h3><p>09:00 – 11:00 · 2 khách</p></div></article></div>",
+      "css": ".ds-ticket-shadow { max-width: 380px; filter: drop-shadow(0 12px 14px rgb(28 18 12 / 0.2)) drop-shadow(0 1px 1px rgb(28 18 12 / 0.14)); } .ds-ticket { --stub: 104px; --notch: 10px; position: relative; display: grid; grid-template-columns: var(--stub) minmax(0, 1fr); background: var(--color-su); color: var(--color-muc); -webkit-mask: radial-gradient(circle at var(--stub) 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) top / 100% 51% no-repeat, radial-gradient(circle at var(--stub) 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) bottom / 100% 51% no-repeat; mask: radial-gradient(circle at var(--stub) 0, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) top / 100% 51% no-repeat, radial-gradient(circle at var(--stub) 100%, #0000 var(--notch), #000 calc(var(--notch) + 0.5px)) bottom / 100% 51% no-repeat; } .ds-ticket::before { content: ''; position: absolute; top: 14px; bottom: 14px; left: calc(var(--stub) - 1px); border-left: 2px dashed color-mix(in srgb, var(--color-muc) 20%, transparent); } .ds-stub { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 8px; background: var(--color-lam-nen); color: var(--color-giay); font-size: 11px; font-weight: 600; line-height: 1; } .ds-stub b { margin: 6px 0; font: 800 3.2rem/1 var(--font-display); font-variant-numeric: tabular-nums; } .ds-ticket-body { padding: 16px 16px 16px 24px; } .ds-ticket-body h3 { margin: 0; font: 700 1.45rem/1.15 var(--font-serif); text-transform: none; } .ds-ticket-body p { margin: 2px 0 0; font-size: 14px; }"
+    },
+    {
+      "name": "Lá thư và dấu son (Tủ chè)",
+      "kind": "custom",
+      "refersTo": "wax-seal",
+      "description": "Thông báo là lá thư giấy; thư chưa mở mang dấu son phẳng đặc, thư đã mở chỉ còn viền son mờ.",
+      "html": "<a class=\"ds-letter\" href=\"#\"><span class=\"ds-wax\">v</span><span><b>Xưởng Minh Hải đã chào giá</b><small>Mở để so với hai chào giá còn lại.</small></span></a><a class=\"ds-letter is-read\" href=\"#\"><span class=\"ds-wax-open\">v</span><span><b>Lịch hẹn đã được xác nhận</b><small>Thứ bảy 22/11, 09:00.</small></span></a>",
+      "css": ".ds-letter { display: flex; align-items: flex-start; gap: 16px; max-width: 420px; margin-bottom: 10px; padding: 14px 18px; border-radius: 4px; background: var(--color-su); color: var(--color-muc); text-decoration: none; box-shadow: 0 1px 0 rgb(28 18 12 / 0.08), 0 14px 22px -16px rgb(28 18 12 / 0.6); transition: translate .5s cubic-bezier(0.16, 1, 0.3, 1); } .ds-letter:hover { translate: 0 -2px; } .ds-letter:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-letter.is-read { box-shadow: 0 1px 0 rgb(28 18 12 / 0.06); } .ds-letter.is-read b { font-weight: 500; opacity: .85; } .ds-letter small { display: block; margin-top: 2px; font-size: 14px; color: var(--color-tro); } .ds-wax, .ds-wax-open { display: grid; place-items: center; flex-shrink: 0; width: 30px; height: 30px; rotate: -6deg; border-radius: 4px; font: 800 12px var(--font-display); } .ds-wax { background: var(--seal-ink, #b3261e); color: var(--color-on); box-shadow: inset 0 0 0 2px var(--seal-ink, #b3261e), inset 0 0 0 3px var(--color-on); } .ds-wax-open { border: 1.5px solid color-mix(in srgb, var(--seal-ink, #b3261e) 45%, transparent); color: color-mix(in srgb, var(--seal-ink, #b3261e) 70%, transparent); }"
     }
   ],
   "narrative": {
     "northStar": "Con đường gốm sứ",
-    "overview": "vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tác phẩm, mỗi lô hàng là một viên gốm men được gắn vào cùng một lưới mạch vữa của làng. Nền là men ngà, có lưới mạch vữa xám ấm kẻ ngang dọc nhìn thấy được; những mảng lớn được tráng men thành viên gốm (men lam Bát Tràng, men ngọc, đất nung), xen giữa là viên hoa văn mây sóng lam vẽ tay, viên men rạn và viên sen. Xác thực được đóng bằng triện son. Hệ thống từ chối mô-típ \"chợ thủ công nền kem, chữ có chân, điểm nhấn đất nung\" quen thuộc: ở đây màu men chiếm trọn mảng, không chỉ làm điểm nhấn.\n\nMật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Ba khu làm việc theo vai trò (khách hàng, nghệ nhân, Ban quản lý) gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Chế độ tối \"lò đêm\" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.\n\nChuyển động kể đúng một câu chuyện vật liệu: viên gốm được \"gắn\" vào mạch vữa (hơi lệch, hơi xoay rồi ăn khớp), bóng men lướt theo con trỏ khi rê lên viên, kim đồng hồ lò có quán tính và giảm chấn thật. Mọi chuyển động đều có đường thay thế khi người dùng giảm chuyển động.",
+    "overview": "vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tác phẩm, mỗi lô hàng là một viên gốm men được gắn vào cùng một lưới mạch vữa của làng. Nền là men ngà, có lưới mạch vữa xám ấm kẻ ngang dọc nhìn thấy được; những mảng lớn được tráng men thành viên gốm (men lam Bát Tràng, men ngọc, đất nung), xen giữa là viên hoa văn mây sóng lam vẽ tay, viên men rạn và viên sen. Xác thực được đóng bằng triện son. Hệ thống từ chối mô-típ \"chợ thủ công nền kem, chữ có chân, điểm nhấn đất nung\" quen thuộc: ở đây màu men chiếm trọn mảng, không chỉ làm điểm nhấn.\n\nMật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Ba khu làm việc theo vai trò (khách hàng, nghệ nhân, Ban quản lý) gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Chế độ tối \"lò đêm\" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.\n\nChuyển động kể đúng một câu chuyện vật liệu: viên gốm được \"gắn\" vào mạch vữa (hơi lệch, hơi xoay rồi ăn khớp), bóng men lướt theo con trỏ khi rê lên viên, kim đồng hồ lò có quán tính và giảm chấn thật. Mọi chuyển động đều có đường thay thế khi người dùng giảm chuyển động.\n\nKhu khách hàng (`/account`) có thế giới con riêng là **Tủ chè**: bức ghép của cổng đăng nhập hóa thành món đồ gỗ sơn then ở gian giữa nhà. Mạch vữa thành gỗ sơn then nâu đen có chỉ vàng; mỗi khối nội dung là một ngăn lõm lót giấy ngà; điều hướng là hàng mặt ngăn kéo có khung tên và quai; cánh tủ chính là bốn viên hoa văn của cổng (hoa văn, lam, sen, rạn). Đồ khách giữ với làng là đồ giấy và đồ trưng trong tủ: đơn sỉ là phiếu đặt hàng có cuống xé, lịch hẹn là tấm vé, thông báo là lá thư đóng dấu son, xưởng đã làm việc để lại con triện, tác phẩm đã lưu đứng trên kệ. Tủ chè chỉ thuộc khu khách hàng; khu nghệ nhân và Ban quản lý vẫn dùng khung thanh bên chung (`zone-shell`) và sẽ có bản sắc riêng sau, không mượn Tủ chè.",
     "keyCharacteristics": [
       "Nền men ngà với lưới mạch vữa 72px nhìn thấy được; các khối gắn vào bức ghép cách nhau đúng một mạch vữa 6px.",
       "Màu men là mảng, không phải viền: lam, đất nung, men ngọc phủ trọn viên biển hiệu, thanh bên, ô số liệu.",
       "Góc viên gốm 4-8px; không có khối bo tròn lớn kiểu viên thuốc.",
       "Bốn giọng chữ có vai rõ ràng: Phudu chữ hoa cho biển hiệu, Alegreya cho tên và lời kể, Be Vietnam Pro cho chữ làm việc, JetBrains Mono cho mã lô.",
       "Trạng thái được mang bằng cả hình dấu lẫn màu.",
-      "Triện son là con dấu duy nhất của sự xác thực."
+      "Triện son là con dấu duy nhất của sự xác thực.",
+      "Khu khách hàng là Tủ chè: gỗ sơn then, chỉ vàng phẳng, ngăn lõm lót giấy, dấu son phẳng; không lan sang khu khác."
     ],
     "rules": [
       {
@@ -830,7 +1040,7 @@
       },
       {
         "name": "Quy tắc Triện son",
-        "body": "`doson` thuộc về con dấu xác thực, lỗi và hành động phá hủy. Không có vai trò nào khác.",
+        "body": "`doson` thuộc về con dấu xác thực, lỗi và hành động phá hủy. Không có vai trò nào khác. Trong Tủ chè, mực son (`seal-ink`) còn mang số việc đang chờ và thư chưa mở, nhưng luôn ở hình con dấu (xem Quy tắc Dấu son phẳng).",
         "section": "colors"
       },
       {
@@ -857,6 +1067,21 @@
         "name": "Quy tắc Bóng men",
         "body": "Viên tương tác được thì phản hồi hover bằng vệt sáng lướt theo con trỏ (hòa trộn `soft-light`) và nhấc 2px; khi giảm chuyển động thì không nhấc.",
         "section": "elevation"
+      },
+      {
+        "name": "Quy tắc Chỉ vàng",
+        "body": "Trong Tủ chè, vàng `chi` là nét vẽ vàng của sơn mài: viền trong 1px, dải hồi văn, quai và chốt vẽ nét phẳng. Không giả ánh kim đồng bằng dải chuyển màu nhiều điểm dừng hay vệt phản chiếu, không phủ `chi` thành mảng nền. Chỉ vàng là nét trang trí bản địa của đồ sơn then, nên Quy tắc Men phủ mảng (dành cho men gốm) không cấm nó.",
+        "section": "colors"
+      },
+      {
+        "name": "Quy tắc Dấu son phẳng",
+        "body": "Mọi dấu son trong Tủ chè là con dấu in phẳng: hình vuông bo 4px, nghiêng -6° tới -8°, viền trong hai nét (`seal-ink` rồi `on`), chữ Phudu 800. Thư đã mở chỉ còn viền son 45% không nền. Không vẽ giọt sáp nổi khối.",
+        "section": "colors"
+      },
+      {
+        "name": "Quy tắc Ngăn lõm",
+        "body": "Khối nội dung trong Tủ chè lõm vào gỗ, không nổi lên khỏi gỗ: bóng đổ vào lòng ngăn từ mép trên. Chỉ mặt ngăn kéo, đồ trên kệ và đồ giấy mới nổi.",
+        "section": "elevation"
       }
     ],
     "dos": [
@@ -868,7 +1093,12 @@
       "**Do** dùng `on` cho chữ trên men đổi theo chế độ và `giay` cho chữ trên viên `*-nen`, ảnh, nền đêm.",
       "**Do** cho mọi chuyển động một đường thay thế khi `prefers-reduced-motion: reduce`.",
       "**Do** dùng `--chart-1..4` cho mọi chuỗi dữ liệu, cột rộng tối đa 24px, đầu cột bo 4px, kèm bảng số liệu.",
-      "**Do** giữ mục tiêu bấm từ 44px trở lên, 56px cho tab điện thoại."
+      "**Do** giữ mục tiêu bấm từ 44px trở lên, 56px cho tab điện thoại.",
+      "**Do** giữ Tủ chè trong khu khách hàng; khu nghệ nhân và Ban quản lý dùng khung chung cho tới khi có bản sắc riêng.",
+      "**Do** vẽ đồ đồng và vàng của Tủ chè bằng nét `chi` phẳng 1px trên sơn then.",
+      "**Do** dùng `seal-ink` cho mọi dấu son trong Tủ chè (đếm việc, thư chưa mở, triện xưởng), ở hình con dấu vuông 4px nghiêng.",
+      "**Do** chỉ đặt tác phẩm đứng trên kệ khi ảnh tách nền đã được duyệt tay, có tên trong `cutouts.ts` và có tệp `.webp.json` ghi nguồn gốc; còn lại dùng khung tranh viền chỉ vàng.",
+      "**Do** để ngăn nội dung lõm vào gỗ với bóng đổ vào từ mép trên; chỉ mặt ngăn, đồ trên kệ và đồ giấy mới nổi lên."
     ],
     "donts": [
       "**Don't** dựng giao diện kiểu chợ thủ công nền kem, chữ có chân và một điểm nhấn đất nung; men màu phải phủ mảng.",
@@ -877,7 +1107,11 @@
       "**Don't** dùng bóng đổ cứng, lệch; bóng luôn mềm với độ lan âm.",
       "**Don't** bo góc lớn kiểu viên thuốc cho nút hay thẻ.",
       "**Don't** dùng `doson` để trang trí.",
-      "**Don't** viết màu dữ liệu lên chữ trong biểu đồ."
+      "**Don't** viết màu dữ liệu lên chữ trong biểu đồ.",
+      "**Don't** giả ánh kim đồng bằng dải chuyển màu nhiều điểm dừng hay vệt phản chiếu.",
+      "**Don't** vẽ dấu sáp dạng giọt nổi khối; dấu son là con dấu in phẳng.",
+      "**Don't** đưa ảnh tách nền tự động chưa duyệt, hoặc thiếu tệp nguồn gốc, lên kệ.",
+      "**Don't** đem khung Tủ chè (hoành phi, mặt ngăn, thân tủ) sang khu nghệ nhân hay Ban quản lý."
     ]
   }
 }

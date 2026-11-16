@@ -155,14 +155,15 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
       {/* Đầu trang */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <div className="flex flex-wrap items-center gap-2">
+          <h1 className="text-3xl md:text-4xl">{q.title}</h1>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             <span className="font-mono text-sm text-lam">{q.requestCode}</span>
             <QuoteStatusBadge status={q.status} />
+            {/* Huy hiệu phiên bản bản ghi: đề bài yêu cầu hiển thị để chứng minh khóa lạc quan trước hội đồng */}
             <span className="inline-flex items-center gap-1 rounded-[4px] bg-lam px-2.5 py-0.5 font-mono text-[11px] text-on" title="Khóa lạc quan: mọi thao tác phải gửi kèm phiên bản này">
-              <Lock className="size-3" /> Record v{q.version} · Optimistic Lock
+              <Lock className="size-3" aria-hidden /> Record v{q.version} · Optimistic Lock
             </span>
           </div>
-          <h1 className="mt-3 text-3xl md:text-4xl">{q.title}</h1>
           <p className="mt-2 text-sm text-tro">
             {q.organizationName} · {formatNumber(q.quantity)} sản phẩm · {GLAZES[q.preferredGlaze].label} · {categoryLabel(q.category)} · cần trong {q.deadlineDays} ngày
           </p>
@@ -173,7 +174,13 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
         </div>
       </div>
 
-      <Card className="p-5"><QuoteFlow status={q.status} /></Card>
+      {q.viewer.isOwner ? (
+        <div className="slip paper p-5 pl-9">
+          <QuoteFlow status={q.status} />
+        </div>
+      ) : (
+        <Card className="p-5"><QuoteFlow status={q.status} /></Card>
+      )}
 
       {conflict && (
         <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-datnung/50 bg-datnung/5 p-4 text-sm">
@@ -228,10 +235,10 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
                               <p className="line-clamp-2 max-w-xs text-xs text-tro">{b.proposalNote}</p>
                               <p className="font-mono text-[10px] text-tro">bid v{b.version} · {timeAgo(b.updatedAt)}</p>
                             </td>
-                            <td className={cn("px-3 py-3 text-right font-mono tabular", b.offeredPricePerUnit <= q.targetBudgetPerUnit ? "text-ngoc" : "text-datnung")}>{formatVnd(b.offeredPricePerUnit)}</td>
+                            <td className={cn("whitespace-nowrap px-3 py-3 text-right font-mono tabular", b.offeredPricePerUnit <= q.targetBudgetPerUnit ? "text-ngoc" : "text-datnung")}>{formatVnd(b.offeredPricePerUnit)}</td>
                             <td className="px-3 py-3 text-right font-mono tabular">{formatNumber(b.committedQuantity)}</td>
                             <td className={cn("px-3 py-3 text-right font-mono", late && "text-datnung")}>{b.estimatedDays}{late && " ⚠"}</td>
-                            <td className="px-3 py-3 text-right font-mono">{b.artisan.ratingAvg.toFixed(1)}</td>
+                            <td className="px-3 py-3 text-right font-mono">{b.artisan.ratingAvg > 0 ? b.artisan.ratingAvg.toFixed(1) : <span className="text-tro" title="Xưởng chưa có đánh giá">–</span>}</td>
                             <td className="px-3 py-3">
                               <label className="sr-only" htmlFor={`alloc-${b.id}`}>Số lượng phân bổ cho {b.artisan.workshopName}</label>
                               <input
