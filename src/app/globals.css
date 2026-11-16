@@ -45,6 +45,13 @@
   --color-giay: #fffdf8;
   --color-dem: #0f1b38;
 
+  /* Tủ chè (khu khách hàng): gỗ sơn then nâu đen, mặt ngăn sáng hơn một nấc, chỉ vàng thếp */
+  --color-then: #1e1511;
+  --color-then-2: #2b1f19;
+  --color-chi: #c9a24e;
+  /* vàng nhạt: chữ khắc trên sơn then (tên tủ, chữ dưới khung tranh, bảng hiệu xưởng) */
+  --color-chi-nhat: #f3dc9f;
+
   /* Màu biểu đồ: đã chạy bộ kiểm tra (độ sáng, độ bão hòa, mù màu, tương phản) trên nền sứ */
   --chart-1: #1f4e9a;
   --chart-2: #a34a23;
@@ -116,6 +123,9 @@
     --color-doson: #f08a80;
     --color-doson-dam: #f5a49c;
     --color-on: #10151e;
+    --color-then: #241a15;
+    --color-then-2: #33261f;
+    --color-chi: #d6b263;
     --chart-1: #5a84d6;
     --chart-2: #c8602e;
     --chart-3: #1aa585;
