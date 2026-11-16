@@ -30,6 +30,11 @@ colors:
   on: "#fffdf8"
   giay: "#fffdf8"
   dem: "#0f1b38"
+  then: "#1e1511"
+  then-2: "#2b1f19"
+  chi: "#c9a24e"
+  chi-nhat: "#f3dc9f"
+  seal-ink: "#b3261e"
   chart-1: "#1f4e9a"
   chart-2: "#a34a23"
   chart-3: "#00866a"
@@ -88,6 +93,7 @@ rounded:
   card: "8px"
   mosaic: "10px"
   sheet: "14px"
+  cabinet: "12px"
 spacing:
   grout: "6px"
   grid-cell: "72px"
@@ -188,6 +194,42 @@ components:
     backgroundColor: "{colors.su}"
     textColor: "{colors.tro}"
     height: "56px"
+  drawer-face:
+    backgroundColor: "{colors.then-2}"
+    textColor: "{colors.giay}"
+    rounded: "{rounded.badge}"
+    padding: "12px 6px 9px"
+    height: "78px"
+  drawer-face-current:
+    backgroundColor: "{colors.lam-nen}"
+    textColor: "{colors.giay}"
+  brass-label:
+    backgroundColor: "{colors.nga}"
+    textColor: "{colors.muc}"
+    rounded: "{rounded.hairline}"
+    padding: "3px 9px 2px"
+  seal-count:
+    backgroundColor: "{colors.seal-ink}"
+    textColor: "{colors.on}"
+    rounded: "{rounded.badge}"
+    padding: "0 5px"
+    height: "24px"
+  cab-cell:
+    backgroundColor: "{colors.nga}"
+    textColor: "{colors.muc}"
+    rounded: "{rounded.badge}"
+  order-slip:
+    backgroundColor: "{colors.su}"
+    textColor: "{colors.muc}"
+    rounded: "{rounded.badge}"
+  visit-ticket:
+    backgroundColor: "{colors.su}"
+    textColor: "{colors.muc}"
+  wax-seal:
+    backgroundColor: "{colors.seal-ink}"
+    textColor: "{colors.on}"
+    rounded: "{rounded.badge}"
+    size: "30px"
 ---
 
 # Design System: vCraft
@@ -200,6 +242,8 @@ vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tá
 
 Mật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Ba khu làm việc theo vai trò (khách hàng, nghệ nhân, Ban quản lý) gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Chế độ tối "lò đêm" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.
 
+Khu khách hàng (`/account`) có thế giới con riêng là **Tủ chè**: bức ghép của cổng đăng nhập hóa thành món đồ gỗ sơn then ở gian giữa nhà. Mạch vữa thành gỗ sơn then nâu đen có chỉ vàng; mỗi khối nội dung là một ngăn lõm lót giấy ngà; điều hướng là hàng mặt ngăn kéo có khung tên và quai; cánh tủ chính là bốn viên hoa văn của cổng (hoa văn, lam, sen, rạn). Đồ khách giữ với làng là đồ giấy và đồ trưng trong tủ: đơn sỉ là phiếu đặt hàng có cuống xé, lịch hẹn là tấm vé, thông báo là lá thư đóng dấu son, xưởng đã làm việc để lại con triện, tác phẩm đã lưu đứng trên kệ. Tủ chè chỉ thuộc khu khách hàng; khu nghệ nhân và Ban quản lý vẫn dùng khung thanh bên chung (`zone-shell`) và sẽ có bản sắc riêng sau, không mượn Tủ chè.
+
 Chuyển động kể đúng một câu chuyện vật liệu: viên gốm được "gắn" vào mạch vữa (hơi lệch, hơi xoay rồi ăn khớp), bóng men lướt theo con trỏ khi rê lên viên, kim đồng hồ lò có quán tính và giảm chấn thật. Mọi chuyển động đều có đường thay thế khi người dùng giảm chuyển động.
 
 **Key Characteristics:**
@@ -209,6 +253,7 @@ Chuyển động kể đúng một câu chuyện vật liệu: viên gốm đư�
 - Bốn giọng chữ có vai rõ ràng: Phudu chữ hoa cho biển hiệu, Alegreya cho tên và lời kể, Be Vietnam Pro cho chữ làm việc, JetBrains Mono cho mã lô.
 - Trạng thái được mang bằng cả hình dấu lẫn màu.
 - Triện son là con dấu duy nhất của sự xác thực.
+- Khu khách hàng là Tủ chè: gỗ sơn then, chỉ vàng phẳng, ngăn lõm lót giấy, dấu son phẳng; không lan sang khu khác.
 
 ## Colors
 
@@ -224,7 +269,7 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 - **Men ngọc** (`ngoc`): nút celadon, trạng thái thành công, viên "xưởng đang mở cửa", thanh trạng thái khu Ban quản lý. `ngoc-nen` là mảng ngọc đậm.
 - **Vàng rơm** (`vangrom`): sao đánh giá và nhãn tông vàng; chữ trên nền nhạt dùng `vangrom-dam` để đủ tương phản.
 - **Đỏ son** (`doson`): triện xác thực của Ban quản lý, lỗi, hành động nguy hiểm. Không dùng làm màu trang trí.
-- **Lửa** (`lua`): chỉ dùng cho huy hiệu đếm số trên thanh bên lam của khu khách hàng.
+- **Lửa** (`lua`): huy hiệu đếm số trên thanh bên men của khung khu làm việc chung. Khu khách hàng không còn dùng: số đếm ở đó là dấu son của Tủ chè.
 
 ### Neutral
 - **Men ngà** (`nga`): nền trang và nền hộp thoại. `nga-dam` cho hover của nút ma, nền khối trống vân men rạn, đầu bảng; `nga-sau` cho rãnh thanh đo và khung xương tải.
@@ -239,15 +284,27 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 ### Biểu đồ
 - `chart-1` lam, `chart-2` đất nung, `chart-3` ngọc lục, `chart-4` vàng đồng: bộ bốn màu đã qua kiểm tra độ sáng, mù màu và tương phản trên nền sứ; có bộ riêng cho chế độ tối. Chữ trong biểu đồ luôn dùng màu chữ, không dùng màu dữ liệu.
 
+### Tủ chè (khu khách hàng)
+Bảng màu con của Tủ chè, chỉ dùng trong `/account`; nền giấy và chữ vẫn dùng `nga`, `su`, `muc`, `tro` của thế giới chung.
+- **Sơn then** (`then`, tối `#241a15`): gỗ thân tủ, hoành phi, nóc tủ, hàng ngăn dưới đáy điện thoại, nền khung tên và quai. Luôn mang vân sơn mài `/textures/lacquer.svg` (ô 480×240px); chữ trên sơn then là `giay`.
+- **Mặt ngăn** (`then-2`, tối `#33261f`): sáng hơn `then` một nấc; mặt ngăn kéo, thanh kệ, khung tranh, thành hộp ngăn kéo, thanh đứng và thanh ngang của cánh tủ.
+- **Chỉ vàng** (`chi`, tối `#d6b263`): nét vẽ vàng của sơn mài. Viền trong 1px (đặc hoặc pha 28-85% tùy độ gần mắt), dải hồi văn, nét quai, chốt cửa, nét chân quỳ. Tên tủ trên hoành phi, chữ khắc dưới khung tranh và tên trên bảng hiệu xưởng dùng `chi-nhat` (`#f3dc9f`, giữ nguyên ở chế độ tối), chỉ đặt trên sơn then.
+- **Mực son** (`seal-ink`, tối `#e8746a`): mực của con dấu trong Tủ chè: dấu đếm việc trên mặt ngăn, dấu thư chưa mở, triện xưởng. Cùng giá trị với `doson` khi sáng; khi tối sẫm hơn `doson` một chút để chữ `on` trên dấu vẫn đọc được.
+- Bóng trong Tủ chè đổi sang màu gỗ ấm `rgb(20 12 8)` thay cho màu mực của thế giới chung.
+
 ### Chế độ tối "lò đêm"
 Đặt qua `:root[data-theme="dark"]`, giữ nguyên tên token: `nga` thành than ấm `#120f0d`, `su` thành `#1d1713`, `vua` thành tro nung `#3b3028`, `muc` thành ngà sáng `#f1e7d7`; các men màu chuyển sang tông sáng (`lam` `#94b4ee`, `datnung` `#ec9a72`, `ngoc` `#8fc7b1`) còn `*-nen` giữ đậm để chữ `giay` vẫn đọc được. Chế độ được đặt trước khi vẽ trang bằng script khởi động, đọc `localStorage` rồi tới `prefers-color-scheme`.
 
 ### Named Rules
 **Quy tắc Men phủ mảng.** Men màu xuất hiện dưới dạng viên gốm phủ kín (biển hiệu, thanh bên, ô số liệu, nút), không làm đường viền mảnh hay chữ nhấn rải rác. Một màn hình có một men chủ, các men khác là viên điểm xuyết.
 
-**Quy tắc Triện son.** `doson` thuộc về con dấu xác thực, lỗi và hành động phá hủy. Không có vai trò nào khác.
+**Quy tắc Triện son.** `doson` thuộc về con dấu xác thực, lỗi và hành động phá hủy. Không có vai trò nào khác. Trong Tủ chè, mực son (`seal-ink`) còn mang số việc đang chờ và thư chưa mở, nhưng luôn ở hình con dấu (xem Quy tắc Dấu son phẳng).
 
 **Quy tắc Chữ trên men.** Trên khối men đổi theo chế độ thì dùng `on`; trên viên `*-nen`, ảnh hoặc nền `dem` thì dùng `giay`. Không đặt `muc` lên men đậm.
+
+**Quy tắc Chỉ vàng.** Trong Tủ chè, vàng `chi` là nét vẽ vàng của sơn mài: viền trong 1px, dải hồi văn, quai và chốt vẽ nét phẳng. Không giả ánh kim đồng bằng dải chuyển màu nhiều điểm dừng hay vệt phản chiếu, không phủ `chi` thành mảng nền. Chỉ vàng là nét trang trí bản địa của đồ sơn then, nên Quy tắc Men phủ mảng (dành cho men gốm) không cấm nó.
+
+**Quy tắc Dấu son phẳng.** Mọi dấu son trong Tủ chè là con dấu in phẳng: hình vuông bo 4px, nghiêng -6° tới -8°, viền trong hai nét (`seal-ink` rồi `on`), chữ Phudu 800. Thư đã mở chỉ còn viền son 45% không nền. Không vẽ giọt sáp nổi khối.
 
 ## Typography
 
@@ -268,6 +325,13 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 - **Label** (600, 0.8rem, 0.02em, chữ thường, màu `tro`): nhãn nhóm cho legend, cột chân trang, tiêu đề thẻ. Đầu cột bảng là ngoại lệ duy nhất dùng chữ hoa nhỏ giãn chữ.
 - **Code** (JetBrains Mono, 0.8em, 0.02em, số dạng bảng): mã lô, mã yêu cầu báo giá.
 
+### Tủ chè
+- **Khung tên** (Phudu 700, 12px, 1.15, chữ hoa, 0.05em; 10px trên ngăn dưới đáy điện thoại): nhãn của mỗi mặt ngăn, cắt bằng dấu ba chấm khi dài.
+- **Tên tủ trên hoành phi** (Phudu, 1.45rem) kèm dòng "của [tên]" Alegreya nghiêng 0.95rem.
+- **Đầu lòng ngăn** (`title-lg` Phudu chữ hoa), ngay dưới là dải hồi văn vàng rộng 144px rồi lời dẫn chữ `tro` tối đa `max-w-2xl`.
+- **Tên nhóm trong ngăn** (Alegreya 700, 1.35rem, chữ thường) kèm số đếm Be Vietnam Pro 600 màu `tro`: đứng một mình như một tiêu đề, không làm dòng mồi.
+- **Đồ giấy:** tên đơn, tên xưởng, tên tác phẩm dùng Alegreya 700 (1.02-1.45rem); mã đơn, mã lô dùng mono màu `lam`; ngày trên cuống vé là Phudu 2.6-3.2rem số dạng bảng.
+
 ### Named Rules
 **Quy tắc Biển hiệu.** Phudu chỉ dùng chữ hoa và chỉ cho tiêu đề, số lớn và chữ trên triện; không bao giờ cho đoạn văn.
 
@@ -282,6 +346,10 @@ Khung chứa: khu công khai rộng tối đa 1440px, lề 16px (điện thoại
 Điện thoại trong khu làm việc: thanh tab cố định dưới đáy, ô bấm cao 56px, năm tab cộng nút "Thêm" mở ngăn kéo dưới dạng bức ghép 3 cột. Mục tiêu bấm tối thiểu 44px (nút cỡ vừa, mục thanh bên `min-h-11`). Điểm ngắt dùng mặc định Tailwind: `sm` 640px, `md` 768px, `lg` 1024px (thanh bên xuất hiện).
 
 Khi in: ẩn đầu trang, chân trang, điều hướng; nền trắng chữ đen; mọi phần tử chờ hiệu ứng hiện ngay.
+
+**Tủ chè (khu khách hàng).** Không có thanh bên. Nền trang vẫn là lưới mạch vữa. Hoành phi sơn then dính trên cùng, cao 64px, nội dung trong `max-w-6xl` với lề 16px/24px. Từ 1024px, nóc tủ là một hàng tám mặt ngăn kéo (khe 8px) dưới dải hồi văn, góc trên 12px. Trang tổng quan là thân tủ: lưới sơn then khe 10px, đệm 10px, 1 cột trên điện thoại, 6 cột từ 768px, 12 cột từ 1280px; mỗi ngăn lõm chiếm một số cột, biển tên men lam giữ góc trên trái, dưới cùng là chân quỳ cao 18px có diềm hồi văn lật ngược. Mỗi trang con là lòng một ngăn kéo: giấy ngà với thành gỗ 6px ba phía (bốn phía dưới 1024px vì không còn hàng mặt ngăn phía trên), đệm 16px/32px/40px theo cỡ màn hình.
+
+Dưới 1024px, hàng mặt ngăn xuống đáy màn hình: năm ngăn và ngăn "Khác", cao 58px, chừa vùng an toàn; "Khác" mở tấm sơn then trồi từ dưới lên (góc trên 14px) với lưới 2 cột mặt ngăn cao 84px. Nội dung chừa 128px phía dưới cho hàng ngăn.
 
 ## Elevation & Depth
 
@@ -298,11 +366,23 @@ Hệ thống lai: độ sâu chủ yếu đến từ vật liệu của viên g�
 
 **Quy tắc Bóng men.** Viên tương tác được thì phản hồi hover bằng vệt sáng lướt theo con trỏ (hòa trộn `soft-light`) và nhấc 2px; khi giảm chuyển động thì không nhấc.
 
+### Tủ chè
+Độ sâu của Tủ chè là độ sâu đồ gỗ, ánh sáng từ trên xuống, bóng màu gỗ `rgb(20 12 8)`: ngăn lõm vào thân tủ, mặt ngăn nhô ra, đồ đứng trên kệ đổ bóng xuống mặt kệ. Mọi bóng vẫn mềm và có độ lan âm như thế giới chung.
+- **Ngăn lõm** (`inset 0 0 0 1px chi 75%, inset 0 0 0 3px rgb(20 12 8/0.3), inset 0 16px 20px -14px rgb(20 12 8/0.55), inset 0 -12px 16px -16px rgb(20 12 8/0.45)`): lớp phủ trên mọi ngăn của thân tủ, nằm trên cả cánh tủ và nội dung.
+- **Mặt ngăn** (`inset 0 0 0 1px chi 50%, inset 0 0 0 5px rgb(0 0 0/0.16), inset 0 1px 0 rgb(255 255 255/0.1), 0 1px 0 rgb(0 0 0/0.55)`): khung chỉ vàng và mép gỗ; ngăn đang mở thay bằng chỉ vàng 85% và bóng rơi `0 18px 20px -12px rgb(10 6 4/0.8)`.
+- **Thanh kệ** (`inset 0 1px 0 chi 85%, inset 0 -2px 0 rgb(0 0 0/0.35), 0 9px 12px -6px rgb(20 12 8/0.5)`) và **đồ trên kệ** (`drop-shadow(0 9px 6px rgb(20 12 8/0.3))`, khi rê `drop-shadow(0 16px 10px rgb(20 12 8/0.26))` và nhấc 5px), kèm vệt tiếp đất hình bầu dục ngay dưới đáy ảnh tách nền.
+- **Đồ giấy:** phiếu `0 1px 0 rgb(28 18 12/0.08), 0 12px 22px -16px rgb(28 18 12/0.55)`; vé dùng `drop-shadow` hai lớp để bóng ôm theo khuyết; thư chưa mở nổi hơn thư đã mở.
+- **Hộp ngăn kéo:** thành gỗ bằng bóng trong 6px `then-2`, bóng gỗ đổ vào lòng từ mép trên, bóng rơi `0 30px 40px -34px rgb(20 12 8/0.7)`.
+
+**Quy tắc Ngăn lõm.** Khối nội dung trong Tủ chè lõm vào gỗ, không nổi lên khỏi gỗ: bóng đổ vào lòng ngăn từ mép trên. Chỉ mặt ngăn kéo, đồ trên kệ và đồ giấy mới nổi.
+
 ## Shapes
 
 Ngôn ngữ hình khối là viên gốm vuông vức với góc bo nhẹ. Viên gốm, nút, ô nhập, mục điều hướng: 6px (`--radius-tile`). Nhãn trạng thái và huy hiệu đếm: 4px (3px trên tab điện thoại). Thẻ, thông báo nổi, popup bản đồ: 8px. Bức ghép và hộp thoại: 10px. Ngăn kéo dưới đáy điện thoại chỉ bo hai góc trên 14px. Các vạch chỉ mục và thanh tiến trình dùng 2px hoặc bo tròn hoàn toàn khi là rãnh mảnh.
 
 Hình lặp lại: lưới mạch vữa; viên hoa văn mây sóng lam (ô 64px), viên sen (96px), viên men rạn (vết rạn mực trên nền `#e6d9bf`, ô 240px), viên đất nung có chấm hạt 7px, viên ngọc và viên lam có vệt sáng hướng tâm ở góc trên trái; vạch phân cách sóng nước lam cao 14px; khối trống phủ vân men rạn rất mờ (360px). Triện son là hình vuông bo 2.5px, viền trong, nghiêng -3° tới -6°. Dấu trạng thái là bốn hình 7-8px: tròn, thoi, vuông, vòng.
+
+Tủ chè dùng góc nhỏ hơn của đồ gỗ: 4px cho mặt ngăn, ngăn lõm, phiếu, thư và dấu son; 2-3px cho khung tên, khung tranh, cánh tủ và thanh kệ; 12px cho hai góc trên của nóc tủ (`cabinet`); 8px cho đáy hộp ngăn kéo. Hình lặp lại: dải hồi văn móc vuông 20×12px nét `chi`, lặp kiểu `round` để dải luôn dừng ở trọn một móc; hàng lỗ xé (chấm 8×13px) và đường xé đứt ở cuống phiếu; vé có cuống 104px (84px bản gọn) với hai khuyết tròn bán kính 10px ở đường xé; lỗ bấm tròn 14px trên cuống vé đã dùng; chân quỳ cong ở hai đầu chân tủ.
 
 ## Components
 
@@ -336,12 +416,40 @@ Viên gốm men ấn được: chắc tay, có gờ men và lún khi ấn.
 
 ### Navigation
 - **Khu công khai:** mục 15px 500, mực 65% khi chờ và mực đặc khi đang xem; một viên đất nung nhỏ 5px trượt theo mục đang xem ở mép dưới đầu trang (lò xo, có chuyển động liên tục giữa các trang). Nút "Đăng ký" là nút lam; khi đã đăng nhập, lối vào khu làm việc là một viên mang men của khu.
-- **Khu làm việc:** thanh bên phủ men của vai trò (khách hàng `tile-lam`, nghệ nhân `tile-dat`, Ban quản lý nền `dem`), mục 14.5px cao tối thiểu 44px; mục đang chọn là một viên trượt bằng lò xo (giấy trên lam/đất nung, ngọc đậm trên đêm).
+- **Khu làm việc (nghệ nhân, Ban quản lý):** thanh bên phủ men của vai trò (nghệ nhân `tile-dat`, Ban quản lý nền `dem`; khu khách hàng đã chuyển sang hàng mặt ngăn của Tủ chè), mục 14.5px cao tối thiểu 44px; mục đang chọn là một viên trượt bằng lò xo (giấy trên lam/đất nung, ngọc đậm trên đêm).
 - **Điện thoại:** thanh tab dưới đáy nền sứ 95% làm mờ, vạch 3px màu men của khu trượt trên tab đang chọn, ngăn kéo "Thêm" trồi lên trong 380ms.
 
 ### Dialog và thông báo nổi
 - **Hộp thoại:** phần tử `<dialog>` gốc, nền ngà, góc 10px, viền `vua`, bóng nhấc, rộng `min(92vw, 520px)`; lớp phủ `dem` 45% làm mờ 2px; trồi lên 14px trong 320ms. Tiêu đề Alegreya 2xl, chân hộp thoại có đường kẻ `vua`.
 - **Thông báo nổi:** thẻ sứ góc 8px, viền theo loại (ngọc, son, lam), vạch thời gian 3px co dần ở mép dưới (4,5 giây, lỗi 7 giây).
+
+### Tủ chè – khu khách hàng (Signature)
+Món đồ gỗ chứa mọi thứ khách giữ với làng. Thành phần nằm trong `src/components/cabinet/` và `src/styles/cabinet.css`; chỉ dùng trong `/account`.
+- **Hoành phi:** đầu trang sơn then, chỉ vàng 55% ở mép dưới; dấu vCraft trong khung chỉ vàng nghiêng -6° khi rê chuột; nút giao diện, chuông, tài khoản viết chữ `giay`, viền nút tài khoản chỉ vàng 45% (80% khi rê).
+- **Mặt ngăn kéo (điều hướng):** sơn then `then-2` có khung tên và quai. Nghỉ: khung chỉ vàng 50%. Rê chuột: lún 2px và vòng quai đung đưa. Ngăn đang mở (`aria-current="page"`): men `lam-nen` có vệt sáng góc trên trái, bị kéo ra 8px và phóng 1.04, chỉ vàng 85%; trên hàng đáy điện thoại thì nhô lên 6px, không phóng.
+- **Khung tên:** thẻ giấy ngà cài trong khung sơn then viền chỉ vàng, đệm 3px.
+- **Quai:** đế và vòng treo vẽ nét `chi` phẳng (18×21px, 14×17px trên điện thoại).
+- **Dấu son đếm:** dấu vuông 24px ở góc trên phải mặt ngăn, nghiêng -8°, hiện "9+" khi quá chín; có nhãn đọc đầy đủ số việc.
+- **Ngăn lõm:** ô của thân tủ, lót giấy ngà hoặc sứ với vân giấy dó 300px, hoặc là biển tên men lam giữ lời chào và việc chờ.
+- **Kệ và đồ trên kệ:** thanh kệ sơn then cao 13px viền chỉ vàng trên; tác phẩm có ảnh tách nền đứng thẳng trên kệ với vệt tiếp đất, tác phẩm chưa có đứng trong khung tranh viền chỉ vàng có chữ khắc tên xưởng; ô trống là khung viền đứt mời thêm tác phẩm.
+- **Cánh tủ:** mỗi ngăn trên trang tổng quan có hai cánh là hai viên hoa văn của cổng đăng nhập (`tile-hoavan`, `tile-lam`, `tile-sen`, `tile-ran`) trong khung thanh đứng, thanh ngang sơn then 9px với chỉ vàng, chốt chỉ vàng 10px ở mép gặp nhau. Chỉ đóng lần đầu mỗi phiên ở `/account` (script đặt trước khi vẽ, lưu `sessionStorage`).
+- **Hộp ngăn kéo:** lòng trang con, giấy ngà với thành gỗ; đầu ngăn gồm tiêu đề, dải hồi văn, lời dẫn và thao tác chính.
+- **Phiếu đặt hàng (đơn sỉ):** tờ giấy góc 4px có hàng lỗ xé và đường xé đứt ở cuống trái; mã đơn mono lam, tên đơn Alegreya, thanh tiến độ năm chặng; cột phải ngăn bằng đường đứt ghi số chào giá (Phudu), xưởng, giá trị và việc cần làm tiếp (đất nung nếu gấp). Rê chuột nhấc 2px.
+- **Thanh tiến độ năm chặng:** ô 10px góc 2px; ô đặc lam là đã qua, ô gạch chéo lam có viền là chặng hiện tại, ô mực 10% là chưa tới; đơn hủy là dòng chữ gạch ngang. Hình mang nghĩa, không chỉ màu.
+- **Vé trải nghiệm:** cuống ngày tháng (men lam chữ `giay` khi đã xác nhận, `lam-nhat` khi chờ, `nga-sau` khi đã qua), đường xé đứt có hai khuyết; dòng trạng thái có dấu hình; vé còn hiệu lực có "Thêm vào lịch" (.ics) và "Chỉ đường"; vé đã dùng có lỗ bấm trên cuống.
+- **Thư:** mỗi thông báo là một tờ giấy góc 4px; thư chưa mở mang dấu son đặc 30px và chữ đậm, thư đã mở chỉ còn viền son mờ và chữ nhạt; nhóm theo ngày.
+- **Triện xưởng:** con dấu vuông hai nét, hai chữ khắc Phudu, mực `seal-ink` loang qua bộ lọc nhiễu SVG (mép nhòe, lòng nét ăn mực không đều); mỗi dấu nghiêng một góc riêng (-5° tới 6°); triện mờ 50% là xưởng còn chờ khách đóng dấu đánh giá.
+- **Chân tủ:** chân quỳ cong sơn then hai đầu, nét chỉ vàng theo đường cong.
+
+**Chuyển động của Tủ chè** (đều dùng `ease-out-expo`):
+- **Mở cánh tủ:** lần đầu mỗi phiên ở `/account`, chờ hai khung hình rồi dừng 300ms cho thấy tủ đóng, sau đó từng cặp cánh xoay bản lề ±100° trong 0.85s, trễ lần lượt 0-330ms giữa các ngăn. Cánh được dọn khi mọi hoạt ảnh thật sự xong (không đoán bằng đồng hồ), có lưới an toàn 7 giây khi tab bị ẩn.
+- **Kéo ngăn:** mỗi lần chuyển sang trang con (trừ `/account`), lòng ngăn trượt ra trong 0.75s: cắt từ trên xuống, trượt 16px, từ mờ 35% lên đặc.
+- **Mặt ngăn:** chuyển vị trí và bóng trong 0.6s; vòng quai đung đưa 16° → -9° → 4° → 0 trong 1.1s khi rê chuột.
+- **Đồ trên kệ:** nhấc 5px và bóng giãn trong 0.5s. Ngăn "Khác" trồi lên trong 420ms, các ngăn con hiện cách nhau 35ms.
+- **Giảm chuyển động:** không có cánh tủ, không kéo ngăn, ngăn đang mở không bị kéo ra, đồ trên kệ không nhấc.
+- **Khi in:** bỏ nền sơn then và bóng, chữ đen.
+
+**Ảnh tách nền (nguồn gốc bắt buộc).** Tác phẩm đứng trên kệ dùng ảnh WebP đã tách nền trong `public/seed/cutout/`. Mỗi ảnh tách nền bằng mô hình phông nền + GrabCut rồi duyệt tay, và phải có tệp `.webp.json` đi kèm ghi nguồn gốc ảnh gốc (nguồn, tác giả, giấy phép), ảnh dẫn xuất từ đâu và cách xử lý. Chỉ ảnh có tên trong danh mục `src/lib/cutouts.ts` mới đứng trên kệ; ảnh chụp trên nền rối giữ nguyên trong khung tranh. Vân `lacquer.svg` và `paper.svg` trong `public/textures/` là vân vẽ bằng SVG.
 
 ### Bức ghép mở màn (Signature)
 Viên biển hiệu lam ở giữa giữ tiêu đề Phudu và hai lối vào; quanh nó là ảnh tác phẩm thật làm viên, viên men hoa văn, viên "xưởng đang mở" với vòng sáng nhịp, viên QR mời truy xuất và viên triện xác thực. Các viên gắn vào lưới theo hiệu ứng `tile-set` (0.85s, `cubic-bezier(0.16, 1, 0.3, 1)`), độ trễ tăng 85ms tỏa ra từ viên biển hiệu, mỗi viên có độ lệch và góc xoay riêng.
@@ -390,6 +498,11 @@ Mặt số sứ cung 240°, vạch mực, cung `chart-2` chỉ phủ vùng trên
 - **Do** cho mọi chuyển động một đường thay thế khi `prefers-reduced-motion: reduce`.
 - **Do** dùng `--chart-1..4` cho mọi chuỗi dữ liệu, cột rộng tối đa 24px, đầu cột bo 4px, kèm bảng số liệu.
 - **Do** giữ mục tiêu bấm từ 44px trở lên, 56px cho tab điện thoại.
+- **Do** giữ Tủ chè trong khu khách hàng; khu nghệ nhân và Ban quản lý dùng khung chung cho tới khi có bản sắc riêng.
+- **Do** vẽ đồ đồng và vàng của Tủ chè bằng nét `chi` phẳng 1px trên sơn then.
+- **Do** dùng `seal-ink` cho mọi dấu son trong Tủ chè (đếm việc, thư chưa mở, triện xưởng), ở hình con dấu vuông 4px nghiêng.
+- **Do** chỉ đặt tác phẩm đứng trên kệ khi ảnh tách nền đã được duyệt tay, có tên trong `cutouts.ts` và có tệp `.webp.json` ghi nguồn gốc; còn lại dùng khung tranh viền chỉ vàng.
+- **Do** để ngăn nội dung lõm vào gỗ với bóng đổ vào từ mép trên; chỉ mặt ngăn, đồ trên kệ và đồ giấy mới nổi lên.
 
 ### Don't:
 - **Don't** dựng giao diện kiểu chợ thủ công nền kem, chữ có chân và một điểm nhấn đất nung; men màu phải phủ mảng.
@@ -399,3 +512,7 @@ Mặt số sứ cung 240°, vạch mực, cung `chart-2` chỉ phủ vùng trên
 - **Don't** bo góc lớn kiểu viên thuốc cho nút hay thẻ.
 - **Don't** dùng `doson` để trang trí.
 - **Don't** viết màu dữ liệu lên chữ trong biểu đồ.
+- **Don't** giả ánh kim đồng bằng dải chuyển màu nhiều điểm dừng hay vệt phản chiếu.
+- **Don't** vẽ dấu sáp dạng giọt nổi khối; dấu son là con dấu in phẳng.
+- **Don't** đưa ảnh tách nền tự động chưa duyệt, hoặc thiếu tệp nguồn gốc, lên kệ.
+- **Don't** đem khung Tủ chè (hoành phi, mặt ngăn, thân tủ) sang khu nghệ nhân hay Ban quản lý.
