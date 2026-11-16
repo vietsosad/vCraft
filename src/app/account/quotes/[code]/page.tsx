@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { pageRequireRole } from "@/lib/auth/guards";
 import { getQuoteForUser } from "@/lib/services/quotation-service";
 import { AppError } from "@/lib/errors";
@@ -24,8 +25,12 @@ export default async function QuoteDetailPage({ params }: Props) {
     const initial = JSON.parse(JSON.stringify(quote)) as QuoteView;
     return (
       <>
-        <nav aria-label="Breadcrumb" className="mb-6 text-sm text-tro">
-          <Link href="/account/quotes" className="hover:text-muc">Đơn đặt sỉ</Link> / <span className="code text-muc">{code}</span>
+        <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-sm text-tro">
+          <Link href="/account/quotes" className="inline-flex min-h-10 items-center gap-1.5 rounded-[var(--radius-tile)] pr-2 font-semibold text-lam hover:text-lam-dam">
+            <ArrowLeft className="size-4" aria-hidden /> Ngăn đơn sỉ
+          </Link>
+          <span aria-hidden>/</span>
+          <span className="code text-muc">{code}</span>
         </nav>
         <QuoteRoom initial={initial} />
       </>
