@@ -4,8 +4,8 @@ import { prisma } from "@/lib/db";
 import { asImage, asImages, type MediaImage } from "@/lib/types";
 
 /**
- * Dữ liệu cho "Tủ chè" – khu riêng của khách hàng. Mỗi hàm trả về đúng một ngăn tủ:
- * đơn sỉ, sổ truy xuất, hộp triện (các xưởng đã làm việc cùng).
+ * Dữ liệu cho "Tấm dệt" – khu riêng của khách hàng. Mỗi hàm trả về đúng một dải:
+ * đơn sỉ, sổ truy xuất, các xưởng đã làm việc cùng.
  */
 
 export { ORDER_LEGS, legIndex, quoteNextStep, type QuoteNextStep } from "@/lib/order-legs";
@@ -115,10 +115,10 @@ export async function tracedBatches(userId: string, take = 60) {
 export type TracedBatch = Awaited<ReturnType<typeof tracedBatches>>[number];
 
 /**
- * Hộp triện: mỗi xưởng khách đã thật sự làm việc cùng để lại một con dấu –
+ * Các xưởng khách đã thật sự làm việc cùng (mỗi xưởng một huy hiệu dệt) –
  * đã ghé (buổi trải nghiệm hoàn tất), đã đặt (chào giá được chốt) hoặc đã đánh giá.
  */
-export async function workshopSeals(userId: string) {
+export async function workedWorkshops(userId: string) {
   const [visits, orders, reviews] = await Promise.all([
     prisma.experienceBooking.findMany({
       where: { userId, status: "COMPLETED" },
@@ -150,17 +150,8 @@ export async function workshopSeals(userId: string) {
     .sort((a, b) => a.since.getTime() - b.since.getTime());
 }
 
-export type WorkshopSeal = Awaited<ReturnType<typeof workshopSeals>>[number];
+export type WorkedWorkshop = Awaited<ReturnType<typeof workedWorkshops>>[number];
 
-/** Hai chữ khắc trên con triện: chữ đầu của hai từ cuối tên xưởng ("Xưởng gốm Ông Tư" → "ÔT"). */
-export function sealGlyphs(name: string) {
-  const words = name
-    .replace(/^(xưởng gốm|xưởng|gốm|lò gốm|lò)\s+/i, "")
-    .split(/\s+/)
-    .filter(Boolean);
-  const pick = words.length >= 2 ? words.slice(-2) : words;
-  return pick.map((w) => w[0]!.toUpperCase()).join("");
-}
 
 /** Lịch sắp tới (chờ xác nhận / đã xác nhận) từ hôm nay theo giờ Việt Nam. */
 export function todayStartVn() {

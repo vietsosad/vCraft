@@ -73,7 +73,7 @@ export function UserMenu({
             exit={{ opacity: 0, y: -4, scale: 0.98, transition: { duration: 0.12 } }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              "absolute top-12 z-50 w-72 origin-top overflow-hidden rounded-[8px] border border-vua bg-su shadow-lift",
+              "absolute top-12 z-50 w-72 origin-top overflow-hidden rounded-[8px] border border-vua bg-su text-muc shadow-lift",
               align === "right" ? "right-0" : "left-0",
             )}
           >

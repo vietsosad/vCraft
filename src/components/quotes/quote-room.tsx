@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { Lock, Sparkles, Zap, RefreshCw, Factory, CheckCircle2, AlertTriangle, History, PackageCheck, Ban } from "lucide-react";
 import { api, ApiError } from "@/lib/api-client";
 import { GLAZES, QUOTE_STATUS, categoryLabel } from "@/lib/constants";
@@ -16,6 +16,7 @@ import { QuoteFlow, QuoteStatusBadge } from "./quote-status";
 import { BidForm } from "./bid-form";
 import type { QuoteView } from "./types";
 import { cn } from "@/lib/cn";
+import { Band } from "@/components/weave/band";
 
 type Selection = Record<string, number>; // bidId → số lượng
 
@@ -26,7 +27,7 @@ type ConflictResult = { label: string; status: number; message: string };
  * (chào giá mới xuất hiện không cần tải lại trang). Mọi thao tác gửi kèm `version` đang hiển thị
  * để server áp dụng khóa lạc quan.
  */
-export function QuoteRoom({ initial }: { initial: QuoteView }) {
+export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; variant?: "weave"; head?: ReactNode }) {
   const toast = useToast();
   const [q, setQ] = useState(initial);
   const [selection, setSelection] = useState<Selection>({});
@@ -150,8 +151,8 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
     }
   }
 
-  return (
-    <div className="space-y-8">
+  const header = (
+    <>
       {/* Đầu trang */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
@@ -173,17 +174,23 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
           {canCancel && <Button variant="outline" size="sm" onClick={() => setCancelOpen(true)}><Ban className="size-4" /> Hủy yêu cầu</Button>}
         </div>
       </div>
-
+    </>
+  );
+  const flow = (
+    <>
       {q.viewer.isOwner ? (
-        <div className="slip paper p-5 pl-9">
+        <div className="patch p-5 sm:px-7">
           <QuoteFlow status={q.status} />
         </div>
       ) : (
         <Card className="p-5"><QuoteFlow status={q.status} /></Card>
       )}
-
+    </>
+  );
+  const rest = (
+    <>
       {conflict && (
-        <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-datnung/50 bg-datnung/5 p-4 text-sm">
+        <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-datnung/50 bg-datnung/5 bg-[repeating-linear-gradient(45deg,rgb(163_74_35/0.09)_0_2px,transparent_2px_9px),repeating-linear-gradient(-45deg,rgb(163_74_35/0.09)_0_2px,transparent_2px_9px)] p-4 text-sm">
           <AlertTriangle className="mt-0.5 size-5 shrink-0 text-datnung" />
           <div>
             <p className="font-semibold text-datnung">409 Conflict – dữ liệu đã thay đổi</p>
@@ -216,7 +223,7 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
               {pendingBids.length === 0 ? (
                 <EmptyState title="Đang chờ các xưởng chào giá" description={`Đã mời ${q.invitations.length} xưởng. Trang sẽ tự cập nhật khi có chào giá mới.`} />
               ) : (
-                <div className="relative overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/80">
+                <div data-card="" className="relative overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/80">
                   <table className="w-full min-w-[720px] text-sm">
                     <thead className="bg-nga-dam/70 text-left text-xs uppercase tracking-wider text-tro">
                       <tr>
@@ -418,6 +425,28 @@ export function QuoteRoom({ initial }: { initial: QuoteView }) {
       {q.status === "DELIVERED" && (
         <p className="flex items-center gap-2 rounded-[var(--radius-tile)] bg-ngoc-nhat p-4 text-ngoc"><CheckCircle2 className="size-5" /> Đơn hàng đã hoàn tất và giao đủ.</p>
       )}
+    </>
+  );
+
+  // Khu khách hàng "Tấm dệt": đầu phòng (tiêu đề, huy hiệu khóa lạc quan, 6 trạng thái) dệt trong một dải đỏ dày
+  if (variant === "weave") {
+    return (
+      <div>
+        <Band hue="n7" weight="heavy" as="div" edges="bottom" bodyClassName="space-y-7 pt-14 lg:pt-16" label="Phòng báo giá">
+          {head}
+          <div className="on-band">{header}</div>
+          {flow}
+        </Band>
+        <div className="mx-auto max-w-6xl space-y-8 px-4 pb-16 pt-8 md:px-8">{rest}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {header}
+      {flow}
+      {rest}
     </div>
   );
 }

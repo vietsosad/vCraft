@@ -3,8 +3,8 @@ import { pageRequireRole } from "@/lib/auth/guards";
 import { prisma } from "@/lib/db";
 import { formatDate } from "@/lib/format";
 import { ProfileForm, PasswordForm, SessionsCard } from "@/components/account/profile-forms";
-import { DrawerHead } from "@/components/cabinet/drawer-head";
-import { WorkshopSeal } from "@/components/cabinet/hardware";
+import { BandHead } from "@/components/weave/band";
+import { WovenBadge } from "@/components/weave/woven";
 
 export const metadata: Metadata = { title: "Hồ sơ & bảo mật" };
 
@@ -14,25 +14,25 @@ export default async function AccountProfile() {
     where: { id: session.id },
     select: { name: true, email: true, phone: true, organization: true, createdAt: true },
   });
-  const initials = user.name.split(" ").filter(Boolean).slice(-2).map((w) => w[0]!.toUpperCase()).join("");
 
   return (
-    <>
-      <DrawerHead title="Hồ sơ" description="Thông tin trên danh thiếp này được tự điền vào yêu cầu báo giá và lịch hẹn. Các xưởng chỉ thấy khi bạn gửi yêu cầu hoặc đặt lịch." />
-      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
-        {/* Danh thiếp: giấy dày, tên viết Alegreya, triện riêng của khách ở góc */}
-        <div className="lg:sticky lg:top-24">
-          <div className="paper relative aspect-[1.7/1] overflow-hidden rounded-[6px] p-5 shadow-[0_1px_0_rgb(28_18_12/0.08),0_24px_36px_-26px_rgb(28_18_12/0.7)] sm:p-6">
-            <div className="hoi-van absolute inset-x-5 top-3 opacity-60" aria-hidden />
-            <div className="flex h-full flex-col justify-end">
-              <p className="font-serif text-[1.65rem] font-bold leading-tight">{user.name}</p>
-              <p className="mt-0.5 text-sm text-tro">{user.organization || "Khách của làng gốm Bát Tràng"}</p>
-              <div className="mt-3 space-y-0.5 text-[13px] text-muc/80">
-                <p className="truncate">{user.email}</p>
-                <p className="tabular">{user.phone || "Chưa có số điện thoại"}</p>
+    <div data-hue="n1">
+      <BandHead hue="n1" title="Hồ sơ" description="Thông tin trên nhãn dệt này được tự điền vào yêu cầu báo giá và lịch hẹn. Các xưởng chỉ thấy khi bạn gửi yêu cầu hoặc đặt lịch." />
+      <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-8 px-4 pb-16 pt-10 md:px-8 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)]">
+        {/* Nhãn dệt tên khách: như nhãn may trên áo thổ cẩm, chữ cái pixel dệt ở góc */}
+        <div className="lg:sticky lg:top-28">
+          <div className="band p-6" data-hue="n8" style={{ backgroundImage: "none" }}>
+            <div className="flex items-start justify-between gap-4">
+              <div className="min-w-0">
+                <p className="hieu text-[1.6rem] leading-tight">{user.name}</p>
+                <p className="soft mt-1 text-sm">{user.organization || "Khách của làng gốm Bát Tràng"}</p>
               </div>
+              <WovenBadge name={user.name} size={58} />
             </div>
-            <WorkshopSeal glyphs={initials} label={`Triện riêng của ${user.name}`} size={60} className="absolute bottom-5 right-5" style={{ rotate: "-6deg" }} />
+            <div className="mt-6 space-y-1 border-t border-white/15 pt-4 text-sm">
+              <p className="truncate">{user.email}</p>
+              <p className="tabular">{user.phone || "Chưa có số điện thoại"}</p>
+            </div>
           </div>
           <p className="mt-3 text-sm text-tro">Khách của vCraft từ {formatDate(user.createdAt)}.</p>
         </div>
@@ -44,6 +44,6 @@ export default async function AccountProfile() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

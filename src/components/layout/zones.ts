@@ -1,6 +1,6 @@
 import {
   LayoutDashboard, FileText, Heart, CalendarDays, Star, UserCog, Bell, Store, Package, Layers, BarChart3,
-  ShieldCheck, ClipboardCheck, Network, Newspaper, Users, ScrollText, Archive, QrCode, type LucideIcon,
+  ShieldCheck, ClipboardCheck, Network, Newspaper, Users, ScrollText, QrCode, type LucideIcon,
 } from "lucide-react";
 
 export type Role = "BUYER" | "ARTISAN" | "ADMIN";
@@ -31,18 +31,18 @@ export type Zone = {
  */
 export const ZONES: Record<Role, Zone> = {
   BUYER: {
-    name: "Tủ chè",
+    name: "Tấm dệt",
     roleLabel: "Khách hàng",
     home: "/account",
     loginHref: "/login",
-    avatar: "bg-lam-nen",
+    avatar: "bg-nau",
     band: "tile-lam",
     tone: "lam",
-    // Mỗi mục là một ngăn của tủ chè (xem src/components/cabinet)
+    // Mỗi mục là một dải màu của tấm thổ cẩm (xem src/components/weave)
     nav: [
-      { href: "/account", label: "Tủ chè", short: "Tủ chè", icon: Archive, exact: true },
+      { href: "/account", label: "Việc của tôi", short: "Việc", icon: LayoutDashboard, exact: true },
       { href: "/account/quotes", label: "Đơn sỉ", short: "Đơn sỉ", icon: FileText, badgeKey: "quotes" },
-      { href: "/account/bookings", label: "Lịch hẹn", short: "Lịch hẹn", icon: CalendarDays },
+      { href: "/account/bookings", label: "Lịch hẹn", short: "Lịch", icon: CalendarDays },
       { href: "/account/favorites", label: "Đã lưu", short: "Đã lưu", icon: Heart },
       { href: "/account/traces", label: "Truy xuất", short: "Truy xuất", icon: QrCode },
       { href: "/account/reviews", label: "Đánh giá", short: "Đánh giá", icon: Star, badgeKey: "reviews" },
@@ -50,7 +50,7 @@ export const ZONES: Record<Role, Zone> = {
       { href: "/account/profile", label: "Hồ sơ", short: "Hồ sơ", icon: UserCog },
     ],
     menu: [
-      { href: "/account", label: "Tủ chè của tôi", icon: Archive },
+      { href: "/account", label: "Việc của tôi", icon: LayoutDashboard },
       { href: "/account/quotes", label: "Đơn đặt sỉ", icon: FileText },
       { href: "/account/bookings", label: "Lịch hẹn nặn gốm", icon: CalendarDays },
       { href: "/account/traces", label: "Sổ truy xuất", icon: QrCode },
