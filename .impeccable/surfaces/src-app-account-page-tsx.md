@@ -1,0 +1,22 @@
+---
+version: 1
+slug: "src-app-account-page-tsx"
+primary_target: "src/app/account/page.tsx"
+related_targets: ["src/app/account/layout.tsx"]
+---
+
+Scope: khu khách hàng /account (tổng quan, đơn sỉ + phòng báo giá + phiếu yêu cầu, lịch hẹn, đã lưu, sổ truy xuất, đánh giá, thư, hồ sơ). Mode: Operate.
+Audience: chị Lan (khách sỉ, máy tính văn phòng, quay lại nhiều lần trong vài tuần) và Minh (khách tham quan, điện thoại, ngoài trời). Job: biết ngay việc gì đang chờ mình, làm tiếp việc đó, giữ lại những gì đã gắn bó với làng.
+Constraints: khu bên trong phải là thế giới riêng, KHÁC trang chủ và trang đăng nhập (không bức ghép, không mạch vữa, không Phudu, không Tủ chè); vẫn mang chất nghệ thuật, lịch sử làng nghề Việt. Tính năng giữ nguyên nhưng phải nổi bật. Phòng báo giá giữ huy hiệu "Record vN · Optimistic Lock" và thanh 6 trạng thái (đề bài yêu cầu). 44px vùng bấm, chế độ sáng/tối, giảm chuyển động.
+User decisions (21/11/2026): bỏ Tủ chè; vòng hướng đi gieo lại một lần, chủ dự án chọn lá gieo "Tấm thổ cẩm" trên trang quyết định (đã thấy rủi ro: thổ cẩm không phải nghề của Bát Tràng; hoa văn tự vẽ hình học, không chép mẫu một dân tộc).
+Build path: code-led (không có công cụ tạo ảnh).
+
+## Direction contract
+THESIS: Khu riêng của khách là một tấm thổ cẩm dài trên khung cửi: mỗi tính năng là một dải dệt có màu nhuộm và hoa văn riêng, nối nhau từ trên xuống; việc của khách với làng được "dệt" dần vào tấm vải. Từ chối khung thanh bên + lưới thẻ, và từ chối bức ghép gốm của trang chủ.
+OWN-WORLD: nền sợi bông trắng (sáng) hoặc vải chàm đen (tối) có vân dệt; dải màu nhuộm đặc chiếm trọn bề ngang: chàm, đỏ củ nâu, vàng nghệ, lá cây, xanh trời, hồng sen; biên mỗi dải là hàng hoa văn pixel dệt (trám, răng cưa, sao tám cánh, móc, ô cờ, sóng) vẽ từ lưới ô vuông; nội dung đọc nằm trên miếng vải mộc khâu đính bằng đường chỉ chạy; chữ hiệu Chakra Petch góc cắt như sợi dệt, Be Vietnam Pro cho việc, mono cho mã; chữ cái pixel dệt cho huy hiệu xưởng. Raises: mỗi tính năng giữ trọn một màu nền đặc, dải đang mở dệt rộng nhất (từ sách thẻ phân mục); xung đột hiện bằng hai đường dệt chéo (từ phiếu phòng tối); điện thoại mỗi dải chiếm gần trọn màn hình, cuộn bắt dải (từ bảng tin dọc); việc gấp dệt dày, việc xong dệt mảnh (từ bản đồ sao); một đường biên vải chia mọi vùng, không khung thẻ (từ bản đồ vườn thú); mỗi dải mang số liệu thật của khách (từ trang đơn sắc).
+STORY: mở tấm vải thấy ngay dải chàm "Việc chờ bạn" với con số lớn, rồi lướt các dải đơn sỉ, lịch hẹn, kệ, sổ truy xuất; bấm đúng dải để so chào giá, thêm buổi nặn gốm vào lịch, đánh giá hoặc gửi yêu cầu mới.
+FIRST VIEWPORT: biên vải trên cùng màu chàm đen (dấu vCraft, "Tấm dệt của Lan", chuông, giao diện, tài khoản); ngay dưới là dải sọc biên tám màu làm điều hướng (mỗi đoạn một màu tính năng, đoạn đang mở dệt dày hơn). Dải chàm dày "Chào Lan": việc chờ bạn với số lớn Chakra Petch và nút "Tạo yêu cầu báo giá"; dải đỏ đơn sỉ với các đơn đang dệt (tiến độ là sợi dọc dệt dần) bắt đầu lộ ở mép dưới. Tương tác đặc trưng: dải dệt vào khi xuất hiện, từng hàng sợi nối nhau và con thoi chạy qua mép dưới; tiến độ đơn là đoạn đã dệt kín, chặng chưa tới chỉ còn sợi dọc.
+FORM: hướng 6 trên danh sách 7 của vòng gieo lại (1 Ấn phẩm Mỹ thuật Đông Dương, 2 Thư phòng nhà nho, 3 Sổ cái nhà buôn gốm, 4 Sắc phong, 5 Đình làng, 6 Thổ cẩm, 7 Lò bầu); seed key 32b07abe, re-roll 1.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+PALETTE AMENDMENT (22/11/2026, sau khi người dùng xem bản dựng): bỏ tám màu nhuộm khác nhau vì rối mắt. Cả tấm dùng một thùng chàm: tám nấc n8 (đậm) → n1 (nhạt) theo thứ tự điều hướng, mục phân biệt bằng độ đậm và hoa văn; chỉ vàng nghệ là điểm nhấn duy nhất. Chữ màu trên miếng vải dùng token chu-cham (sáng lên ở chế độ tối). Mọi chữ phải đạt 4.5:1 ở cả hai chế độ, kể cả khi đổi chế độ bằng nút. Dòng OWN-WORLD và FIRST VIEWPORT ở trên nói "tám màu"/"dải đỏ": đọc thành tám nấc chàm.
+PALETTE AMENDMENT 2 (22/11/2026, người dùng gửi ảnh mẫu một mảnh gốm men nâu cổ có hoa văn khắc nổi phủ men trắng rạn): thay thùng chàm bằng thùng nhuộm củ nâu. Tám nấc n8 (nâu men đậm) → n1 (nâu vàng nhạt); nội dung trên miếng trắng sứ có vân men rạn rất mờ; biên dải là răng cưa nâu và hàng hạt trắng (như hàng hạt quanh miệng bình); điểm nhấn duy nhất là vàng mật ong cùng họ. Token: nau, chu-nau (sáng lên ở chế độ tối), lam của thành phần dùng chung nhuộm lại thành nâu ở cả hai chế độ. Amendment 1 (thùng chàm) không còn hiệu lực.

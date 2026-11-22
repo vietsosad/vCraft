@@ -1,91 +1,120 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Star } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { pageRequireRole } from "@/lib/auth/guards";
 import { pendingReviews } from "@/lib/services/engagement-service";
+import { workedWorkshops } from "@/lib/services/buyer-zone";
 import { formatDate } from "@/lib/format";
-import { Card, EmptyState, PageHeader } from "@/components/ui/primitives";
 import { ReviewForm } from "@/components/engagement/review-form";
 import { Stars } from "@/components/engagement/stars";
+import { Band, BandHead } from "@/components/weave/band";
+import { WovenBadge } from "@/components/weave/woven";
 
 export const metadata: Metadata = { title: "Đánh giá" };
 export const dynamic = "force-dynamic";
 
 export default async function AccountReviews() {
   const user = await pageRequireRole("/account/reviews", "BUYER");
-  const [pending, mine] = await Promise.all([
+  const [pending, mine, worked] = await Promise.all([
     pendingReviews(user.id),
     prisma.review.findMany({
       where: { authorId: user.id },
       orderBy: { createdAt: "desc" },
       include: { artisan: { select: { workshopName: true, slug: true } }, quoteRequest: { select: { requestCode: true } }, booking: { select: { code: true } } },
     }),
+    workedWorkshops(user.id),
   ]);
 
   return (
-    <>
-      <PageHeader title="Đánh giá" description="Chỉ khách đã nhận hàng hoặc đã ghé xưởng mới được đánh giá, nên mỗi lời nhận xét đều có thật." />
-      <div className="space-y-12">
-        <section>
-          <h2 className="label mb-4">Chờ bạn đánh giá ({pending.length})</h2>
+    <div data-hue="n3">
+      <BandHead
+        hue="n3"
+        title={pending.length ? "xưởng chờ bạn đánh giá" : "Đánh giá"}
+        description="Chỉ khách đã nhận hàng hoặc đã ghé xưởng mới được đánh giá, nên mỗi lời nhận xét đều có thật."
+        count={pending.length}
+      />
+      {worked.length > 0 && (
+        <Band hue="n3" weight="light" edges="bottom" label="Xưởng đã làm việc cùng" className="border-t-[3px] border-[#16171f]/20">
+          <ul className="flex flex-wrap gap-x-8 gap-y-4">
+            {worked.map((w) => (
+              <li key={w.id}>
+                <Link href={`/artisans/${w.slug}`} className="group flex items-center gap-3">
+                  <WovenBadge name={w.workshopName} size={50} faded={w.rating === null} />
+                  <span className="leading-tight">
+                    <span className="block font-semibold underline decoration-white/25 underline-offset-4 group-hover:decoration-white">{w.workshopName}</span>
+                    <span className="soft block text-xs">{[w.visited && "đã ghé", w.ordered && "đã đặt", w.rating !== null ? `bạn chấm ${w.rating}/5` : "chưa đánh giá"].filter(Boolean).join(" · ")}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Band>
+      )}
+      <div className="mx-auto max-w-6xl space-y-14 px-4 pb-16 pt-10 md:px-8">
+        <section aria-label="Chờ bạn đánh giá">
+          <h2 className="mb-4 flex items-baseline gap-2 text-[1.5rem]">Chờ bạn đánh giá <span className="nhan text-tro">{pending.length}</span></h2>
           {pending.length === 0 ? (
-            <p className="text-sm text-tro">Không có đơn hàng hay buổi trải nghiệm nào đang chờ đánh giá.</p>
+            <p className="text-lg text-tro">Không có đơn hàng hay buổi trải nghiệm nào đang chờ đánh giá.</p>
           ) : (
-            <div className="grid gap-4 lg:grid-cols-2">
-              {pending.map((p, i) => (
-                <Card key={`${p.ref}-${p.artisan.id}`} data-reveal style={{ ["--d" as string]: `${i * 60}ms` }} className="p-5">
-                  <p className="text-xs text-tro">
-                    {p.kind === "quote" ? "Đơn sỉ" : "Trải nghiệm"} <span className="code">{p.ref}</span> · {formatDate(p.date)}
-                  </p>
-                  <p className="mt-1 font-serif text-xl font-bold">{p.artisan.workshopName}</p>
-                  <p className="mb-4 text-sm text-tro">{p.title}</p>
-                  <ReviewForm
-                    artisanId={p.artisan.id}
-                    workshopName={p.artisan.workshopName}
-                    quoteCode={p.kind === "quote" ? p.ref : undefined}
-                    bookingCode={p.kind === "booking" ? p.ref : undefined}
-                  />
-                </Card>
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {pending.map((p) => (
+                <article key={`${p.ref}-${p.artisan.id}`} className="patch p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <h3 className="text-[1.3rem] leading-tight">{p.artisan.workshopName}</h3>
+                      <p className="text-sm text-tro">{p.title}</p>
+                      <p className="mt-1 text-xs text-tro">
+                        {p.kind === "quote" ? "Đơn sỉ" : "Buổi trải nghiệm"} <span className="code">{p.ref}</span> · {formatDate(p.date)}
+                      </p>
+                    </div>
+                    <WovenBadge name={p.artisan.workshopName} size={52} tone="ink" faded className="text-chu-nau" />
+                  </div>
+                  <div className="mt-4 border-t border-dashed border-muc/15 pt-4">
+                    <ReviewForm
+                      artisanId={p.artisan.id}
+                      workshopName={p.artisan.workshopName}
+                      quoteCode={p.kind === "quote" ? p.ref : undefined}
+                      bookingCode={p.kind === "booking" ? p.ref : undefined}
+                    />
+                  </div>
+                </article>
               ))}
             </div>
           )}
         </section>
-        <section>
-          <h2 className="label mb-4">Đánh giá của bạn ({mine.length})</h2>
+
+        <section aria-label="Lời bạn đã viết">
+          <h2 className="mb-4 flex items-baseline gap-2 text-[1.5rem]">Lời bạn đã viết <span className="nhan text-tro">{mine.length}</span></h2>
           {mine.length === 0 ? (
-            <EmptyState icon={<Star />} title="Bạn chưa viết đánh giá nào" />
+            <p className="text-lg text-tro">Bạn chưa viết đánh giá nào.</p>
           ) : (
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
               {mine.map((r) => (
                 <li key={r.id}>
-                  <Card className="p-5">
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <Link href={`/artisans/${r.artisan.slug}#danh-gia`} className="font-serif text-xl font-bold hover:text-lam">{r.artisan.workshopName}</Link>
-                      <Stars value={r.rating} />
+                  <article className="patch h-full p-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <Link href={`/artisans/${r.artisan.slug}#danh-gia`} className="text-[1.2rem] font-semibold leading-tight hover:underline">{r.artisan.workshopName}</Link>
+                      <WovenBadge name={r.artisan.workshopName} size={44} tone="ink" />
                     </div>
-                    <p className="mt-2">{r.comment}</p>
-                    <p className="mt-2 text-xs text-tro">
+                    <div className="mt-1"><Stars value={r.rating} /></div>
+                    <p className="mt-3 text-[1.02rem] leading-relaxed">“{r.comment}”</p>
+                    <p className="mt-3 text-xs text-tro">
                       {formatDate(r.createdAt)} ·{" "}
-                      {r.quoteRequest ? (
-                        <>đơn sỉ <span className="code">{r.quoteRequest.requestCode}</span></>
-                      ) : (
-                        <>trải nghiệm <span className="code">{r.booking?.code}</span></>
-                      )}
+                      {r.quoteRequest ? <>đơn sỉ <span className="code">{r.quoteRequest.requestCode}</span></> : <>trải nghiệm <span className="code">{r.booking?.code}</span></>}
                     </p>
                     {r.artisanReply && (
-                      <div className="mt-3 rounded-[var(--radius-tile)] bg-datnung-nhat p-3 text-sm">
-                        <p className="font-semibold text-datnung">Nghệ nhân trả lời</p>
-                        <p className="mt-0.5">{r.artisanReply}</p>
+                      <div className="mt-4 bg-chu-nau/8 p-4 text-sm">
+                        <p className="nhan text-chu-nau">Nghệ nhân trả lời</p>
+                        <p className="mt-1 italic">{r.artisanReply}</p>
                       </div>
                     )}
-                  </Card>
+                  </article>
                 </li>
               ))}
             </ul>
           )}
         </section>
       </div>
-    </>
+    </div>
   );
 }

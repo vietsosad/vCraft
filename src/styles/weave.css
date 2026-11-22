@@ -1,0 +1,372 @@
+/*
+ * "Tấm dệt" – khu riêng của khách hàng, thế giới thổ cẩm tách hẳn trang chủ và trang đăng nhập.
+ * Bảng màu lấy từ gốm men nâu cổ: nền nâu vàng trầm, hoa văn khắc nổi phủ men trắng rạn, hàng hạt trắng quanh miệng bình.
+ * Mỗi tính năng là một dải vải nhuộm củ nâu chạy hết bề ngang; cả tấm dùng MỘT thùng nhuộm: tám nấc từ đậm
+ * (n8, nhúng nhiều lần) đến nhạt (n1), phân biệt bằng độ đậm và hoa văn, không bằng màu khác.
+ * Nội dung đọc nằm trên miếng trắng sứ khâu chỉ chạy, có vân rạn rất mờ; biên dải là răng cưa nâu và hàng hạt trắng.
+ * Hoa văn sinh từ lưới ô vuông trong src/components/weave/loom.ts.
+ */
+@layer components {
+  /* ---------- Gốc khu: vân dệt của tấm vải nền ---------- */
+  .det {
+    --soi: rgb(74 50 20 / 0.05);
+    --khau: rgb(42 29 12 / 0.28);
+    background-color: var(--color-vai);
+    background-image:
+      repeating-linear-gradient(0deg, var(--soi) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, var(--soi) 0 1px, transparent 1px 4px);
+    color: var(--color-muc);
+  }
+  :root[data-theme="dark"] .det {
+    --soi: rgb(240 210 160 / 0.04);
+    --khau: rgb(255 255 255 / 0.3);
+  }
+  /* Thành phần dùng chung (biểu mẫu, phòng báo giá, đánh giá) nhuộm theo tấm dệt: lam → nâu men, mặt thẻ → trắng sứ */
+  .det {
+    --color-lam: var(--color-nau);
+    --color-lam-sang: #6e5129;
+    --color-lam-dam: #3f2d14;
+    --color-lam-nhat: #efe6d4;
+    --color-lam-nen: #4a3519;
+  }
+  :root[data-theme="dark"] .det {
+    --color-lam: #d6b57a;
+    --color-lam-sang: #e2c48e;
+    --color-lam-dam: #ecd3a6;
+    --color-lam-nhat: #2a2117;
+    --color-lam-nen: #4a3519;
+  }
+  .det {
+    --color-su: var(--color-vai-2);
+  }
+  /* Chữ hiệu của khu: Chakra Petch góc cắt như sợi dệt, chữ thường (khác chữ hoa biển hiệu của trang chủ) */
+  .det h1, .det h2, .det .hieu {
+    font-family: var(--font-chakra), var(--font-sans);
+    text-transform: none;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.02;
+  }
+  .det h3 { font-family: var(--font-sans); font-weight: 650; letter-spacing: -0.005em; }
+  .det .nhan {
+    font-family: var(--font-chakra), var(--font-sans);
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+  .det .so {
+    font-family: var(--font-chakra), var(--font-sans);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+  }
+  .det ::selection { background: var(--color-nghe); color: var(--color-mun); }
+  /* vòng focus luôn đủ tương phản: nâu trên nền sáng, màu chữ của dải trên dải, nâu lại trong miếng trắng sứ */
+  .det :focus-visible { outline-color: var(--color-chu-nau); }
+  .det .band :focus-visible, .det .selv:focus-visible { outline-color: var(--band-ink); }
+  .det .band .patch :focus-visible, .det .band [data-card] :focus-visible { outline-color: var(--color-chu-nau); }
+
+  /* ---------- Tám nấc nâu của dải ----------
+   * Sáng: n8–n5 nâu men đậm chữ ngà, n4–n1 nâu vàng nhạt chữ nâu đen (bỏ qua vùng giữa, nơi chữ nào cũng mờ).
+   * Tối: cả tám nấc dồn về vùng nâu tối, chữ ngà, để không có mảng sáng chói giữa đêm.
+   * --band-deep: màu chỉ khâu, đoạn tiến độ, răng cưa việc gấp – luôn đủ đậm trên miếng trắng sứ. */
+  .det, [data-hue] {
+    --n8: #46321a; --n7: #55401f; --n6: #644b26; --n5: #72572d;
+    --n4: #c2a674; --n3: #d1ba8e; --n2: #dfcfab; --n1: #ebe1c9;
+  }
+  :root[data-theme="dark"] .det, :root[data-theme="dark"] [data-hue] {
+    --n8: #3a2a16; --n7: #41301a; --n6: #48361e; --n5: #503c22;
+    --n4: #584226; --n3: #60482a; --n2: #684e2f; --n1: #705434;
+  }
+  [data-hue] { --band: var(--n8); --band-deep: var(--band); --band-ink: #fbf8f0; --band-soft: rgb(251 248 240 / 0.78); --band-line: rgb(251 248 240 / 0.24); }
+  [data-hue="n8"] { --band: var(--n8); }
+  [data-hue="n7"] { --band: var(--n7); }
+  [data-hue="n6"] { --band: var(--n6); }
+  [data-hue="n5"] { --band: var(--n5); }
+  [data-hue="n4"] { --band: var(--n4); }
+  [data-hue="n3"] { --band: var(--n3); }
+  [data-hue="n2"] { --band: var(--n2); }
+  [data-hue="n1"] { --band: var(--n1); }
+  :root:not([data-theme="dark"]) :is([data-hue="n4"], [data-hue="n3"], [data-hue="n2"], [data-hue="n1"]) {
+    --band-deep: #644b26;
+    --band-ink: #2a1d0c;
+    --band-soft: rgb(42 29 12 / 0.8);
+    --band-line: rgb(42 29 12 / 0.22);
+  }
+  :root[data-theme="dark"] [data-hue] { --band-ink: #f4ede0; --band-soft: rgb(244 237 224 / 0.84); --band-line: rgb(244 237 224 / 0.24); --band-deep: #c2a674; }
+
+  /* ---------- Dải dệt ---------- */
+  .band {
+    position: relative;
+    isolation: isolate;
+    background-color: var(--band);
+    color: var(--band-ink);
+  }
+  /* lớp hoa văn tông-trên-tông phủ cả dải */
+  .band::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: var(--motif);
+    pointer-events: none;
+    /* hoa văn dệt đậm ở hai mép, lặng đi sau cột nội dung để chữ luôn dễ đọc */
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 max(0px, calc(50% - 41rem)), rgb(0 0 0 / 0.28) max(4%, calc(50% - 34rem)), rgb(0 0 0 / 0.28) min(96%, calc(50% + 34rem)), #000 min(100%, calc(50% + 41rem)));
+    mask-image: linear-gradient(90deg, #000 0, #000 max(0px, calc(50% - 41rem)), rgb(0 0 0 / 0.28) max(4%, calc(50% - 34rem)), rgb(0 0 0 / 0.28) min(96%, calc(50% + 34rem)), #000 min(100%, calc(50% + 41rem)));
+  }
+  /* biên răng cưa trên và dưới */
+  .band-edge {
+    height: 15px;
+    background-image: var(--edge);
+    background-repeat: repeat-x;
+    background-size: 30px 15px;
+  }
+  .band-edge.flip { transform: scaleY(-1); }
+  .band-body { padding-block: 1.6rem; }
+  .band[data-weight="heavy"] .band-body { padding-block: clamp(2.2rem, 5vw, 3.6rem); }
+  .band[data-weight="light"] .band-body { padding-block: 1.1rem; }
+  .band .soft { color: var(--band-soft); }
+  .band a.band-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.75rem;
+    font-weight: 650;
+    text-decoration: underline;
+    text-decoration-color: var(--band-line);
+    text-underline-offset: 0.3em;
+    transition: text-decoration-color 0.25s ease-out;
+  }
+  .band a.band-link:hover { text-decoration-color: currentColor; }
+
+  /* Nút trên dải: vải mộc chữ nâu đen (chính), viền sợi (phụ) */
+  .det .btn-moc,
+  .det .btn-soi {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding-inline: 1.1rem;
+    border-radius: 3px;
+    font-weight: 650;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    transition: transform 0.2s var(--ease-out-expo), background-color 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+  .det .btn-moc {
+    background: #fbfaf5;
+    color: #2a1d0c;
+    box-shadow: inset 0 -3px 0 rgb(42 29 12 / 0.14), 0 6px 14px -10px rgb(0 0 0 / 0.6);
+  }
+  .det .btn-moc:hover { background: var(--color-nghe); }
+  .det .btn-moc:active, .det .btn-soi:active { transform: translateY(1px); }
+  .det .btn-soi {
+    color: var(--band-ink, var(--color-muc));
+    box-shadow: inset 0 0 0 1.5px currentColor;
+  }
+  .det .btn-soi:hover { background: rgb(255 255 255 / 0.1); }
+
+  /* ---------- Miếng vải mộc khâu chỉ (nội dung đọc) ---------- */
+  .patch {
+    position: relative;
+    background-color: var(--color-vai-2);
+    color: var(--color-muc);
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgb(42 29 12 / 0.1), 0 12px 22px -18px rgb(42 29 12 / 0.5);
+  }
+  /* đường chỉ chạy quanh mép, màu chỉ theo màu dải */
+  .patch::after {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    border: 1.5px dashed color-mix(in srgb, var(--band-deep, var(--color-nau)) 70%, transparent);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  a.patch, .patch.lift { transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo); }
+  a.patch:hover, .patch.lift:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgb(42 29 12 / 0.1), 0 20px 30px -20px rgb(42 29 12 / 0.55); }
+
+  /* ---------- Biên vải trên (đầu trang) ---------- */
+  .selvage-top { background-color: var(--color-mun); color: #fbfaf5; }
+
+  /* ---------- Sọc biên: điều hướng tám nấc nâu ---------- */
+  .selv {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.2rem;
+    min-height: 3.4rem;
+    padding: 0.55rem 0.75rem 0.6rem;
+    background-color: var(--band);
+    color: var(--band-ink);
+    transition: filter 0.3s ease-out;
+  }
+  .selv::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--motif);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+  }
+  .selv:hover::before { opacity: 1; }
+  .selv[aria-current="page"]::before { opacity: 1; }
+  /* sọc biên trên cùng (máy tính): đoạn đang mở dệt dài xuống thành một khối liền màu, phủ lên mép dải bên dưới */
+  .selv.top[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: calc(-1.1rem - 15px);
+    height: calc(1.1rem + 15px);
+    background-color: var(--band);
+  }
+  .selv .dem {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.5rem;
+    display: grid;
+    place-items: center;
+    min-width: 1.45rem;
+    height: 1.45rem;
+    padding: 0 0.3rem;
+    background: #fbfaf5;
+    color: #2a1d0c;
+    font: 700 0.75rem/1 var(--font-chakra), var(--font-sans);
+    box-shadow: 0 0 0 2px var(--band);
+  }
+
+  /* ---------- Tiến độ đơn: đoạn đã dệt kín, chặng chưa tới chỉ còn sợi dọc ---------- */
+  .warp {
+    height: 0.8rem;
+    background-image: repeating-linear-gradient(90deg, color-mix(in srgb, currentColor 32%, transparent) 0 1px, transparent 1px 4px);
+  }
+  .warp.done { background-color: var(--band-deep); background-image: var(--motif-on, none); }
+  .warp.now {
+    background-image:
+      linear-gradient(var(--band-deep) 0 50%, transparent 50%),
+      repeating-linear-gradient(90deg, color-mix(in srgb, currentColor 32%, transparent) 0 1px, transparent 1px 4px);
+  }
+
+  /* ---------- Con thoi chạy qua mép dưới khi dải dệt xong ---------- */
+  .shuttle {
+    position: absolute;
+    left: 0;
+    bottom: 6px;
+    width: 56px;
+    height: 14px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ---------- Tua vải cuối tấm ---------- */
+  .fringe {
+    height: 46px;
+    background-image: repeating-linear-gradient(90deg,
+      var(--n8) 0 2px, transparent 2px 7px,
+      var(--n5) 7px 9px, transparent 9px 14px,
+      #fbf8f0 14px 16px, transparent 16px 21px,
+      var(--n3) 21px 23px, transparent 23px 28px);
+    -webkit-mask-image: linear-gradient(#000 30%, transparent);
+    mask-image: linear-gradient(#000 30%, transparent);
+  }
+
+}
+
+/*
+ * Ngoài @layer để thắng các lớp tiện ích của thành phần dùng chung (biểu mẫu, phòng báo giá, đánh giá):
+ * trong tấm dệt, mọi thẻ là miếng vải mộc khâu chỉ, không thẻ bo tròn đổ bóng mềm.
+ */
+.det .font-serif { font-family: var(--font-chakra), var(--font-sans); letter-spacing: -0.01em; }
+.det [data-card] {
+  position: relative;
+  border-color: transparent;
+  border-radius: 3px;
+  background-color: var(--color-vai-2);
+  box-shadow: 0 1px 0 rgb(42 29 12 / 0.1), 0 12px 22px -18px rgb(42 29 12 / 0.5);
+}
+.det [data-card]::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1.5px dashed color-mix(in srgb, var(--band-deep, var(--color-nau)) 70%, transparent);
+  border-radius: 2px;
+  pointer-events: none;
+}
+/* Phần đầu đặt thẳng trên dải màu: chữ phụ, chữ chính và nút viền đổi theo màu dải */
+.det .on-band .text-tro { color: var(--band-soft); }
+.det .on-band .text-muc, .det .on-band .text-lam { color: var(--band-ink); }
+.det .on-band button { color: var(--band-ink); border-color: var(--band-line); background-color: transparent; }
+.det .on-band button:hover { background-color: rgb(255 255 255 / 0.12); }
+:root:not([data-theme="dark"]) .det .on-band [data-badge] { background-color: #fbfaf5; }
+/* Miếng trắng sứ: vân men rạn rất mờ như lớp men trắng trên hoa văn khắc nổi (chỉ ở chế độ sáng, phủ một lớp trắng để chữ không bị nhiễu) */
+:root:not([data-theme="dark"]) .det .patch, :root:not([data-theme="dark"]) .det [data-card] {
+  background-image: linear-gradient(rgb(253 252 248 / 0.5), rgb(253 252 248 / 0.5)), url("/textures/crackle-faint.svg");
+  background-size: auto, 360px 360px;
+}
+/* Miếng vải tối trên dải nâu tối: tách nhau bằng viền sợi mảnh và bóng đậm (chỉ khâu sáng lấy từ --band-deep) */
+:root[data-theme="dark"] .det .patch, :root[data-theme="dark"] .det [data-card] {
+  box-shadow: 0 0 0 1px rgb(226 196 142 / 0.12), 0 14px 26px -16px rgb(0 0 0 / 0.85);
+}
+
+/* Việc gấp dệt dày: dải răng cưa màu dải ở mép trên và đường chỉ đôi; việc đã xong dệt mảnh */
+.det .patch.dense { padding-top: 0.6rem; }
+.det .patch.dense::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 9px;
+  background-color: var(--band-deep, var(--color-nau));
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 4 3' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h4v1H0zM1 1h2v1H1z'/%3E%3C/svg%3E") repeat-x 0 0 / 12px 9px;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 4 3' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h4v1H0zM1 1h2v1H1z'/%3E%3C/svg%3E") repeat-x 0 0 / 12px 9px;
+}
+.det .patch.dense::after { inset: 6px; border: 3px double color-mix(in srgb, var(--band-deep, var(--color-nau)) 85%, transparent); }
+.det .patch.thin { box-shadow: 0 1px 0 rgb(42 29 12 / 0.08); }
+.det .patch.thin::after { border-color: color-mix(in srgb, var(--band-deep, var(--color-nau)) 35%, transparent); }
+
+/* ---------- Dệt vào: hàng sợi nối nhau từ trên xuống, con thoi chạy qua ---------- */
+.js [data-reveal="weave"]:not([data-in]) { opacity: 1; }
+.js [data-reveal="weave"][data-in] { animation: none; }
+.js [data-reveal="weave"]:not([data-in])::before { clip-path: inset(0 0 100% 0); }
+.js [data-reveal="weave"][data-in]::before { animation: weave-rows 0.9s steps(9, end) both; }
+.js [data-reveal="weave"][data-in] .shuttle { animation: shuttle-run 1.05s var(--ease-out-expo) 0.55s both; }
+@keyframes weave-rows {
+  from { clip-path: inset(0 0 100% 0); }
+  to { clip-path: inset(0 0 0 0); }
+}
+@keyframes shuttle-run {
+  0% { opacity: 1; transform: translateX(-60px); }
+  85% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(calc(100vw + 20px)); }
+}
+/* Chuyển trang: tấm vải trượt lên một chút */
+.weave-page { animation: weave-page 0.5s var(--ease-out-expo) both; }
+@keyframes weave-page {
+  from { opacity: 0; translate: 0 10px; }
+  to { opacity: 1; translate: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal="weave"]::before { clip-path: none !important; animation: none !important; }
+  .js [data-reveal="weave"] .shuttle { animation: none !important; opacity: 0 !important; }
+  .weave-page { animation: none; }
+  .selv { transition: none; }
+}
+
+@media print {
+  .band, .selv, .selvage-top { background: none !important; color: black !important; }
+  .band::before, .band-edge, .fringe { display: none !important; }
+}
+
+/* Điện thoại: cuộn bắt từng dải, mỗi dải gần như chiếm trọn màn hình */
+@media (max-width: 1023.98px) {
+  :root:has(.det-home) { scroll-snap-type: y proximity; }
+  .det-home > .band { scroll-snap-align: start; scroll-margin-top: calc(var(--demo-h) + 79px); }
+  .det-home > .band[data-weight="heavy"] { min-height: calc(100svh - var(--demo-h) - 79px - 64px); }
+}

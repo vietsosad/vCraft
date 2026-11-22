@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { recordScan } from "@/lib/services/batch-service";
+import { getCurrentUser } from "@/lib/auth/session";
 
 export const runtime = "nodejs";
 
@@ -10,7 +11,8 @@ export const runtime = "nodejs";
  */
 export async function GET(req: Request, { params }: { params: Promise<{ code: string }> }) {
   const { code } = await params;
-  const found = await recordScan(code);
+  const user = await getCurrentUser().catch(() => null);
+  const found = await recordScan(code, user?.id);
   const target = new URL(found ? `/trace/${encodeURIComponent(code)}` : "/trace/not-found", req.url);
   return NextResponse.redirect(target, 302);
 }

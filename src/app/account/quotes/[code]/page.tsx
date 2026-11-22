@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { pageRequireRole } from "@/lib/auth/guards";
 import { getQuoteForUser } from "@/lib/services/quotation-service";
 import { AppError } from "@/lib/errors";
@@ -23,21 +24,32 @@ export default async function QuoteDetailPage({ params }: Props) {
     // Chuẩn hóa sang JSON để dữ liệu ban đầu và dữ liệu làm mới qua API có cùng dạng
     const initial = JSON.parse(JSON.stringify(quote)) as QuoteView;
     return (
-      <>
-        <nav aria-label="Breadcrumb" className="mb-6 text-sm text-tro">
-          <Link href="/account/quotes" className="hover:text-muc">Đơn đặt sỉ</Link> / <span className="code text-muc">{code}</span>
-        </nav>
-        <QuoteRoom initial={initial} />
-      </>
+      <div data-hue="n7">
+        <QuoteRoom
+          initial={initial}
+          variant="weave"
+          head={
+            <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-sm">
+              <Link href="/account/quotes" className="band-link font-semibold">
+                <ArrowLeft className="size-4" aria-hidden /> Đơn sỉ
+              </Link>
+              <span aria-hidden className="soft">/</span>
+              <span className="soft">Phòng báo giá</span>
+            </nav>
+          }
+        />
+      </div>
     );
   } catch (err) {
     if (err instanceof AppError && (err.status === 403 || err.status === 404)) {
       return (
+        <div className="mx-auto max-w-3xl px-4 py-12">
         <EmptyState
           title={err.status === 403 ? "Bạn không có quyền xem yêu cầu này" : "Không tìm thấy yêu cầu"}
           description={err.message}
           action={<ButtonLink href="/account/quotes">Về danh sách đơn sỉ</ButtonLink>}
         />
+        </div>
       );
     }
     throw err;

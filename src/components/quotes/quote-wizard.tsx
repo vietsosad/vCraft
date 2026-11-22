@@ -102,7 +102,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
   return (
     <div className="mt-8">
       <Stepper steps={STEPS} current={step} tone="cobalt" />
-      <div className="mt-8 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-6 shadow-soft">
+      <div data-card="" className="mt-8 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-6 shadow-soft">
         {step === 0 && (
           <div className="space-y-4">
             <Field label="Tổ chức đặt hàng" htmlFor="organizationName" error={errors.organizationName} required hint="Tự điền từ hồ sơ tài khoản">

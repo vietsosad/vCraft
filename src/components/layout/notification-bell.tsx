@@ -14,7 +14,7 @@ type Item = { id: string; title: string; body: string; link: string | null; read
  * Chuông thông báo: hỏi lại server mỗi 20 giây bằng fetch (JSON) và cập nhật DOM,
  * không tải lại trang. Tạm dừng khi tab bị ẩn để tiết kiệm tài nguyên.
  */
-export function NotificationBell() {
+export function NotificationBell({ buttonClassName, allHref = "/notifications" }: { buttonClassName?: string; allHref?: string } = {}) {
   const [items, setItems] = useState<Item[]>([]);
   const [unread, setUnread] = useState(0);
   const [open, setOpen] = useState(false);
@@ -60,7 +60,7 @@ export function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="relative grid size-10 place-items-center rounded-[var(--radius-tile)] hover:bg-nga-dam"
+        className={cn("relative grid size-10 place-items-center rounded-[var(--radius-tile)] hover:bg-nga-dam", buttonClassName)}
         aria-label={`Thông báo${unread ? `, ${unread} chưa đọc` : ""}`}
         aria-expanded={open}
       >
@@ -101,7 +101,7 @@ export function NotificationBell() {
             {items.map((n) => (
               <li key={n.id}>
                 <Link
-                  href={n.link ?? "/notifications"}
+                  href={n.link ?? allHref}
                   onClick={() => setOpen(false)}
                   className={cn("block border-b border-vua/60 px-4 py-3 hover:bg-nga-dam/60", !n.readAt && "bg-datnung/[0.05]")}
                 >
@@ -115,7 +115,7 @@ export function NotificationBell() {
               </li>
             ))}
           </ul>
-          <Link href="/notifications" onClick={() => setOpen(false)} className="block px-4 py-2.5 text-center text-sm text-lam hover:bg-nga-dam">
+          <Link href={allHref} onClick={() => setOpen(false)} className="block px-4 py-2.5 text-center text-sm text-lam hover:bg-nga-dam">
             Xem tất cả
           </Link>
         </motion.div>

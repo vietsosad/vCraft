@@ -1175,6 +1175,11 @@ async function seedEngagement(ctx: {
     }
   }
   await prisma.scanEvent.createMany({ data: events });
+  // Chị Lan đã quét tem của vài lô (mua tại xưởng và nhận hàng sỉ) – để sổ truy xuất có nội dung
+  const traced = await prisma.productBatch.findMany({ where: { status: "COMPLETED", products: { some: { isPublished: true } } }, orderBy: { lockedAt: "desc" }, take: 4, select: { id: true } });
+  await prisma.scanEvent.createMany({
+    data: traced.map((b, i) => ({ batchId: b.id, userId: lan.id, createdAt: daysAgo(2 + i * 9) })),
+  });
 
   console.log("→ Thông báo cho lịch hẹn và đánh giá");
   await prisma.notification.createMany({

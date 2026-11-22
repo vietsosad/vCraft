@@ -14,10 +14,14 @@ export function UserMenu({
   user,
   align = "right",
   showSiteLink = false,
+  triggerClassName,
+  nameClassName,
 }: {
   user: { name: string; email: string; role: Role; status: string };
   align?: "right" | "left";
   showSiteLink?: boolean;
+  triggerClassName?: string;
+  nameClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -51,14 +55,14 @@ export function UserMenu({
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-[var(--radius-tile)] border border-vua bg-su py-1 pl-1 pr-2 transition hover:border-muc/30"
+        className={cn("flex items-center gap-2 rounded-[var(--radius-tile)] border border-vua bg-su py-1 pl-1 pr-2 transition hover:border-muc/30", triggerClassName)}
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label={`Tài khoản ${user.name}`}
       >
         <span className={cn("grid size-8 place-items-center rounded-[4px] text-xs font-bold text-giay", zone.avatar)}>{initials}</span>
         <span className="hidden max-w-32 truncate text-sm font-medium md:block">{user.name}</span>
-        <ChevronDown className={cn("size-4 text-tro transition-transform duration-300", open && "rotate-180")} />
+        <ChevronDown className={cn("size-4 text-tro transition-transform duration-300", nameClassName, open && "rotate-180")} />
       </button>
       <AnimatePresence>
         {open && (
@@ -69,7 +73,7 @@ export function UserMenu({
             exit={{ opacity: 0, y: -4, scale: 0.98, transition: { duration: 0.12 } }}
             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
             className={cn(
-              "absolute top-12 z-50 w-72 origin-top overflow-hidden rounded-[8px] border border-vua bg-su shadow-lift",
+              "absolute top-12 z-50 w-72 origin-top overflow-hidden rounded-[8px] border border-vua bg-su text-muc shadow-lift",
               align === "right" ? "right-0" : "left-0",
             )}
           >

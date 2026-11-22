@@ -27,6 +27,7 @@ export function Badge({
 }: HTMLAttributes<HTMLSpanElement> & { tone?: Tone | string; mark?: "dot" | "diamond" | "square" | "ring" }) {
   return (
     <span
+      data-badge=""
       className={cn(
         "inline-flex items-center gap-1.5 rounded-[4px] px-2 py-0.5 text-xs font-semibold ring-1 ring-inset whitespace-nowrap",
         tones[(tone as Tone) in tones ? (tone as Tone) : "ash"],
@@ -51,7 +52,7 @@ export function StatusMark({ mark, className }: { mark: "dot" | "diamond" | "squ
 }
 
 export function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("rounded-[8px] border border-vua bg-su shadow-soft", className)} {...props} />;
+  return <div data-card="" className={cn("rounded-[8px] border border-vua bg-su shadow-soft", className)} {...props} />;
 }
 
 export function Skeleton({ className }: { className?: string }) {

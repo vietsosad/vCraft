@@ -30,6 +30,23 @@ colors:
   on: "#fffdf8"
   giay: "#fffdf8"
   dem: "#0f1b38"
+  nau: "#5c4321"
+  chu-nau: "#6b4a1e"
+  nghe: "#d9a548"
+  mun: "#1f170d"
+  nau-n8: "#46321a"
+  nau-n7: "#55401f"
+  nau-n6: "#644b26"
+  nau-n5: "#72572d"
+  nau-n4: "#c2a674"
+  nau-n3: "#d1ba8e"
+  nau-n2: "#dfcfab"
+  nau-n1: "#ebe1c9"
+  chu-nau-dam: "#2a1d0c"
+  hat-trang: "#f6f1e6"
+  vai: "#ece4d4"
+  vai-2: "#fdfcf8"
+  soi-trang: "#fbfaf5"
   chart-1: "#1f4e9a"
   chart-2: "#a34a23"
   chart-3: "#00866a"
@@ -81,6 +98,25 @@ typography:
     fontWeight: 400
     letterSpacing: "0.02em"
     fontFeature: "\"tnum\""
+  weave-display:
+    fontFamily: "Chakra Petch, Be Vietnam Pro, system-ui, sans-serif"
+    fontSize: "clamp(2.3rem, 5vw, 3.6rem)"
+    fontWeight: 700
+    lineHeight: 1.02
+    letterSpacing: "-0.012em"
+  weave-numeral:
+    fontFamily: "Chakra Petch, Be Vietnam Pro, system-ui, sans-serif"
+    fontSize: "clamp(3rem, 7vw, 4.6rem)"
+    fontWeight: 700
+    lineHeight: 0.88
+    letterSpacing: "-0.03em"
+    fontFeature: "\"tnum\", \"lnum\""
+  weave-label:
+    fontFamily: "Chakra Petch, Be Vietnam Pro, system-ui, sans-serif"
+    fontSize: "0.74rem"
+    fontWeight: 600
+    lineHeight: 1.2
+    letterSpacing: "0.09em"
 rounded:
   hairline: "2px"
   badge: "4px"
@@ -88,6 +124,7 @@ rounded:
   card: "8px"
   mosaic: "10px"
   sheet: "14px"
+  weave: "3px"
 spacing:
   grout: "6px"
   grid-cell: "72px"
@@ -96,6 +133,7 @@ spacing:
   container-site: "1440px"
   container-zone: "72rem"
   sidebar: "272px"
+  band-edge: "15px"
 components:
   button-primary:
     backgroundColor: "{colors.lam}"
@@ -188,6 +226,56 @@ components:
     backgroundColor: "{colors.su}"
     textColor: "{colors.tro}"
     height: "56px"
+  weave-band:
+    backgroundColor: "{colors.nau-n8}"
+    textColor: "{colors.soi-trang}"
+    padding: "1.6rem 0"
+  weave-band-heavy:
+    padding: "clamp(2.2rem, 5vw, 3.6rem) 0"
+  weave-band-light:
+    padding: "1.1rem 0"
+  weave-band-pale:
+    backgroundColor: "{colors.nau-n2}"
+    textColor: "{colors.chu-nau-dam}"
+  button-moc:
+    backgroundColor: "{colors.soi-trang}"
+    textColor: "{colors.mun}"
+    rounded: "{rounded.weave}"
+    padding: "0 1.1rem"
+    height: "44px"
+  button-moc-hover:
+    backgroundColor: "{colors.nghe}"
+    textColor: "{colors.mun}"
+  button-soi:
+    textColor: "{colors.soi-trang}"
+    rounded: "{rounded.weave}"
+    padding: "0 1.1rem"
+    height: "44px"
+  patch:
+    backgroundColor: "{colors.vai-2}"
+    textColor: "{colors.muc}"
+    rounded: "{rounded.weave}"
+  selvage-header:
+    backgroundColor: "{colors.mun}"
+    textColor: "{colors.soi-trang}"
+    height: "64px"
+  selvage-segment:
+    backgroundColor: "{colors.nau-n8}"
+    textColor: "{colors.soi-trang}"
+    typography: "{typography.weave-label}"
+    padding: "0.55rem 0.75rem 0.6rem"
+    height: "3.4rem"
+  selvage-count:
+    backgroundColor: "{colors.soi-trang}"
+    textColor: "{colors.mun}"
+    padding: "0 0.3rem"
+    height: "1.45rem"
+  optimistic-lock-badge:
+    backgroundColor: "{colors.lam}"
+    textColor: "{colors.on}"
+    typography: "{typography.code}"
+    rounded: "{rounded.badge}"
+    padding: "2px 10px"
 ---
 
 # Design System: vCraft
@@ -198,7 +286,9 @@ components:
 
 vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tác phẩm, mỗi lô hàng là một viên gốm men được gắn vào cùng một lưới mạch vữa của làng. Nền là men ngà, có lưới mạch vữa xám ấm kẻ ngang dọc nhìn thấy được; những mảng lớn được tráng men thành viên gốm (men lam Bát Tràng, men ngọc, đất nung), xen giữa là viên hoa văn mây sóng lam vẽ tay, viên men rạn và viên sen. Xác thực được đóng bằng triện son. Hệ thống từ chối mô-típ "chợ thủ công nền kem, chữ có chân, điểm nhấn đất nung" quen thuộc: ở đây màu men chiếm trọn mảng, không chỉ làm điểm nhấn.
 
-Mật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Ba khu làm việc theo vai trò (khách hàng, nghệ nhân, Ban quản lý) gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Chế độ tối "lò đêm" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.
+Mật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Hai khu làm việc nghệ nhân và Ban quản lý gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Khu khách hàng không dùng khung này mà có thế giới riêng (xem dưới). Chế độ tối "lò đêm" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.
+
+Khu khách hàng (`/account`) có thế giới riêng là **Tấm dệt**: một tấm thổ cẩm dài trên khung cửi, tách hẳn khỏi bức ghép gốm của trang chủ và cổng đăng nhập (không mạch vữa, không Phudu, không viên men). Bảng màu lấy từ gốm men nâu cổ có hoa văn khắc nổi phủ men trắng rạn: nền ngà có vân dệt (tối: nâu đen); mỗi tính năng là một dải vải nhuộm củ nâu chạy hết bề ngang (tám nấc từ đậm tới nhạt, cùng một thùng nhuộm), có hoa văn pixel tông-trên-tông riêng và biên răng cưa điểm hạt trắng như hàng hạt quanh miệng bình, các dải nối nhau từ trên xuống. Nội dung đọc nằm trên miếng trắng sứ có vân rạn rất mờ, khâu đính bằng đường chỉ chạy, nổi lên trên nền nâu. Điều hướng là sọc biên tám nấc nâu, nhạt dần từ trái sang phải. Việc gấp dệt dày, việc đã xong dệt mảnh; tiến độ đơn là đoạn vải đã dệt kín, chặng chưa tới chỉ còn sợi dọc; xưởng hiện bằng huy hiệu chữ pixel dệt. Hoa văn là hình học tự vẽ trên lưới ô vuông, không chép mẫu của một dân tộc cụ thể. Tấm dệt chỉ thuộc khu khách hàng; khu nghệ nhân và Ban quản lý vẫn dùng khung thanh bên chung (`zone-shell`) và sẽ có bản sắc riêng sau, không mượn Tấm dệt.
 
 Chuyển động kể đúng một câu chuyện vật liệu: viên gốm được "gắn" vào mạch vữa (hơi lệch, hơi xoay rồi ăn khớp), bóng men lướt theo con trỏ khi rê lên viên, kim đồng hồ lò có quán tính và giảm chấn thật. Mọi chuyển động đều có đường thay thế khi người dùng giảm chuyển động.
 
@@ -209,13 +299,14 @@ Chuyển động kể đúng một câu chuyện vật liệu: viên gốm đư�
 - Bốn giọng chữ có vai rõ ràng: Phudu chữ hoa cho biển hiệu, Alegreya cho tên và lời kể, Be Vietnam Pro cho chữ làm việc, JetBrains Mono cho mã lô.
 - Trạng thái được mang bằng cả hình dấu lẫn màu.
 - Triện son là con dấu duy nhất của sự xác thực.
+- Khu khách hàng là Tấm dệt: dải nâu men cổ hết bề ngang (một thùng nhuộm, tám nấc), biên răng cưa điểm hạt trắng, miếng trắng sứ vân rạn khâu chỉ, sọc biên tám nấc nâu, chữ Chakra Petch; không lan sang khu khác.
 
 ## Colors
 
 Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chiếm mảng lớn, hai màu son và vàng rơm dành cho dấu và điểm sáng, cùng thang trung tính ấm như đất sét đã nung.
 
 ### Primary
-- **Men lam Bát Tràng** (`lam`): màu chủ đạo. Nút chính, viên biển hiệu mở màn, thanh bên khu khách hàng, vòng focus, vùng chọn chữ, hoa văn mây sóng. Biến thể `lam-sang` cho hover, `lam-dam` cho chữ đậm trên nền sáng, `lam-nhat` cho nền nhãn, `lam-nen` cho mảng lớn luôn đậm.
+- **Men lam Bát Tràng** (`lam`): màu chủ đạo. Nút chính, viên biển hiệu mở màn, vòng focus, vùng chọn chữ, hoa văn mây sóng. Biến thể `lam-sang` cho hover, `lam-dam` cho chữ đậm trên nền sáng, `lam-nhat` cho nền nhãn, `lam-nen` cho mảng lớn luôn đậm.
 
 ### Secondary
 - **Đất nung** (`datnung`): nút thứ hai (earth), thanh bên khu nghệ nhân (`datnung-nen` với chấm hạt đất), vạch chỉ mục đang xem trên điều hướng công khai, con trỏ nhập liệu, viền focus của ô nhập, nhiệt độ lò vượt 1.200°C.
@@ -224,7 +315,7 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 - **Men ngọc** (`ngoc`): nút celadon, trạng thái thành công, viên "xưởng đang mở cửa", thanh trạng thái khu Ban quản lý. `ngoc-nen` là mảng ngọc đậm.
 - **Vàng rơm** (`vangrom`): sao đánh giá và nhãn tông vàng; chữ trên nền nhạt dùng `vangrom-dam` để đủ tương phản.
 - **Đỏ son** (`doson`): triện xác thực của Ban quản lý, lỗi, hành động nguy hiểm. Không dùng làm màu trang trí.
-- **Lửa** (`lua`): chỉ dùng cho huy hiệu đếm số trên thanh bên lam của khu khách hàng.
+- **Lửa** (`lua`): huy hiệu đếm số trên thanh bên men của khung khu làm việc chung. Khu khách hàng không dùng: số đếm ở đó là ô vải trắng trên sọc biên.
 
 ### Neutral
 - **Men ngà** (`nga`): nền trang và nền hộp thoại. `nga-dam` cho hover của nút ma, nền khối trống vân men rạn, đầu bảng; `nga-sau` cho rãnh thanh đo và khung xương tải.
@@ -239,6 +330,27 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 ### Biểu đồ
 - `chart-1` lam, `chart-2` đất nung, `chart-3` ngọc lục, `chart-4` vàng đồng: bộ bốn màu đã qua kiểm tra độ sáng, mù màu và tương phản trên nền sứ; có bộ riêng cho chế độ tối. Chữ trong biểu đồ luôn dùng màu chữ, không dùng màu dữ liệu.
 
+### Tấm dệt (khu khách hàng)
+Ngả màu men nâu cổ và men trắng tinh khiết, chỉ dùng trong `/account`. Nguồn là một mảnh gốm men nâu có hoa văn hoa lá khắc nổi phủ men trắng rạn và hàng hạt trắng đắp quanh miệng: nền nâu vàng trầm, chỗ khắc sâu nâu đậm, hoa văn trắng ngà nổi lên. Lịch sử: ngày 22/11/2026 bản cầu vồng tám màu (chàm, đỏ, vàng, lá, trời, sen) bị chê rối mắt nên chuyển sang một thùng chàm; cùng ngày người dùng chọn lại bảng men nâu này. Chữ `muc` và `tro` của thế giới chung vẫn dùng trên miếng trắng sứ.
+
+Cả tấm là tám nấc nhuộm củ nâu, đặt tên theo số lần nhúng, từ `n8` đậm nhất tới `n1` nhạt nhất, đi theo thứ tự điều hướng (bảng `ROUTE_HUE` trong `src/components/weave/loom.ts`), nên sọc biên nhạt dần từ trái sang phải. Các mục phân biệt bằng độ đậm và hoa văn, không bằng màu khác:
+- `n8` Việc của tôi (hoa văn trám), `n7` Đơn sỉ và phòng báo giá (răng cưa), `n6` Lịch hẹn (sao tám cánh), `n5` Đã lưu (móc câu): nâu men đậm, chữ ngà `#fbf8f0`.
+- `n4` Truy xuất (ô cờ), `n3` Đánh giá (sóng), `n2` Thư (trám), `n1` Hồ sơ (ô cờ): nâu vàng nhạt, chữ nâu đen `#2a1d0c`.
+- Ở chế độ sáng, thang bỏ qua vùng giữa (nâu vàng trung tính như `#9a7a46` của mảnh gốm), nơi cả chữ ngà lẫn chữ nâu đen đều dưới 4.5:1. Ở chế độ tối, cả tám nấc dồn về vùng nâu tối (`#3a2a16` tới `#705434`), chữ ngà `#f4ede0`, để không có mảng sáng chói giữa đêm.
+- Giá trị tám nấc khai báo trong `src/styles/weave.css` (biến `--n1`…`--n8`), không qua `@theme`. `--band-deep` là màu chỉ khâu, đoạn tiến độ đã dệt và răng cưa việc gấp: bằng chính nấc với dải đậm, `#644b26` với dải nhạt, `#c2a674` ở chế độ tối, để luôn nhìn rõ trên miếng vải.
+- Biên mỗi dải: răng cưa tông trên tông (nâu đen `#2a1d0c` trên dải đậm, nâu men `#644b26` trên dải nhạt) và một hàng hạt trắng `#f6f1e6` (`hat-trang`). Biên vải đầu trang: răng cưa nâu men và hạt trắng trên nền nâu đen. Dấu vCraft trên biên vải dùng tông đất nung.
+
+Màu dùng chung trong khu:
+- **Nâu men** (`nau`, cố định): nút đặc và khối trên miếng vải (lọc đơn đang chọn, cuống ngày của lịch còn hiệu lực, nút tạo đơn đầu tiên). Mọi `lam` của thành phần dùng chung bên trong khu được nhuộm lại thành nâu: sáng `lam` `#5c4321`, `lam-sang` `#6e5129`, `lam-dam` `#3f2d14`, `lam-nhat` `#efe6d4`, `lam-nen` `#4a3519`; tối `lam` `#d6b57a`, `lam-sang` `#e2c48e`, `lam-dam` `#ecd3a6`, `lam-nhat` `#2a2117`. Huy hiệu Record và nút chính của phòng báo giá vì thế mang màu nâu men.
+- **Chữ nâu** (`chu-nau`, tối `#e2c48e`): mã đơn, mã lô, số chào giá, việc cần làm tiếp, liên kết trên miếng vải, dấu "đã xác nhận", vòng focus trên nền sáng. Token này sáng lên ở chế độ tối; không dùng `nau` cố định cho chữ trên miếng vải.
+- **Vàng mật ong** (`nghe`, `#d9a548`): điểm nhấn nhỏ cùng họ màu. Chữ "Tấm dệt", vùng chọn (chữ `mun`), hover nút vải mộc, nhãn "Mới" của thư chưa mở, nút "Viết đánh giá", chấm "đang mở cửa" của xưởng đã lưu. Nhãn vàng luôn dùng chữ nâu đen.
+- **Nâu đen** (`mun`, tối `#0e0a05`): biên vải trên cùng, nền thanh sọc biên dưới đáy điện thoại.
+
+Nền và chữ:
+- **Nền ngà** (`vai`, tối `#120d08`): nền cả khu, mang vân dệt hai lớp sợi 1px (ngang mỗi 3px, dọc mỗi 4px) ở 5% nâu.
+- **Trắng sứ** (`vai-2`, tối `#1e1710`): mặt miếng vải khâu; trong khu, `su` của thành phần dùng chung trỏ về token này. Ở chế độ sáng, miếng vải và thẻ phủ vân men rạn `crackle-faint.svg` (ô 360px) dưới một lớp trắng 50%, như men trắng rạn trên hoa văn khắc nổi. Ở chế độ tối, bỏ vân rạn; miếng vải và thẻ có viền sợi 1px vàng ngà 12% và bóng đậm để tách khỏi dải nâu tối.
+- **Sợi trắng** (`soi-trang`): chữ trên dải nâu đậm, mặt nút vải mộc, ô số đếm trên sọc biên. Là giá trị viết thẳng trong mã, không đổi theo chế độ. Chữ phụ trên dải dùng màu chữ của dải ở 78% (80% trên dải nhạt, 84% ở chế độ tối), đường kẻ trên dải ở 22-24%.
+
 ### Chế độ tối "lò đêm"
 Đặt qua `:root[data-theme="dark"]`, giữ nguyên tên token: `nga` thành than ấm `#120f0d`, `su` thành `#1d1713`, `vua` thành tro nung `#3b3028`, `muc` thành ngà sáng `#f1e7d7`; các men màu chuyển sang tông sáng (`lam` `#94b4ee`, `datnung` `#ec9a72`, `ngoc` `#8fc7b1`) còn `*-nen` giữ đậm để chữ `giay` vẫn đọc được. Chế độ được đặt trước khi vẽ trang bằng script khởi động, đọc `localStorage` rồi tới `prefers-color-scheme`.
 
@@ -248,6 +360,12 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 **Quy tắc Triện son.** `doson` thuộc về con dấu xác thực, lỗi và hành động phá hủy. Không có vai trò nào khác.
 
 **Quy tắc Chữ trên men.** Trên khối men đổi theo chế độ thì dùng `on`; trên viên `*-nen`, ảnh hoặc nền `dem` thì dùng `giay`. Không đặt `muc` lên men đậm.
+
+**Quy tắc Một thùng nâu.** Trong Tấm dệt, mọi dải là một nấc nâu đặc phủ hết bề ngang, và mỗi mục giữ đúng nấc của nó ở đoạn sọc biên, dải đầu trang và dải trên trang tổng quan. Không đưa thêm màu nhuộm khác (chàm, đỏ, xanh lá, hồng…) vào dải, chữ hay nhãn; muốn phân biệt thì đổi độ đậm hoặc hoa văn.
+
+**Quy tắc Men trắng nổi.** Nội dung đọc luôn nằm trên miếng trắng sứ (tối: nâu trầm), không đặt khối chữ dài thẳng lên dải trừ phần đầu dải. Màu nhấn duy nhất ngoài nâu là vàng mật ong cùng họ; không thêm màu nhấn thứ hai.
+
+**Quy tắc Chữ nâu đổi theo chế độ.** Chữ màu trên miếng vải dùng `chu-nau`, không dùng nấc dải hay `nau` cố định; mọi chữ trong khu phải đạt 4.5:1 ở cả hai chế độ, kể cả khi đổi chế độ bằng nút trong lúc đang xem.
 
 ## Typography
 
@@ -268,10 +386,22 @@ Bảng màu men gốm Bát Tràng trên nền men ngà: ba men màu chính chi�
 - **Label** (600, 0.8rem, 0.02em, chữ thường, màu `tro`): nhãn nhóm cho legend, cột chân trang, tiêu đề thẻ. Đầu cột bảng là ngoại lệ duy nhất dùng chữ hoa nhỏ giãn chữ.
 - **Code** (JetBrains Mono, 0.8em, 0.02em, số dạng bảng): mã lô, mã yêu cầu báo giá.
 
+### Tấm dệt
+**Display Font:** Chakra Petch 500/600/700 (với Be Vietnam Pro), tải ở `src/app/account/layout.tsx` thành biến `--font-chakra`, bộ con chữ `vietnamese`.
+- **Tiêu đề** (`weave-display`, chữ thường): `h1`, `h2` và `.hieu` trong khu. Góc cắt như sợi dệt, đối lập với chữ hoa Phudu của trang chủ. Lời chào trang tổng quan lớn hơn (`clamp(2.7rem, 6.5vw, 4.6rem)`); tiêu đề dải 1.8rem; tiêu đề nhóm 1.2-1.5rem. `h3` trở lại Be Vietnam Pro 650; `font-serif` của thành phần dùng chung đổi sang Chakra Petch.
+- **Số** (`weave-numeral`, `.so`): số dạng bảng, khít dòng 0.88. Số lớn của dải 3-4.6rem; ngày của lịch hẹn kế tiếp tới 8.5rem; ngày trên cuống miếng lịch 3.1rem.
+- **Nhãn** (`weave-label`, `.nhan`, chữ hoa giãn 0.09em): tên đoạn sọc biên, số đếm cạnh tiêu đề nhóm, nhãn ngày tháng, nhãn "Mới"/"Đã mở", tên trường `dt`.
+- **Chữ làm việc** Be Vietnam Pro; mã đơn, mã lô mono trong màu của mục.
+- **Chữ pixel dệt:** bảng chữ 5×7 ô (A-Z, bỏ dấu tiếng Việt) trong `loom.ts`, chỉ dùng cho huy hiệu xưởng: hai chữ cái đầu, khung viền 13 ô có hàng chấm răng cưa.
+
 ### Named Rules
 **Quy tắc Biển hiệu.** Phudu chỉ dùng chữ hoa và chỉ cho tiêu đề, số lớn và chữ trên triện; không bao giờ cho đoạn văn.
 
 **Quy tắc Không dòng mồi.** Tiêu đề đứng một mình. Nhãn nhóm không được đặt làm dòng chữ nhỏ phía trên tiêu đề.
+
+**Quy tắc Số dệt vào tên.** Trong Tấm dệt, con số là một phần của tiêu đề ("3 việc chờ bạn", "2 Đơn sỉ"): số Chakra Petch lớn đứng ngay trước chữ, cùng dòng chân. Số bằng không thì không hiện, thao tác chính thay chỗ. Không dựng hàng ô số liệu.
+
+**Quy tắc Chakra chữ thường.** Chakra Petch viết chữ thường cho tiêu đề và số; chữ hoa giãn chỉ dành cho nhãn `.nhan` ngắn, đứng cạnh hoặc dưới tiêu đề.
 
 ## Layout
 
@@ -282,6 +412,18 @@ Khung chứa: khu công khai rộng tối đa 1440px, lề 16px (điện thoại
 Điện thoại trong khu làm việc: thanh tab cố định dưới đáy, ô bấm cao 56px, năm tab cộng nút "Thêm" mở ngăn kéo dưới dạng bức ghép 3 cột. Mục tiêu bấm tối thiểu 44px (nút cỡ vừa, mục thanh bên `min-h-11`). Điểm ngắt dùng mặc định Tailwind: `sm` 640px, `md` 768px, `lg` 1024px (thanh bên xuất hiện).
 
 Khi in: ẩn đầu trang, chân trang, điều hướng; nền trắng chữ đen; mọi phần tử chờ hiệu ứng hiện ngay.
+
+**Tấm dệt (khu khách hàng).** Không có thanh bên, không lưới thẻ. Trang là các dải xếp chồng chạy hết bề ngang màn hình; nội dung trong mỗi dải nằm trong cột `max-w-6xl` với lề 16px/32px. Thứ tự từ trên xuống:
+- **Biên vải trên** nâu đen dính đầu trang (cao 64px + dải răng cưa 15px nâu men, hạt trắng): dấu vCraft trong ô vải trắng, "Tấm dệt" và "của [tên]", lối về trang triển lãm, giao diện, chuông, tài khoản.
+- **Sọc biên** (từ 1024px): lưới 8 cột bằng nhau, mỗi đoạn một nấc nâu của mục, biểu tượng trên, nhãn dưới.
+- **Các dải.** Trang tổng quan xếp bảy dải nhạt dần từ trên xuống: `n8` (lời chào, việc chờ bạn) → `n7` (đơn sỉ) → `n6` (lịch hẹn) → `n5` (đã lưu) → `n4` (truy xuất) → `n3` (xưởng đã làm cùng) → `n2` (thư), kết thúc bằng tua vải. Trang con mở bằng dải đầu trang dày của mục rồi tới nội dung trên nền sợi bông. Dải chỉ có biên răng cưa ở mép dưới khi xếp chồng, nên giữa hai dải luôn là một đường biên vải.
+- **Miếng vải** đặt trên dải hoặc trên nền sợi bông, xếp danh sách một cột khe 10-12px; lưới 2-3 cột chỉ cho miếng truy xuất gọn và tác phẩm bày (3 cột, 6 từ 768px).
+
+Dưới 1024px: sọc biên xuống đáy màn hình thành thanh 5 ô trên nền nâu đen (bốn mục chính và "Khác", ô Khác nấc `n4`), ô cao 3.6rem, ô đang mở dệt dài lên 4.1rem; chừa vùng an toàn và 96px phía dưới nội dung. "Khác" mở tấm nâu đen trồi từ dưới lên, mép trên là dải răng cưa, mỗi mục còn lại (và lối về trang triển lãm) là một dải nấc nâu của mục cao 56px. Trên trang tổng quan, cuộn bắt từng dải (`scroll-snap` gần), dải dày cao gần trọn màn hình trừ đầu trang và thanh dưới.
+
+**Quy tắc Hai mép dày, giữa lặng.** Hoa văn của dải đậm đủ ở hai mép và lặng xuống 28% sau cột nội dung (mặt nạ chuyển từ `50% ± 41rem` vào `50% ± 34rem`), để chữ trên dải luôn đọc được mà tấm vải vẫn đầy hoa văn ở lề.
+
+**Quy tắc Một đường biên vải.** Vùng được chia bằng biên răng cưa của dải và đường chỉ khâu của miếng vải, không bằng khung thẻ, đường kẻ xám hay thanh bên.
 
 ## Elevation & Depth
 
@@ -298,11 +440,25 @@ Hệ thống lai: độ sâu chủ yếu đến từ vật liệu của viên g�
 
 **Quy tắc Bóng men.** Viên tương tác được thì phản hồi hover bằng vệt sáng lướt theo con trỏ (hòa trộn `soft-light`) và nhấc 2px; khi giảm chuyển động thì không nhấc.
 
+### Tấm dệt
+Độ sâu của Tấm dệt là độ dày của vải: dải nằm phẳng, miếng vải khâu nổi lên một lớp vải, bóng mềm màu nâu đen `rgb(42 29 12)` có độ lan âm như thế giới chung. Không gờ men, không vệt sáng men.
+- **Miếng vải** (`0 1px 0 rgb(42 29 12/0.1), 0 12px 22px -18px rgb(42 29 12/0.5)`); khi là liên kết thì rê chuột nhấc 2px và đổi sang `0 1px 0 rgb(42 29 12/0.1), 0 20px 30px -20px rgb(42 29 12/0.55)`.
+- **Miếng vải dệt mảnh** chỉ còn `0 1px 0 rgb(42 29 12/0.08)`.
+- **Nút vải mộc** (`inset 0 -3px 0 rgb(42 29 12/0.14), 0 6px 14px -10px rgb(0 0 0/0.6)`), lún 1px khi ấn.
+- **Thanh sọc biên dưới đáy** (`0 -10px 24px -14px rgb(0 0 0/0.6)`).
+- **Tác phẩm bày trên vải:** ảnh tách nền `drop-shadow(0 10px 8px rgb(0 0 0/0.25))` cùng vệt tiếp đất bầu dục đen 40% ngay dưới đáy.
+
+**Quy tắc Gấp dệt dày, xong dệt mảnh.** Độ nặng thị giác đi theo độ gấp của việc. Dải có việc chờ khách dệt dày (đệm `clamp(2.2rem, 5vw, 3.6rem)`), dải bình thường 1.6rem, dải không còn việc dệt mảnh (1.1rem). Miếng vải của việc gấp có dải răng cưa màu dải ở mép trên và đường chỉ đôi 3px; việc đã xong hay đã hủy dệt mảnh: chỉ khâu 35%, gần như không bóng.
+
 ## Shapes
 
 Ngôn ngữ hình khối là viên gốm vuông vức với góc bo nhẹ. Viên gốm, nút, ô nhập, mục điều hướng: 6px (`--radius-tile`). Nhãn trạng thái và huy hiệu đếm: 4px (3px trên tab điện thoại). Thẻ, thông báo nổi, popup bản đồ: 8px. Bức ghép và hộp thoại: 10px. Ngăn kéo dưới đáy điện thoại chỉ bo hai góc trên 14px. Các vạch chỉ mục và thanh tiến trình dùng 2px hoặc bo tròn hoàn toàn khi là rãnh mảnh.
 
 Hình lặp lại: lưới mạch vữa; viên hoa văn mây sóng lam (ô 64px), viên sen (96px), viên men rạn (vết rạn mực trên nền `#e6d9bf`, ô 240px), viên đất nung có chấm hạt 7px, viên ngọc và viên lam có vệt sáng hướng tâm ở góc trên trái; vạch phân cách sóng nước lam cao 14px; khối trống phủ vân men rạn rất mờ (360px). Triện son là hình vuông bo 2.5px, viền trong, nghiêng -3° tới -6°. Dấu trạng thái là bốn hình 7-8px: tròn, thoi, vuông, vòng.
+
+Tấm dệt dùng góc vải 3px (`weave`) cho miếng vải, nút, liên kết dạng nút, khung ảnh; 2px cho đường chỉ khâu và ảnh trong miếng vải; dải và đoạn sọc biên vuông góc. Thẻ bo 8px có viền mảnh của thế giới chung, khi nằm trong khu, bị nhuộm lại thành miếng vải 3px. Hình lặp lại: biên răng cưa (lưới 10×5 ô ở 3px, lát 30×15px, hai màu so le, lật dọc ở mép dưới); hoa văn tông-trên-tông (ô 4px, 10% ngà trên dải chữ sáng, 9% nâu đen trên dải chữ tối); đường chỉ chạy đứt 1.5px cách mép 5px; dải răng cưa 9px của việc gấp; sợi dọc 1px mỗi 4px của chặng chưa dệt; tua vải bốn sợi (nâu `n8`, `n5`, ngà, `n3`) mờ dần ở cuối tấm; con thoi gỗ 56×14px.
+
+**Quy tắc Hoa văn tự dệt.** Mọi hoa văn (trám, sao tám cánh, răng cưa, móc câu, ô cờ đôi, sóng), biên và chữ huy hiệu đều sinh từ lưới ô vuông trong `src/components/weave/loom.ts` và xuất thành SVG nét sắc (`crispEdges`). Đây là hình học tự vẽ, không chép mẫu của một dân tộc cụ thể, không dùng ảnh vải thật làm nền.
 
 ## Components
 
@@ -336,12 +492,41 @@ Viên gốm men ấn được: chắc tay, có gờ men và lún khi ấn.
 
 ### Navigation
 - **Khu công khai:** mục 15px 500, mực 65% khi chờ và mực đặc khi đang xem; một viên đất nung nhỏ 5px trượt theo mục đang xem ở mép dưới đầu trang (lò xo, có chuyển động liên tục giữa các trang). Nút "Đăng ký" là nút lam; khi đã đăng nhập, lối vào khu làm việc là một viên mang men của khu.
-- **Khu làm việc:** thanh bên phủ men của vai trò (khách hàng `tile-lam`, nghệ nhân `tile-dat`, Ban quản lý nền `dem`), mục 14.5px cao tối thiểu 44px; mục đang chọn là một viên trượt bằng lò xo (giấy trên lam/đất nung, ngọc đậm trên đêm).
+- **Khu làm việc (nghệ nhân, Ban quản lý):** thanh bên phủ men của vai trò (nghệ nhân `tile-dat`, Ban quản lý nền `dem`; khu khách hàng dùng sọc biên của Tấm dệt), mục 14.5px cao tối thiểu 44px; mục đang chọn là một viên trượt bằng lò xo (giấy trên lam/đất nung, ngọc đậm trên đêm).
 - **Điện thoại:** thanh tab dưới đáy nền sứ 95% làm mờ, vạch 3px màu men của khu trượt trên tab đang chọn, ngăn kéo "Thêm" trồi lên trong 380ms.
 
 ### Dialog và thông báo nổi
 - **Hộp thoại:** phần tử `<dialog>` gốc, nền ngà, góc 10px, viền `vua`, bóng nhấc, rộng `min(92vw, 520px)`; lớp phủ `dem` 45% làm mờ 2px; trồi lên 14px trong 320ms. Tiêu đề Alegreya 2xl, chân hộp thoại có đường kẻ `vua`.
 - **Thông báo nổi:** thẻ sứ góc 8px, viền theo loại (ngọc, son, lam), vạch thời gian 3px co dần ở mép dưới (4,5 giây, lỗi 7 giây).
+
+### Tấm dệt – khu khách hàng (Signature)
+Tấm thổ cẩm chứa mọi việc khách có với làng. Thành phần nằm trong `src/components/weave/` và `src/styles/weave.css`, gốc khu là lớp `.det`; chỉ dùng trong `/account`.
+- **Biên vải trên:** nền nâu đen, chữ sợi trắng; dấu vCraft trong ô vải trắng 3px nghiêng -3° khi rê; nút trên biên là chữ trắng 75-85% với nền trắng 10% khi rê. Mép dưới là dải răng cưa nâu men điểm hạt trắng.
+- **Sọc biên (điều hướng):** mỗi đoạn là màu đặc của mục. Nghỉ: màu trơn. Rê chuột: hoa văn của mục hiện lên (0.3s). Đang mở (`aria-current="page"`): hoa văn hiện và, trên máy tính, đoạn dệt dài xuống thêm `1.1rem + 15px` kết bằng biên răng cưa, phủ lên mép dải bên dưới; trên thanh đáy điện thoại, đoạn cao lên từ 3.6rem tới 4.1rem. Số đếm là ô vải trắng 1.45rem ở góc trên phải, chữ Chakra 700, viền 2px màu đoạn, "9+" khi quá chín, có nhãn đọc đầy đủ.
+- **Dải (`Band`):** thẻ `section`/`header`/`div` có `data-hue`, độ dày `heavy`/`normal`/`light`, biên trên/dưới/cả hai/không. Liên kết trên dải gạch chân màu đường kẻ của dải, đậm dần khi rê.
+- **Dải đầu trang (`BandHead`):** dải dày, tiêu đề lớn với số việc dệt liền phía trước (ẩn khi bằng không), lời dẫn chữ phụ của dải, hàng thao tác.
+- **Nút vải mộc / nút viền sợi:** chỉ dùng trên dải. Vải mộc: nền sợi trắng chữ nâu đen 650, cao tối thiểu 44px, góc 3px; rê chuyển nền vàng mật ong. Viền sợi: trong suốt, viền trong 1.5px màu chữ của dải, rê nền trắng 10%. Cả hai lún 1px khi ấn.
+- **Miếng vải khâu (`.patch`):** mặt vải mộc góc 3px, đường chỉ chạy màu `--band-deep` 70%. Biến thể dày (`.dense`) cho việc gấp, mảnh (`.thin`) cho việc xong; `.lift` hoặc thẻ liên kết thì nhấc khi rê. Thành phần dùng chung có `data-card` (Card, bảng chào giá của phòng báo giá, khung bước của phiếu yêu cầu) tự thành miếng vải; `data-badge` trên dải được đặt nền sợi trắng; phần đầu đặt trong `.on-band` thì chữ và nút viền đổi theo màu dải.
+- **Miếng đơn sỉ (`OrderPatch`):** tên đơn, mã mono `chu-nau`, số lượng, men, ngân sách, tiến độ dệt; cột phải ngăn bằng đường đứt ghi số chào giá (số Chakra 2.4rem `chu-nau`), xưởng nhận làm, giá trị đã chốt và việc cần làm tiếp (`chu-nau` nếu có việc, tro nếu đang chờ xưởng; việc gấp nhận ra bằng miếng vải dệt dày, không bằng màu). Bản gọn một dòng cho trang tổng quan.
+- **Tiến độ dệt (`WeaveTrack`):** năm chặng thành năm ô cao 0.8rem: đã qua dệt kín màu `--band-deep` với hoa văn răng cưa 22%, chặng đang làm dệt nửa trên, chặng chưa tới chỉ còn sợi dọc; nhãn chặng 0.72rem, chặng hiện tại đậm. Đơn hủy là dòng chữ gạch ngang. Hình mang nghĩa, không chỉ màu.
+- **Miếng lịch hẹn (`VisitPatch`):** cuống ngày bên trái (nền `nau` chữ sợi trắng khi còn hiệu lực, mực 8% chữ tro khi đã qua), xưởng, trạng thái có dấu hình (`chu-nau` khi đã xác nhận), giờ, số khách, địa chỉ, lời nhắn của xưởng; lịch còn hiệu lực có "Thêm vào lịch" (.ics) và "Chỉ đường".
+- **Miếng truy xuất (`TracePatch`):** ảnh lô, tên, mã mono `chu-nau`, men, xưởng (kèm "Hộ nghề xác thực"), công đoạn, nhiệt độ nung, trạng thái khóa nhật ký; ảnh phóng 1.05 khi rê.
+- **Thư (`LetterList`):** mỗi thông báo là một miếng vải, nhóm theo ngày; thư chưa mở mang nhãn dệt "Mới" nền vàng mật ong chữ nâu đen và chữ đậm, thư đã mở mờ 80% với nhãn "Đã mở".
+- **Huy hiệu dệt (`WovenBadge`):** hai chữ cái pixel của xưởng giữa khung răng cưa (khung 55%), theo màu chữ của dải hoặc màu mực; mờ 45% là xưởng còn chờ khách đánh giá. Huy hiệu là dấu nhận diện, không phải con dấu xác thực.
+- **Tác phẩm bày trên vải (`LaidPiece`):** tác phẩm có ảnh tách nền đứng thẳng trên dải lá với bóng tiếp đất; tác phẩm chưa có thì là miếng ảnh khâu đính (miếng vải đệm 7px). Rê chuột nhấc 6px.
+- **Phòng báo giá (`QuoteRoom variant="weave"`):** đầu phòng dệt trong một dải nâu `n7` dày: tiêu đề, mã phiếu, nhãn trạng thái, **huy hiệu "Record vN · Optimistic Lock"** (nền `lam`, chữ `on`, mono 11px, biểu tượng khóa, góc 4px) và **thanh 6 trạng thái** đặt trên miếng vải ngay trong dải. Huy hiệu và thanh 6 trạng thái là yêu cầu của đề bài: bắt buộc giữ, luôn nhìn thấy trong màn hình đầu, không được ẩn, gập hay chuyển xuống dưới. Phần còn lại (bảng chào giá, xung đột 409, lịch sử) nằm dưới dải trên nền sợi bông.
+- **Tua vải và con thoi:** tua vải 46px kết thúc trang tổng quan; con thoi gỗ chạy qua mép dưới mỗi dải một lần khi dải dệt xong.
+
+**Chuyển động của Tấm dệt:**
+- **Dệt vào:** mỗi dải (`data-reveal="weave"`) khi cuộn tới thì lớp hoa văn hiện từ trên xuống theo 9 bậc trong 0.9s như từng hàng sợi được dệt; con thoi chạy ngang mép dưới trong 1.05s (`ease-out-expo`, trễ 0.55s) rồi biến mất.
+- **Chuyển trang:** mỗi lần đổi mục, tấm vải hiện từ mờ và trượt lên 10px trong 0.5s (`ease-out-expo`).
+- **Sọc biên:** hoa văn hiện trong 0.3s khi rê hoặc khi đang mở.
+- **Miếng vải và nút:** miếng vải nhấc 2px trong 0.45s; nút vải mộc đổi nền và lún trong 0.2s; mũi tên của việc trượt 4px trong 0.5s; tác phẩm bày nhấc 6px trong 0.5s.
+- **Tấm "Khác":** trồi lên trong 0.42s (`cubic-bezier(0.16, 1, 0.3, 1)`), nền mờ đen 55%; mỗi dải con trượt vào từ trái 16px, cách nhau 40ms.
+- **Giảm chuyển động:** hoa văn hiện ngay không dệt, không con thoi, không trượt trang, sọc biên không chuyển; các chuyển tiếp còn lại theo luật chung.
+- **Khi in:** bỏ màu dải, sọc biên và biên vải; ẩn hoa văn, biên răng cưa, tua vải; chữ đen.
+
+**Ảnh tách nền (nguồn gốc bắt buộc).** Tác phẩm đứng thẳng trên vải dùng ảnh WebP đã tách nền trong `public/seed/cutout/`. Mỗi ảnh tách nền bằng mô hình phông nền + GrabCut rồi duyệt tay, và phải có tệp `.webp.json` đi kèm ghi nguồn gốc ảnh gốc (nguồn, tác giả, giấy phép), ảnh dẫn xuất từ đâu và cách xử lý. Chỉ ảnh có tên trong danh mục `src/lib/cutouts.ts` mới được đứng trên vải; ảnh chụp trên nền rối giữ nguyên trong miếng ảnh khâu.
 
 ### Bức ghép mở màn (Signature)
 Viên biển hiệu lam ở giữa giữ tiêu đề Phudu và hai lối vào; quanh nó là ảnh tác phẩm thật làm viên, viên men hoa văn, viên "xưởng đang mở" với vòng sáng nhịp, viên QR mời truy xuất và viên triện xác thực. Các viên gắn vào lưới theo hiệu ứng `tile-set` (0.85s, `cubic-bezier(0.16, 1, 0.3, 1)`), độ trễ tăng 85ms tỏa ra từ viên biển hiệu, mỗi viên có độ lệch và góc xoay riêng.
@@ -385,11 +570,18 @@ Mặt số sứ cung 240°, vạch mực, cung `chart-2` chỉ phủ vùng trên
 - **Do** dùng góc 6px cho viên, nút, ô nhập; 8px cho thẻ; 10px cho bức ghép và hộp thoại.
 - **Do** mang trạng thái bằng cả hình dấu (tròn, thoi, vuông, vòng) lẫn màu.
 - **Do** dùng triện son `doson` cho mọi dấu hiệu "đã được Ban quản lý xác thực".
-- **Do** giữ mỗi khu làm việc trong men của nó: khách hàng lam, nghệ nhân đất nung, Ban quản lý đêm với điểm ngọc.
+- **Do** giữ mỗi khu làm việc trong thế giới của nó: khách hàng là Tấm dệt, nghệ nhân đất nung, Ban quản lý đêm với điểm ngọc.
 - **Do** dùng `on` cho chữ trên men đổi theo chế độ và `giay` cho chữ trên viên `*-nen`, ảnh, nền đêm.
 - **Do** cho mọi chuyển động một đường thay thế khi `prefers-reduced-motion: reduce`.
 - **Do** dùng `--chart-1..4` cho mọi chuỗi dữ liệu, cột rộng tối đa 24px, đầu cột bo 4px, kèm bảng số liệu.
 - **Do** giữ mục tiêu bấm từ 44px trở lên, 56px cho tab điện thoại.
+- **Do** giữ Tấm dệt trong khu khách hàng; khu nghệ nhân và Ban quản lý dùng khung chung cho tới khi có bản sắc riêng.
+- **Do** cho mỗi mục của Tấm dệt đúng một màu nhuộm theo `ROUTE_HUE` và dùng nó cho sọc biên, dải, chỉ khâu, mã và số của mục.
+- **Do** đặt nội dung đọc trên miếng vải mộc khâu chỉ góc 3px; để dải dệt dày khi có việc chờ khách và dệt mảnh khi không còn việc.
+- **Do** dệt con số vào tiêu đề bằng Chakra Petch và ẩn số khi bằng không.
+- **Do** sinh mọi hoa văn, biên và chữ huy hiệu từ lưới ô vuông trong `loom.ts`.
+- **Do** giữ huy hiệu "Record vN · Optimistic Lock" và thanh 6 trạng thái trong dải đầu của phòng báo giá, luôn nhìn thấy.
+- **Do** chỉ cho tác phẩm đứng thẳng trên vải khi ảnh tách nền đã được duyệt tay, có tên trong `cutouts.ts` và có tệp `.webp.json` ghi nguồn gốc; còn lại dùng miếng ảnh khâu.
 
 ### Don't:
 - **Don't** dựng giao diện kiểu chợ thủ công nền kem, chữ có chân và một điểm nhấn đất nung; men màu phải phủ mảng.
@@ -399,3 +591,8 @@ Mặt số sứ cung 240°, vạch mực, cung `chart-2` chỉ phủ vùng trên
 - **Don't** bo góc lớn kiểu viên thuốc cho nút hay thẻ.
 - **Don't** dùng `doson` để trang trí.
 - **Don't** viết màu dữ liệu lên chữ trong biểu đồ.
+- **Don't** đưa ảnh tách nền tự động chưa duyệt, hoặc thiếu tệp nguồn gốc, lên vải.
+- **Don't** đem bức ghép, mạch vữa, viên men hay Phudu vào Tấm dệt, hay đem dải dệt và sọc biên sang khu nghệ nhân, Ban quản lý.
+- **Don't** dựng ô số liệu xếp hàng hay thẻ bo tròn viền mảnh trong Tấm dệt; số dệt vào tiêu đề, nội dung nằm trên miếng vải.
+- **Don't** chép hoa văn của một dân tộc cụ thể hay dùng ảnh vải thổ cẩm thật làm nền.
+- **Don't** để hoa văn đậm sau cột chữ; giữa dải luôn lặng.
