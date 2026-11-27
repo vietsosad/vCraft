@@ -1,0 +1,49 @@
+/*
+ * "Xưởng Đất Nung" – không gian làm việc riêng của Hộ gia đình / Nghệ nhân (/dashboard/artisan).
+ * Bản sắc: đất sét nung, tro lò, men gốm mộc và con dấu triện đỏ son; tách biệt hoàn toàn với
+ * "Tấm dệt" (Khách hàng) và "Bảng điều phối" (Ban quản lý).
+ * Ưu tiên chữ to, tương phản rõ, vùng chạm >= 44–56px để nghệ nhân thao tác một tay trên điện thoại.
+ */
+@layer components {
+  .kiln-zone {
+    --kiln-grain: rgb(163 74 35 / 0.035);
+    --kiln-line: rgb(163 74 35 / 0.14);
+    background-color: var(--color-nga);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgb(200 150 46 / 0.07), transparent 42%),
+      radial-gradient(var(--kiln-grain) 1px, transparent 1px);
+    background-size: 100% 100%, 14px 14px;
+    color: var(--color-muc);
+  }
+
+  :root[data-theme="dark"] .kiln-zone {
+    --kiln-grain: rgb(244 226 215 / 0.035);
+    --kiln-line: rgb(244 226 215 / 0.14);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgb(163 74 35 / 0.12), transparent 44%),
+      radial-gradient(var(--kiln-grain) 1px, transparent 1px);
+  }
+
+  /* Thẻ xưởng: đường viền đất nung ấm, góc gốm 6px */
+  .kiln-zone [data-card] {
+    border-color: var(--color-vua);
+    box-shadow: 0 1px 2px rgb(28 26 23 / 0.04), 0 10px 24px -18px rgb(163 74 35 / 0.25);
+  }
+
+  /* Dải gạch đất nung trang trí ở mép trên thanh bên hoặc đầu khu */
+  .kiln-brick-strip {
+    height: 6px;
+    background-image: repeating-linear-gradient(
+      90deg,
+      var(--color-datnung) 0 28px,
+      var(--color-nga-sau) 28px 31px,
+      var(--color-datnung-dam) 31px 59px,
+      var(--color-nga-sau) 59px 62px
+    );
+  }
+
+  /* Vùng bấm lớn thân thiện điện thoại (56px) */
+  .kiln-touch {
+    min-height: 48px;
+  }
+}

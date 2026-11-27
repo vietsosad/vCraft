@@ -4,12 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { Download, ExternalLink, Lock, Printer, Trash2, Plus, Flame } from "lucide-react";
+import { Download, ExternalLink, Lock, Printer, Trash2, Plus, Flame, Check } from "lucide-react";
 import { api, ApiError, zodFieldErrors } from "@/lib/api-client";
 import { stageInputSchema } from "@/lib/validators/batch";
 import { STAGE_TEMPLATES, REQUIRED_STAGE_KEYS } from "@/lib/constants";
 import { formatDate, formatNumber } from "@/lib/format";
 import type { MediaImage, ProductionStage } from "@/lib/types";
+import { cn } from "@/lib/cn";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Badge, Card } from "@/components/ui/primitives";
 import { Field, Input, Select, Textarea } from "@/components/ui/form";
@@ -115,6 +116,54 @@ export function BatchManager({ batch }: { batch: BatchView }) {
           <h2 className="mt-2 text-3xl">{batch.batchTitle}</h2>
           <p className="text-sm text-tro">{formatNumber(batch.quantityProduced)} sản phẩm · {formatNumber(batch.scanCount)} lượt quét QR</p>
         </div>
+
+        {/* Tiến độ 6 công đoạn chuẩn: chạm để chọn nhanh công đoạn tiếp theo */}
+        <Card className="p-4">
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <p className="text-sm font-semibold">Tiến độ 6 công đoạn chuẩn</p>
+            <span className="font-mono text-xs text-datnung">
+              {STAGE_TEMPLATES.filter((t) => doneKeys.has(t.key)).length}/{STAGE_TEMPLATES.length}
+            </span>
+          </div>
+          <ol className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {STAGE_TEMPLATES.map((t, idx) => {
+              const done = doneKeys.has(t.key);
+              const required = REQUIRED_STAGE_KEYS.includes(t.key);
+              const selected = !locked && form.key === t.key;
+              return (
+                <li key={t.key}>
+                  <button
+                    type="button"
+                    disabled={locked}
+                    onClick={() => applyTemplate(t.key)}
+                    className={cn(
+                      "flex min-h-12 w-full items-center gap-2 rounded-[var(--radius-tile)] border px-3 py-2 text-left text-xs transition-colors",
+                      done
+                        ? "border-ngoc/40 bg-ngoc-nhat/60 text-ngoc"
+                        : selected
+                          ? "border-datnung bg-datnung-nhat/60 text-datnung-dam"
+                          : "border-vua bg-nga/50 text-tro hover:border-datnung/40 hover:text-muc",
+                      locked && "cursor-default opacity-90",
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        "grid size-5 shrink-0 place-items-center rounded-full text-[11px] font-bold",
+                        done ? "bg-ngoc text-giay" : selected ? "bg-datnung text-on" : "bg-nga-sau text-tro",
+                      )}
+                    >
+                      {done ? <Check className="size-3" aria-hidden /> : idx + 1}
+                    </span>
+                    <span className="min-w-0 flex-1 leading-tight">
+                      <span className="block truncate font-semibold">{t.title}</span>
+                      {required && !done && <span className="text-[10px] text-datnung">Bắt buộc trước khi khóa</span>}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </Card>
 
         <section>
           <h3 className="mb-4 text-2xl">Nhật ký ({batch.stages.length} mốc)</h3>

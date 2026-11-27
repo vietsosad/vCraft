@@ -2,23 +2,39 @@ import Link from "next/link";
 import { Clock, XCircle } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { pageRequireRole } from "@/lib/auth/guards";
-import { ZoneShell } from "@/components/layout/zone-shell";
+import { KilnShell } from "@/components/artisan/kiln-shell";
+import "@/styles/kiln.css";
 
-/** Khu nghệ nhân (đất nung): xưởng, lô & nhật ký, sản phẩm, báo giá, lịch trải nghiệm, đánh giá, thống kê. */
+/** Khu nghệ nhân ("Xưởng đất nung"): xưởng, lô & nhật ký, sản phẩm, báo giá, lịch trải nghiệm, đánh giá, thống kê. */
 export default async function ArtisanLayout({ children }: { children: React.ReactNode }) {
   const user = await pageRequireRole("/dashboard/artisan", "ARTISAN");
   const profile = await prisma.artisanProfile.findUnique({
     where: { userId: user.id },
-    select: { id: true, workshopName: true, slug: true, verificationStatus: true, verificationNote: true },
+    select: {
+      id: true,
+      workshopName: true,
+      slug: true,
+      verificationStatus: true,
+      verificationNote: true,
+      isOpenForVisit: true,
+    },
   });
-  const [openInvites, pendingBookings] = profile
+
+  const [openInvites, pendingBookings, unread] = profile
     ? await Promise.all([
         prisma.quoteInvitation.count({
-          where: { artisanId: profile.id, quoteRequest: { status: { in: ["SENT_TO_ARTISANS", "ARTISANS_BIDDING"] }, bids: { none: { artisanId: profile.id } } } },
+          where: {
+            artisanId: profile.id,
+            quoteRequest: {
+              status: { in: ["SENT_TO_ARTISANS", "ARTISANS_BIDDING"] },
+              bids: { none: { artisanId: profile.id } },
+            },
+          },
         }),
         prisma.experienceBooking.count({ where: { artisanId: profile.id, status: "PENDING" } }),
+        prisma.notification.count({ where: { userId: user.id, readAt: null } }),
       ])
-    : [0, 0];
+    : [0, 0, 0];
 
   const banner =
     profile?.verificationStatus === "PENDING" ? (
@@ -44,13 +60,16 @@ export default async function ArtisanLayout({ children }: { children: React.Reac
     ) : null;
 
   return (
-    <ZoneShell
+    <KilnShell
       user={{ name: user.name, email: user.email, role: user.role, status: user.status }}
-      subtitle={profile?.workshopName}
-      badges={{ quotes: openInvites, bookings: pendingBookings }}
+      workshopName={profile?.workshopName}
+      workshopSlug={profile?.slug}
+      verificationStatus={profile?.verificationStatus}
+      isOpenForVisit={profile?.isOpenForVisit}
+      badges={{ quotes: openInvites, bookings: pendingBookings, unread }}
       banner={banner}
     >
       {children}
-    </ZoneShell>
+    </KilnShell>
   );
 }
