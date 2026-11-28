@@ -73,7 +73,7 @@ export default async function ArtisanPage({ params }: Props) {
           <div className="tile tile-dat animate-tile-set col-span-6 flex flex-col justify-between gap-6 p-6 text-giay md:col-span-5 md:p-8" style={{ ["--d" as string]: "120ms" }}>
             <div>
               <div className="flex items-start justify-between gap-3">
-                <RevealText as="h1" text={w.workshopName} delay={250} className="title-xl block !text-[clamp(2.4rem,5vw,4.4rem)]" />
+                <RevealText as="h1" text={w.workshopName} delay={250} className="title-xl block" />
                 <FavoriteButton artisanId={w.id} initial={fav.artisans.includes(w.id)} canFavorite={canFav} className="shrink-0" />
               </div>
               <p className="mt-3 text-giay/85">
@@ -81,7 +81,7 @@ export default async function ArtisanPage({ params }: Props) {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-              <span className="inline-flex items-center rounded-[4px] bg-giay px-2 py-1"><VerifiedSeal className="text-doson" /></span>
+              <span className="inline-flex items-center rounded-[4px] bg-giay px-2 py-1"><VerifiedSeal className="!text-[#b3261e]" /></span>
               {w.ratingCount > 0 && (
                 <a href="#danh-gia" className="inline-flex items-center gap-2 rounded-[4px] bg-giay/12 px-2.5 py-1">
                   <Stars value={w.ratingAvg} /> <strong>{w.ratingAvg.toFixed(1)}</strong> · {w.ratingCount} đánh giá
@@ -103,7 +103,7 @@ export default async function ArtisanPage({ params }: Props) {
       <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-12 px-4 py-12 md:px-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
         <div className="min-w-0">
           <h2 className="title-md">Câu chuyện gia đình</h2>
-          {w.tagline && <p className="mt-4 font-serif text-3xl italic leading-snug text-datnung">“{w.tagline}”</p>}
+          {w.tagline && <p className="giong-ke mt-4 font-serif text-2xl italic leading-snug text-datnung">“{w.tagline}”</p>}
           <div className="prose-vcraft mt-4 text-[17px] leading-relaxed text-muc/85">
             {w.familyHistory.split("\n").map((para, i) => <p key={i}>{para}</p>)}
           </div>
@@ -151,7 +151,7 @@ export default async function ArtisanPage({ params }: Props) {
                       <Stars value={r.rating} />
                     </div>
                     <p className="text-xs text-tro">{formatDate(r.createdAt)}{r.booking ? ` · trải nghiệm ${r.booking.guests} khách` : " · đơn sỉ"}</p>
-                    <p className="mt-3 font-serif text-lg leading-snug">“{r.comment}”</p>
+                    <p className="giong-ke mt-3 font-serif text-lg leading-snug">“{r.comment}”</p>
                     {r.artisanReply && <p className="mt-3 border-t border-vua pt-3 text-sm text-tro"><strong className="text-datnung">Xưởng:</strong> {r.artisanReply}</p>}
                   </li>
                 ))}

@@ -29,7 +29,7 @@ export default async function CoordinationPage() {
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-3xl">Điều phối đơn sỉ</h2>
+        <h1>Điều phối đơn sỉ</h1>
         <p className="text-sm text-tro">BQL xem được mọi chào giá, mời thêm xưởng khi đơn ít người chào và theo dõi tiến độ từng hộ được phân bổ.</p>
       </div>
       {quotes.map((q) => {
@@ -43,9 +43,9 @@ export default async function CoordinationPage() {
                 <div className="flex flex-wrap items-center gap-2">
                   <Link href={`/dashboard/admin/coordination/${q.requestCode}`} className="font-mono text-sm text-lam hover:underline">{q.requestCode}</Link>
                   <QuoteStatusBadge status={q.status} />
-                  <span className="font-mono text-[11px] text-tro">v{q.version}</span>
+                  <span className="text-xs tabular text-tro">bản v{q.version}</span>
                 </div>
-                <p className="mt-1 font-serif text-xl">{q.title}</p>
+                <p className="mt-1 text-lg font-semibold leading-snug">{q.title}</p>
                 <p className="text-sm text-tro">{q.organizationName} · {formatNumber(q.quantity)} sp · {GLAZES[q.preferredGlaze].label} · cập nhật {formatDate(q.updatedAt, true)}</p>
               </div>
               {open && (
@@ -61,7 +61,7 @@ export default async function CoordinationPage() {
                 {q.bids.map((b) => (
                   <li key={b.id} className="rounded-md border border-vua bg-su/80 p-3 text-sm">
                     <p className="font-medium">{b.artisan.workshopName}</p>
-                    <p className="font-mono text-xs">{formatVnd(b.offeredPricePerUnit)} · {formatNumber(b.committedQuantity)} sp · {b.estimatedDays} ngày</p>
+                    <p className="text-[13px] tabular">{formatVnd(b.offeredPricePerUnit)} · {formatNumber(b.committedQuantity)} sp · {b.estimatedDays} ngày</p>
                   </li>
                 ))}
               </ul>
@@ -76,7 +76,7 @@ export default async function CoordinationPage() {
                   return (
                     <li key={b.batchCode} className="rounded-md border border-vua bg-su/80 p-3 text-sm">
                       <div className="flex items-center justify-between gap-2"><span className="font-medium">{b.artisan.workshopName}</span><Badge tone={b.status === "COMPLETED" ? "celadon" : late ? "terracotta" : "gold"}>{b.status === "COMPLETED" ? "Hoàn tất" : late ? "Cần đôn đốc" : "Đang làm"}</Badge></div>
-                      <p className="font-mono text-xs text-tro">{b.batchCode} · {formatNumber(b.allocatedQuantity ?? 0)} sp · {n}/6 công đoạn</p>
+                      <p className="text-[13px] tabular text-tro"><span className="code">{b.batchCode}</span> · {formatNumber(b.allocatedQuantity ?? 0)} sp · {n}/6 công đoạn</p>
                       <div className="mt-1.5 h-1.5 overflow-hidden rounded bg-nga-dam"><div className="h-full bg-datnung" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
                     </li>
                   );

@@ -109,7 +109,7 @@ export function DailyColumns({ data, label, unit = "lượt", color = "var(--cha
         {[0, 0.5, 1].map((t) => (
           <g key={t}>
             <line x1={pad.l} x2={w - pad.r} y1={y(max * t)} y2={y(max * t)} stroke="var(--color-vua)" strokeWidth={1} />
-            <text x={pad.l - 6} y={y(max * t) + 4} textAnchor="end" className="fill-tro text-[10px]">{compact(max * t)}</text>
+            <text x={pad.l - 6} y={y(max * t) + 4} textAnchor="end" className="fill-tro text-[12px]">{compact(max * t)}</text>
           </g>
         ))}
         {data.map((d, i) => {
@@ -144,10 +144,10 @@ export function DailyColumns({ data, label, unit = "lượt", color = "var(--cha
         })}
         <line x1={pad.l} x2={w - pad.r} y1={pad.t + ih} y2={pad.t + ih} stroke="var(--color-tro)" strokeOpacity={0.5} strokeWidth={1} />
         {data.map((d, i) => (i % Math.ceil(data.length / 6) === 0 || i === data.length - 1) && (
-          <text key={d.day} x={pad.l + i * band + band / 2} y={height - 6} textAnchor="middle" className="fill-tro text-[10px]">{fmtDay(d.day)}</text>
+          <text key={d.day} x={pad.l + i * band + band / 2} y={height - 6} textAnchor="middle" className="fill-tro text-[12px]">{fmtDay(d.day)}</text>
         ))}
         {data[peak].value > 0 && (
-          <text x={pad.l + peak * band + band / 2} y={y(data[peak].value) - 6} textAnchor="middle" className="fill-muc text-[11px] font-semibold">{data[peak].value}</text>
+          <text x={pad.l + peak * band + band / 2} y={y(data[peak].value) - 6} textAnchor="middle" className="fill-muc text-[12px] font-semibold">{data[peak].value}</text>
         )}
       </svg>
       {hover !== null && (
@@ -206,7 +206,7 @@ export function StackedColumns({
         {[0, 0.5, 1].map((t) => (
           <g key={t}>
             <line x1={pad.l} x2={w - pad.r} y1={pad.t + ih - max * t * unitH} y2={pad.t + ih - max * t * unitH} stroke="var(--color-vua)" strokeWidth={1} />
-            <text x={pad.l - 6} y={pad.t + ih - max * t * unitH + 4} textAnchor="end" className="fill-tro text-[10px]">{nf.format(max * t)}</text>
+            <text x={pad.l - 6} y={pad.t + ih - max * t * unitH + 4} textAnchor="end" className="fill-tro text-[12px]">{nf.format(max * t)}</text>
           </g>
         ))}
         {data.map((d, i) => {
@@ -234,7 +234,7 @@ export function StackedColumns({
               <rect x={pad.l + i * band} y={pad.t} width={band} height={ih} fill="transparent" tabIndex={0} className="outline-none"
                 aria-label={`Tuần ${fmtWeek(d.x)}: ${series.map((s, si) => `${d.values[si]} ${s.name}`).join(", ")}`}
                 onPointerEnter={() => setHover(i)} onPointerLeave={() => setHover(null)} onFocus={() => setHover(i)} onBlur={() => setHover(null)} />
-              <text x={pad.l + i * band + band / 2} y={height - 6} textAnchor="middle" className="fill-tro text-[10px]">{fmtWeek(d.x)}</text>
+              <text x={pad.l + i * band + band / 2} y={height - 6} textAnchor="middle" className="fill-tro text-[12px]">{fmtWeek(d.x)}</text>
             </g>
           );
         })}

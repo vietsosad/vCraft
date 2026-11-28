@@ -44,10 +44,10 @@ export default async function AccountQuotes({ searchParams }: { searchParams: Pr
       />
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-8">
         {units > 0 && (
-          <p className="mb-8 max-w-3xl text-[1.08rem] leading-relaxed">
-            Bạn đã chốt <strong className="so whitespace-nowrap text-[1.5rem] text-chu-nau">{formatNumber(units)}</strong> sản phẩm với{" "}
-            <strong className="so text-[1.5rem] text-chu-nau">{workshops}</strong> xưởng
-            {value > 0 && <>, tổng giá trị <strong className="so whitespace-nowrap text-[1.5rem] text-chu-nau">{formatVnd(value)}</strong></>}.
+          <p className="mb-7 max-w-3xl leading-relaxed">
+            Bạn đã chốt <strong className="so whitespace-nowrap text-lg text-chu-nau">{formatNumber(units)}</strong> sản phẩm với{" "}
+            <strong className="so text-lg text-chu-nau">{workshops}</strong> xưởng
+            {value > 0 && <>, tổng giá trị <strong className="so whitespace-nowrap text-lg text-chu-nau">{formatVnd(value)}</strong></>}.
           </p>
         )}
 
@@ -68,7 +68,7 @@ export default async function AccountQuotes({ searchParams }: { searchParams: Pr
                     )}
                   >
                     {d.label}
-                    <span className={cn("so grid min-w-6 place-items-center px-1 py-0.5 text-[0.8rem]", on ? "bg-[#fbfaf5] text-nau" : "bg-muc/10")}>{n}</span>
+                    <span className={cn("so grid min-w-6 place-items-center rounded-[3px] px-1 py-0.5 text-[13px]", on ? "bg-[#fbfaf5] text-nau" : "bg-muc/10 text-muc")}>{n}</span>
                   </Link>
                 </li>
               );
@@ -78,7 +78,7 @@ export default async function AccountQuotes({ searchParams }: { searchParams: Pr
 
         {quotes.length === 0 ? (
           <div className="patch max-w-2xl p-7">
-            <h2 className="text-[1.6rem]">Chưa có đơn sỉ nào</h2>
+            <h2>Chưa có đơn sỉ nào</h2>
             <p className="mt-2 text-tro">Thử đặt 500 chiếc cốc men trắng ngà in logo cho sự kiện sắp tới: hệ thống mời các xưởng có sở trường và đủ công suất, bạn nhận chào giá kín trong vài ngày.</p>
             <Link href="/account/quotes/new" className="mt-5 inline-flex min-h-11 items-center gap-2 bg-nau px-5 font-semibold text-[#fbfaf5]">Tạo yêu cầu đầu tiên</Link>
           </div>

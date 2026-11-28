@@ -55,7 +55,7 @@ export default async function TracePage({ params }: Props) {
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-muc via-muc/70 to-muc/30" />
         <div className="relative mx-auto max-w-5xl px-4 pb-14 pt-16 md:px-6 md:pt-24">
-                    <RevealText as="h1" text={b.batchTitle} className="title-xl block max-w-4xl !text-[clamp(2.3rem,5.4vw,4.6rem)]" />
+                    <RevealText as="h1" text={b.batchTitle} className="title-xl block max-w-4xl" />
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-[4px] bg-giay/10 px-3 py-1.5 text-sm"><span className="code text-[#f5c9a6]">{b.batchCode}</span></span>
             {verified && <VerifiedSeal className="rounded-[4px] bg-giay px-2 py-1 text-doson" label="Xác thực bởi BQL làng gốm Bát Tràng" />}
@@ -74,7 +74,7 @@ export default async function TracePage({ params }: Props) {
         <Link href={`/artisans/${b.artisan.slug}`} className="tile glaze flex gap-4 bg-su p-5">
           <VImage image={asImage(b.artisan.coverImage)} ratio="1/1" sizes="88px" className="w-[88px] shrink-0 rounded-[6px]" />
           <div>
-            <p className="font-serif text-2xl font-bold">{b.artisan.workshopName}</p>
+            <p className="text-xl font-semibold">{b.artisan.workshopName}</p>
             <p className="text-sm text-tro">{b.artisan.artisanTitle} {b.artisan.artisanName} · dòng họ {b.artisan.clanName} · đời thứ {b.artisan.generation}</p>
             <p className="mt-2 flex items-center gap-1 text-xs text-tro"><MapPin className="size-3.5" /> {formatCoord(b.artisan.latitude, b.artisan.longitude)}</p>
           </div>
@@ -121,7 +121,7 @@ export default async function TracePage({ params }: Props) {
                 <li key={p.slug}>
                   <Link href={`/products/${p.slug}`} className="group block">
                     <div className="tile glaze"><VImage image={asImages(p.images)[0]} ratio="4/5" sizes="200px" /></div>
-                    <p className="mt-2 font-serif text-lg font-bold leading-tight group-hover:text-lam">{p.name}</p>
+                    <p className="mt-2 font-semibold leading-snug group-hover:text-lam">{p.name}</p>
                   </Link>
                 </li>
               ))}
@@ -131,7 +131,7 @@ export default async function TracePage({ params }: Props) {
           )}
         </div>
         <aside className="tile relative h-fit overflow-visible bg-su p-5 text-center">
-          {verified && <SealStamp className="absolute -top-6 right-1 size-20 sm:-right-5" />}
+          {verified && <SealStamp className="absolute -top-6 right-1 size-20 lg:-right-5" />}
           <p className="label">Chứng nhận QR của lô</p>
           <Image src={b.qrCodeDataUrl} alt={`Mã QR ${b.batchCode}`} width={200} height={200} unoptimized className="mx-auto mt-3" />
           <p className="code mt-2 block text-sm">{b.batchCode}</p>

@@ -32,7 +32,7 @@ export default async function ReportsPage() {
   return (
     <>
       <PageHeader title="Báo cáo & xuất CSV" description="Tệp CSV mã hóa UTF-8 có BOM, mở thẳng bằng Excel mà vẫn giữ đúng dấu tiếng Việt. Mỗi lần xuất được ghi vào nhật ký." />
-      <div className="mosaic grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {REPORTS.map((r, i) => (
           <a
             key={r.kind}
@@ -40,11 +40,11 @@ export default async function ReportsPage() {
             download
             data-reveal
             style={{ ["--d" as string]: `${i * 60}ms` }}
-            className="tile glaze group flex flex-col gap-3 bg-su p-5"
+            className="group flex flex-col gap-3 rounded-[8px] border border-vua bg-su p-5 transition-colors hover:border-ngoc/50"
           >
             <span className="tile tile-ngoc grid size-11 place-items-center text-giay"><FileSpreadsheet className="size-5" aria-hidden /></span>
             <span>
-              <span className="block font-serif text-xl font-bold">{r.title}</span>
+              <span className="block text-lg font-semibold">{r.title}</span>
               <span className="mt-1 block text-sm text-tro">{r.desc}</span>
             </span>
             <span className="mt-auto flex items-center justify-between text-sm">
@@ -57,11 +57,11 @@ export default async function ReportsPage() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <Card className="p-6">
-          <h2 className="mb-5 font-serif text-2xl font-bold normal-case">Lịch trải nghiệm theo trạng thái</h2>
+          <h2 className="mb-5">Lịch trải nghiệm theo trạng thái</h2>
           <BarList label="Số lịch trải nghiệm theo trạng thái" color="var(--chart-4)" items={Object.keys(BOOKING_LABEL).map((k) => ({ label: BOOKING_LABEL[k], value: v.bookings[k] ?? 0 }))} />
         </Card>
         <Card className="p-6">
-          <h2 className="mb-5 font-serif text-2xl font-bold normal-case">Hộ nghề theo trạng thái duyệt</h2>
+          <h2 className="mb-5">Hộ nghề theo trạng thái duyệt</h2>
           <BarList
             label="Số hộ nghề theo trạng thái duyệt"
             color="var(--chart-3)"

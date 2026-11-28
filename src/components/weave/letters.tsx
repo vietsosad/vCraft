@@ -22,14 +22,14 @@ export async function LetterList({ userId }: { userId: string }) {
       {unread > 0 && (
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-lg">
-            Còn <strong className="so text-[1.6rem] text-chu-nau">{unread}</strong> thư chưa mở.
+            Còn <strong className="so text-lg text-chu-nau">{unread}</strong> thư chưa mở.
           </p>
           <MarkAllRead />
         </div>
       )}
       {[...groups.entries()].map(([day, list]) => (
         <section key={day}>
-          <h2 className="mb-3 flex items-baseline gap-2 text-[1.2rem]">
+          <h2 className="mb-3 flex items-baseline gap-2 text-base">
             {day} <span className="nhan text-tro">{list.length} thư</span>
           </h2>
           <ul className="space-y-2.5">

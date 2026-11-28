@@ -8,7 +8,7 @@ export default function CreditsPage() {
   const entries = Object.entries(manifest);
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-4xl">Ghi công ảnh tư liệu</h1>
+      <h1>Ghi công ảnh tư liệu</h1>
       <p className="mt-3 text-tro">
         Ảnh trong dữ liệu mẫu lấy từ Wikimedia Commons theo giấy phép CC BY-SA, CC BY hoặc CC0 / phạm vi công cộng, đã được thu nhỏ và nén lại. Các
         xưởng và nghệ nhân trong dữ liệu mẫu là hư cấu; điểm di sản dùng tên thật. Bản đồ © OpenStreetMap contributors.

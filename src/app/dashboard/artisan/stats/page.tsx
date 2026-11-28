@@ -27,29 +27,29 @@ export default async function ArtisanStats() {
         description="Khách quét QR bao nhiêu, chào giá trúng bao nhiêu, lớp nặn gốm đón bao nhiêu khách."
         actions={<>{exportLink("batches", "Lô (CSV)")}{exportLink("bids", "Chào giá (CSV)")}{exportLink("bookings", "Lịch hẹn (CSV)")}</>}
       />
-      <div className="mosaic grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat tone="dat" label="Lượt quét QR 30 ngày" value={<CountUp value={s.scans30} />} hint={`${formatNumber(s.scansTotal)} lượt từ trước tới nay`} />
         <Stat label="Tỉ lệ trúng chào giá" value={s.bids.winRate === null ? "—" : <CountUp value={s.bids.winRate} format="percent" />} hint={`${s.bids.accepted}/${s.bids.total} chào giá được chọn`} />
-        <Stat label="Doanh thu đơn sỉ" value={<span className="text-[2rem]"><CountUp value={s.wholesaleRevenue} format="vnd" /></span>} hint="Theo số lượng được phân bổ" />
+        <Stat label="Doanh thu đơn sỉ" value={<CountUp value={s.wholesaleRevenue} format="vnd" />} hint="Theo số lượng được phân bổ" />
         <Stat label="Khách đã đón" value={<CountUp value={s.bookings.guestsServed} />} hint={`${s.bookings.completed} buổi trải nghiệm`} />
       </div>
 
       <Card className="mt-6 p-6">
-        <h2 className="font-serif text-2xl font-bold normal-case">Lượt quét QR mỗi ngày</h2>
+        <h2>Lượt quét QR mỗi ngày</h2>
         <p className="mb-4 text-sm text-tro">Tất cả các lô của xưởng, 30 ngày gần nhất.</p>
         <DailyColumns data={s.scans} label="Lượt quét QR của xưởng mỗi ngày" unit="lượt quét" color="var(--chart-2)" />
       </Card>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <Card className="p-6">
-          <h2 className="mb-5 font-serif text-2xl font-bold normal-case">Lô được quét nhiều nhất</h2>
+          <h2 className="mb-5">Lô được quét nhiều nhất</h2>
           <BarList label="Lượt quét theo lô" color="var(--chart-2)" items={s.topBatches.map((b) => ({ label: b.batchCode, value: b.scanCount }))} />
           <p className="mt-4 text-xs text-tro">
             Mở <Link href="/dashboard/artisan/batches" className="underline">Lô & nhật ký</Link> để in thêm tem QR cho lô bán chạy.
           </p>
         </Card>
         <Card className="p-6">
-          <h2 className="mb-5 font-serif text-2xl font-bold normal-case">Lịch trải nghiệm</h2>
+          <h2 className="mb-5">Lịch trải nghiệm</h2>
           <BarList
             label="Lịch trải nghiệm theo trạng thái"
             color="var(--chart-1)"

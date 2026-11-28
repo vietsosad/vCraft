@@ -9,15 +9,15 @@ import manifest from "../../../public/seed/manifest.json";
 
 export type Portal = "customer" | "artisan" | "admin";
 
-const PORTAL_STYLE: Record<Portal, { tile: string; name: string; tone: "lam" | "datnung" | "ngoc"; pattern: string[] }> = {
-  customer: { tile: "tile-lam", name: "Cổng khách hàng", tone: "lam", pattern: ["tile-hoavan", "tile-lam", "tile-sen", "tile-ran"] },
-  artisan: { tile: "tile-dat", name: "Cổng nghệ nhân", tone: "datnung", pattern: ["tile-ran", "tile-dat", "tile-hoavan", "tile-dat"] },
-  admin: { tile: "tile-ngoc", name: "Cổng Ban quản lý", tone: "ngoc", pattern: ["tile-ngoc", "tile-hoavan", "tile-ran", "tile-ngoc"] },
+const PORTAL_STYLE: Record<Portal, { tile: string; name: string; tone: "lam" | "datnung" | "ngoc"; pattern: string }> = {
+  customer: { tile: "tile-lam", name: "Cổng khách hàng", tone: "lam", pattern: "tile-hoavan" },
+  artisan: { tile: "tile-dat", name: "Cổng nghệ nhân", tone: "datnung", pattern: "tile-ran" },
+  admin: { tile: "tile-ngoc", name: "Cổng Ban quản lý", tone: "ngoc", pattern: "tile-hoavan" },
 };
 
 /**
- * Bố cục trang xác thực: một bức gốm ghép (ảnh thật + viên men của cổng) bên trái,
- * biểu mẫu bên phải. Mỗi cổng đăng nhập mang màu men của khu nó dẫn tới.
+ * Bố cục trang xác thực: biểu mẫu là phần chính (bên phải, cột rộng hơn); bên trái là một bức ghép gọn
+ * gồm ảnh thật, một viên hoa văn và viên men mang tên cổng – mỗi cổng giữ màu men của khu nó dẫn tới.
  */
 export function AuthShell({
   title,
@@ -38,17 +38,15 @@ export function AuthShell({
 }) {
   const style = PORTAL_STYLE[portal];
   return (
-    <div className="grid min-h-dvh lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
+    <div className="grid min-h-dvh lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1fr)]">
       <div className="grout relative hidden p-6 lg:block">
-        <div className="mosaic sticky top-6 h-[calc(100dvh-3rem)] grid-cols-6 grid-rows-6">
-          <div data-reveal style={{ ["--d" as string]: "0ms" }} className="tile col-span-4 row-span-6 bg-nga-sau">
-            <VImage image={manifest[image]} ratio="auto" sizes="40vw" priority className="h-full" imgClassName="h-full object-cover" />
+        <div className="mosaic sticky top-6 h-[calc(100dvh-3rem)] grid-cols-4 grid-rows-6">
+          <div className="tile col-span-4 row-span-5 bg-nga-sau">
+            <VImage image={manifest[image]} ratio="auto" sizes="34vw" priority className="h-full" imgClassName="h-full object-cover" />
           </div>
-          {style.pattern.map((t, i) => (
-            <div key={i} data-reveal style={{ ["--d" as string]: `${120 + i * 90}ms` }} className={cn("tile col-span-2", i === 1 ? "row-span-2" : "row-span-1", t)} />
-          ))}
-          <div data-reveal style={{ ["--d" as string]: "520ms" }} className={cn("tile col-span-2 row-span-1 flex items-end p-3 text-giay", style.tile)}>
-            <p className="font-display text-lg leading-none">{style.name}</p>
+          <div className={cn("tile col-span-1 row-span-1", style.pattern)} aria-hidden />
+          <div className={cn("tile col-span-3 row-span-1 flex items-end p-3 text-giay", style.tile)}>
+            <p className="dau-hieu font-display text-lg leading-none">{style.name}</p>
           </div>
         </div>
       </div>
@@ -60,9 +58,9 @@ export function AuthShell({
           <ThemeToggle />
         </div>
         <div className={cn("mx-auto flex w-full flex-1 flex-col justify-center py-10", wide ? "max-w-2xl" : "max-w-md")}>
-          <Logo tone={style.tone} sub={style.name} className="mb-10" />
-          <h1 className="title-lg">{title}</h1>
-          <p className="mb-8 mt-3 text-tro">{subtitle}</p>
+          <Logo tone={style.tone} sub={style.name} className="mb-8" />
+          <h1>{title}</h1>
+          <p className="mb-7 mt-2 text-tro">{subtitle}</p>
           {children}
           {aside && <div className="mt-10">{aside}</div>}
         </div>

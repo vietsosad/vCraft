@@ -41,22 +41,22 @@ export default async function AdminOverview() {
         </Link>
       )}
 
-      <div className="mosaic grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat tone="ngoc" label="Hộ nghề xác thực" value={<CountUp value={stats.artisans} />} hint={`${stats.products} tác phẩm công khai`} />
         <Stat label="Lượt quét QR (30 ngày)" value={<CountUp value={v.scans30} />} hint={`${formatNumber(stats.scans)} lượt từ trước tới nay`} />
-        <Stat label="Giá trị đơn sỉ đã chốt" value={<span className="text-[2rem]"><CountUp value={v.gmv} format="vnd" /></span>} hint={`${formatNumber(v.unitsAllocated)} sản phẩm đã phân bổ`} />
+        <Stat label="Giá trị đơn sỉ đã chốt" value={<CountUp value={v.gmv} format="vnd" />} hint={`${formatNumber(v.unitsAllocated)} sản phẩm đã phân bổ`} />
         <Stat label="Khách đã đặt trải nghiệm" value={<CountUp value={v.guests} />} hint={`${v.bookings.COMPLETED ?? 0} buổi đã diễn ra`} />
       </div>
 
       <Card className="p-6">
-        <h2 className="font-serif text-2xl font-bold normal-case">Lượt quét QR mỗi ngày</h2>
+        <h2>Lượt quét QR mỗi ngày</h2>
         <p className="mb-4 text-sm text-tro">Mỗi lượt quét là một khách kiểm tra nguồn gốc ngay tại quầy hoặc tại nhà.</p>
         <DailyColumns data={v.scans} label="Lượt quét QR mỗi ngày, 30 ngày gần nhất" unit="lượt quét" />
       </Card>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <Card className="p-6">
-          <h2 className="font-serif text-2xl font-bold normal-case">Đăng ký mới theo tuần</h2>
+          <h2>Đăng ký mới theo tuần</h2>
           <p className="mb-4 text-sm text-tro">8 tuần gần nhất.</p>
           <StackedColumns
             label="Đăng ký mới theo tuần, khách hàng và hộ nghề"
@@ -65,7 +65,7 @@ export default async function AdminOverview() {
           />
         </Card>
         <Card className="p-6">
-          <h2 className="font-serif text-2xl font-bold normal-case">Yêu cầu báo giá theo trạng thái</h2>
+          <h2>Yêu cầu báo giá theo trạng thái</h2>
           <p className="mb-5 text-sm text-tro">Theo máy trạng thái của sàn báo giá.</p>
           <BarList
             label="Số yêu cầu báo giá theo trạng thái"
@@ -73,13 +73,13 @@ export default async function AdminOverview() {
           />
         </Card>
         <Card className="p-6">
-          <h2 className="font-serif text-2xl font-bold normal-case">Xưởng nhận nhiều đơn sỉ nhất</h2>
+          <h2>Xưởng nhận nhiều đơn sỉ nhất</h2>
           <p className="mb-5 text-sm text-tro">Tổng số sản phẩm được phân bổ khi khách chốt.</p>
           <BarList label="Số sản phẩm được phân bổ theo xưởng" color="var(--chart-3)" items={v.topWorkshops.map((t) => ({ label: t.name, value: t.units }))} />
         </Card>
         <Card className="p-6">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-serif text-2xl font-bold normal-case">Nhật ký thao tác</h2>
+            <h2>Nhật ký thao tác</h2>
             <Link href="/dashboard/admin/audit" className="inline-flex items-center gap-1 text-sm font-semibold text-ngoc">Tất cả <ArrowRight className="size-4" /></Link>
           </div>
           <ul className="divide-y divide-vua text-sm">

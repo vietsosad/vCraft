@@ -4,7 +4,7 @@ import { mediaImageSchema } from "@/lib/types";
 
 export const batchCreateSchema = z.object({
   batchTitle: z.string().trim().min(5, "Tên lô cần ít nhất 5 ký tự.").max(120),
-  glazeType: z.enum(GLAZE_KEYS as [string, ...string[]]),
+  glazeType: z.enum(GLAZE_KEYS as [string, ...string[]], { errorMap: () => ({ message: "Chọn một dòng men." }) }),
   quantityProduced: z.coerce.number().int().min(1, "Số lượng tối thiểu là 1.").max(100000),
   clayOrigin: z.string().trim().min(3).max(200),
   kilnType: z.string().trim().min(3).max(120),

@@ -15,7 +15,7 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   if (!p) notFound();
   return (
     <div className="mx-auto max-w-3xl">
-      <h2 className="mb-6 text-3xl">Sửa sản phẩm</h2>
+      <h1 className="mb-6">Sửa sản phẩm</h1>
       <ProductForm
         id={p.id}
         batches={batches}

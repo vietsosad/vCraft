@@ -79,8 +79,8 @@ export function EmptyState({
         <span className="tile tile-ran size-7 rounded-[3px]" />
         <span className="tile tile-lam grid size-7 place-items-center rounded-[3px] text-giay">{icon && <span className="[&_svg]:size-4">{icon}</span>}</span>
       </div>
-      <p className="font-serif text-2xl font-bold">{title}</p>
-      {description && <p className="mx-auto mt-2 max-w-md text-sm text-tro">{description}</p>}
+      <p className="text-lg font-semibold">{title}</p>
+      {description && <p className="mx-auto mt-1.5 max-w-md text-[15px] text-tro">{description}</p>}
       {action && <div className="mt-6 flex justify-center">{action}</div>}
     </div>
   );
@@ -110,13 +110,13 @@ export function SectionHeading({
   );
 }
 
-/** Đầu trang trong các khu làm việc. */
+/** Đầu trang trong các khu làm việc: tiêu đề → mô tả ngắn → hành động (chữ theo phạm vi thao tác). */
 export function PageHeader({ title, description, actions, className }: { title: ReactNode; description?: ReactNode; actions?: ReactNode; className?: string }) {
   return (
-    <div className={cn("mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between", className)}>
+    <div className={cn("mb-7 flex flex-col gap-4 md:flex-row md:items-end md:justify-between", className)}>
       <div className="min-w-0">
-        <h1 className="title-md">{title}</h1>
-        {description && <p className="mt-2 max-w-2xl text-tro">{description}</p>}
+        <h1 className="op-h1">{title}</h1>
+        {description && <p className="mt-1.5 max-w-2xl text-tro">{description}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
@@ -153,14 +153,22 @@ export function SealStamp({ className, lines = ["ĐÃ XÁC THỰC", "BQL BÁT TR
   );
 }
 
-/** Ô số liệu dạng viên gốm: số lớn Phudu, nhãn rõ, gợi ý nhỏ. */
+/**
+ * Ô số liệu nền nhẹ: nhãn → số (Be Vietnam Pro, số đều cột) → gợi ý.
+ * Màu vai trò chỉ ở vạch trên và con số; ô có tone (việc cần xử lý) thêm nền nhạt của màu đó để nổi hơn ô thường.
+ */
 export function Stat({ label, value, hint, tone = "plain", className }: { label: string; value: ReactNode; hint?: ReactNode; tone?: "plain" | "lam" | "dat" | "ngoc"; className?: string }) {
-  const tile = { plain: "bg-su", lam: "tile-lam text-giay", dat: "tile-dat text-giay", ngoc: "tile-ngoc text-giay" }[tone];
+  const look = {
+    plain: { surface: "bg-su", bar: "before:bg-vua", num: "text-muc" },
+    lam: { surface: "bg-lam-nhat", bar: "before:bg-lam", num: "text-lam" },
+    dat: { surface: "bg-datnung-nhat", bar: "before:bg-datnung", num: "text-datnung" },
+    ngoc: { surface: "bg-ngoc-nhat", bar: "before:bg-ngoc", num: "text-ngoc" },
+  }[tone];
   return (
-    <div className={cn("tile p-5", tile, className)}>
-      <p className={cn("text-sm font-medium", tone === "plain" ? "text-tro" : "text-giay/80")}>{label}</p>
-      <p className="mt-2 font-display text-[2.6rem] leading-none">{value}</p>
-      {hint && <p className={cn("mt-2 text-xs", tone === "plain" ? "text-tro" : "text-giay/75")}>{hint}</p>}
+    <div className={cn("relative overflow-hidden rounded-[8px] border border-vua p-5 before:absolute before:inset-x-0 before:top-0 before:h-[3px]", look.surface, look.bar, className)}>
+      <p className="text-sm font-medium text-tro">{label}</p>
+      <p className={cn("op-stat mt-1.5", look.num)}>{value}</p>
+      {hint && <p className="mt-1 text-[13px] leading-snug text-tro">{hint}</p>}
     </div>
   );
 }

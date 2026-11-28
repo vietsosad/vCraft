@@ -56,14 +56,14 @@ export default async function ArtisanBookings() {
             return (
               <section key={day} data-reveal style={{ ["--d" as string]: `${di * 60}ms` }}>
                 <h2 className="mb-3 flex items-baseline gap-3">
-                  <span className="font-display text-2xl">{DOW[d.getUTCDay()]} {d.getUTCDate()}/{d.getUTCMonth() + 1}</span>
+                  <span className="text-xl font-bold tabular">{DOW[d.getUTCDay()]} {d.getUTCDate()}/{d.getUTCMonth() + 1}</span>
                   <span className="text-sm text-tro">{list.length} lịch · {guests} khách</span>
                 </h2>
                 <ul className="space-y-2">
                   {list.map((b) => (
                     <li key={b.id} className="tile flex flex-col gap-3 bg-su p-4 md:flex-row md:items-center">
                       <div className={cn("tile grid h-16 w-20 shrink-0 place-items-center text-center leading-none", b.status === "CONFIRMED" ? "tile-dat text-giay" : "bg-datnung-nhat text-datnung")}>
-                        <span className="font-display text-2xl">{b.slot}</span>
+                        <span className="text-xl font-bold tabular">{b.slot}</span>
                       </div>
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">

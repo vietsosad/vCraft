@@ -8,7 +8,7 @@ export default async function EditNewsPage({ params }: { params: Promise<{ id: s
   if (!n) notFound();
   return (
     <div>
-      <h2 className="mb-6 text-3xl">Sửa tin</h2>
+      <h1 className="mb-6">Sửa tin</h1>
       <NewsEditor id={n.id} initial={{ title: n.title, category: n.category, excerpt: n.excerpt, content: n.content, coverImage: asImage(n.coverImage), isUrgent: n.isUrgent, isPublished: n.isPublished }} />
     </div>
   );

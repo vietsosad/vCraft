@@ -74,9 +74,9 @@ export default async function ProductPage({ params }: Props) {
             </Link>
             {p.isUniquePiece && <span className="rounded-[4px] bg-dem px-2.5 py-1 text-xs font-semibold text-giay">Độc bản</span>}
           </div>
-          <RevealText as="h1" text={p.name} className="mt-4 block font-serif text-4xl font-bold normal-case leading-tight md:text-5xl" />
-          <p className="mt-4 font-display text-3xl tabular">{formatVnd(p.priceVnd)}</p>
-          <p className="mt-6 text-[17px] leading-relaxed text-muc/80">{p.story}</p>
+          <RevealText as="h1" text={p.name} className="mt-4 block md:text-[2rem]" />
+          <p className="mt-2 text-2xl font-bold tabular">{formatVnd(p.priceVnd)}</p>
+          <p className="giong-ke mt-5 font-serif text-lg leading-relaxed text-muc/85">{p.story}</p>
 
           <dl className="mt-8 grid grid-cols-2 gap-4 border-y border-vua py-6 text-sm sm:grid-cols-4">
             <div><dt className="flex items-center gap-1 text-tro"><Ruler className="size-3.5" /> Kích thước</dt><dd className="mt-1">{p.dimensions}</dd></div>
@@ -90,7 +90,7 @@ export default async function ProductPage({ params }: Props) {
               <Image src={p.currentBatch.qrCodeDataUrl} alt={`Mã QR lô ${p.currentBatch.batchCode}`} width={96} height={96} unoptimized className="shrink-0 rounded" />
               <div className="min-w-0">
                 <p className="flex items-center gap-1.5 text-sm font-semibold text-ngoc"><ShieldCheck className="size-4" /> Đã xác thực nguồn gốc</p>
-                <p className="text-xs text-tro"><span className="code">{p.currentBatch.batchCode}</span> · {stages.length} mốc nhật ký</p>
+                <p className="text-[13px] text-tro"><span className="code">{p.currentBatch.batchCode}</span> · {stages.length} mốc nhật ký</p>
                 <p className="mt-1 text-sm">Mọi sản phẩm cùng lô “{p.currentBatch.batchTitle}” dùng chung mã QR này.</p>
                 <Link href={`/trace/${p.currentBatch.batchCode}`} className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-lam underline-offset-4 hover:underline">
                   <QrCode className="size-4" /> Xem hành trình ra đời
@@ -112,7 +112,7 @@ export default async function ProductPage({ params }: Props) {
             <VImage image={asImage(p.artisan.coverImage)} ratio="1/1" sizes="64px" className="w-16 shrink-0 rounded-[6px]" />
             <div>
               <VerifiedSeal />
-              <p className="mt-1 font-serif text-xl">{p.artisan.workshopName}</p>
+              <p className="mt-1 text-lg font-semibold">{p.artisan.workshopName}</p>
               <p className="text-sm text-tro">{p.artisan.artisanTitle} {p.artisan.artisanName} · đời thứ {p.artisan.generation} · từ {p.artisan.establishedYear}</p>
             </div>
           </Link>

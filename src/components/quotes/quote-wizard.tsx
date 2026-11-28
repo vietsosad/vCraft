@@ -16,6 +16,13 @@ import { useToast } from "@/components/ui/toast";
 import type { MediaImage } from "@/lib/types";
 
 const STEPS = ["Nhu cầu", "Yêu cầu riêng", "Thời hạn & giao hàng", "Xem lại"];
+/** Lời dẫn của từng bước: nói rõ bước này cần gì để người đặt không phải đoán. */
+const STEP_HINTS = [
+  "Ai đặt, đặt món gì, bao nhiêu chiếc.",
+  "Mô tả kỹ thuật và ngân sách mỗi sản phẩm; ảnh mẫu giúp xưởng chào giá sát hơn.",
+  "Khi nào cần hàng và giao tới đâu.",
+  "Kiểm tra lại trước khi gửi. Sau khi gửi, các xưởng được mời sẽ chào giá kín.",
+];
 const DRAFT_KEY = "vcraft:quote-draft";
 const STEP_FIELDS: string[][] = [
   ["organizationName", "title", "category", "preferredGlaze", "quantity"],
@@ -102,7 +109,11 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
   return (
     <div className="mt-8">
       <Stepper steps={STEPS} current={step} tone="cobalt" />
-      <div data-card="" className="mt-8 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-6 shadow-soft">
+      <div data-card="" className="mt-8 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-5 shadow-soft sm:p-7">
+        <div className="mb-5">
+          <h2>{STEPS[step]}</h2>
+          <p className="mt-0.5 text-sm text-tro">{STEP_HINTS[step]}</p>
+        </div>
         {step === 0 && (
           <div className="space-y-4">
             <Field label="Tổ chức đặt hàng" htmlFor="organizationName" error={errors.organizationName} required hint="Tự điền từ hồ sơ tài khoản">
@@ -125,7 +136,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
                 </Select>
               </Field>
             </div>
-            {form.preferredGlaze && <p className="rounded-md bg-nga-dam p-3 text-xs text-tro">{GLAZES[form.preferredGlaze as keyof typeof GLAZES].description}</p>}
+            {form.preferredGlaze && <p className="rounded-md bg-nga-dam p-3 text-sm text-tro">{GLAZES[form.preferredGlaze as keyof typeof GLAZES].description}</p>}
             <Field label="Số lượng" htmlFor="quantity" error={errors.quantity} required hint="Tối thiểu 50 sản phẩm">
               <MoneyInput id="quantity" value={form.quantity} onChange={(v) => set("quantity", v)} invalid={!!errors.quantity} suffix="sp" placeholder="5.000" />
             </Field>
@@ -139,7 +150,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
                 placeholder="Dung tích, kích thước, màu logo, cách in (decal nung / vẽ tay), quy cách đóng gói…" />
             </Field>
             <Field label="Ngân sách dự kiến mỗi sản phẩm" htmlFor="targetBudgetPerUnit" error={errors.targetBudgetPerUnit} required
-              hint={totalBudget ? <>Tổng ngân sách dự kiến: <strong className="font-mono">{formatVnd(totalBudget)}</strong></> : undefined}>
+              hint={totalBudget ? <>Tổng ngân sách dự kiến: <strong className="tabular text-muc">{formatVnd(totalBudget)}</strong></> : undefined}>
               <MoneyInput id="targetBudgetPerUnit" value={form.targetBudgetPerUnit} onChange={(v) => set("targetBudgetPerUnit", v)} invalid={!!errors.targetBudgetPerUnit} placeholder="48.000" />
             </Field>
             <div>
@@ -166,7 +177,7 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
         )}
 
         {step === 3 && (
-          <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
+          <dl className="grid gap-x-6 gap-y-3 text-[15px] sm:grid-cols-2">
             {[
               ["Tổ chức", form.organizationName],
               ["Tiêu đề", form.title],
@@ -177,9 +188,9 @@ export function QuoteWizard({ defaults }: { defaults: Partial<Form> }) {
               ["Thời hạn", `${form.deadlineDays} ngày · nhận chào giá ${form.biddingDays} ngày`],
               ["Giao tới", form.deliveryAddress],
             ].map(([k, v]) => (
-              <div key={k} className="border-b border-vua pb-2"><dt className="text-xs text-tro">{k}</dt><dd className="mt-0.5">{v || <span className="text-doson">Chưa nhập</span>}</dd></div>
+              <div key={k} className="border-b border-vua pb-2"><dt className="text-[13px] text-tro">{k}</dt><dd className="mt-0.5">{v || <span className="text-doson">Chưa nhập</span>}</dd></div>
             ))}
-            <div className="sm:col-span-2"><dt className="text-xs text-tro">Mô tả</dt><dd className="mt-0.5 whitespace-pre-line">{form.specifications}</dd></div>
+            <div className="sm:col-span-2"><dt className="text-[13px] text-tro">Mô tả</dt><dd className="mt-0.5 whitespace-pre-line">{form.specifications}</dd></div>
           </dl>
         )}
 

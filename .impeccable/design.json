@@ -712,17 +712,17 @@
         "textTransform": "uppercase"
       },
       "title": {
-        "displayName": "Tiêu đề trang khu làm việc (Phudu)",
-        "purpose": "PageHeader trong ba khu vai trò; chữ hoa.",
+        "displayName": "Tiêu đề kiểu biển hiệu (Phudu)",
+        "purpose": "Lớp .title-md của trang chủ; chữ hoa. Ngoài trang chủ nhường cho operate-h2.",
         "textTransform": "uppercase"
       },
       "numeral": {
-        "displayName": "Số lớn",
-        "purpose": "Ô số liệu, số xưởng đang mở, nhiệt độ lò."
+        "displayName": "Số lớn (Phudu)",
+        "purpose": "Số xưởng đang mở, nhiệt độ lò trên trang chủ. Ô số liệu khu làm việc dùng operate-stat."
       },
       "narrative": {
         "displayName": "Giọng kể (Alegreya)",
-        "purpose": "h3, tên tác phẩm, tên xưởng, tiêu đề hộp thoại và khối trống."
+        "purpose": "Trang chủ: h3, tên tác phẩm, tên xưởng. Ngoài trang chủ chỉ trong .giong-ke: câu chuyện tác phẩm, khẩu hiệu và lời khách của xưởng, bài bản tin."
       },
       "body": {
         "displayName": "Chữ làm việc (Be Vietnam Pro)",
@@ -730,31 +730,50 @@
       },
       "label": {
         "displayName": "Nhãn nhóm",
-        "purpose": "Legend, cột chân trang, tiêu đề thẻ; màu tro; không làm kicker."
+        "purpose": "Legend, cột chân trang, tiêu đề thẻ; màu tro; không làm kicker. Trong phạm vi thao tác 14px, đầu cột bảng viết hoa đầu câu 13px."
       },
       "code": {
         "displayName": "Mã (JetBrains Mono)",
         "purpose": "Mã lô, mã yêu cầu báo giá."
       },
-      "weave-display": {
-        "displayName": "Tiêu đề Tấm dệt (Chakra Petch)",
-        "purpose": "h1, h2, .hieu trong khu khách hàng; chữ thường; font-serif dùng chung cũng đổi sang đây.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
+      "operate-h1": {
+        "displayName": "Tiêu đề trang thao tác",
+        "purpose": "h1 mọi màn ngoài trang chủ (.ui-operate): 24px, 28px từ 768px, 700. Một h1 mỗi trang.",
+        "scope": "Phạm vi thao tác .ui-operate (src/styles/operate.css)"
       },
-      "weave-numeral": {
-        "displayName": "Số dệt (Chakra Petch)",
-        "purpose": ".so: số dệt liền vào tiêu đề, ngày lịch hẹn, số chào giá.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
+      "operate-h2": {
+        "displayName": "Tiêu đề nhóm",
+        "purpose": "h2, .title-md: 18px, 20px từ 768px, 600.",
+        "scope": "Phạm vi thao tác .ui-operate"
+      },
+      "operate-h3": {
+        "displayName": "Tiêu đề mục nhỏ",
+        "purpose": "h3: 17px 600, cùng họ chữ với nội dung.",
+        "scope": "Phạm vi thao tác .ui-operate"
+      },
+      "operate-stat": {
+        "displayName": "Số liệu tổng quan",
+        "purpose": ".op-stat, Stat: 28px, 32px từ 768px, 700, số dạng bảng.",
+        "scope": "Phạm vi thao tác .ui-operate"
+      },
+      "operate-meta": {
+        "displayName": "Mô tả phụ",
+        "purpose": "Thời gian, mô tả phụ 13px; thông tin cần để quyết định 14px; sàn 12px cho mọi nhãn và huy hiệu.",
+        "scope": "Phạm vi thao tác .ui-operate"
       },
       "weave-label": {
-        "displayName": "Nhãn dệt (Chakra Petch)",
-        "purpose": ".nhan: tên đoạn sọc biên, số đếm cạnh tiêu đề nhóm, nhãn ngày, Mới/Đã mở, dt; chữ hoa; không làm dòng mồi.",
-        "textTransform": "uppercase",
+        "displayName": "Nhãn dệt",
+        "purpose": ".nhan: tên đoạn sọc biên, số đếm cạnh tiêu đề nhóm, nhãn ngày, Mới/Đã mở, dt; Be Vietnam Pro 13px 600 chữ thường, không giãn.",
         "scope": "Tấm dệt (khu khách hàng /account)"
       },
       "weave-pixel": {
         "displayName": "Chữ pixel dệt 5×7",
         "purpose": "Chỉ cho huy hiệu xưởng (WovenBadge): hai chữ cái đầu bỏ dấu, khung 13 ô có hàng chấm răng cưa. Định nghĩa trong src/components/weave/loom.ts.",
+        "scope": "Tấm dệt (khu khách hàng /account)"
+      },
+      "weave-mark": {
+        "displayName": "Tên Tấm dệt (Chakra Petch)",
+        "purpose": "Chỉ chữ 'Tấm dệt' trên biên vải (.hieu); mọi chữ khác trong khu theo phạm vi thao tác.",
         "scope": "Tấm dệt (khu khách hàng /account)"
       }
     },
@@ -884,33 +903,18 @@
         "purpose": "Đường thay thế bắt buộc."
       },
       {
-        "name": "weave-rows",
-        "value": "0.9s steps(9, end) both, clip-path inset(0 0 100% 0) → inset(0) trên lớp hoa văn ::before",
-        "purpose": "Tấm dệt: dải dệt vào khi cuộn tới (data-reveal=\"weave\")."
-      },
-      {
-        "name": "shuttle-run",
-        "value": "1.05s ease-out-expo, trễ 0.55s, translateX(-60px) → calc(100vw + 20px), mờ dần ở 85-100%",
-        "purpose": "Tấm dệt: con thoi chạy qua mép dưới dải vừa dệt xong."
-      },
-      {
         "name": "weave-page",
-        "value": "0.5s ease-out-expo both, opacity 0 → 1, translate 0 10px → none",
+        "value": "0.18s ease-out both, opacity 0 → 1 (không trượt)",
         "purpose": "Tấm dệt: chuyển mục (template.tsx)."
       },
       {
-        "name": "selvage-motif",
-        "value": "0.3s ease-out, opacity hoa văn 0 → 1",
-        "purpose": "Tấm dệt: đoạn sọc biên khi rê hoặc đang mở."
-      },
-      {
         "name": "patch-lift",
-        "value": "0.45s ease-out-expo, translateY(-2px) + patch-lift",
+        "value": "0.16s ease-out-expo, translateY(-1px), viền 18% → 40%",
         "purpose": "Tấm dệt: miếng vải liên kết khi rê."
       },
       {
         "name": "laid-piece-lift",
-        "value": "0.5s ease-out-expo, translateY(-6px)",
+        "value": "0.2s, translateY(-4px)",
         "purpose": "Tấm dệt: tác phẩm bày trên vải khi rê."
       },
       {
@@ -920,8 +924,13 @@
       },
       {
         "name": "weave-reduced-motion",
-        "value": "hoa văn hiện ngay, không con thoi, không weave-page, sọc biên không chuyển",
+        "value": "không weave-page, không chuyển tiếp ở sọc biên, nút và miếng vải",
         "purpose": "Tấm dệt: đường thay thế khi giảm chuyển động."
+      },
+      {
+        "name": "operate-motion",
+        "value": "150-200ms cho chuyển trạng thái; animate-rise 0.2s; data-reveal hiện ngay; không tilt, không parallax, không vệt sáng lướt",
+        "purpose": "Phạm vi thao tác .ui-operate: màn thao tác không chờ cuộn mới hiện dữ liệu."
       }
     ],
     "breakpoints": [

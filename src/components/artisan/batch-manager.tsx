@@ -112,7 +112,7 @@ export function BatchManager({ batch }: { batch: BatchView }) {
             <Badge tone={locked ? "celadon" : "gold"}>{locked ? <><Lock className="size-3" /> Đã khóa {batch.lockedAt ? formatDate(batch.lockedAt) : ""}</> : "Đang sản xuất"}</Badge>
             {batch.quote && <Badge tone="cobalt">Đơn {batch.quote.requestCode}</Badge>}
           </div>
-          <h2 className="mt-2 text-3xl">{batch.batchTitle}</h2>
+          <h1 className="mt-2">{batch.batchTitle}</h1>
           <p className="text-sm text-tro">{formatNumber(batch.quantityProduced)} sản phẩm · {formatNumber(batch.scanCount)} lượt quét QR</p>
         </div>
 
@@ -128,8 +128,8 @@ export function BatchManager({ batch }: { batch: BatchView }) {
                   <div className="rounded-[var(--radius-tile)] border border-vua bg-su/80 p-4">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
-                        <p className="font-mono text-xs text-tro">{formatDate(s.occurredAt, true)}{s.temperatureC ? ` · ${formatNumber(s.temperatureC)}°C` : ""}</p>
-                        <p className="font-serif text-xl">{s.title}</p>
+                        <p className="text-[13px] tabular text-tro">{formatDate(s.occurredAt, true)}{s.temperatureC ? ` · ${formatNumber(s.temperatureC)}°C` : ""}</p>
+                        <p className="text-lg font-semibold">{s.title}</p>
                       </div>
                       {!locked && (
                         <button onClick={() => removeStage(s.id)} className="text-tro hover:text-datnung" aria-label={`Xóa mốc ${s.title}`}><Trash2 className="size-4" /></button>

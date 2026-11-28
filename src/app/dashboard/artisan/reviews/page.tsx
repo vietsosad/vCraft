@@ -32,7 +32,7 @@ export default async function ArtisanReviews() {
       ) : (
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[300px_1fr]">
           <Card className="h-fit p-6 lg:sticky lg:top-24">
-            <p className="font-display text-6xl leading-none">{profile.ratingAvg.toFixed(1)}</p>
+            <p className="text-4xl font-bold leading-none tabular">{profile.ratingAvg.toFixed(1)}</p>
             <Stars value={profile.ratingAvg} size="md" className="mt-2" />
             <p className="mt-1 text-sm text-tro">{profile.ratingCount} lượt đánh giá</p>
             <div className="mt-6">

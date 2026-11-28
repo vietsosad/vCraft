@@ -19,7 +19,7 @@ export type Zone = {
   tone: "lam" | "datnung" | "ngoc";
   nav: ZoneLink[];
   menu: ZoneLink[];
-  /** các tab dưới đáy màn hình điện thoại (tối đa 5) */
+  /** các tab dưới đáy màn hình điện thoại (tối đa 4; ô thứ năm luôn là "Khác") */
   tabs: string[];
 };
 
@@ -83,7 +83,7 @@ export const ZONES: Record<Role, Zone> = {
       { href: "/dashboard/artisan/quotes", label: "Cơ hội báo giá", icon: FileText },
       { href: "/dashboard/artisan/account", label: "Tài khoản & bảo mật", icon: UserCog },
     ],
-    tabs: ["/dashboard/artisan", "/dashboard/artisan/batches", "/dashboard/artisan/quotes", "/dashboard/artisan/bookings", "/dashboard/artisan/products"],
+    tabs: ["/dashboard/artisan", "/dashboard/artisan/batches", "/dashboard/artisan/quotes", "/dashboard/artisan/bookings"],
   },
   ADMIN: {
     name: "Bảng điều phối",
@@ -108,6 +108,6 @@ export const ZONES: Record<Role, Zone> = {
       { href: "/dashboard/admin/approvals", label: "Duyệt hộ nghề", icon: ClipboardCheck },
       { href: "/dashboard/admin/account", label: "Tài khoản & bảo mật", icon: UserCog },
     ],
-    tabs: ["/dashboard/admin", "/dashboard/admin/approvals", "/dashboard/admin/coordination", "/dashboard/admin/news", "/dashboard/admin/reports"],
+    tabs: ["/dashboard/admin", "/dashboard/admin/approvals", "/dashboard/admin/coordination", "/dashboard/admin/news"],
   },
 };

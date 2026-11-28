@@ -120,7 +120,7 @@ export function ImageUploader({
         <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(e) => { void handleFiles(e.target.files); e.target.value = ""; }} />
         <input ref={cameraRef} type="file" accept="image/*" capture="environment" hidden onChange={(e) => { void handleFiles(e.target.files); e.target.value = ""; }} />
       </div>
-      {error && <p role="alert" className="mt-2 text-[13px] text-doson">{error}</p>}
+      {error && <p role="alert" className="mt-2 text-sm text-doson">{error}</p>}
 
       {(value.length > 0 || pending.length > 0) && (
         <ul className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
@@ -133,10 +133,10 @@ export function ImageUploader({
                 ) : (
                   <Image src={img.thumb ?? img.src} alt={img.alt} fill sizes="120px" className="object-cover" placeholder={img.blurDataURL ? "blur" : "empty"} blurDataURL={img.blurDataURL} />
                 )}
-                {i === 0 && <span className="absolute left-1 top-1 rounded bg-dem/80 px-1.5 py-0.5 text-[10px] text-giay">Ảnh chính</span>}
+                {i === 0 && <span className="absolute left-1 top-1 rounded bg-dem/80 px-1.5 py-0.5 text-xs text-giay">Ảnh chính</span>}
               </div>
               {img.stats && (
-                <p className="truncate px-1.5 py-1 font-mono text-[10px] text-ngoc" title="Dung lượng gốc → sau khi tối ưu WebP">
+                <p className="truncate px-1.5 py-1 text-xs tabular text-ngoc" title="Dung lượng gốc → sau khi tối ưu WebP">
                   {kb(img.stats.originalBytes)} → {kb(img.stats.bytes)}
                 </p>
               )}
@@ -154,13 +154,13 @@ export function ImageUploader({
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 p-2 text-center">
                 {p.error ? (
                   <>
-                    <p className="text-[11px] text-doson">{p.error}</p>
-                    <button type="button" onClick={() => setPending((x) => x.filter((y) => y.id !== p.id))} className="text-[11px] underline">Bỏ qua</button>
+                    <p className="text-[13px] text-doson">{p.error}</p>
+                    <button type="button" onClick={() => setPending((x) => x.filter((y) => y.id !== p.id))} className="text-[13px] underline">Bỏ qua</button>
                   </>
                 ) : (
                   <>
                     <Loader2 className="size-5 animate-spin text-datnung" />
-                    <span className="font-mono text-[11px]">{p.progress < 100 ? `${p.progress}%` : "Đang tối ưu…"}</span>
+                    <span className="text-xs tabular">{p.progress < 100 ? `${p.progress}%` : "Đang tối ưu…"}</span>
                   </>
                 )}
               </div>

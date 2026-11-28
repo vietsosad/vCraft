@@ -5,8 +5,8 @@ import { mediaImageSchema } from "@/lib/types";
 export const quoteCreateSchema = z.object({
   organizationName: z.string().trim().min(2, "Nhập tên tổ chức.").max(160),
   title: z.string().trim().min(10, "Tiêu đề cần ít nhất 10 ký tự.").max(200),
-  category: z.enum(CATEGORY_SLUGS),
-  preferredGlaze: z.enum(GLAZE_KEYS as [string, ...string[]]),
+  category: z.enum(CATEGORY_SLUGS, { errorMap: () => ({ message: "Chọn một phân loại." }) }),
+  preferredGlaze: z.enum(GLAZE_KEYS as [string, ...string[]], { errorMap: () => ({ message: "Chọn một dòng men." }) }),
   quantity: z.coerce
     .number({ invalid_type_error: "Số lượng phải là số." })
     .int()

@@ -17,11 +17,11 @@ export default async function UsersPage() {
   });
   return (
     <div>
-      <h2 className="text-3xl">Tài khoản</h2>
+      <h1>Tài khoản</h1>
       <p className="mb-6 text-sm text-tro">Tạm khóa một hộ (ví dụ khi phát hiện bán hàng nhập) sẽ thu hồi mọi phiên đăng nhập và ẩn toàn bộ sản phẩm của xưởng.</p>
       <div className="relative overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/70">
         <table className="w-full min-w-[760px] text-sm">
-          <thead className="bg-nga-dam/70 text-left text-xs uppercase tracking-wider text-tro">
+          <thead className="bg-nga-dam/70 text-left text-[13px] font-semibold text-tro">
             <tr><th className="px-4 py-3">Người dùng</th><th className="px-4 py-3">Vai trò</th><th className="px-4 py-3">Trạng thái</th><th className="px-4 py-3">Phiên</th><th className="px-4 py-3">Tạo lúc</th><th className="px-4 py-3" /></tr>
           </thead>
           <tbody className="divide-y divide-vua">
@@ -30,7 +30,7 @@ export default async function UsersPage() {
                 <td className="px-4 py-3"><p className="font-medium">{u.name}</p><p className="text-xs text-tro">{u.email}{u.artisanProfile ? ` · ${u.artisanProfile.workshopName}` : ""}</p></td>
                 <td className="px-4 py-3">{ROLE[u.role]}</td>
                 <td className="px-4 py-3"><Badge tone={STATUS[u.status][1]}>{STATUS[u.status][0]}</Badge></td>
-                <td className="px-4 py-3 font-mono">{u._count.sessions}</td>
+                <td className="px-4 py-3 tabular">{u._count.sessions}</td>
                 <td className="px-4 py-3 text-xs text-tro">{formatDate(u.createdAt)}</td>
                 <td className="px-4 py-3 text-right">{u.id !== me?.id && u.role !== "ADMIN" && <SuspendButton id={u.id} suspended={u.status === "SUSPENDED"} name={u.name} />}</td>
               </tr>

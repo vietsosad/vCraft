@@ -1,0 +1,115 @@
+/*
+ * Phạm vi giao diện thao tác (.ui-operate): mọi màn ngoài trang chủ "/".
+ * Gắn ở khung Tấm dệt (/account), khung khu làm việc (dashboard), khu xác thực, <main> của trang công khai
+ * trừ trang chủ (SiteMain), và trang lỗi/không có quyền (MissingTile). Trang chủ không mang lớp này nên giữ nguyên
+ * Phudu chữ hoa, Alegreya, mọi hoa văn và hiệu ứng.
+ *
+ * Hệ chữ trong phạm vi:
+ * - Be Vietnam Pro cho mọi chữ thao tác: tiêu đề, menu, biểu mẫu, bảng, nút, thông báo. Chỉ dùng weight đã nạp (400–700).
+ * - JetBrains Mono chỉ cho mã lô, mã yêu cầu.
+ * - Phudu / Chakra Petch chỉ ở dấu hiệu nhận diện có chủ đích: gắn lớp .dau-hieu.
+ * - Alegreya chỉ cho giọng kể (câu chuyện nghệ nhân, trích dẫn, bài viết): gắn lớp .giong-ke cho khối đó.
+ * Thang cố định theo vai trò (không co giãn theo khung nhìn), chỉ đổi một nấc ở 768px.
+ */
+@layer components {
+  .ui-operate {
+    --op-h1: 1.5rem;       /* tiêu đề trang: 24px điện thoại, 28px từ 768px */
+    --op-h2: 1.125rem;     /* tiêu đề nhóm: 18px → 20px */
+    --op-h3: 1.0625rem;    /* tiêu đề mục nhỏ: 17px */
+    --op-stat: 1.75rem;    /* số liệu tổng quan: 28px → 32px */
+    --op-meta: 0.8125rem;  /* thời gian, mô tả phụ: 13px; thông tin cần để quyết định dùng 14px */
+    --op-ease: cubic-bezier(0.2, 0, 0, 1);
+    --op-fast: 160ms;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  @media (min-width: 768px) {
+    .ui-operate { --op-h1: 1.75rem; --op-h2: 1.25rem; --op-stat: 2rem; }
+  }
+
+  /* ---------- Tiêu đề: một họ chữ, viết hoa đầu câu ---------- */
+  .ui-operate :is(h1, h2, h3, h4) {
+    text-transform: none;
+    letter-spacing: -0.011em;
+    text-wrap: balance;
+  }
+  .ui-operate h1 { font-size: var(--op-h1); font-weight: 700; line-height: 1.3; }
+  .ui-operate h2 { font-size: var(--op-h2); font-weight: 600; line-height: 1.4; }
+  .ui-operate h3 { font-size: var(--op-h3); font-weight: 600; line-height: 1.45; }
+  .ui-operate h4 { font-size: 1rem; font-weight: 600; line-height: 1.5; }
+
+  /* Lớp tiêu đề kiểu biển hiệu của thế giới chung → tiêu đề thao tác */
+  .ui-operate :is(.font-display, .title-xl, .title-lg, .title-md):not(.dau-hieu) {
+    text-transform: none;
+    letter-spacing: -0.011em;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .ui-operate .title-xl:not(.dau-hieu) { font-size: 2rem; line-height: 1.22; }
+  .ui-operate .title-lg:not(.dau-hieu) { font-size: var(--op-h1); }
+  .ui-operate .title-md:not(.dau-hieu) { font-size: var(--op-h2); line-height: 1.35; }
+  .ui-operate .font-serif:not(.giong-ke, .giong-ke *) { letter-spacing: -0.006em; line-height: 1.4; }
+  .ui-operate .giong-ke { line-height: 1.65; }
+
+  /* Dấu hiệu nhận diện giữ chữ của thế giới (Phudu chữ hoa); Chakra Petch của Tấm dệt khai báo trong weave.css */
+  .ui-operate .dau-hieu.font-display { text-transform: uppercase; }
+
+  /* ---------- Chữ phụ, nhãn, mã ---------- */
+  .ui-operate .label { font-size: 0.875rem; letter-spacing: 0; }
+  .ui-operate .code { font-size: max(0.8125rem, 0.85em); letter-spacing: 0; }
+  .ui-operate .op-meta { font-size: var(--op-meta); line-height: 1.5; color: var(--color-tro); }
+
+  /* Vai trò chữ dùng lại trong thành phần */
+  .ui-operate .op-h1 { font-size: var(--op-h1); font-weight: 700; line-height: 1.3; letter-spacing: -0.011em; }
+  .ui-operate .op-h2 { font-size: var(--op-h2); font-weight: 600; line-height: 1.4; letter-spacing: -0.011em; }
+  .ui-operate .op-h3 { font-size: var(--op-h3); font-weight: 600; line-height: 1.45; }
+  .ui-operate .op-stat {
+    font-size: var(--op-stat);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* ---------- Thẻ trong vùng thao tác: một viền mảnh, không gờ men, không vệt sáng lướt ---------- */
+  .ui-operate .tile.bg-su { box-shadow: 0 0 0 1px var(--color-vua), 0 1px 2px rgb(28 26 23 / 0.05); }
+  .ui-operate .glaze::after { content: none; }
+  .ui-operate .glaze:hover { transform: translateY(-1px); }
+  .ui-operate .tile.bg-su.glaze:hover { box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-muc) 24%, transparent), 0 8px 18px -12px rgb(28 26 23 / 0.35); }
+
+  /* ---------- Chuyển động ngắn, không chờ cuộn mới hiện dữ liệu ---------- */
+  .js .ui-operate [data-reveal]:not([data-in]) { opacity: 1; }
+  .js .ui-operate [data-reveal][data-in] { animation: none; }
+  .js .ui-operate [data-reveal="words"] .w > span { transform: none; transition: none; }
+  .js .ui-operate [data-reveal="mask"] > * { clip-path: none; animation: none; }
+  .js .ui-operate [data-reveal="mask"] img { scale: 1; transition: none; }
+  .ui-operate .glaze { transition-duration: var(--op-fast); }
+  .ui-operate .glaze[data-tilt]:hover { transform: translateY(-1px); }
+  .ui-operate [data-parallax] { translate: none !important; }
+}
+
+/*
+ * Ngoài @layer: họ chữ của .font-display / .font-serif cũng được Tailwind sinh thành lớp tiện ích,
+ * nên phải thắng ở đây. Cỡ chữ vẫn để trong @layer components để lớp tiện ích của từng trang được ưu tiên.
+ */
+.ui-operate :is(h1, h2, h3, h4) { font-family: var(--font-sans); }
+.ui-operate :is(.font-display, .title-xl, .title-lg, .title-md):not(.dau-hieu) { font-family: var(--font-sans); }
+.ui-operate .font-serif:not(.giong-ke, .giong-ke *) { font-family: var(--font-sans); }
+.ui-operate :is(h1, h2, h3, h4).dau-hieu,
+.ui-operate .dau-hieu.font-display { font-family: var(--font-display); }
+.ui-operate :is(h1, h2, h3, h4).giong-ke,
+.ui-operate .giong-ke :is(h1, h2, h3, h4) { font-family: var(--font-serif); }
+.ui-operate .animate-rise { animation-duration: 0.2s; }
+
+/* Sàn cỡ chữ 12px cho nhãn, huy hiệu, mã nhỏ – kể cả thành phần dùng chung với trang chủ (thẻ tác phẩm,
+   chuông, menu tài khoản…): trong phạm vi thao tác không còn chữ 9–11px; trang chủ giữ cỡ cũ. */
+.ui-operate :is(.text-\[9px\], .text-\[10px\], .text-\[10\.5px\], .text-\[11px\], .text-\[11\.5px\]) { font-size: 12px; }
+
+/* Ô nhập trên điện thoại tối thiểu 16px để iOS không tự phóng to khi chạm vào */
+@media (max-width: 767.98px) {
+  .ui-operate :is(input:not([type="checkbox"], [type="radio"], [type="range"], [type="file"]), select, textarea) { font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-operate .glaze[data-tilt]:hover { transform: none; }
+}
