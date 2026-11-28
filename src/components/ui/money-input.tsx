@@ -21,7 +21,7 @@ export function MoneyInput({ id, value, onChange, invalid, placeholder, suffix =
           onChange(digits ? Number(digits) : "");
         }}
         placeholder={placeholder}
-        className="pr-10 font-mono tabular"
+        className="pr-10 tabular"
       />
       <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-tro">{suffix}</span>
     </div>
