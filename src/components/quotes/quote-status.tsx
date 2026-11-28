@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/primitives";
 import { Stepper } from "@/components/ui/stepper";
 
 /** Hình dấu theo nhóm trạng thái: ○ nháp/đã hủy, ◆ đang chờ chào giá, ● đang chạy, ■ đã xong. */
-const MARK: Record<QuoteStatus, "dot" | "diamond" | "square" | "ring"> = {
+export const QUOTE_MARK: Record<QuoteStatus, "dot" | "diamond" | "square" | "ring"> = {
   DRAFT_REQUEST: "ring",
   SENT_TO_ARTISANS: "diamond",
   ARTISANS_BIDDING: "diamond",
@@ -15,7 +15,7 @@ const MARK: Record<QuoteStatus, "dot" | "diamond" | "square" | "ring"> = {
 };
 
 export function QuoteStatusBadge({ status }: { status: QuoteStatus }) {
-  return <Badge tone={QUOTE_STATUS[status].tone} mark={MARK[status]}>{QUOTE_STATUS[status].label}</Badge>;
+  return <Badge tone={QUOTE_STATUS[status].tone} mark={QUOTE_MARK[status]}>{QUOTE_STATUS[status].label}</Badge>;
 }
 
 /** Thanh tiến trình 6 trạng thái của máy trạng thái báo giá. */
