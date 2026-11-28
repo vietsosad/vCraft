@@ -41,7 +41,7 @@ export default async function AccountBookings() {
       <div className="mx-auto max-w-6xl space-y-12 px-4 pb-16 pt-10 md:px-8">
         {rows.length === 0 ? (
           <div className="patch max-w-2xl p-7">
-            <h2 className="text-[1.6rem]">Chưa có buổi hẹn nào</h2>
+            <h2>Chưa có buổi hẹn nào</h2>
             <p className="mt-2 text-tro">Vào gian trưng bày của một xưởng có lớp trải nghiệm, chọn ngày và khung giờ.</p>
             <Link href="/artisans" className="mt-5 inline-flex min-h-11 items-center gap-2 bg-nau px-5 font-semibold text-[#fbfaf5]"><CalendarDays className="size-4" aria-hidden /> Xem các xưởng</Link>
           </div>
@@ -52,7 +52,7 @@ export default async function AccountBookings() {
             ) : (
               [...months.entries()].map(([m, list]) => (
                 <section key={m} aria-label={m}>
-                  <h2 className="mb-4 flex items-baseline gap-2 text-[1.5rem]">{m} <span className="nhan text-tro">{list.length} buổi</span></h2>
+                  <h2 className="mb-4 flex items-baseline gap-2">{m} <span className="nhan text-tro">{list.length} buổi</span></h2>
                   <ul className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                     {list.map((b) => (
                       <li key={b.id}><VisitPatch b={b} actions={<BookingActions code={b.code} version={b.version} status={b.status} as="buyer" />} /></li>
@@ -63,7 +63,7 @@ export default async function AccountBookings() {
             )}
             {past.length > 0 && (
               <section aria-label="Đã qua">
-                <h2 className="mb-4 flex items-baseline gap-2 text-[1.5rem]">Đã qua hoặc đã đóng <span className="nhan text-tro">{past.length} buổi</span></h2>
+                <h2 className="mb-4 flex items-baseline gap-2">Đã qua hoặc đã đóng <span className="nhan text-tro">{past.length} buổi</span></h2>
                 <ul className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                   {past.map((b) => (
                     <li key={b.id}>

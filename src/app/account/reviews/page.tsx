@@ -52,7 +52,7 @@ export default async function AccountReviews() {
       )}
       <div className="mx-auto max-w-6xl space-y-14 px-4 pb-16 pt-10 md:px-8">
         <section aria-label="Chờ bạn đánh giá">
-          <h2 className="mb-4 flex items-baseline gap-2 text-[1.5rem]">Chờ bạn đánh giá <span className="nhan text-tro">{pending.length}</span></h2>
+          <h2 className="mb-4 flex items-baseline gap-2">Chờ bạn đánh giá <span className="nhan text-tro">{pending.length}</span></h2>
           {pending.length === 0 ? (
             <p className="text-lg text-tro">Không có đơn hàng hay buổi trải nghiệm nào đang chờ đánh giá.</p>
           ) : (
@@ -61,7 +61,7 @@ export default async function AccountReviews() {
                 <article key={`${p.ref}-${p.artisan.id}`} className="patch p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <h3 className="text-[1.3rem] leading-tight">{p.artisan.workshopName}</h3>
+                      <h3 className="text-lg leading-snug">{p.artisan.workshopName}</h3>
                       <p className="text-sm text-tro">{p.title}</p>
                       <p className="mt-1 text-xs text-tro">
                         {p.kind === "quote" ? "Đơn sỉ" : "Buổi trải nghiệm"} <span className="code">{p.ref}</span> · {formatDate(p.date)}
@@ -84,7 +84,7 @@ export default async function AccountReviews() {
         </section>
 
         <section aria-label="Lời bạn đã viết">
-          <h2 className="mb-4 flex items-baseline gap-2 text-[1.5rem]">Lời bạn đã viết <span className="nhan text-tro">{mine.length}</span></h2>
+          <h2 className="mb-4 flex items-baseline gap-2">Lời bạn đã viết <span className="nhan text-tro">{mine.length}</span></h2>
           {mine.length === 0 ? (
             <p className="text-lg text-tro">Bạn chưa viết đánh giá nào.</p>
           ) : (
@@ -93,11 +93,11 @@ export default async function AccountReviews() {
                 <li key={r.id}>
                   <article className="patch h-full p-6">
                     <div className="flex items-start justify-between gap-3">
-                      <Link href={`/artisans/${r.artisan.slug}#danh-gia`} className="text-[1.2rem] font-semibold leading-tight hover:underline">{r.artisan.workshopName}</Link>
+                      <Link href={`/artisans/${r.artisan.slug}#danh-gia`} className="text-lg font-semibold leading-snug hover:underline">{r.artisan.workshopName}</Link>
                       <WovenBadge name={r.artisan.workshopName} size={44} tone="ink" />
                     </div>
                     <div className="mt-1"><Stars value={r.rating} /></div>
-                    <p className="mt-3 text-[1.02rem] leading-relaxed">“{r.comment}”</p>
+                    <p className="mt-3 leading-relaxed">“{r.comment}”</p>
                     <p className="mt-3 text-xs text-tro">
                       {formatDate(r.createdAt)} ·{" "}
                       {r.quoteRequest ? <>đơn sỉ <span className="code">{r.quoteRequest.requestCode}</span></> : <>trải nghiệm <span className="code">{r.booking?.code}</span></>}
@@ -105,7 +105,7 @@ export default async function AccountReviews() {
                     {r.artisanReply && (
                       <div className="mt-4 bg-chu-nau/8 p-4 text-sm">
                         <p className="nhan text-chu-nau">Nghệ nhân trả lời</p>
-                        <p className="mt-1 italic">{r.artisanReply}</p>
+                        <p className="mt-1">{r.artisanReply}</p>
                       </div>
                     )}
                   </article>

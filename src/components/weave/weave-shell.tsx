@@ -36,10 +36,10 @@ function Segment({ l, active, count, compact }: { l: ZoneLink; active: boolean; 
       aria-current={active ? "page" : undefined}
       data-hue={hue}
       style={bandVars(hue) as CSSProperties}
-      className={cn("selv", compact ? "min-h-[3.6rem] items-center px-1 pb-2 text-center [&[aria-current=page]]:min-h-[4.1rem]" : "top")}
+      className={cn("selv", compact ? "dock" : "top")}
     >
-      <l.icon className={cn("relative size-[18px] opacity-90", compact ? "mx-auto" : "mb-auto")} aria-hidden />
-      <span className={cn("nhan relative", compact ? "text-[0.64rem] tracking-[0.06em]" : "text-[0.72rem]")}>{compact ? l.short ?? l.label : l.label}</span>
+      <l.icon className={cn("relative shrink-0", compact ? "mx-auto size-5" : "mb-auto size-[18px]")} aria-hidden />
+      <span className="nhan relative">{compact ? l.short ?? l.label : l.label}</span>
       {count > 0 && (
         <span className="dem" aria-label={`${count} ${BADGE_LABEL[l.badgeKey ?? ""] ?? ""}`}>
           {count > 9 ? "9+" : count}
@@ -67,7 +67,7 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
   const count = (l: ZoneLink) => (l.badgeKey ? badges[l.badgeKey] ?? 0 : 0);
 
   return (
-    <div className="det min-h-dvh pb-24 lg:pb-0">
+    <div className="det ui-operate min-h-dvh pb-24 lg:pb-0">
       {/* Biên vải trên */}
       <header className="selvage-top sticky top-[var(--demo-h)] z-40">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 md:px-8">
@@ -114,7 +114,7 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
 
       {/* Sọc biên dưới đáy (điện thoại, máy tính bảng) */}
       <nav className="no-print fixed inset-x-0 bottom-0 z-50 lg:hidden" aria-label="Các mục của tấm dệt">
-        <ul className="grid grid-cols-5 items-end bg-mun pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_24px_-14px_rgb(0_0_0/0.6)]">
+        <ul className="grid grid-cols-5 bg-mun pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_24px_-14px_rgb(0_0_0/0.6)]">
           {dock.map((l) => (
             <li key={l.href}>
               <Segment l={l} active={isActive(pathname, l)} count={count(l)} compact />
@@ -127,12 +127,12 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
               aria-current={restActive ? "page" : undefined}
               data-hue="n4"
               style={bandVars("n4") as CSSProperties}
-              className="selv min-h-[3.6rem] w-full items-center px-1 pb-2 text-center [&[aria-current=page]]:min-h-[4.1rem]"
+              className="selv dock w-full"
             >
-              <span className="relative mx-auto grid size-[18px] grid-cols-2 gap-[3px]" aria-hidden>
+              <span className="relative mx-auto grid size-5 grid-cols-2 gap-[3px]" aria-hidden>
                 <i className="bg-current" /><i className="bg-current opacity-70" /><i className="bg-current opacity-45" /><i className="bg-current opacity-25" />
               </span>
-              <span className="nhan relative text-[0.64rem] tracking-[0.06em]">Khác</span>
+              <span className="nhan relative">Khác</span>
               {restBadge > 0 && <span className="dem" aria-label={`${restBadge} việc trong các mục khác`}>{restBadge > 9 ? "9+" : restBadge}</span>}
             </button>
           </li>
@@ -170,8 +170,9 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
                         aria-current={isActive(pathname, l) ? "page" : undefined}
                         data-hue={hue}
                         style={bandVars(hue) as CSSProperties}
-                        className="band flex min-h-14 items-center gap-3 px-5"
+                        className="flex min-h-14 items-center gap-3 border-t border-white/10 px-5 text-[#fbf8f0]/85 transition-colors hover:bg-white/5 aria-[current=page]:bg-white/10 aria-[current=page]:font-bold aria-[current=page]:text-[#fbf8f0]"
                       >
+                        <span className="size-3 shrink-0 rounded-[2px] bg-[var(--band)] ring-1 ring-white/20" aria-hidden />
                         <l.icon className="size-5" aria-hidden />
                         <span className="flex-1 font-semibold">{l.label}</span>
                         {c > 0 && <span className="so bg-[#fbfaf5] px-2 py-1 text-sm text-mun">{c}</span>}

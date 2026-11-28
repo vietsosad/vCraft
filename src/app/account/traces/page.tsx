@@ -27,7 +27,7 @@ export default async function AccountTraces() {
       <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-8">
         {items.length === 0 ? (
           <div className="patch max-w-2xl p-7">
-            <h2 className="text-[1.6rem]">Sổ chưa có trang nào</h2>
+            <h2>Sổ chưa có trang nào</h2>
             <p className="mt-2 text-tro">Lật đáy món gốm bạn mua ở làng, quét tem bằng camera điện thoại hoặc nút “Quét tem QR”. Trang truy xuất mở ra, và lô đó được ghi vào sổ của bạn.</p>
           </div>
         ) : (

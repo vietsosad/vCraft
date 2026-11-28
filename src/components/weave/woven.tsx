@@ -59,7 +59,7 @@ export function WeaveTrack({ status, labels = true, className }: { status: Quote
         return (
           <li key={l.status} className="min-w-0" aria-current={now ? "step" : undefined}>
             <span className={cn("warp block", done && "done", now && "now")} />
-            {labels && <span className={cn("mt-1.5 block truncate text-[0.72rem] leading-tight", now ? "font-semibold" : "opacity-70")}>{l.label}</span>}
+            {labels && <span className={cn("mt-1.5 block truncate text-xs leading-snug", now ? "font-semibold" : "opacity-75")}>{l.label}</span>}
           </li>
         );
       })}

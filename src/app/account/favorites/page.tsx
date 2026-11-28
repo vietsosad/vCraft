@@ -63,7 +63,7 @@ export default async function AccountFavorites() {
                         <Link href={`/products/${p.slug}`} className="hover:underline">{p.name}</Link>
                       </p>
                       <p className="soft mt-0.5 truncate text-xs">{p.artisan.workshopName} · {GLAZES[p.glazeType].short}</p>
-                      <p className="so mt-1.5 text-[1.35rem]">{formatVnd(p.priceVnd)}</p>
+                      <p className="so mt-1.5 text-lg">{formatVnd(p.priceVnd)}</p>
                       {p.isUniquePiece && <p className="nhan soft mt-1">Độc bản</p>}
                     </div>
                   </li>
@@ -73,18 +73,18 @@ export default async function AccountFavorites() {
           )}
           {workshops.length > 0 && (
             <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-8">
-              <h2 className="mb-5 flex items-baseline gap-2 text-[1.5rem]">Xưởng <span className="nhan text-tro">{workshops.length}</span></h2>
+              <h2 className="mb-5 flex items-baseline gap-2">Xưởng <span className="nhan text-tro">{workshops.length}</span></h2>
               <ul className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {workshops.map((w) => {
                   const open = getOpenState(w);
                   return (
                     <li key={w.id}>
                       <article className="patch group relative overflow-hidden">
-                        <VImage image={asImage(w.coverImage)} ratio="16/10" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-[1.2s] [transition-timing-function:var(--ease-out-expo)] group-hover:scale-105" />
+                        <VImage image={asImage(w.coverImage)} ratio="16/10" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-300 group-hover:scale-[1.03]" />
                         <div className="flex items-start gap-3 p-5">
                           <WovenBadge name={w.workshopName} size={48} tone="ink" className="text-chu-nau" />
                           <div className="min-w-0">
-                            <h3 className="text-[1.15rem] leading-tight">
+                            <h3 className="leading-snug">
                               <Link href={`/artisans/${w.slug}`} className="after:absolute after:inset-0">{w.workshopName}</Link>
                             </h3>
                             <p className="mt-0.5 text-sm text-tro">{w.artisanTitle} {w.artisanName} · đời thứ {w.generation}</p>

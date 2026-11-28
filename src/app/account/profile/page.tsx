@@ -24,7 +24,7 @@ export default async function AccountProfile() {
           <div className="band p-6" data-hue="n8" style={{ backgroundImage: "none" }}>
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
-                <p className="hieu text-[1.6rem] leading-tight">{user.name}</p>
+                <p className="text-xl font-bold leading-snug">{user.name}</p>
                 <p className="soft mt-1 text-sm">{user.organization || "Khách của làng gốm Bát Tràng"}</p>
               </div>
               <WovenBadge name={user.name} size={58} />
