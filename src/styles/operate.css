@@ -1,13 +1,13 @@
 /*
  * Phạm vi giao diện thao tác (.ui-operate): mọi màn ngoài trang chủ "/".
- * Gắn ở khung Tấm dệt (/account), khung khu làm việc (dashboard), khu xác thực, <main> của trang công khai
+ * Gắn ở khung Đường làng (/account), khung khu làm việc (dashboard), khu xác thực, <main> của trang công khai
  * trừ trang chủ (SiteMain), và trang lỗi/không có quyền (MissingTile). Trang chủ không mang lớp này nên giữ nguyên
  * Phudu chữ hoa, Alegreya, mọi hoa văn và hiệu ứng.
  *
  * Hệ chữ trong phạm vi:
  * - Be Vietnam Pro cho mọi chữ thao tác: tiêu đề, menu, biểu mẫu, bảng, nút, thông báo. Chỉ dùng weight đã nạp (400–700).
  * - JetBrains Mono chỉ cho mã lô, mã yêu cầu.
- * - Phudu / Chakra Petch chỉ ở dấu hiệu nhận diện có chủ đích: gắn lớp .dau-hieu.
+ * - Phudu chỉ ở dấu hiệu nhận diện có chủ đích (biển hiệu, số đếm lớn): gắn lớp .dau-hieu.
  * - Alegreya chỉ cho giọng kể (câu chuyện nghệ nhân, trích dẫn, bài viết): gắn lớp .giong-ke cho khối đó.
  * Thang cố định theo vai trò (không co giãn theo khung nhìn), chỉ đổi một nấc ở 768px.
  */
@@ -51,7 +51,7 @@
   .ui-operate .font-serif:not(.giong-ke, .giong-ke *) { letter-spacing: -0.006em; line-height: 1.4; }
   .ui-operate .giong-ke { line-height: 1.65; }
 
-  /* Dấu hiệu nhận diện giữ chữ của thế giới (Phudu chữ hoa); Chakra Petch của Tấm dệt khai báo trong weave.css */
+  /* Dấu hiệu nhận diện giữ chữ của thế giới (Phudu chữ hoa) */
   .ui-operate .dau-hieu.font-display { text-transform: uppercase; }
 
   /* ---------- Chữ phụ, nhãn, mã ---------- */
