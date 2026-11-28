@@ -249,7 +249,7 @@ export function TracePatch({ t, compact = false }: { t: TracedBatch; compact?: b
 export function LaidPiece({ href, name, image, sizes, showName, className }: { href: string; name: string; image: MediaImage | null | undefined; sizes: string; showName?: boolean; className?: string }) {
   const cut = cutoutFor(image?.src);
   return (
-    <Link href={href} className={cn("group relative block transition-transform duration-200 motion-safe:hover:-translate-y-1", className)} title={name} aria-label={name}>
+    <Link href={href} className={cn("account-piece group relative block", className)} title={name} aria-label={name}>
       {cut ? (
         <span className="relative block aspect-[4/5]">
           <span aria-hidden className="absolute inset-x-[10%] -bottom-1 h-2.5 rounded-[50%] bg-[radial-gradient(closest-side,rgb(0_0_0/0.4),transparent)]" />

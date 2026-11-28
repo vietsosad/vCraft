@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig } from "framer-motion";
 import { Ellipsis, Globe, X } from "lucide-react";
 import { cn } from "@/lib/cn";
@@ -11,6 +11,7 @@ import { LogoMark } from "@/components/layout/logo";
 import { NotificationBell } from "@/components/layout/notification-bell";
 import { UserMenu } from "@/components/layout/user-menu";
 import { ThemeToggle } from "@/components/motion/theme-toggle";
+import { WeavePress } from "./weave-press";
 
 type ShellUser = { name: string; email: string; role: Role; status: string };
 
@@ -43,6 +44,38 @@ function Segment({ link, active, count, compact }: { link: ZoneLink; active: boo
       <NavCount count={count} kind={link.badgeKey} />
     </Link>
   );
+}
+
+function NavMarker({ pathname }: { pathname: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const marker = ref.current;
+    const nav = marker?.parentElement;
+    if (!marker || !nav || typeof ResizeObserver === "undefined") return;
+
+    const place = () => {
+      const active = nav.querySelector<HTMLElement>('[aria-current="page"], [data-active="true"]');
+      if (!active?.offsetWidth) {
+        delete nav.dataset.weaveMarker;
+        return;
+      }
+      // Tọa độ trong thanh điều hướng giữ vạch ngang đúng hàng khi trang đổi vị trí cuộn.
+      marker.style.setProperty("--marker-x", `${active.offsetLeft}px`);
+      marker.style.setProperty("--marker-y", `${active.offsetTop}px`);
+      marker.style.setProperty("--marker-width", `${active.offsetWidth}px`);
+      marker.style.setProperty("--marker-height", `${active.offsetHeight}px`);
+      nav.dataset.weaveMarker = "";
+    };
+
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(nav);
+    nav.querySelectorAll("li").forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  return <span ref={ref} aria-hidden="true" className="account-nav-marker" />;
 }
 
 export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; badges?: Record<string, number>; children: ReactNode }) {
@@ -98,6 +131,7 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
             </div>
           </div>
           <nav aria-label="Các mục của Tấm dệt" className="account-desktop-nav">
+            <NavMarker pathname={pathname} />
             <ul className="account-container">
               {zone.nav.map((link) => (
                 <li key={link.href}>
@@ -114,6 +148,7 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
         </main>
 
         <nav className="account-dock no-print" aria-label="Các mục của Tấm dệt">
+          <NavMarker pathname={pathname} />
           <ul>
             {dock.map((link) => (
               <li key={link.href}>
@@ -176,6 +211,7 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
             </ul>
           </div>
         </dialog>
+        <WeavePress />
       </div>
     </MotionConfig>
   );

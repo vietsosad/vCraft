@@ -202,7 +202,6 @@
     box-shadow: var(--shadow-lift);
     overscroll-behavior: contain;
   }
-  .account-more[open] { animation: account-sheet-in 260ms var(--ease-out-expo) both; }
   body:has(.account-more[open]) { overflow: hidden; }
   .account-more::backdrop { background: rgb(21 28 23 / 0.52); }
   .account-more-content { padding: 0.75rem 1rem calc(1rem + env(safe-area-inset-bottom)); }
@@ -225,18 +224,7 @@
       gap: 0.3rem;
       padding-block: 0.3rem 0.45rem;
     }
-      .account-desktop-nav .account-nav-link[aria-current="page"]::after {
-      position: absolute;
-      bottom: -0.45rem;
-      inset-inline: 0.75rem;
-      height: 2px;
-      border-radius: 2px;
-      background: currentColor;
-      content: "";
-      transform-origin: center;
-      animation: account-underline 240ms var(--ease-out-expo) both;
-    }
-    .account-dock { display: none; }
+      .account-dock { display: none; }
   }
 
   .det-home { padding-block: clamp(1rem, 3vw, 2rem) 3rem; }
@@ -523,8 +511,6 @@
   }
   .det .patch.lift:has(a:focus-visible) { outline: 2px solid var(--account-focus); outline-offset: 3px; }
   .warp { height: 5px; border-radius: 2px; background: var(--account-line); }
-  @keyframes account-underline { from { scale: 0.55 1; } to { scale: 1 1; } }
-  @keyframes account-sheet-in { from { translate: 0 100%; } to { translate: 0 0; } }
 }
 
 /* Thẻ dùng chung trong biểu mẫu và phòng báo giá nhận bảng màu của khu khách hàng. */
@@ -546,7 +532,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .account-more[open], .account-desktop-nav .account-nav-link[aria-current="page"]::after { animation: none; }
   .det .account-link svg, .det .account-task-arrow { translate: none; transition: none; }
 }
 @media print {

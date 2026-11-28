@@ -5,6 +5,31 @@
     --weave-glint: color-mix(in srgb, var(--account-gold) 65%, var(--account-accent));
   }
 
+  .account-desktop-nav { position: relative; }
+  [data-weave-marker] .account-nav-link { z-index: 1; }
+  [data-weave-marker] .account-nav-link:is([aria-current="page"], [data-active]) { background: transparent; }
+  .account-nav-marker {
+    display: none;
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: var(--marker-width);
+    height: var(--marker-height);
+    border-radius: 7px;
+    background: var(--account-accent-tint);
+    pointer-events: none;
+    translate: var(--marker-x) var(--marker-y);
+  }
+  [data-weave-marker] > .account-nav-marker { display: block; }
+  .account-nav-marker::after {
+    position: absolute;
+    inset: auto calc(50% - 0.375rem) 0.25rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--account-accent);
+    content: "";
+  }
+  .account-desktop-nav .account-nav-marker::after { inset: auto 0.75rem -0.45rem; }
+
   .account-scroll-line {
     display: none;
     position: absolute;
@@ -13,6 +38,31 @@
     background: linear-gradient(90deg, var(--account-accent), var(--weave-glint) 55%, var(--account-jade));
     pointer-events: none;
     transform-origin: left;
+  }
+
+  .account-press-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .account-press-mark {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    color: var(--weave-glint);
+    opacity: 0;
+    translate: -50% -50%;
+  }
+  .account-press-mark::after {
+    position: absolute;
+    inset: 0.4rem;
+    border: 1px solid currentColor;
+    rotate: 45deg;
+    content: "";
   }
 
   .account-hero-photo-frame {
@@ -51,6 +101,7 @@
   .weave-track .warp.done::before { background: var(--account-jade); }
   .weave-track .warp.now::before { background: linear-gradient(90deg, var(--account-accent) 55%, transparent 55%); }
 
+  .account-piece img { transform-origin: center 57%; }
 }
 
 @media screen and (prefers-reduced-motion: no-preference) {
@@ -66,18 +117,47 @@
     .account-hero-rings { animation: weave-rings-enter 1100ms var(--ease-out-expo) 230ms both; }
     .account-subhead h1 { animation: weave-line-enter 560ms var(--ease-out-expo); }
     .account-subhead .soft { animation: weave-line-enter 540ms var(--ease-out-expo) 65ms backwards; }
+    .account-nav-marker { transition: translate 450ms var(--ease-out-expo), width 450ms var(--ease-out-expo); }
 
+    .account-nav-link, .account-filter-link, .account-tool, .account-user-trigger,
+    .account-hero-actions a, .account-task, .account-letter-preview, .account-piece {
+      transition-property: background-color, color, border-color, box-shadow, scale, translate;
+      transition-duration: 230ms;
+      transition-timing-function: var(--weave-ease);
+    }
+    :is(.account-nav-link, .account-filter-link, .account-tool, .account-user-trigger, .account-hero-actions a, .account-task, .account-letter-preview, .account-piece):active {
+      scale: 0.965;
+      transition-duration: 75ms;
+    }
+    .det .patch.lift:has(a:active) { scale: 0.99; }
+    .account-nav-link > svg, .account-task-icon > svg { transition: rotate 320ms var(--ease-out-expo), scale 320ms var(--ease-out-expo); }
+    .account-nav-link[aria-current="page"] > svg { animation: weave-nav-icon 430ms var(--ease-out-expo) both; }
 
-    :is([data-weave-cascade] > *, .weave-track li) { --weave-index: 0; }
-    :is([data-weave-cascade] > *, .weave-track li):nth-child(2) { --weave-index: 1; }
-    :is([data-weave-cascade] > *, .weave-track li):nth-child(3) { --weave-index: 2; }
-    :is([data-weave-cascade] > *, .weave-track li):nth-child(4) { --weave-index: 3; }
-    .weave-track li:nth-child(5) { --weave-index: 4; }
+    .account-more[open] { animation: weave-sheet-enter 440ms var(--ease-out-expo); }
+    .account-more[open]::backdrop { animation: weave-backdrop-in 300ms ease-out both; }
+    .account-more[open] li { animation: weave-sheet-item 430ms var(--ease-out-expo) calc(55ms + var(--weave-index) * 42ms) backwards; }
+    :is(.account-more li, [data-weave-cascade] > *, .weave-track li) { --weave-index: 0; }
+    :is(.account-more li, [data-weave-cascade] > *, .weave-track li):nth-child(2) { --weave-index: 1; }
+    :is(.account-more li, [data-weave-cascade] > *, .weave-track li):nth-child(3) { --weave-index: 2; }
+    :is(.account-more li, [data-weave-cascade] > *, .weave-track li):nth-child(4) { --weave-index: 3; }
+    :is(.account-more li, .weave-track li):nth-child(5) { --weave-index: 4; }
 
     .account-filter-results { animation: weave-filter-enter 420ms var(--weave-ease); }
     .account-tasks:target { animation: weave-target 1.35s var(--weave-ease); }
     [data-reveal="weave"][data-in] .warp:is(.done, .now)::before {
       animation: weave-fill 630ms var(--ease-out-expo) calc(130ms + var(--weave-index) * 85ms) backwards;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      :is(.account-task, .account-letter-preview):hover { translate: 3px 0; }
+      .account-task:hover .account-task-icon > svg { rotate: -9deg; scale: 1.1; }
+      .account-nav-link:hover > svg { rotate: -7deg; }
+      .account-piece { transition: translate 420ms var(--ease-out-expo), scale 230ms var(--weave-ease); }
+      .account-piece img { transition: scale 550ms var(--ease-out-expo); }
+      .account-piece:is(:hover, :focus-visible) { translate: 0 -4px; }
+      .account-piece:is(:hover, :focus-visible) img { scale: 1.055; }
+      .det .patch.lift { transition: translate 300ms var(--ease-out-expo), scale 220ms var(--weave-ease), border-color 180ms ease, box-shadow 300ms ease; }
+      .det .patch.lift:hover { translate: 0 -3px; }
     }
 
     @supports (animation-timeline: scroll()) {
@@ -127,6 +207,17 @@
       from { background-position: 0 0; }
       to { background-position: 0 36px; }
     }
+    @keyframes weave-nav-icon {
+      from { scale: 0.83; }
+      44% { scale: 1.1; }
+      to { scale: 1; }
+    }
+    @keyframes weave-sheet-enter { from { translate: 0 100%; } to { translate: 0 0; } }
+    @keyframes weave-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes weave-sheet-item {
+      from { opacity: 0.58; translate: 0 12px; }
+      to { opacity: 1; translate: 0 0; }
+    }
     @keyframes weave-filter-enter {
       from { opacity: 0.7; translate: 0 7px; }
       to { opacity: 1; translate: 0 0; }
@@ -164,5 +255,5 @@
 }
 
 @media (prefers-reduced-motion: reduce), print {
-  .account-scroll-line { display: none; }
+  .account-scroll-line, .account-press-layer { display: none; }
 }
