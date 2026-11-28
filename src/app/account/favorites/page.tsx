@@ -7,13 +7,12 @@ import { formatVnd } from "@/lib/format";
 import { asImage, asImages } from "@/lib/types";
 import { getOpenState } from "@/lib/opening-hours";
 import { VImage } from "@/components/ui/vimage";
+import { StatusMark } from "@/components/ui/primitives";
 import { FavoriteButton } from "@/components/engagement/favorite-button";
-import { Band, BandHead } from "@/components/weave/band";
-import { LaidPiece } from "@/components/weave/goods";
-import { WovenBadge } from "@/components/weave/woven";
+import { Invite, LangHead, NUT, Shelf, hoaDau, soChu } from "@/components/lang/pieces";
 import { cn } from "@/lib/cn";
 
-export const metadata: Metadata = { title: "Đã lưu" };
+export const metadata: Metadata = { title: "Kệ trưng bày" };
 export const dynamic = "force-dynamic";
 
 export default async function AccountFavorites() {
@@ -35,75 +34,78 @@ export default async function AccountFavorites() {
   const workshops = rows.flatMap((r) => (r.artisan ? [r.artisan] : []));
 
   return (
-    <div data-hue="n5">
-      <BandHead
-        hue="n5"
-        title={products.length ? "tác phẩm đã lưu" : "Đã lưu"}
-        description="Tác phẩm bạn yêu thích và những xưởng bạn muốn ghé lại."
+    <>
+      <LangHead
+        icon="ke"
+        title={products.length ? "tác phẩm trên kệ của bạn" : "Kệ trưng bày"}
         count={products.length}
-        actions={<Link href="/products" className="btn-moc">Vào phòng triển lãm</Link>}
+        lead={
+          <p>
+            {products.length || workshops.length
+              ? `Những món bạn thương${workshops.length ? ` và ${soChu(workshops.length)} xưởng bạn muốn ghé lại` : ""}. Bấm trái tim lần nữa để cất món đó khỏi kệ.`
+              : "Trong phòng triển lãm, bấm trái tim trên tác phẩm hay gian trưng bày của xưởng: món đó sẽ đứng trên kệ sơn then này."}
+          </p>
+        }
+        actions={<Link href="/products" className={NUT.lam}>Vào phòng triển lãm</Link>}
       />
-      {products.length === 0 && workshops.length === 0 ? (
-        <div className="account-container py-10">
-          <p className="max-w-xl text-lg">Chưa lưu gì. Trong phòng triển lãm, bấm trái tim trên tác phẩm hoặc gian trưng bày của xưởng.</p>
-        </div>
-      ) : (
-        <>
-          {products.length > 0 && (
-            <Band hue="n5" tone="quiet" label="Tác phẩm" bodyClassName="pt-8">
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
-                {products.map((p) => (
-                  <li key={p.id} data-reveal="weave" className="flex flex-col">
-                    <div className="relative mx-auto w-full max-w-[15rem]">
-                      <LaidPiece href={`/products/${p.slug}`} name={p.name} image={asImages(p.images)[0]} sizes="(max-width: 768px) 45vw, 22vw" />
-                      <FavoriteButton productId={p.id} initial canFavorite className="absolute right-1.5 top-1.5 z-10" />
-                    </div>
-                    <div className="mx-auto mt-4 w-full max-w-[15rem]">
-                      <p className="line-clamp-2 font-semibold leading-snug">
-                        <Link href={`/products/${p.slug}`} className="hover:underline">{p.name}</Link>
-                      </p>
-                      <p className="soft mt-0.5 truncate text-xs">{p.artisan.workshopName} · {GLAZES[p.glazeType].short}</p>
-                      <p className="so mt-1.5 text-lg">{formatVnd(p.priceVnd)}</p>
-                      {p.isUniquePiece && <p className="nhan soft mt-1">Độc bản</p>}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </Band>
-          )}
-          {workshops.length > 0 && (
-            <div className="account-container pb-16 pt-8">
-              <h2 className="mb-5 flex items-baseline gap-2">Xưởng <span className="nhan text-tro">{workshops.length}</span></h2>
-              <ul className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                {workshops.map((w) => {
-                  const open = getOpenState(w);
-                  return (
-                    <li key={w.id} data-reveal="weave">
-                      <article className="patch group relative overflow-hidden">
-                        <VImage image={asImage(w.coverImage)} ratio="16/10" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-300 group-hover:scale-[1.03]" />
-                        <div className="flex items-start gap-3 p-5">
-                          <WovenBadge name={w.workshopName} size={48} tone="ink" className="text-chu-nau" />
-                          <div className="min-w-0">
-                            <h3 className="leading-snug">
-                              <Link href={`/artisans/${w.slug}`} className="after:absolute after:inset-0">{w.workshopName}</Link>
+
+      <div className="mx-auto max-w-7xl space-y-12 px-4 pb-16 pt-9 md:px-6">
+        {products.length === 0 && workshops.length === 0 ? (
+          <Invite title="Kệ còn trống chờ món đầu tiên" action={<Link href="/products" className={NUT.lam}>Xem tác phẩm của làng</Link>}>
+            <p>Bình men lam, chén men rạn, đĩa men ngọc: mỗi món trong phòng triển lãm đều ghi rõ xưởng làm, men gì và lô sản xuất nào.</p>
+          </Invite>
+        ) : (
+          <>
+            {products.length > 0 && (
+              <section aria-labelledby="ke-tac-pham">
+                <h2 id="ke-tac-pham" className="sr-only">Tác phẩm đã lưu</h2>
+                <Shelf
+                  sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 280px"
+                  items={products.map((p) => ({
+                    key: p.id,
+                    href: `/products/${p.slug}`,
+                    name: p.name,
+                    image: asImages(p.images)[0],
+                    note: formatVnd(p.priceVnd),
+                    sub: `${p.artisan.workshopName} · ${GLAZES[p.glazeType].short}${p.isUniquePiece ? " · độc bản" : ""}`,
+                    extra: <FavoriteButton productId={p.id} initial canFavorite className="absolute right-0 top-1 z-10 !size-11" />,
+                  }))}
+                />
+              </section>
+            )}
+
+            {workshops.length > 0 && (
+              <section aria-labelledby="ke-xuong">
+                <h2 id="ke-xuong" className="mb-5 flex flex-wrap items-baseline gap-x-3 font-serif text-[1.6rem] font-bold leading-tight giong-ke">
+                  {hoaDau(soChu(workshops.length))} xưởng bạn muốn ghé lại
+                </h2>
+                <ul className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  {workshops.map((w, i) => {
+                    const open = getOpenState(w);
+                    return (
+                      <li key={w.id} className="gan-vien" style={{ animationDelay: `${i * 90}ms` }}>
+                        <article className="viec group relative h-full flex-col items-stretch gap-0 overflow-hidden p-0">
+                          <VImage image={asImage(w.coverImage)} ratio="16/10" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-500 group-hover:scale-[1.04]" />
+                          <div className="p-5">
+                            <h3 className="font-serif text-[1.3rem] font-bold leading-snug giong-ke">
+                              <Link href={`/artisans/${w.slug}`} className="phu-ca after:absolute after:inset-0 focus-visible:outline-none">{w.workshopName}</Link>
                             </h3>
                             <p className="mt-0.5 text-sm text-tro">{w.artisanTitle} {w.artisanName} · đời thứ {w.generation}</p>
-                            <p className={cn("mt-2 inline-flex items-center gap-1.5 text-xs font-semibold", open.isOpenNow ? "text-chu-nau" : "text-tro")}>
-                              <span className={cn("size-2", open.isOpenNow ? "bg-nghe" : "bg-tro/50")} aria-hidden />
-                              {open.label}
+                            <p className={cn("mt-2.5 inline-flex items-center gap-1.5 rounded-[4px] px-2 py-0.5 text-[13px] font-semibold", open.isOpenNow ? "bg-ngoc-nhat text-ngoc" : "bg-tro/10 text-tro")}>
+                              <StatusMark mark={open.isOpenNow ? "dot" : "ring"} /> {open.label}
                             </p>
                           </div>
-                        </div>
-                        <FavoriteButton artisanId={w.id} initial canFavorite className="absolute right-2 top-2 z-10" />
-                      </article>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          )}
-        </>
-      )}
-    </div>
+                          <FavoriteButton artisanId={w.id} initial canFavorite className="absolute right-2 top-2 z-10 !size-11" />
+                        </article>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 }
