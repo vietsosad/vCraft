@@ -2,7 +2,7 @@ import { z } from "zod";
 import { CATEGORY_SLUGS, GLAZE_KEYS } from "@/lib/constants";
 import { certificationSchema, mediaImageSchema } from "@/lib/types";
 
-const glazeEnum = z.enum(GLAZE_KEYS as [string, ...string[]]);
+const glazeEnum = z.enum(GLAZE_KEYS as [string, ...string[]], { errorMap: () => ({ message: "Chọn một dòng men." }) });
 
 /** Tham số lọc danh sách sản phẩm (query string). */
 export const productQuerySchema = z.object({
