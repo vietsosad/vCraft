@@ -157,7 +157,3 @@ export type WorkedWorkshop = Awaited<ReturnType<typeof workedWorkshops>>[number]
 export function todayStartVn() {
   return new Date(new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Ho_Chi_Minh" }).format(new Date()) + "T00:00:00Z");
 }
-
-export function daysUntil(date: Date) {
-  return Math.round((date.getTime() - todayStartVn().getTime()) / 86_400_000);
-}

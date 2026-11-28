@@ -24,7 +24,7 @@ export default async function AccountTraces() {
         count={items.length}
         actions={<Link href="/scan" className="btn-moc"><QrCode className="size-4" aria-hidden /> Quét tem QR</Link>}
       />
-      <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-8">
+      <div className="account-container pb-16 pt-8">
         {items.length === 0 ? (
           <div className="patch max-w-2xl p-7">
             <h2>Sổ chưa có trang nào</h2>
@@ -32,7 +32,7 @@ export default async function AccountTraces() {
           </div>
         ) : (
           <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-            {items.map((t) => <li key={t.code}><TracePatch t={t} /></li>)}
+            {items.map((t) => <li key={t.code} data-reveal="weave"><TracePatch t={t} /></li>)}
           </ul>
         )}
       </div>

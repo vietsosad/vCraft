@@ -2,189 +2,217 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { Globe, X } from "lucide-react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { MotionConfig } from "framer-motion";
+import { Ellipsis, Globe, X } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { ZONES, type Role, type ZoneLink } from "@/components/layout/zones";
 import { LogoMark } from "@/components/layout/logo";
 import { NotificationBell } from "@/components/layout/notification-bell";
 import { UserMenu } from "@/components/layout/user-menu";
 import { ThemeToggle } from "@/components/motion/theme-toggle";
-import { HAT_TRANG, ROUTE_HUE, bandVars, edgeUrl } from "./loom";
-
-/** Biên vải đầu trang: răng cưa nâu men trên nền nâu đen, hàng hạt men trắng. */
-const SELVAGE_EDGE = edgeUrl("#644b26", HAT_TRANG);
+import { WeavePress } from "./weave-press";
 
 type ShellUser = { name: string; email: string; role: Role; status: string };
 
 const BADGE_LABEL: Record<string, string> = {
   quotes: "đơn đang chờ bạn",
-  reviews: "xưởng chờ đánh giá",
-  unread: "thư chưa mở",
+  reviews: "lượt chờ đánh giá",
+  unread: "thư chưa đọc",
+  more: "việc trong các mục khác",
 };
 
-function isActive(pathname: string, l: ZoneLink) {
-  return l.exact ? pathname === l.href : pathname === l.href || pathname.startsWith(`${l.href}/`);
+function isActive(pathname: string, link: ZoneLink) {
+  return pathname === link.href || (!link.exact && pathname.startsWith(link.href + "/"));
 }
 
-function Segment({ l, active, count, compact }: { l: ZoneLink; active: boolean; count: number; compact?: boolean }) {
-  const hue = ROUTE_HUE[l.href] ?? "n8";
+function NavCount({ count, kind }: { count: number; kind?: string }) {
+  if (!count) return null;
   return (
-    <Link
-      href={l.href}
-      aria-current={active ? "page" : undefined}
-      data-hue={hue}
-      style={bandVars(hue) as CSSProperties}
-      className={cn("selv", compact ? "dock" : "top")}
-    >
-      <l.icon className={cn("relative shrink-0", compact ? "mx-auto size-5" : "mb-auto size-[18px]")} aria-hidden />
-      <span className="nhan relative">{compact ? l.short ?? l.label : l.label}</span>
-      {count > 0 && (
-        <span className="dem" aria-label={`${count} ${BADGE_LABEL[l.badgeKey ?? ""] ?? ""}`}>
-          {count > 9 ? "9+" : count}
-        </span>
-      )}
+    <span className="account-nav-count">
+      <span aria-hidden>{count > 9 ? "9+" : count}</span>
+      <span className="sr-only">{count} {BADGE_LABEL[kind ?? ""]}</span>
+    </span>
+  );
+}
+
+function Segment({ link, active, count, compact }: { link: ZoneLink; active: boolean; count: number; compact?: boolean }) {
+  return (
+    <Link href={link.href} aria-current={active ? "page" : undefined} className="account-nav-link">
+      <link.icon className="size-[17px] shrink-0" aria-hidden />
+      <span>{compact ? link.short ?? link.label : link.label}</span>
+      <NavCount count={count} kind={link.badgeKey} />
     </Link>
   );
 }
 
-/**
- * Khung "Tấm dệt" của khách hàng: biên vải nâu đen trên cùng, sọc biên tám nấc nâu làm điều hướng
- * (đậm dần sang nhạt theo thứ tự mục, mục đang mở dệt dài hơn); trên điện thoại sọc biên xuống đáy màn hình.
- */
+function NavMarker({ pathname }: { pathname: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useLayoutEffect(() => {
+    const marker = ref.current;
+    const nav = marker?.parentElement;
+    if (!marker || !nav || typeof ResizeObserver === "undefined") return;
+
+    const place = () => {
+      const active = nav.querySelector<HTMLElement>('[aria-current="page"], [data-active="true"]');
+      if (!active?.offsetWidth) {
+        delete nav.dataset.weaveMarker;
+        return;
+      }
+      // Tọa độ trong thanh điều hướng giữ vạch ngang đúng hàng khi trang đổi vị trí cuộn.
+      marker.style.setProperty("--marker-x", `${active.offsetLeft}px`);
+      marker.style.setProperty("--marker-y", `${active.offsetTop}px`);
+      marker.style.setProperty("--marker-width", `${active.offsetWidth}px`);
+      marker.style.setProperty("--marker-height", `${active.offsetHeight}px`);
+      nav.dataset.weaveMarker = "";
+    };
+
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(nav);
+    nav.querySelectorAll("li").forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  return <span ref={ref} aria-hidden="true" className="account-nav-marker" />;
+}
+
 export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; badges?: Record<string, number>; children: ReactNode }) {
-  const zone = ZONES[user.role];
+  const zone = ZONES.BUYER;
   const pathname = usePathname();
   const [more, setMore] = useState(false);
-  useEffect(() => setMore(false), [pathname]);
+  const moreDialog = useRef<HTMLDialogElement>(null);
 
-  const dock = zone.tabs.map((h) => zone.nav.find((n) => n.href === h)!).filter(Boolean);
-  const rest = zone.nav.filter((n) => !zone.tabs.includes(n.href));
-  const restBadge = rest.reduce((s, l) => s + (l.badgeKey ? badges[l.badgeKey] ?? 0 : 0), 0);
-  const restActive = rest.some((l) => isActive(pathname, l));
-  const firstName = user.name.split(" ").slice(-1)[0];
-  const count = (l: ZoneLink) => (l.badgeKey ? badges[l.badgeKey] ?? 0 : 0);
+  useEffect(() => {
+    moreDialog.current?.close();
+  }, [pathname]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) moreDialog.current?.close();
+    };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+
+  const count = (link: ZoneLink) => link.badgeKey ? badges[link.badgeKey] ?? 0 : 0;
+  const dock = zone.nav.filter((link) => zone.tabs.includes(link.href));
+  const rest = zone.nav.filter((link) => !zone.tabs.includes(link.href));
+  const restBadge = rest.reduce((sum, link) => sum + count(link), 0);
+  const restActive = rest.some((link) => isActive(pathname, link));
 
   return (
-    <div className="det ui-operate min-h-dvh pb-24 lg:pb-0">
-      {/* Biên vải trên */}
-      <header className="selvage-top sticky top-[var(--demo-h)] z-40">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4 md:px-8">
-          <Link href={zone.home} className="group flex min-w-0 items-center gap-3" aria-label="Tấm dệt – việc của tôi">
-            <span className="rounded-[3px] bg-[#fbfaf5] p-[3px] transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:-rotate-3">
-              <LogoMark tone="datnung" className="size-8" />
-            </span>
-            <span className="min-w-0 leading-none">
-              <span className="hieu block text-[1.3rem] text-nghe">Tấm dệt</span>
-              <span className="mt-1 block truncate text-[0.82rem] text-[#fbfaf5]/70">của {user.name}</span>
-            </span>
-          </Link>
-          <div className="flex items-center gap-1">
-            <Link href="/" className="hidden items-center gap-2 rounded-[3px] px-3 py-2 text-sm text-[#fbfaf5]/75 transition hover:bg-white/10 hover:text-[#fbfaf5] md:inline-flex">
-              <Globe className="size-4" aria-hidden /> Trang triển lãm
-            </Link>
-            <ThemeToggle className="text-[#fbfaf5]/80 hover:bg-white/10 hover:text-[#fbfaf5]" />
-            <NotificationBell allHref="/account/notifications" buttonClassName="text-[#fbfaf5]/85 hover:bg-white/10! hover:text-[#fbfaf5]" />
-            <UserMenu
-              user={user}
-              showSiteLink
-              triggerClassName="border-white/25! bg-white/[0.06]! text-[#fbfaf5] hover:border-white/60!"
-              nameClassName="text-[#fbfaf5]/70!"
-            />
-          </div>
-        </div>
-        <div aria-hidden className="h-[15px]" style={{ backgroundImage: SELVAGE_EDGE, backgroundSize: "30px 15px", backgroundColor: "var(--color-mun)" }} />
-      </header>
-
-      {/* Sọc biên: tám nấc nâu, tám mục (máy tính) */}
-      <nav aria-label="Các mục của tấm dệt" className="relative z-30 hidden lg:block">
-        <ul className="grid grid-cols-8">
-          {zone.nav.map((l) => (
-            <li key={l.href}>
-              <Segment l={l} active={isActive(pathname, l)} count={count(l)} />
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <main id="main" className="relative">
-        {children}
-      </main>
-
-      {/* Sọc biên dưới đáy (điện thoại, máy tính bảng) */}
-      <nav className="no-print fixed inset-x-0 bottom-0 z-50 lg:hidden" aria-label="Các mục của tấm dệt">
-        <ul className="grid grid-cols-5 bg-mun pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_24px_-14px_rgb(0_0_0/0.6)]">
-          {dock.map((l) => (
-            <li key={l.href}>
-              <Segment l={l} active={isActive(pathname, l)} count={count(l)} compact />
-            </li>
-          ))}
-          <li>
-            <button
-              onClick={() => setMore(true)}
-              aria-expanded={more}
-              aria-current={restActive ? "page" : undefined}
-              data-hue="n4"
-              style={bandVars("n4") as CSSProperties}
-              className="selv dock w-full"
-            >
-              <span className="relative mx-auto grid size-5 grid-cols-2 gap-[3px]" aria-hidden>
-                <i className="bg-current" /><i className="bg-current opacity-70" /><i className="bg-current opacity-45" /><i className="bg-current opacity-25" />
+    <MotionConfig reducedMotion="user">
+      <div className="det ui-operate">
+        <header className="account-header no-print">
+          <div className="account-container account-header-row">
+            <Link href={zone.home} className="account-brand" aria-label="Tấm dệt – việc của tôi">
+              <LogoMark tone="datnung" className="size-10 shrink-0" />
+              <span className="min-w-0">
+                <span className="account-brand-name">Tấm dệt</span>
+                <span className="account-brand-caption">Không gian khách hàng</span>
               </span>
-              <span className="nhan relative">Khác</span>
-              {restBadge > 0 && <span className="dem" aria-label={`${restBadge} việc trong các mục khác`}>{restBadge > 9 ? "9+" : restBadge}</span>}
-            </button>
-          </li>
-        </ul>
-      </nav>
+            </Link>
+            <div className="account-tools">
+              <Link href="/" className="account-site-link">
+                <Globe className="size-4" aria-hidden /> Triển lãm
+              </Link>
+              <ThemeToggle className="account-tool" />
+              <NotificationBell
+                allHref="/account/notifications"
+                initialUnread={badges.unread}
+                className="account-bell"
+                buttonClassName="account-tool"
+                panelClassName="account-bell-panel"
+              />
+              <UserMenu user={user} showSiteLink triggerClassName="account-user-trigger" />
+            </div>
+          </div>
+          <nav aria-label="Các mục của Tấm dệt" className="account-desktop-nav">
+            <NavMarker pathname={pathname} />
+            <ul className="account-container">
+              {zone.nav.map((link) => (
+                <li key={link.href}>
+                  <Segment link={link} active={isActive(pathname, link)} count={count(link)} />
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div className="account-scroll-line" aria-hidden />
+        </header>
 
-      <AnimatePresence>
-        {more && (
-          <motion.div className="fixed inset-0 z-[60] lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <button className="absolute inset-0 bg-black/55" aria-label="Đóng" onClick={() => setMore(false)} />
-            <motion.div
-              role="dialog"
-              aria-label="Các mục khác"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
-              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-x-0 bottom-0 bg-mun pb-[env(safe-area-inset-bottom)] text-[#fbfaf5]"
-            >
-              <div aria-hidden className="h-[15px] -scale-y-100" style={{ backgroundImage: SELVAGE_EDGE, backgroundSize: "30px 15px" }} />
-              <div className="flex items-center justify-between px-4 py-2">
-                <p className="hieu text-lg text-nghe">Tấm dệt của {firstName}</p>
-                <button onClick={() => setMore(false)} className="grid size-11 place-items-center text-[#fbfaf5]/80" aria-label="Đóng">
-                  <X className="size-5" />
-                </button>
-              </div>
-              <ul className="grid grid-cols-1">
-                {[...rest, { href: "/", label: "Trang triển lãm", icon: Globe } as ZoneLink].map((l, i) => {
-                  const hue = ROUTE_HUE[l.href] ?? "n8";
-                  const c = count(l);
-                  return (
-                    <motion.li key={l.href} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}>
-                      <Link
-                        href={l.href}
-                        aria-current={isActive(pathname, l) ? "page" : undefined}
-                        data-hue={hue}
-                        style={bandVars(hue) as CSSProperties}
-                        className="flex min-h-14 items-center gap-3 border-t border-white/10 px-5 text-[#fbf8f0]/85 transition-colors hover:bg-white/5 aria-[current=page]:bg-white/10 aria-[current=page]:font-bold aria-[current=page]:text-[#fbf8f0]"
-                      >
-                        <span className="size-3 shrink-0 rounded-[2px] bg-[var(--band)] ring-1 ring-white/20" aria-hidden />
-                        <l.icon className="size-5" aria-hidden />
-                        <span className="flex-1 font-semibold">{l.label}</span>
-                        {c > 0 && <span className="so bg-[#fbfaf5] px-2 py-1 text-sm text-mun">{c}</span>}
-                      </Link>
-                    </motion.li>
-                  );
-                })}
-              </ul>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        <main id="main" tabIndex={-1}>
+          {children}
+        </main>
+
+        <nav className="account-dock no-print" aria-label="Các mục của Tấm dệt">
+          <NavMarker pathname={pathname} />
+          <ul>
+            {dock.map((link) => (
+              <li key={link.href}>
+                <Segment link={link} active={isActive(pathname, link)} count={count(link)} compact />
+              </li>
+            ))}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  moreDialog.current?.showModal();
+                  setMore(true);
+                }}
+                aria-haspopup="dialog"
+                aria-controls="account-more"
+                aria-expanded={more}
+                data-active={restActive || undefined}
+                className="account-nav-link"
+              >
+                <Ellipsis className="size-5" aria-hidden />
+                <span>Khác</span>
+                <NavCount count={restBadge} kind="more" />
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <dialog
+          id="account-more"
+          ref={moreDialog}
+          aria-labelledby="account-more-title"
+          onClose={() => setMore(false)}
+          onClick={(event) => {
+            if (event.target === event.currentTarget) moreDialog.current?.close();
+          }}
+          className="account-more no-print"
+        >
+          <div className="account-more-content">
+            <div className="account-more-head">
+              <h2 id="account-more-title">Các mục khác</h2>
+              <button type="button" onClick={() => moreDialog.current?.close()} className="account-tool" aria-label="Đóng">
+                <X className="size-5" aria-hidden />
+              </button>
+            </div>
+            <ul>
+              {[...rest, { href: "/", label: "Trang triển lãm", icon: Globe }].map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={isActive(pathname, link) ? "page" : undefined}
+                    onClick={() => moreDialog.current?.close()}
+                    className={cn("account-nav-link", link.href === "/" && "account-more-site")}
+                  >
+                    <link.icon className="size-5" aria-hidden />
+                    <span>{link.label}</span>
+                    <NavCount count={count(link)} kind={link.badgeKey} />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </dialog>
+        <WeavePress />
+      </div>
+    </MotionConfig>
   );
 }

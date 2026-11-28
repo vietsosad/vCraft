@@ -1,11 +1,11 @@
-import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { formatDate, timeAgo } from "@/lib/format";
 import { MarkAllRead } from "@/components/account/mark-all-read";
+import { NotificationLink } from "@/components/account/notification-link";
 import { cn } from "@/lib/cn";
 
 /** Thư của khách: mỗi thông báo là một miếng vải khâu; thư chưa mở mang nhãn chỉ vàng cho tới khi mở. */
-export async function LetterList({ userId }: { userId: string }) {
+export async function LetterList({ userId, unread }: { userId: string; unread: number }) {
   const items = await prisma.notification.findMany({ where: { userId }, orderBy: { createdAt: "desc" }, take: 100 });
   if (items.length === 0) {
     return <p className="text-lg text-tro">Chưa có thư nào. Lời mời chào giá, lịch hẹn được xác nhận và tin từ Ban quản lý sẽ về đây.</p>;
@@ -15,15 +15,10 @@ export async function LetterList({ userId }: { userId: string }) {
     const key = formatDate(n.createdAt);
     groups.set(key, [...(groups.get(key) ?? []), n]);
   }
-  const unread = items.filter((n) => !n.readAt).length;
-
   return (
     <div className="space-y-10" data-hue="n2">
       {unread > 0 && (
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-lg">
-            Còn <strong className="so text-lg text-chu-nau">{unread}</strong> thư chưa mở.
-          </p>
           <MarkAllRead />
         </div>
       )}
@@ -34,19 +29,17 @@ export async function LetterList({ userId }: { userId: string }) {
           </h2>
           <ul className="space-y-2.5">
             {list.map((n) => (
-              <li key={n.id}>
-                <Link href={n.link ?? "#"} className={cn("patch flex items-start gap-4 px-5 py-4", n.readAt && "opacity-80")}>
-                  {n.readAt ? (
-                    <span className="nhan mt-0.5 w-12 shrink-0 text-tro">Đã mở</span>
-                  ) : (
-                    <span className="nhan mt-0.5 w-12 shrink-0 bg-nghe px-1.5 py-1 text-center text-[#2a1d0c]">Mới</span>
-                  )}
-                  <span className="min-w-0 flex-1">
+              <li key={n.id} data-reveal="weave">
+                <NotificationLink id={n.id} href={n.link} read={!!n.readAt} className="patch grid w-full grid-cols-[auto_minmax(0,1fr)] items-start gap-3 px-4 py-4 text-left sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:px-5">
+                  <span className={cn("nhan mt-0.5 px-2 py-1", n.readAt ? "text-tro" : "rounded bg-lam-nhat text-chu-nau")}>
+                    {n.readAt ? "Đã đọc" : "Chưa đọc"}
+                  </span>
+                  <span className="min-w-0">
                     <span className={cn("block leading-snug", n.readAt ? "font-medium" : "font-semibold")}>{n.title}</span>
                     <span className="mt-0.5 block text-sm text-tro">{n.body}</span>
                   </span>
-                  <span className="shrink-0 pt-0.5 text-xs text-tro">{timeAgo(n.createdAt)}</span>
-                </Link>
+                  <span className="col-start-2 text-xs text-tro sm:col-start-3 sm:pt-1">{timeAgo(n.createdAt)}</span>
+                </NotificationLink>
               </li>
             ))}
           </ul>

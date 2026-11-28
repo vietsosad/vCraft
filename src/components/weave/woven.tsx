@@ -3,7 +3,6 @@ import { QUOTE_STATUS } from "@/lib/constants";
 import { ORDER_LEGS, legIndex } from "@/lib/order-legs";
 import { cn } from "@/lib/cn";
 import { badgePaths, initials } from "./loom";
-import { motifOn } from "./band";
 
 /**
  * Huy hiệu dệt: chữ cái pixel của xưởng (hoặc của khách) dệt giữa khung răng cưa.
@@ -52,14 +51,14 @@ export function WeaveTrack({ status, labels = true, className }: { status: Quote
   if (idx === -2) return <p className={cn("text-sm line-through opacity-70", className)}>Đơn đã hủy</p>;
   const delivered = status === "DELIVERED";
   return (
-    <ol className={cn("grid grid-cols-5 gap-[3px]", className)} aria-label={`Tiến độ đơn: ${QUOTE_STATUS[status].label}`} style={motifOn("rangcua")}>
+    <ol className={cn("weave-track grid grid-cols-5 gap-1", className)} aria-label={`Tiến độ đơn: ${QUOTE_STATUS[status].label}`}>
       {ORDER_LEGS.map((l, i) => {
         const done = delivered || i < idx;
         const now = !delivered && i === idx;
         return (
           <li key={l.status} className="min-w-0" aria-current={now ? "step" : undefined}>
             <span className={cn("warp block", done && "done", now && "now")} />
-            {labels && <span className={cn("mt-1.5 block truncate text-xs leading-snug", now ? "font-semibold" : "opacity-75")}>{l.label}</span>}
+            {labels && <span className={cn("mt-1.5 block text-xs leading-snug", now ? "font-semibold" : "text-tro")}>{l.label}</span>}
           </li>
         );
       })}

@@ -17,10 +17,10 @@ export default async function AccountProfile() {
 
   return (
     <div data-hue="n1">
-      <BandHead hue="n1" title="Hồ sơ" description="Thông tin trên nhãn dệt này được tự điền vào yêu cầu báo giá và lịch hẹn. Các xưởng chỉ thấy khi bạn gửi yêu cầu hoặc đặt lịch." />
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-start gap-8 px-4 pb-16 pt-10 md:px-8 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)]">
+      <BandHead hue="n1" title="Hồ sơ" description="Thông tin liên hệ được điền sẵn khi bạn gửi yêu cầu báo giá hoặc đặt lịch." />
+      <div className="account-container grid grid-cols-1 items-start gap-8 pb-16 pt-8 lg:grid-cols-[minmax(0,21rem)_minmax(0,1fr)]">
         {/* Nhãn dệt tên khách: như nhãn may trên áo thổ cẩm, chữ cái pixel dệt ở góc */}
-        <div className="lg:sticky lg:top-28">
+        <div className="lg:sticky lg:top-[calc(var(--account-header-height)+1rem)]">
           <div className="band p-6" data-hue="n8" style={{ backgroundImage: "none" }}>
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">

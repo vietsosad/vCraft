@@ -39,21 +39,21 @@ export default async function AccountFavorites() {
       <BandHead
         hue="n5"
         title={products.length ? "tác phẩm đã lưu" : "Đã lưu"}
-        description={`Tác phẩm và ${workshops.length} xưởng bạn muốn quay lại, bày trên tấm vải. Bấm trái tim lần nữa để cất đi.`}
+        description="Tác phẩm bạn yêu thích và những xưởng bạn muốn ghé lại."
         count={products.length}
         actions={<Link href="/products" className="btn-moc">Vào phòng triển lãm</Link>}
       />
-      {rows.length === 0 ? (
-        <div className="mx-auto max-w-6xl px-4 py-12 md:px-8">
+      {products.length === 0 && workshops.length === 0 ? (
+        <div className="account-container py-10">
           <p className="max-w-xl text-lg">Chưa lưu gì. Trong phòng triển lãm, bấm trái tim trên tác phẩm hoặc gian trưng bày của xưởng.</p>
         </div>
       ) : (
         <>
           {products.length > 0 && (
-            <Band hue="n5" edges="bottom" label="Tác phẩm" className="border-t-[3px] border-[#16171f]/20" bodyClassName="pt-10">
+            <Band hue="n5" tone="quiet" label="Tác phẩm" bodyClassName="pt-8">
               <ul className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
                 {products.map((p) => (
-                  <li key={p.id} className="flex flex-col">
+                  <li key={p.id} data-reveal="weave" className="flex flex-col">
                     <div className="relative mx-auto w-full max-w-[15rem]">
                       <LaidPiece href={`/products/${p.slug}`} name={p.name} image={asImages(p.images)[0]} sizes="(max-width: 768px) 45vw, 22vw" />
                       <FavoriteButton productId={p.id} initial canFavorite className="absolute right-1.5 top-1.5 z-10" />
@@ -72,13 +72,13 @@ export default async function AccountFavorites() {
             </Band>
           )}
           {workshops.length > 0 && (
-            <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-8">
+            <div className="account-container pb-16 pt-8">
               <h2 className="mb-5 flex items-baseline gap-2">Xưởng <span className="nhan text-tro">{workshops.length}</span></h2>
               <ul className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {workshops.map((w) => {
                   const open = getOpenState(w);
                   return (
-                    <li key={w.id}>
+                    <li key={w.id} data-reveal="weave">
                       <article className="patch group relative overflow-hidden">
                         <VImage image={asImage(w.coverImage)} ratio="16/10" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-300 group-hover:scale-[1.03]" />
                         <div className="flex items-start gap-3 p-5">

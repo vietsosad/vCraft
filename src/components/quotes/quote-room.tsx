@@ -455,12 +455,12 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
   if (variant === "weave") {
     return (
       <div>
-        <Band hue="n7" as="div" edges="bottom" bodyClassName="space-y-6 pt-8 lg:pt-14" label="Phòng báo giá">
+        <Band hue="n7" as="div" bodyClassName="space-y-6 pt-6 lg:pt-8" label="Phòng báo giá">
           {head}
           <div className="on-band">{header}</div>
           {flow}
         </Band>
-        <div className="mx-auto max-w-6xl space-y-8 px-4 pb-16 pt-8 md:px-8">{rest}</div>
+        <div className="account-container space-y-8 pb-16 pt-8">{rest}</div>
       </div>
     );
   }

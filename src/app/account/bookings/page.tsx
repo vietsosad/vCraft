@@ -17,7 +17,7 @@ export default async function AccountBookings() {
   const user = await pageRequireRole("/account/bookings", "BUYER");
   const rows = await prisma.experienceBooking.findMany({
     where: { userId: user.id },
-    orderBy: [{ visitDate: "desc" }, { slot: "asc" }],
+    orderBy: [{ visitDate: "desc" }, { slot: "desc" }],
     include: {
       artisan: { select: { workshopName: true, slug: true, address: true, phone: true, latitude: true, longitude: true } },
       review: { select: { id: true } },
@@ -34,11 +34,11 @@ export default async function AccountBookings() {
       <BandHead
         hue="n6"
         title={upcoming.length ? "buổi hẹn sắp tới" : "Lịch hẹn"}
-        description="Các buổi nặn gốm, vẽ men bạn đã đặt tại xưởng. Xưởng xác nhận trong ngày; bạn có thể thêm buổi hẹn vào lịch điện thoại và mở đường đi tới xưởng."
+        description="Theo dõi xác nhận từ xưởng, lưu lịch và mở chỉ đường."
         count={upcoming.length}
         actions={<Link href="/map" className="btn-moc"><MapPin className="size-4" aria-hidden /> Đặt buổi mới</Link>}
       />
-      <div className="mx-auto max-w-6xl space-y-12 px-4 pb-16 pt-10 md:px-8">
+      <div className="account-container space-y-10 pb-16 pt-8">
         {rows.length === 0 ? (
           <div className="patch max-w-2xl p-7">
             <h2>Chưa có buổi hẹn nào</h2>
@@ -48,14 +48,14 @@ export default async function AccountBookings() {
         ) : (
           <>
             {upcoming.length === 0 ? (
-              <p className="text-lg text-tro">Không có buổi nào sắp tới.</p>
+              <p className="account-empty">Chưa có buổi nặn gốm sắp tới.</p>
             ) : (
               [...months.entries()].map(([m, list]) => (
                 <section key={m} aria-label={m}>
                   <h2 className="mb-4 flex items-baseline gap-2">{m} <span className="nhan text-tro">{list.length} buổi</span></h2>
                   <ul className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                     {list.map((b) => (
-                      <li key={b.id}><VisitPatch b={b} actions={<BookingActions code={b.code} version={b.version} status={b.status} as="buyer" />} /></li>
+                      <li key={b.id} data-reveal="weave"><VisitPatch b={b} actions={<BookingActions code={b.code} version={b.version} status={b.status} as="buyer" />} /></li>
                     ))}
                   </ul>
                 </section>
@@ -66,10 +66,11 @@ export default async function AccountBookings() {
                 <h2 className="mb-4 flex items-baseline gap-2">Đã qua hoặc đã đóng <span className="nhan text-tro">{past.length} buổi</span></h2>
                 <ul className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                   {past.map((b) => (
-                    <li key={b.id}>
+                    <li key={b.id} data-reveal="weave">
                       <VisitPatch
                         b={b}
-                        actions={b.status === "COMPLETED" && !b.review ? <Link href="/account/reviews" className="inline-flex min-h-10 items-center bg-nghe px-4 text-sm font-semibold text-[#2a1d0c]">Viết đánh giá</Link> : undefined}
+                        past
+                        actions={b.status === "COMPLETED" && !b.review ? <Link href={`/account/reviews#review-${b.code}-${b.artisanId}`} className="account-link">Viết đánh giá</Link> : undefined}
                       />
                     </li>
                   ))}
