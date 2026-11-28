@@ -13,8 +13,8 @@ export const dynamic = "force-dynamic";
 
 /** Các tờ chia: lọc theo việc khách cần làm, không theo tên trạng thái kỹ thuật. */
 const DIVIDERS: { key: string; label: string; test: (q: BuyerQuote) => boolean; empty: string }[] = [
-  { key: "dang-chay", label: "Đang dệt", test: (q) => !["DELIVERED", "CANCELLED"].includes(q.status), empty: "Không có đơn nào đang chạy." },
-  { key: "can-ban", label: "Cần bạn", test: (q) => !!q.next?.urgent, empty: "Không có đơn nào đang chờ bạn quyết định." },
+  { key: "dang-chay", label: "Đang mở", test: (q) => !["DELIVERED", "CANCELLED"].includes(q.status), empty: "Không có đơn nào đang chạy." },
+  { key: "can-ban", label: "Cần bạn", test: (q) => !!q.next, empty: "Không có đơn nào đang chờ bạn quyết định." },
   { key: "da-giao", label: "Đã giao", test: (q) => q.status === "DELIVERED", empty: "Chưa có đơn nào giao xong." },
   { key: "da-huy", label: "Đã hủy", test: (q) => q.status === "CANCELLED", empty: "Không có đơn nào bị hủy." },
   { key: "tat-ca", label: "Tất cả", test: () => true, empty: "" },
@@ -37,12 +37,12 @@ export default async function AccountQuotes({ searchParams }: { searchParams: Pr
     <div data-hue="n7">
       <BandHead
         hue="n7"
-        title={running ? "đơn sỉ đang dệt" : "Đơn sỉ"}
-        description="Một yêu cầu, nhiều xưởng chào giá kín. Bạn so sánh, chốt và chia đơn cho nhiều hộ cùng làm, rồi theo dõi từng mẻ đến khi nhận hàng."
+        title={running ? "đơn sỉ đang mở" : "Đơn sỉ"}
+        description="So sánh chào giá, chia đơn cho các xưởng và theo dõi tiến độ."
         count={running}
         actions={<Link href="/account/quotes/new" className="btn-moc"><FilePlus2 className="size-4" aria-hidden /> Tạo yêu cầu báo giá</Link>}
       />
-      <div className="mx-auto max-w-6xl px-4 pb-16 pt-10 md:px-8">
+      <div className="account-container pb-16 pt-8">
         {units > 0 && (
           <p className="mb-7 max-w-3xl leading-relaxed">
             Bạn đã chốt <strong className="so whitespace-nowrap text-lg text-chu-nau">{formatNumber(units)}</strong> sản phẩm với{" "}

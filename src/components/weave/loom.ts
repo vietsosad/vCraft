@@ -1,18 +1,20 @@
+import type { CSSProperties } from "react";
+
 /**
  * Khung cửi số của khu khách hàng "Tấm dệt".
  * Hoa văn thổ cẩm là lưới ô vuông (mỗi ô là một điểm sợi nổi), nên mọi hoa văn ở đây được sinh từ lưới
  * rồi xuất thành SVG nét sắc (crispEdges). Hoa văn là hình học tự vẽ, không chép mẫu của một dân tộc cụ thể.
  */
 
-export type Grid = boolean[][];
-/** Tám nấc nhuộm củ nâu: n8 nhúng nhiều lần nhất (đậm nhất) … n1 nhạt nhất. Giá trị màu nằm trong src/styles/weave.css. */
+type Grid = boolean[][];
+/** Mã hoa văn của các mục trong Tấm dệt. */
 export type Hue = "n8" | "n7" | "n6" | "n5" | "n4" | "n3" | "n2" | "n1";
 
 const make = (w: number, h: number, on: (x: number, y: number) => boolean): Grid =>
   Array.from({ length: h }, (_, y) => Array.from({ length: w }, (_, x) => on(x, y)));
 
 /** Các hoa văn nền (ô lặp) */
-export const MOTIF = {
+const MOTIF = {
   /** trám: các hình thoi lồng nhau */
   tram: make(12, 12, (x, y) => {
     const d = Math.abs(x - 5.5) + Math.abs(y - 5.5);
@@ -46,7 +48,7 @@ export const MOTIF = {
   }),
 } satisfies Record<string, Grid>;
 
-export type MotifName = keyof typeof MOTIF;
+type MotifName = keyof typeof MOTIF;
 
 /** Lưới → chuỗi đường SVG gồm các ô vuông 1×1 */
 function cells(grid: Grid) {
@@ -58,59 +60,27 @@ function cells(grid: Grid) {
 }
 
 /** Ô lặp hoa văn thành url(data:image/svg+xml) dùng cho background-image */
-export function motifUrl(name: MotifName, color: string, cell = 4) {
+function motifUrl(name: MotifName, color: string, cell = 4) {
   const g = MOTIF[name];
   const w = g[0]!.length, h = g.length;
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w * cell}" height="${h * cell}" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges"><path fill="${color}" d="${cells(g)}"/></svg>`;
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
-/** Biên dải: hai hàng răng cưa so le hai màu, cao 5 ô */
-export function edgeUrl(a: string, b: string, cell = 3) {
-  const w = 10, h = 5;
-  const top = make(w, h, (x, y) => y <= 4 - Math.min(x % 10, 9 - (x % 10)) && y < 4);
-  const dots = make(w, h, (x, y) => y === 4 && x % 2 === 0);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${w * cell}" height="${h * cell}" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges"><path fill="${a}" d="${cells(top)}"/><path fill="${b}" d="${cells(dots)}"/></svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
-}
-
-/** Hạt men trắng: hàng chấm ở mỗi đường biên, như hàng hạt trắng đắp quanh miệng bình men nâu. */
-export const HAT_TRANG = "#f6f1e6";
-const RANG_DAM = "#2a1d0c"; // răng cưa trên dải đậm: nâu đen, tông trên tông
-const RANG_NHAT = "#644b26"; // răng cưa trên dải nhạt: nâu men đậm
-
-/** Mỗi nấc nâu: chữ sáng hay tối (ở chế độ sáng), hoa văn riêng, biên răng cưa hai màu. */
-export const HUES: Record<Hue, { name: string; ink: "light" | "dark"; motif: MotifName; edge: [string, string] }> = {
-  n8: { name: "nâu tám nước", ink: "light", motif: "tram", edge: [RANG_DAM, HAT_TRANG] },
-  n7: { name: "nâu bảy nước", ink: "light", motif: "rangcua", edge: [RANG_DAM, HAT_TRANG] },
-  n6: { name: "nâu sáu nước", ink: "light", motif: "sao", edge: [RANG_DAM, HAT_TRANG] },
-  n5: { name: "nâu năm nước", ink: "light", motif: "moc", edge: [RANG_DAM, HAT_TRANG] },
-  n4: { name: "nâu bốn nước", ink: "dark", motif: "oco", edge: [RANG_NHAT, HAT_TRANG] },
-  n3: { name: "nâu ba nước", ink: "dark", motif: "song", edge: [RANG_NHAT, HAT_TRANG] },
-  n2: { name: "nâu hai nước", ink: "dark", motif: "tram", edge: [RANG_NHAT, HAT_TRANG] },
-  n1: { name: "nâu một nước", ink: "dark", motif: "oco", edge: [RANG_NHAT, HAT_TRANG] },
+const motifByHue: Record<Hue, MotifName> = {
+  n8: "tram",
+  n7: "rangcua",
+  n6: "sao",
+  n5: "moc",
+  n4: "oco",
+  n3: "song",
+  n2: "tram",
+  n1: "oco",
 };
 
-/** Nấc nâu của từng mục, theo thứ tự điều hướng: sọc biên nhạt dần từ trái sang phải. */
-export const ROUTE_HUE: Record<string, Hue> = {
-  "/account": "n8",
-  "/account/quotes": "n7",
-  "/account/bookings": "n6",
-  "/account/favorites": "n5",
-  "/account/traces": "n4",
-  "/account/reviews": "n3",
-  "/account/notifications": "n2",
-  "/account/profile": "n1",
-};
-
-/** Biến CSS cho một dải: hoa văn tông-trên-tông và biên hai màu */
-export function bandVars(hue: Hue, motif?: MotifName): Record<string, string> {
-  const h = HUES[hue];
-  const tone = h.ink === "light" ? "rgba(255,248,232,0.1)" : "rgba(42,29,12,0.09)";
-  return {
-    "--motif": motifUrl(motif ?? h.motif, tone),
-    "--edge": edgeUrl(h.edge[0], h.edge[1]),
-  };
+export function bandVars(hue: Hue, tone: "light" | "dark" = "light"): CSSProperties & { "--motif": string } {
+  const color = tone === "dark" ? "rgba(255,248,232,0.1)" : "rgba(96,70,44,0.09)";
+  return { "--motif": motifUrl(motifByHue[hue], color) };
 }
 
 /* ---------------- Chữ cái pixel dệt (5×7) cho huy hiệu ---------------- */

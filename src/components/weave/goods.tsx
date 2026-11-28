@@ -17,10 +17,6 @@ import { WeaveTrack } from "./woven";
 
 const DOW = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
 
-export function visitWhen(date: Date, slot: string) {
-  return `${DOW[date.getUTCDay()]} ${date.getUTCDate()}/${date.getUTCMonth() + 1}, ${slot}`;
-}
-
 export function slotRange(slot: string, minutes = 120) {
   const [h, m] = slot.split(":").map(Number);
   const end = h! * 60 + m! + minutes;
@@ -47,7 +43,7 @@ export function OrderPatch({ q, compact = false }: { q: BuyerQuote; compact?: bo
       <article className={cn("patch lift group relative px-5 py-4", weight)} data-hue="n7">
         <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-6">
           <div className="min-w-0">
-            <h3 className="truncate text-base leading-snug">
+            <h3 className="text-base leading-snug">
               <Link href={href} className="after:absolute after:inset-0 focus-visible:outline-none">{q.title}</Link>
             </h3>
             <p className="mt-0.5 text-[13px] text-tro">
@@ -55,9 +51,9 @@ export function OrderPatch({ q, compact = false }: { q: BuyerQuote; compact?: bo
             </p>
             <WeaveTrack status={q.status} labels={false} className="mt-2.5 max-w-72 text-muc" />
           </div>
-          <p className={cn("inline-flex items-center gap-1.5 text-sm font-semibold", q.next?.urgent ? "text-chu-nau" : "text-tro")}>
+          <p className={cn("inline-flex max-w-36 items-center gap-1.5 text-xs font-semibold", q.next ? "text-chu-nau" : "text-tro")}>
             {next}
-            {q.next && <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />}
+            {q.next && <ArrowRight className="size-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden />}
           </p>
         </div>
       </article>
@@ -148,9 +144,9 @@ export function VisitLinks({ b, className }: { b: VisitBooking; className?: stri
 }
 
 /** Một buổi trải nghiệm trên miếng vải: ngày lớn bên trái, xưởng và giờ bên phải. */
-export function VisitPatch({ b, actions, className }: { b: VisitBooking; actions?: ReactNode; className?: string }) {
+export function VisitPatch({ b, actions, past, className }: { b: VisitBooking; actions?: ReactNode; past?: boolean; className?: string }) {
   const s = VISIT_STATUS[b.status];
-  const live = b.status === "PENDING" || b.status === "CONFIRMED";
+  const live = !past && (b.status === "PENDING" || b.status === "CONFIRMED");
   return (
     <article className={cn("patch grid grid-cols-[5.5rem_minmax(0,1fr)] gap-0 overflow-hidden sm:grid-cols-[7rem_minmax(0,1fr)]", !live && "opacity-90", className)} data-hue="n6">
       <div className={cn("flex flex-col items-center justify-center px-2 py-5 text-center leading-none", live ? "bg-nau text-[#fbfaf5]" : "bg-muc/8 text-muc/75")}>
@@ -250,10 +246,10 @@ export function TracePatch({ t, compact = false }: { t: TracedBatch; compact?: b
  * Tác phẩm đã lưu bày trên dải vải: ảnh đã tách nền thì món đồ đứng thẳng trên vải với bóng tiếp đất;
  * ảnh chưa tách được thì là một miếng ảnh khâu đính lên vải.
  */
-export function LaidPiece({ href, name, image, sizes, className }: { href: string; name: string; image: MediaImage | null | undefined; sizes: string; className?: string }) {
+export function LaidPiece({ href, name, image, sizes, showName, className }: { href: string; name: string; image: MediaImage | null | undefined; sizes: string; showName?: boolean; className?: string }) {
   const cut = cutoutFor(image?.src);
   return (
-    <Link href={href} className={cn("group relative block transition-transform duration-200 hover:-translate-y-1", className)} title={name}>
+    <Link href={href} className={cn("group relative block transition-transform duration-200 motion-safe:hover:-translate-y-1", className)} title={name} aria-label={name}>
       {cut ? (
         <span className="relative block aspect-[4/5]">
           <span aria-hidden className="absolute inset-x-[10%] -bottom-1 h-2.5 rounded-[50%] bg-[radial-gradient(closest-side,rgb(0_0_0/0.4),transparent)]" />
@@ -264,7 +260,7 @@ export function LaidPiece({ href, name, image, sizes, className }: { href: strin
           <VImage image={image} ratio="4/5" sizes={sizes} className="rounded-[2px]" />
         </span>
       )}
-      <span className="sr-only">{name}</span>
+      {showName && <span className="mt-2 block text-sm font-semibold leading-snug group-hover:underline">{name}</span>}
     </Link>
   );
 }

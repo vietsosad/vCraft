@@ -34,14 +34,14 @@ export default async function AccountReviews() {
         count={pending.length}
       />
       {worked.length > 0 && (
-        <Band hue="n3" weight="light" edges="bottom" label="Xưởng đã làm việc cùng" className="border-t-[3px] border-[#16171f]/20">
+        <Band hue="n3" weight="light" tone="quiet" label="Xưởng đã làm việc cùng">
           <ul className="flex flex-wrap gap-x-8 gap-y-4">
             {worked.map((w) => (
               <li key={w.id}>
                 <Link href={`/artisans/${w.slug}`} className="group flex items-center gap-3">
                   <WovenBadge name={w.workshopName} size={50} faded={w.rating === null} />
                   <span className="leading-tight">
-                    <span className="block font-semibold underline decoration-white/25 underline-offset-4 group-hover:decoration-white">{w.workshopName}</span>
+                    <span className="block font-semibold underline decoration-vua underline-offset-4 group-hover:decoration-current">{w.workshopName}</span>
                     <span className="soft block text-xs">{[w.visited && "đã ghé", w.ordered && "đã đặt", w.rating !== null ? `bạn chấm ${w.rating}/5` : "chưa đánh giá"].filter(Boolean).join(" · ")}</span>
                   </span>
                 </Link>
@@ -50,7 +50,7 @@ export default async function AccountReviews() {
           </ul>
         </Band>
       )}
-      <div className="mx-auto max-w-6xl space-y-14 px-4 pb-16 pt-10 md:px-8">
+      <div className="account-container space-y-12 pb-16 pt-8">
         <section aria-label="Chờ bạn đánh giá">
           <h2 className="mb-4 flex items-baseline gap-2">Chờ bạn đánh giá <span className="nhan text-tro">{pending.length}</span></h2>
           {pending.length === 0 ? (
@@ -58,7 +58,7 @@ export default async function AccountReviews() {
           ) : (
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
               {pending.map((p) => (
-                <article key={`${p.ref}-${p.artisan.id}`} className="patch p-6">
+                <article id={`review-${p.ref}-${p.artisan.id}`} key={`${p.ref}-${p.artisan.id}`} className="patch p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <h3 className="text-lg leading-snug">{p.artisan.workshopName}</h3>

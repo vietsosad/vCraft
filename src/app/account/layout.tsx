@@ -22,7 +22,7 @@ export default async function AccountLayout({ children }: { children: ReactNode 
     <div className={chakra.variable}>
       <WeaveShell
         user={{ name: user.name, email: user.email, role: user.role, status: user.status }}
-        badges={{ reviews: reviews.length, quotes: quotes.filter((q) => q.next?.urgent).length, unread }}
+        badges={{ reviews: reviews.length, quotes: quotes.filter((q) => q.next).length, unread }}
       >
         {children}
       </WeaveShell>

@@ -1,135 +1,449 @@
-/*
- * "Tấm dệt" – khu riêng của khách hàng, thế giới thổ cẩm tách hẳn trang chủ và trang đăng nhập.
- * Bảng màu lấy từ gốm men nâu cổ: nền nâu vàng trầm, hoa văn khắc nổi phủ men trắng, hàng hạt trắng quanh miệng bình.
- * Mỗi tính năng là một dải vải nhuộm củ nâu chạy hết bề ngang; cả tấm dùng MỘT thùng nhuộm: tám nấc từ đậm
- * (n8, nhúng nhiều lần) đến nhạt (n1), phân biệt bằng độ đậm và hoa văn, không bằng màu khác.
- * Hoa văn sinh từ lưới ô vuông trong src/components/weave/loom.ts.
- *
- * Đợt tinh gọn 28/11/2026 (docs/UI_TYPOGRAPHY_PLAN.md): chữ thao tác theo phạm vi .ui-operate (Be Vietnam Pro),
- * Chakra Petch chỉ còn ở tên "Tấm dệt"; hoa văn chỉ ở mép dải, không nằm sau chữ; đường khâu chỉ còn ở việc gấp;
- * phần lịch sử dùng dải "nhẹ" (data-tone="quiet"); chuyển động ngắn, không chờ cuộn.
- */
+/* Tấm dệt · giấy ngà, đất nung và men ngọc của khu khách hàng. */
 @layer components {
-  /* ---------- Gốc khu: vân dệt rất mờ của tấm vải nền ---------- */
   .det {
-    --soi: rgb(74 50 20 / 0.022);
-    background-color: var(--color-vai);
-    background-image:
-      repeating-linear-gradient(0deg, var(--soi) 0 1px, transparent 1px 3px),
-      repeating-linear-gradient(90deg, var(--soi) 0 1px, transparent 1px 4px);
-    color: var(--color-muc);
-  }
-  :root[data-theme="dark"] .det { --soi: rgb(240 210 160 / 0.02); }
-  /* Thành phần dùng chung (biểu mẫu, phòng báo giá, đánh giá) nhuộm theo tấm dệt: lam → nâu men, mặt thẻ → trắng sứ */
-  .det {
-    --color-lam: var(--color-nau);
-    --color-lam-sang: #6e5129;
-    --color-lam-dam: #3f2d14;
-    --color-lam-nhat: #efe6d4;
-    --color-lam-nen: #4a3519;
-    --color-su: var(--color-vai-2);
+    --account-bg: #f4f0e6;
+    --account-paper: #fffcf5;
+    --account-line: #e3d9c8;
+    --account-ink: #28251e;
+    --account-muted: #62594b;
+    --account-accent: #8d4329;
+    --account-accent-tint: #f3e4d8;
+    --account-jade: #34594a;
+    --account-jade-tint: #e9eee5;
+    --account-forest: #203c34;
+    --account-gold: #dfb77e;
+    --account-focus: #92502d;
+    --account-shadow: 0 12px 32px -24px rgb(54 38 21 / 0.28);
+    --account-width: 82rem;
+    --account-gutter: clamp(1rem, 3vw, 2rem);
+    --account-header-height: calc(var(--demo-h) + 4rem);
+    --color-vai-2: var(--account-paper);
+    --color-lam: var(--account-accent);
+    --color-lam-dam: #72321d;
+    --color-lam-sang: #a25032;
+    --color-lam-nhat: var(--account-accent-tint);
+    --color-lam-nen: #843f26;
+    --color-su: var(--account-paper);
+    --color-muc: var(--account-ink);
+    --color-tro: var(--account-muted);
+    --color-vua: var(--account-line);
+    --color-chu-nau: var(--account-accent);
+    min-height: 100dvh;
+    padding-bottom: calc(4rem + env(safe-area-inset-bottom));
+    background: var(--account-bg);
+    color: var(--account-ink);
+    overflow-wrap: anywhere;
   }
   :root[data-theme="dark"] .det {
-    --color-lam: #d6b57a;
-    --color-lam-sang: #e2c48e;
-    --color-lam-dam: #ecd3a6;
-    --color-lam-nhat: #2a2117;
-    --color-lam-nen: #4a3519;
+    --account-bg: #151914;
+    --account-paper: #20251e;
+    --account-line: #3d4538;
+    --account-ink: #f5ecdb;
+    --account-muted: #c0b8a7;
+    --account-accent: #efaa87;
+    --account-accent-tint: #3b2b23;
+    --account-jade: #add2bf;
+    --account-jade-tint: #29382f;
+    --account-forest: #1c342d;
+    --account-focus: #f2bd91;
+    --account-shadow: 0 12px 32px -24px rgb(0 0 0 / 0.75);
+    --color-lam-dam: #f7bda2;
+    --color-lam-sang: #f5b797;
   }
-
-  /* ---------- Chữ: Be Vietnam Pro theo phạm vi thao tác; Chakra Petch chỉ ở tên "Tấm dệt" ---------- */
-  .det .hieu {
-    font-family: var(--font-chakra), var(--font-sans);
-    font-weight: 700;
-    letter-spacing: -0.012em;
-    line-height: 1.05;
+  .det :focus-visible {
+    outline: 2px solid var(--account-focus);
+    outline-offset: 3px;
   }
-  /* nhãn nhỏ: chữ thường, không giãn chữ */
+  .det #main { outline: none; }
+  .det :target { scroll-margin-top: calc(var(--account-header-height) + 1rem); }
+  .det ::selection { background: #dfb77e; color: #28251e; }
   .det .nhan {
-    font-family: var(--font-sans);
     font-size: 0.8125rem;
     font-weight: 600;
-    letter-spacing: 0;
-    text-transform: none;
-    line-height: 1.3;
+    line-height: 1.35;
   }
-  /* con số: cùng họ chữ, số đều cột */
-  .det .so {
-    font-family: var(--font-sans);
+  .det .so { font-variant-numeric: tabular-nums lining-nums; }
+  .account-container {
+    width: 100%;
+    max-width: var(--account-width);
+    margin-inline: auto;
+    padding-inline: var(--account-gutter);
+  }
+
+  .account-header {
+    position: sticky;
+    top: var(--demo-h);
+    z-index: 40;
+    background: var(--account-paper);
+    border-bottom: 1px solid var(--account-line);
+  }
+  .account-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 4rem;
+  }
+  .account-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 44px;
+    min-width: 0;
+  }
+  .account-brand-name {
+    display: block;
+    font-family: var(--font-chakra), var(--font-sans);
+    font-size: 1.4rem;
     font-weight: 700;
-    font-variant-numeric: tabular-nums lining-nums;
-    letter-spacing: -0.015em;
-    line-height: 1.15;
+    line-height: 1.1;
   }
-  .det ::selection { background: var(--color-nghe); color: var(--color-mun); }
-  /* vòng focus luôn đủ tương phản: nâu trên nền sáng, màu chữ của dải trên dải, nâu lại trong miếng trắng sứ */
-  .det :focus-visible { outline-color: var(--color-chu-nau); }
-  .det .band :focus-visible, .det .selv:focus-visible { outline-color: var(--band-ink); }
-  .det .band .patch :focus-visible, .det .band [data-card] :focus-visible { outline-color: var(--color-chu-nau); }
+  .account-brand-caption {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.75rem;
+    line-height: 1.35;
+    color: var(--account-muted);
+  }
+  .account-tools {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .account-site-link, .account-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 7px;
+    color: var(--account-muted);
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+  .account-site-link {
+    display: none;
+    gap: 0.45rem;
+    padding-inline: 0.65rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .account-site-link:hover, .account-tool:hover,
+  .account-tools .account-user-trigger:hover { background: var(--account-bg); color: var(--account-ink); }
+  .account-tools .account-user-trigger { min-height: 44px; }
+  .account-desktop-nav { display: none; }
+  .account-nav-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 7px;
+    color: var(--account-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.2;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+  .account-nav-link:hover { background: var(--account-bg); color: var(--account-ink); }
+  .account-nav-link:is([aria-current="page"], [data-active]) {
+    background: var(--account-accent-tint);
+    color: var(--account-accent);
+  }
+  .account-nav-count, .account-panel-count {
+    display: inline-grid;
+    flex-shrink: 0;
+    place-items: center;
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+    padding-inline: 0.25rem;
+    border-radius: 5px;
+    color: var(--account-accent);
+    background: var(--account-accent-tint);
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+    font-variant-numeric: tabular-nums;
+  }
+  .account-nav-link[aria-current="page"] .account-nav-count { background: var(--account-paper); }
+  .account-dock {
+    position: fixed;
+    z-index: 50;
+    inset: auto 0 0;
+    padding: 0.3rem 0.5rem calc(0.3rem + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--account-line);
+    background: var(--account-paper);
+    box-shadow: 0 -12px 28px -24px rgb(40 37 30 / 0.45);
+  }
+  .account-dock ul { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.25rem; max-width: 42rem; margin-inline: auto; }
+  .account-dock .account-nav-link {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+    width: 100%;
+    min-height: 3.5rem;
+    padding: 0.3rem 0.15rem;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+  .account-dock .account-nav-count { position: absolute; top: 0.2rem; left: calc(50% + 0.55rem); border: 1px solid var(--account-paper); }
+  .account-more {
+    position: fixed;
+    inset: auto 0 0;
+    width: min(100%, 38rem);
+    max-width: none;
+    max-height: 85dvh;
+    margin: 0 auto;
+    border: 1px solid var(--account-line);
+    border-radius: 16px 16px 0 0;
+    background: var(--account-paper);
+    color: var(--account-ink);
+    box-shadow: var(--shadow-lift);
+    overscroll-behavior: contain;
+  }
+  .account-more[open] { animation: account-sheet-in 260ms var(--ease-out-expo) both; }
+  body:has(.account-more[open]) { overflow: hidden; }
+  .account-more::backdrop { background: rgb(21 28 23 / 0.52); }
+  .account-more-content { padding: 0.75rem 1rem calc(1rem + env(safe-area-inset-bottom)); }
+  .account-more-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.4rem; }
+  .account-more .account-nav-link { min-height: 3.25rem; }
+  .account-more .account-nav-link > span:first-of-type { flex: 1; }
+  .account-more-site { margin-top: 0.3rem; border-top: 1px solid var(--account-line); border-radius: 0 0 7px 7px; }
+  @media (min-width: 40rem) {
+    .account-site-link { display: inline-flex; }
+  }
+  @media (max-width: 25rem) {
+    .account-brand-caption { display: none; }
+  }
+  @media (min-width: 64rem) {
+    .det { --account-header-height: calc(var(--demo-h) + 7.5rem); padding-bottom: 0; }
+    .account-desktop-nav { display: block; }
+    .account-desktop-nav ul {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.3rem;
+      padding-block: 0.3rem 0.45rem;
+    }
+    .account-desktop-nav .account-nav-link[aria-current="page"]::after {
+      position: absolute;
+      bottom: -0.45rem;
+      inset-inline: 0.75rem;
+      height: 2px;
+      border-radius: 2px;
+      background: currentColor;
+      content: "";
+      transform-origin: center;
+      animation: account-underline 240ms var(--ease-out-expo) both;
+    }
+    .account-dock { display: none; }
+  }
 
-  /* ---------- Tám nấc nâu của dải ----------
-   * Sáng: n8–n5 nâu men đậm chữ ngà, n4–n1 nâu vàng nhạt chữ nâu đen (bỏ qua vùng giữa, nơi chữ nào cũng mờ).
-   * Tối: cả tám nấc dồn về vùng nâu tối, chữ ngà, để không có mảng sáng chói giữa đêm.
-   * --band-deep: màu chỉ khâu, đoạn tiến độ, răng cưa việc gấp – luôn đủ đậm trên miếng trắng sứ. */
-  .det, [data-hue] {
-    --n8: #46321a; --n7: #55401f; --n6: #644b26; --n5: #72572d;
-    --n4: #c2a674; --n3: #d1ba8e; --n2: #dfcfab; --n1: #ebe1c9;
+  .det-home { padding-block: clamp(1rem, 3vw, 2rem) 3rem; }
+  .account-hero {
+    display: grid;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--account-forest);
+    color: #fbf4e6;
+    box-shadow: var(--account-shadow);
   }
-  :root[data-theme="dark"] .det, :root[data-theme="dark"] [data-hue] {
-    --n8: #3a2a16; --n7: #41301a; --n6: #48361e; --n5: #503c22;
-    --n4: #584226; --n3: #60482a; --n2: #684e2f; --n1: #705434;
+  .account-hero-content {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    padding: clamp(1.4rem, 3.6vw, 2.9rem);
   }
-  [data-hue] { --band: var(--n8); --band-deep: var(--band); --band-ink: #fbf8f0; --band-soft: rgb(251 248 240 / 0.8); --band-line: rgb(251 248 240 / 0.24); }
-  [data-hue="n8"] { --band: var(--n8); }
-  [data-hue="n7"] { --band: var(--n7); }
-  [data-hue="n6"] { --band: var(--n6); }
-  [data-hue="n5"] { --band: var(--n5); }
-  [data-hue="n4"] { --band: var(--n4); }
-  [data-hue="n3"] { --band: var(--n3); }
-  [data-hue="n2"] { --band: var(--n2); }
-  [data-hue="n1"] { --band: var(--n1); }
-  :root:not([data-theme="dark"]) :is([data-hue="n4"], [data-hue="n3"], [data-hue="n2"], [data-hue="n1"]) {
-    --band-deep: #644b26;
-    --band-ink: #2a1d0c;
-    --band-soft: rgb(42 29 12 / 0.8);
-    --band-line: rgb(42 29 12 / 0.22);
+  .account-hero-content::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: var(--motif) repeat;
+    mask-image: linear-gradient(115deg, transparent 35%, #000);
+    opacity: 0.55;
+    pointer-events: none;
+    content: "";
   }
-  :root[data-theme="dark"] [data-hue] { --band-ink: #f4ede0; --band-soft: rgb(244 237 224 / 0.84); --band-line: rgb(244 237 224 / 0.24); --band-deep: #c2a674; }
+  .account-hero-rule {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    width: 4.75rem;
+    color: var(--account-gold);
+    margin-bottom: 0.6rem;
+  }
+  .account-hero-rule::before, .account-hero-rule::after { content: ""; height: 1px; background: currentColor; flex: 1; }
+  .account-hero-rule span { width: 0.45rem; height: 0.45rem; border: 1px solid currentColor; rotate: 45deg; }
+  .det .account-hero h1 {
+    font-size: clamp(2.85rem, 5.4vw, 5.25rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    text-wrap: wrap;
+  }
+  .account-hero-organization { margin-top: 0.6rem; color: #e6d9c0; font-size: clamp(0.875rem, 1.45vw, 1rem); }
+  .account-hero-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 0.6rem;
+    margin-top: 0.55rem;
+    color: #f2d1a2;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  .account-hero-summary a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-color: rgb(242 209 162 / 0.5);
+  }
+  .account-hero-summary a:hover { text-decoration-color: currentColor; }
+  .account-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 0.65rem;
+  }
+  .account-hero-photo {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 10rem;
+    border-top: 1px solid rgb(223 183 126 / 0.5);
+    background: #705541;
+  }
+  .account-hero-photo img {
+    object-fit: cover;
+    object-position: center 59%;
+    animation: account-photo-in 850ms var(--ease-out-expo) both;
+  }
+  .account-hero-photo::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgb(30 22 15 / 0.71), transparent 55%);
+    content: "";
+    pointer-events: none;
+  }
+  .account-hero-photo figcaption {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    bottom: 0.95rem;
+    left: 1.15rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #fff7e7;
+  }
+  .account-hero-photo figcaption span { width: 5px; height: 5px; background: var(--account-gold); rotate: 45deg; }
+  @media (min-width: 42rem) {
+    .account-hero { grid-template-columns: 1.08fr 1fr; min-height: 19rem; }
+    .account-hero-photo { border-top: 0; border-left: 1px solid rgb(223 183 126 / 0.5); }
+    .account-hero-photo figcaption { bottom: 1.25rem; left: 1.45rem; }
+  }
 
-  /* ---------- Dải dệt ---------- */
+  .account-home-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin-top: 1rem; }
+  .account-panel {
+    min-width: 0;
+    padding: clamp(1rem, 2vw, 1.4rem);
+    border: 1px solid var(--account-line);
+    border-radius: 10px;
+    background: var(--account-paper);
+    box-shadow: var(--account-shadow);
+  }
+  .account-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+  .account-panel-head > div { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+  .account-panel-head h2 { font-weight: 700; }
+  .account-panel-icon, .account-task-icon {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 6px;
+    flex-shrink: 0;
+    color: var(--account-jade);
+    background: var(--account-jade-tint);
+  }
+  .account-tasks .account-panel-icon, .account-task-priority {
+    color: var(--account-accent);
+    background: var(--account-accent-tint);
+  }
+  .account-empty { padding: 0.85rem 1rem; border: 1px dashed var(--account-line); border-radius: 7px; color: var(--account-muted); font-size: 0.875rem; }
+  .account-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 44px;
+    color: var(--account-accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-underline-offset: 0.24em;
+  }
+  .account-link:hover { text-decoration: underline; }
+  .account-link svg, .account-task-arrow { transition: translate 180ms var(--ease-out-expo); }
+  .account-link:hover svg:last-child, :is(.account-task, .account-letter-preview):hover .account-task-arrow { translate: 3px 0; }
+  .account-task-list li + li { border-top: 1px solid var(--account-line); }
+  .account-task, .account-letter-preview {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 3.8rem;
+    padding: 0.6rem 0.3rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    transition: background-color 180ms ease;
+  }
+  :is(.account-task, .account-letter-preview):hover { background: var(--account-bg); }
+  .account-task-title { display: block; font-weight: 600; line-height: 1.45; }
+  .account-task-detail { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; margin-top: 0.1rem; color: var(--account-muted); font-size: 0.8125rem; line-height: 1.45; }
+  .account-task-arrow { color: var(--account-muted); }
+  .account-letter-dot { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: var(--account-line); }
+  .account-letter-dot.is-unread { background: var(--account-accent); }
+  @media (min-width: 54rem) {
+    .account-home-grid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+    .account-tasks { grid-column: 2; grid-row: 1; }
+    .account-orders { grid-column: 1; grid-row: 1; }
+  }
+
+  /* Màu men cho đầu trang con và các dấu tiến độ. */
+  .det [data-hue] {
+    --band: var(--account-forest);
+    --band-deep: var(--account-accent);
+    --band-ink: #fbf4e6;
+    --band-soft: #e2d8c7;
+    --band-line: rgb(251 244 230 / 0.35);
+  }
+  .det [data-hue="n7"] { --band: #46342a; }
+  .det [data-hue="n5"] { --band: #3f4635; }
   .band {
     position: relative;
     isolation: isolate;
-    background-color: var(--band);
+    background: var(--band);
     color: var(--band-ink);
   }
-  /* hoa văn tông-trên-tông chỉ ở hai mép dải; cột nội dung để trơn, không có hoa văn sau chữ */
-  .band::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background-image: var(--motif);
-    pointer-events: none;
-    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 max(0px, calc(50% - 41rem)), transparent max(3%, calc(50% - 36rem)), transparent min(97%, calc(50% + 36rem)), #000 min(100%, calc(50% + 41rem)));
-    mask-image: linear-gradient(90deg, #000 0, #000 max(0px, calc(50% - 41rem)), transparent max(3%, calc(50% - 36rem)), transparent min(97%, calc(50% + 36rem)), #000 min(100%, calc(50% + 41rem)));
-  }
-  /* biên răng cưa: chỉ ở đáy các dải nhuộm, không lặp ở phần lịch sử */
-  .band-edge {
-    height: 15px;
-    background-image: var(--edge);
-    background-repeat: repeat-x;
-    background-size: 30px 15px;
-  }
-  .band-edge.flip { transform: scaleY(-1); }
-  .band-body { padding-block: 1.75rem; }
-  .band[data-weight="heavy"] .band-body { padding-block: 2.25rem; }
-  .band[data-weight="light"] .band-body { padding-block: 1.25rem; }
-  @media (min-width: 768px) {
-    .band[data-weight="heavy"] .band-body { padding-block: 2.75rem; }
-  }
+  .band-body { padding-block: 1.6rem; }
+  .band[data-weight="light"] .band-body { padding-block: 1.1rem; }
   .band .soft { color: var(--band-soft); }
-  .band a.band-link {
+  .band .band-link {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
@@ -138,224 +452,118 @@
     text-decoration: underline;
     text-decoration-color: var(--band-line);
     text-underline-offset: 0.3em;
-    transition: text-decoration-color 0.16s ease-out;
   }
-  .band a.band-link:hover { text-decoration-color: currentColor; }
-
-  /* Dải nhẹ: phần lịch sử (đã lưu, truy xuất, xưởng đã làm cùng, thư) nằm trên nền vải trơn,
-     chỉ giữ một vạch màu nấc của mục ở mép trên – nhận ra mục mà không thêm một mảng màu đặc. */
-  .det .band[data-tone="quiet"][data-hue] {
-    background-color: transparent;
-    color: var(--color-muc);
-    border-top: 3px solid var(--band);
-    --band-ink: var(--color-muc);
-    --band-soft: var(--color-tro);
-    --band-line: color-mix(in srgb, var(--color-muc) 22%, transparent);
+  .band .band-link:hover { text-decoration-color: currentColor; }
+  .det .band[data-tone="quiet"] {
+    --band-ink: var(--account-ink);
+    --band-soft: var(--account-muted);
+    --band-line: var(--account-line);
+    background: var(--account-paper);
+    border-bottom: 1px solid var(--account-line);
   }
-  .det .band[data-tone="quiet"]::before { display: none; }
-  .det .band[data-tone="quiet"] + .band[data-tone="quiet"] { margin-top: 0; }
+  .account-subhead::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0 0 0 64%;
+    background: var(--motif);
+    mask-image: linear-gradient(to right, transparent, black);
+    pointer-events: none;
+    content: "";
+  }
+  .account-subhead .band-body {
+    max-width: var(--account-width);
+    padding: clamp(1.75rem, 4vw, 3rem) var(--account-gutter);
+  }
+  .det .account-subhead h1 { font-size: clamp(2.15rem, 4.8vw, 3.25rem); line-height: 1.12; font-weight: 600; }
+  .account-subhead .account-hero-rule { color: var(--account-accent); }
+  .account-subhead-count { font-variant-numeric: tabular-nums; }
 
-  /* Nút trên dải: vải mộc chữ nâu đen (chính), viền sợi (phụ). Trên dải nhẹ, nút chính là nâu men đặc. */
-  .det .btn-moc,
-  .det .btn-soi {
+  .det :is(.btn-moc, .btn-soi) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
     min-height: 2.75rem;
-    padding-inline: 1.1rem;
-    border-radius: 3px;
-    font-weight: 600;
-    font-size: 0.9375rem;
-    white-space: nowrap;
-    transition: transform 0.16s var(--ease-out-expo), background-color 0.16s ease-out, box-shadow 0.16s ease-out;
-  }
-  .det .btn-moc {
-    background: #fbfaf5;
-    color: #2a1d0c;
-    box-shadow: inset 0 -2px 0 rgb(42 29 12 / 0.14), 0 4px 10px -8px rgb(0 0 0 / 0.6);
-  }
-  .det .btn-moc:hover { background: var(--color-nghe); }
-  .det .btn-moc:active, .det .btn-soi:active { transform: translateY(1px); }
-  .det .btn-soi {
-    color: var(--band-ink, var(--color-muc));
-    box-shadow: inset 0 0 0 1.5px currentColor;
-  }
-  .det .btn-soi:hover { background: rgb(255 255 255 / 0.1); }
-  .det .band[data-tone="quiet"] .btn-moc { background: var(--color-nau); color: #fbf8f0; box-shadow: none; }
-  .det .band[data-tone="quiet"] .btn-moc:hover { background: var(--color-lam-sang); }
-  :root[data-theme="dark"] .det .band[data-tone="quiet"] .btn-moc { background: #d6b57a; color: #1f170d; }
-  :root[data-theme="dark"] .det .band[data-tone="quiet"] .btn-moc:hover { background: #e2c48e; }
-  .det .band[data-tone="quiet"] .btn-soi:hover { background: color-mix(in srgb, var(--color-muc) 6%, transparent); }
-
-  /* ---------- Miếng vải trắng sứ (nội dung đọc) ----------
-     Mặc định chỉ một viền mảnh; đường khâu và răng cưa để dành cho việc gấp (.dense) nên việc gấp nổi lên rõ. */
-  .patch {
-    position: relative;
-    background-color: var(--color-vai-2);
-    color: var(--color-muc);
-    border-radius: 3px;
-    border: 1px solid color-mix(in srgb, var(--band-deep, var(--color-nau)) 18%, transparent);
-    box-shadow: 0 1px 2px rgb(42 29 12 / 0.06);
-  }
-  /* liên kết phủ cả miếng vải (after:inset-0) tắt viền riêng; viền focus hiện quanh cả miếng */
-  .det .patch:has(a:focus-visible) { outline: 2px solid var(--color-chu-nau); outline-offset: 2px; }
-  .det .band:not([data-tone="quiet"]) .patch:has(a:focus-visible) { outline-color: var(--band-ink); }
-  a.patch, .patch.lift { transition: transform 0.16s var(--ease-out-expo), box-shadow 0.16s ease-out, border-color 0.16s ease-out; }
-  a.patch:hover, .patch.lift:hover {
-    transform: translateY(-1px);
-    border-color: color-mix(in srgb, var(--band-deep, var(--color-nau)) 40%, transparent);
-    box-shadow: 0 6px 14px -10px rgb(42 29 12 / 0.45);
-  }
-
-  /* ---------- Biên vải trên (đầu trang) ---------- */
-  .selvage-top { background-color: var(--color-mun); color: #fbfaf5; }
-
-  /* ---------- Sọc biên: điều hướng tám nấc nâu ----------
-     Các mục cùng một nền tối (chỉ ánh màu nấc của mục), mục đang mở mới hiện đúng màu dải của nó,
-     kèm vạch vàng mật ong và nhãn đậm. Cao đều nhau, không xê dịch khi đổi mục. */
-  .selv {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.25rem;
-    min-height: 3.5rem;
-    padding: 0.55rem 0.75rem 0.6rem;
-    background-color: color-mix(in srgb, var(--band) 26%, var(--color-mun));
-    color: rgb(251 248 240 / 0.78);
-    transition: background-color 0.16s ease-out, color 0.16s ease-out;
-  }
-  .selv:hover { background-color: color-mix(in srgb, var(--band) 48%, var(--color-mun)); color: #fbf8f0; }
-  .selv[aria-current="page"] {
-    background-color: var(--band);
-    color: var(--band-ink);
-    box-shadow: inset 0 3px 0 var(--color-nghe);
-  }
-  .selv[aria-current="page"] .nhan { font-weight: 700; }
-  /* sọc biên trên cùng (máy tính): đoạn đang mở dệt dài xuống thành một khối liền màu, phủ lên mép dải bên dưới */
-  .selv.top[aria-current="page"]::after {
-    content: "";
-    position: absolute;
-    inset-inline: 0;
-    bottom: calc(-1.1rem - 15px);
-    height: calc(1.1rem + 15px);
-    background-color: var(--band);
-  }
-  .selv .dem {
-    position: absolute;
-    top: 0.45rem;
-    right: 0.5rem;
-    display: grid;
-    place-items: center;
-    min-width: 1.4rem;
-    height: 1.4rem;
-    padding: 0 0.3rem;
-    border-radius: 3px;
-    background: #fbfaf5;
-    color: #2a1d0c;
-    font: 700 0.75rem/1 var(--font-sans);
-    font-variant-numeric: tabular-nums;
-  }
-  /* thanh dưới đáy điện thoại: ô bằng nhau, nhãn 13px, vạch vàng ở mục đang mở */
-  .selv.dock {
-    min-height: 3.75rem;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2rem;
-    padding: 0.5rem 0.25rem 0.55rem;
+    padding: 0.4rem 0.85rem;
+    border: 1px solid transparent;
+    border-radius: 7px;
     text-align: center;
-    background-color: var(--color-mun);
-    color: rgb(251 248 240 / 0.74);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.35;
+    transition: background-color 180ms ease, translate 180ms var(--ease-out-expo);
   }
-  .selv.dock[aria-current="page"] {
-    background-color: color-mix(in srgb, var(--band) 62%, var(--color-mun));
-    color: #fbf8f0;
-  }
-  .selv.dock .dem { top: 0.3rem; right: calc(50% - 1.9rem); }
+  .det .btn-moc { background: #843f26; color: #fff8ed; }
+  .det .btn-moc:hover { background: #72321d; }
+  .det .btn-soi { color: var(--band-ink, var(--account-ink)); border-color: var(--band-line, var(--account-line)); }
+  .det .btn-soi:hover { background: var(--account-bg); }
+  :root[data-theme="dark"] .det .btn-moc { background: #edab85; color: #281b14; }
+  :root[data-theme="dark"] .det .btn-moc:hover { background: #f8bf9c; }
+  .det .account-hero .btn-moc { background: #f3e4c8; color: #29342a; }
+  .det .account-hero .btn-moc:hover { background: #ffefd2; }
+  .det .account-hero .btn-soi { color: #fbf4e6; border-color: rgb(251 244 230 / 0.5); }
+  .det .account-hero .btn-soi:hover { background: rgb(251 244 230 / 0.1); }
+  .det :is(.btn-moc, .btn-soi):active { translate: 0 1px; }
+  .det .account-hero :focus-visible, .det .band:not([data-tone="quiet"]) :focus-visible { outline-color: #f2c895; }
 
-  /* ---------- Tiến độ đơn: đoạn đã dệt kín, chặng chưa tới chỉ còn sợi dọc ---------- */
-  .warp {
-    height: 0.75rem;
-    background-image: repeating-linear-gradient(90deg, color-mix(in srgb, currentColor 32%, transparent) 0 1px, transparent 1px 4px);
+  .det .patch {
+    position: relative;
+    background: var(--account-paper);
+    color: var(--account-ink);
+    border-radius: 8px;
+    border: 1px solid var(--account-line);
   }
-  .warp.done { background-color: var(--band-deep); background-image: var(--motif-on, none); }
-  .warp.now {
-    background-image:
-      linear-gradient(var(--band-deep) 0 50%, transparent 50%),
-      repeating-linear-gradient(90deg, color-mix(in srgb, currentColor 32%, transparent) 0 1px, transparent 1px 4px);
+  .det .patch.dense { border-inline-start: 3px solid var(--account-accent); }
+  .det .patch.thin { background: color-mix(in srgb, var(--account-bg) 35%, var(--account-paper)); }
+  .det :is(a.patch, button.patch, .patch.lift) {
+    transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
   }
+  .det :is(a.patch, button.patch, .patch.lift):hover {
+    border-color: color-mix(in srgb, var(--account-accent) 46%, var(--account-line));
+    box-shadow: var(--account-shadow);
+  }
+  .det .patch.lift:has(a:focus-visible) { outline: 2px solid var(--account-focus); outline-offset: 3px; }
+  .warp { height: 5px; border-radius: 2px; background: var(--account-line); }
+  .warp.done { background: var(--account-jade); }
+  .warp.now { background: linear-gradient(90deg, var(--account-accent) 55%, var(--account-line) 55%); }
 
-  /* ---------- Tua vải cuối tấm ---------- */
-  .fringe {
-    height: 40px;
-    background-image: repeating-linear-gradient(90deg,
-      var(--n8) 0 2px, transparent 2px 7px,
-      var(--n5) 7px 9px, transparent 9px 14px,
-      var(--n3) 14px 16px, transparent 16px 21px);
-    -webkit-mask-image: linear-gradient(#000 30%, transparent);
-    mask-image: linear-gradient(#000 30%, transparent);
-  }
+  .weave-page { animation: account-page-in 240ms var(--ease-out-expo); }
+  .account-hero-content > * { animation: account-page-in 440ms var(--ease-out-expo) both; }
+  .account-hero-content > :nth-child(2) { animation-delay: 30ms; }
+  .account-hero-content > :nth-child(3) { animation-delay: 65ms; }
+  .account-hero-content > :nth-child(4) { animation-delay: 90ms; }
+  .account-hero-content > :nth-child(5) { animation-delay: 115ms; }
+  @keyframes account-page-in { from { opacity: 0.7; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes account-photo-in { from { scale: 1.05; } to { scale: 1; } }
+  @keyframes account-underline { from { scale: 0.55 1; } to { scale: 1 1; } }
+  @keyframes account-sheet-in { from { translate: 0 100%; } to { translate: 0 0; } }
 }
 
-/*
- * Ngoài @layer để thắng các lớp tiện ích của thành phần dùng chung (biểu mẫu, phòng báo giá, đánh giá):
- * trong tấm dệt, mọi thẻ là miếng vải trắng sứ viền mảnh, không thẻ bo tròn đổ bóng mềm, không hoa văn sau chữ.
- */
-.det [data-card] {
-  position: relative;
-  border-color: color-mix(in srgb, var(--band-deep, var(--color-nau)) 18%, transparent);
-  border-radius: 3px;
-  background-color: var(--color-vai-2);
-  box-shadow: 0 1px 2px rgb(42 29 12 / 0.06);
-}
-/* Phần đầu đặt thẳng trên dải màu: chữ phụ, chữ chính và nút viền đổi theo màu dải */
+/* Thẻ dùng chung trong biểu mẫu và phòng báo giá nhận bảng màu của khu khách hàng. */
+.det [data-card] { border-color: var(--account-line); border-radius: 8px; background: var(--account-paper); box-shadow: var(--account-shadow); }
 .det .on-band .text-tro { color: var(--band-soft); }
 .det .on-band .text-muc, .det .on-band .text-lam { color: var(--band-ink); }
-.det .on-band button { color: var(--band-ink); border-color: var(--band-line); background-color: transparent; }
-.det .on-band button:hover { background-color: rgb(255 255 255 / 0.12); }
-:root:not([data-theme="dark"]) .det .on-band [data-badge] { background-color: #fbfaf5; }
-/* Miếng vải tối trên dải nâu tối: tách nhau bằng viền sợi mảnh */
-:root[data-theme="dark"] .det .patch, :root[data-theme="dark"] .det [data-card] {
-  border-color: rgb(226 196 142 / 0.14);
-  box-shadow: 0 8px 18px -14px rgb(0 0 0 / 0.85);
-}
+.det .on-band button { color: var(--band-ink); border-color: var(--band-line); background: transparent; }
+.det .on-band button:hover { background: rgb(255 255 255 / 0.12); }
+:root:not([data-theme="dark"]) .det .on-band [data-badge] { background: #fbfaf5; }
 
-/* Việc gấp dệt dày: dải răng cưa màu dải ở mép trên và đường chỉ khâu – dấu hiệu "cần bạn" duy nhất trên miếng vải */
-.det .patch.dense { padding-top: 0.6rem; border-color: color-mix(in srgb, var(--band-deep, var(--color-nau)) 55%, transparent); }
-.det .patch.dense::before {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: 0;
-  height: 9px;
-  background-color: var(--band-deep, var(--color-nau));
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 4 3' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h4v1H0zM1 1h2v1H1z'/%3E%3C/svg%3E") repeat-x 0 0 / 12px 9px;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 4 3' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h4v1H0zM1 1h2v1H1z'/%3E%3C/svg%3E") repeat-x 0 0 / 12px 9px;
-}
-.det .patch.dense::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1.5px dashed color-mix(in srgb, var(--band-deep, var(--color-nau)) 70%, transparent);
-  border-radius: 2px;
-  pointer-events: none;
-}
-.det .patch.thin { box-shadow: none; border-color: color-mix(in srgb, var(--band-deep, var(--color-nau)) 12%, transparent); }
-
-/* Chuyển trang: chỉ mờ vào rất nhanh, không trượt */
-.weave-page { animation: weave-page 0.18s ease-out both; }
-@keyframes weave-page {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@media (max-width: 39.999rem) {
+  .account-tools .account-bell { position: static; }
+  .account-tools .account-bell-panel {
+    right: var(--account-gutter);
+    top: calc(100% + 0.35rem);
+    width: min(360px, calc(100% - 2 * var(--account-gutter)));
+  }
+  .account-bell-panel ul { max-height: min(24rem, calc(100dvh - var(--account-header-height) - 7rem)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .weave-page { animation: none; }
-  .selv, .det .btn-moc, .det .btn-soi, a.patch, .patch.lift { transition: none; }
+  .weave-page, .account-hero-content > *, .account-hero-photo img,
+  .account-more[open], .account-desktop-nav .account-nav-link[aria-current="page"]::after { animation: none; }
+  .det .account-link svg, .det .account-task-arrow { translate: none; transition: none; }
 }
-
 @media print {
-  .band, .selv, .selvage-top { background: none !important; color: black !important; }
-  .band::before, .band-edge, .fringe { display: none !important; }
+  .det { background: white; padding: 0; }
+  .account-hero, .band { background: none !important; color: black !important; }
+  .account-hero-photo, .account-subhead::after { display: none !important; }
 }
