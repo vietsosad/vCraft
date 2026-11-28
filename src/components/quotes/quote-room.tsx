@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
-import { Lock, Sparkles, Zap, RefreshCw, Factory, CheckCircle2, AlertTriangle, History, PackageCheck, Ban } from "lucide-react";
+import { Lock, Sparkles, Zap, RefreshCw, Factory, CheckCircle2, AlertTriangle, History, PackageCheck, Ban, ArrowDown } from "lucide-react";
 import { api, ApiError } from "@/lib/api-client";
 import { GLAZES, QUOTE_STATUS, categoryLabel } from "@/lib/constants";
 import { formatDate, formatNumber, formatVnd, timeAgo } from "@/lib/format";
 import { asStages, asStrings } from "@/lib/types";
+import { quoteNextStep } from "@/lib/order-legs";
 import { Button } from "@/components/ui/button";
 import { Badge, Card, EmptyState } from "@/components/ui/primitives";
 import { ConfirmDialog, Dialog } from "@/components/ui/dialog";
@@ -151,22 +152,30 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
     }
   }
 
+  // Việc người đặt cần làm tiếp, cùng quy tắc với danh sách đơn sỉ của khu khách hàng
+  const nextStep = quoteNextStep({
+    status: q.status,
+    bids: q.bids.length,
+    batchesOpen: q.allocatedBatches.filter((b) => b.status !== "COMPLETED").length,
+    batches: q.allocatedBatches.length,
+  });
+
   const header = (
     <>
       {/* Đầu trang */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div className="max-w-3xl">
-          <h1 className="text-3xl md:text-4xl">{q.title}</h1>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <h1>{q.title}</h1>
+          <div className="mt-2.5 flex flex-wrap items-center gap-2">
             <span className="font-mono text-sm text-lam">{q.requestCode}</span>
             <QuoteStatusBadge status={q.status} />
             {/* Huy hiệu phiên bản bản ghi: đề bài yêu cầu hiển thị để chứng minh khóa lạc quan trước hội đồng */}
-            <span className="inline-flex items-center gap-1 rounded-[4px] bg-lam px-2.5 py-0.5 font-mono text-[11px] text-on" title="Khóa lạc quan: mọi thao tác phải gửi kèm phiên bản này">
+            <span className="inline-flex items-center gap-1 rounded-[4px] bg-lam px-2.5 py-0.5 font-mono text-xs text-on" title="Khóa lạc quan: mọi thao tác phải gửi kèm phiên bản này">
               <Lock className="size-3" aria-hidden /> Record v{q.version} · Optimistic Lock
             </span>
           </div>
-          <p className="mt-2 text-sm text-tro">
-            {q.organizationName} · {formatNumber(q.quantity)} sản phẩm · {GLAZES[q.preferredGlaze].label} · {categoryLabel(q.category)} · cần trong {q.deadlineDays} ngày
+          <p className="mt-2.5 text-[15px] text-tro">
+            {q.organizationName} · <span className="tabular font-semibold text-muc">{formatNumber(q.quantity)}</span> sản phẩm · {GLAZES[q.preferredGlaze].label} · {categoryLabel(q.category)} · cần trong {q.deadlineDays} ngày
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -181,6 +190,17 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
       {q.viewer.isOwner ? (
         <div className="patch p-5 sm:px-7">
           <QuoteFlow status={q.status} />
+          {nextStep && (
+            <p className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 border-t border-vua pt-3.5 text-[15px]">
+              <span className="text-tro">Việc tiếp theo của bạn:</span>
+              <span className="font-semibold">{nextStep.label}</span>
+              {q.status === "ARTISANS_BIDDING" && (
+                <a href="#chao-gia" className="inline-flex min-h-11 items-center gap-1 px-1 text-sm font-semibold text-lam underline underline-offset-4">
+                  Tới bảng chào giá <ArrowDown className="size-4" aria-hidden />
+                </a>
+              )}
+            </p>
+          )}
         </div>
       ) : (
         <Card className="p-5"><QuoteFlow status={q.status} /></Card>
@@ -190,7 +210,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
   const rest = (
     <>
       {conflict && (
-        <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-datnung/50 bg-datnung/5 bg-[repeating-linear-gradient(45deg,rgb(163_74_35/0.09)_0_2px,transparent_2px_9px),repeating-linear-gradient(-45deg,rgb(163_74_35/0.09)_0_2px,transparent_2px_9px)] p-4 text-sm">
+        <div role="alert" className="flex gap-3 rounded-[var(--radius-tile)] border border-datnung/50 bg-datnung-nhat p-4 text-[15px]">
           <AlertTriangle className="mt-0.5 size-5 shrink-0 text-datnung" />
           <div>
             <p className="font-semibold text-datnung">409 Conflict – dữ liệu đã thay đổi</p>
@@ -205,18 +225,18 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
           {/* Người mua / BQL: bảng so sánh và chốt */}
           {canManage && q.status === "DRAFT_REQUEST" && (
             <Card className="p-6">
-              <h2 className="text-2xl">Bản nháp</h2>
-              <p className="mt-2 text-sm text-tro">Gửi yêu cầu để hệ thống ghép và mời các xưởng phù hợp.</p>
+              <h2>Bản nháp</h2>
+              <p className="mt-1.5 text-tro">Gửi yêu cầu để hệ thống ghép và mời các xưởng phù hợp.</p>
               <Button className="mt-4" variant="cobalt" onClick={() => setConfirm("send")}>Gửi tới các xưởng</Button>
             </Card>
           )}
 
           {canManage && ["SENT_TO_ARTISANS", "ARTISANS_BIDDING"].includes(q.status) && (
-            <section>
+            <section id="chao-gia" className="scroll-mt-28">
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
-                  <h2 className="text-2xl">So sánh chào giá ({pendingBids.length})</h2>
-                  <p className="text-sm text-tro">Chọn một hoặc nhiều xưởng, tổng phân bổ phải đúng {formatNumber(q.quantity)} sản phẩm.</p>
+                  <h2>So sánh chào giá ({pendingBids.length})</h2>
+                  <p className="mt-0.5 text-sm text-tro">Chọn một hoặc nhiều xưởng, tổng phân bổ phải đúng {formatNumber(q.quantity)} sản phẩm.</p>
                 </div>
                 <Button variant="outline" size="sm" onClick={suggest} disabled={!pendingBids.length}><Sparkles className="size-4" /> Gợi ý phân bổ tối ưu</Button>
               </div>
@@ -225,7 +245,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
               ) : (
                 <div data-card="" className="relative overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/80">
                   <table className="w-full min-w-[720px] text-sm">
-                    <thead className="bg-nga-dam/70 text-left text-xs uppercase tracking-wider text-tro">
+                    <thead className="bg-nga-dam/70 text-left text-[13px] font-semibold text-tro">
                       <tr>
                         <th className="px-3 py-3">Xưởng</th><th className="px-3 py-3 text-right">Đơn giá</th><th className="px-3 py-3 text-right">Nhận làm</th>
                         <th className="px-3 py-3 text-right">Số ngày</th><th className="px-3 py-3 text-right">Uy tín</th><th className="px-3 py-3">Phân bổ</th>
@@ -239,13 +259,16 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
                           <tr key={b.id} className={cn(qty > 0 && "bg-ngoc-nhat/40")}>
                             <td className="px-3 py-3">
                               <Link href={`/artisans/${b.artisan.slug}`} className="font-medium hover:text-datnung">{b.artisan.workshopName}</Link>
-                              <p className="line-clamp-2 max-w-xs text-xs text-tro">{b.proposalNote}</p>
-                              <p className="font-mono text-[10px] text-tro">bid v{b.version} · {timeAgo(b.updatedAt)}</p>
+                              <p className="line-clamp-2 max-w-xs text-[13px] text-tro">{b.proposalNote}</p>
+                              <p className="mt-0.5 text-xs text-tro">Cập nhật {timeAgo(b.updatedAt)} · bản v{b.version}</p>
                             </td>
-                            <td className={cn("whitespace-nowrap px-3 py-3 text-right font-mono tabular", b.offeredPricePerUnit <= q.targetBudgetPerUnit ? "text-ngoc" : "text-datnung")}>{formatVnd(b.offeredPricePerUnit)}</td>
-                            <td className="px-3 py-3 text-right font-mono tabular">{formatNumber(b.committedQuantity)}</td>
-                            <td className={cn("px-3 py-3 text-right font-mono", late && "text-datnung")}>{b.estimatedDays}{late && " ⚠"}</td>
-                            <td className="px-3 py-3 text-right font-mono">{b.artisan.ratingAvg > 0 ? b.artisan.ratingAvg.toFixed(1) : <span className="text-tro" title="Xưởng chưa có đánh giá">–</span>}</td>
+                            <td className={cn("whitespace-nowrap px-3 py-3 text-right font-semibold tabular", b.offeredPricePerUnit <= q.targetBudgetPerUnit ? "text-ngoc" : "text-datnung")}>{formatVnd(b.offeredPricePerUnit)}</td>
+                            <td className="px-3 py-3 text-right tabular">{formatNumber(b.committedQuantity)}</td>
+                            <td className={cn("px-3 py-3 text-right tabular", late && "font-semibold text-datnung")}>
+                              <span className="inline-flex items-center gap-1">{late && <AlertTriangle className="size-3.5" aria-hidden />}{b.estimatedDays}</span>
+                              {late && <span className="sr-only"> (quá hạn cần giao)</span>}
+                            </td>
+                            <td className="px-3 py-3 text-right tabular">{b.artisan.ratingAvg > 0 ? b.artisan.ratingAvg.toFixed(1) : <span className="text-tro" title="Xưởng chưa có đánh giá">–</span>}</td>
                             <td className="px-3 py-3">
                               <label className="sr-only" htmlFor={`alloc-${b.id}`}>Số lượng phân bổ cho {b.artisan.workshopName}</label>
                               <input
@@ -257,7 +280,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
                                   const n = Math.min(Number(e.target.value.replace(/\D/g, "") || 0), b.committedQuantity);
                                   setSelection((s) => ({ ...s, [b.id]: n }));
                                 }}
-                                className="w-24 rounded border border-vua px-2 py-1.5 text-right font-mono"
+                                className="w-24 rounded border border-vua bg-su px-2 py-1.5 text-right tabular"
                               />
                             </td>
                           </tr>
@@ -267,8 +290,8 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
                   </table>
                   <div className="flex flex-wrap items-center justify-between gap-3 border-t border-vua bg-nga-dam/40 px-4 py-3">
                     <p className="text-sm">
-                      Đã phân bổ <strong className={cn("font-mono", totalSelected === q.quantity ? "text-ngoc" : "text-datnung")}>{formatNumber(totalSelected)}</strong> / {formatNumber(q.quantity)}
-                      {totalSelected > 0 && <> · Thành tiền <strong className="font-mono">{formatVnd(totalCost)}</strong></>}
+                      Đã phân bổ <strong className={cn("tabular", totalSelected === q.quantity ? "text-ngoc" : "text-datnung")}>{formatNumber(totalSelected)}</strong> / {formatNumber(q.quantity)}
+                      {totalSelected > 0 && <> · Thành tiền <strong className="tabular">{formatVnd(totalCost)}</strong></>}
                       {totalSelected !== q.quantity && totalSelected > 0 && <span className="text-datnung"> · {totalSelected < q.quantity ? `thiếu ${formatNumber(q.quantity - totalSelected)}` : `thừa ${formatNumber(totalSelected - q.quantity)}`}</span>}
                     </p>
                     <Button variant="cobalt" disabled={totalSelected !== q.quantity || q.status !== "ARTISANS_BIDDING"} onClick={() => setConfirm("accept")}>
@@ -283,7 +306,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
                 <div className="mt-6 rounded-[var(--radius-tile)] border border-dashed border-lam/40 bg-lam/[0.04] p-5">
                   <p className="flex items-center gap-2 font-semibold text-lam"><Zap className="size-4" /> Mô phỏng xung đột đồng thời (409 Conflict Demo)</p>
                   <p className="mt-1 text-sm text-tro">
-                    Gửi hai yêu cầu chốt <em>cùng lúc</em> với cùng phiên bản v{q.version}, giống hai người bấm chốt ở hai cửa sổ. Giao dịch Serializable và điều kiện{" "}
+                    Gửi hai yêu cầu chốt <strong className="font-semibold text-muc">cùng lúc</strong> với cùng phiên bản v{q.version}, giống hai người bấm chốt ở hai cửa sổ. Giao dịch Serializable và điều kiện{" "}
                     <code className="font-mono text-xs">updateMany(where: {"{"} version: {q.version} {"}"})</code> bảo đảm chỉ một yêu cầu thắng.
                   </p>
                   <Button className="mt-3" size="sm" variant="outline" onClick={simulateConflict} loading={busy}>Gửi 2 yêu cầu chốt đồng thời</Button>
@@ -291,7 +314,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
                     <div className="mt-4 grid gap-2 sm:grid-cols-2">
                       {demoResults.map((r) => (
                         <div key={r.label} className={cn("rounded-md border p-3 text-sm", r.status === 200 ? "border-ngoc/40 bg-ngoc-nhat/50" : "border-datnung/40 bg-datnung/5")}>
-                          <p className="font-mono text-xs">{r.label} → HTTP {r.status}</p>
+                          <p className="font-mono text-[13px]">{r.label} → HTTP {r.status}</p>
                           <p className="mt-1">{r.message}</p>
                         </div>
                       ))}
@@ -305,7 +328,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
           {/* Nghệ nhân: chào giá */}
           {q.viewer.isArtisan && (
             <section>
-              <h2 className="mb-2 text-2xl">Chào giá của xưởng bạn</h2>
+              <h2 className="mb-2">Chào giá của xưởng bạn</h2>
               {q.viewer.invitation && (
                 <ul className="mb-4 flex flex-wrap gap-1.5">
                   {asStrings(q.viewer.invitation.matchReasons).map((r) => <li key={r}><Badge tone="cobalt">{r}</Badge></li>)}
@@ -319,7 +342,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
           {q.allocatedBatches.length > 0 && (
             <section>
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-                <h2 className="text-2xl">Phân bổ sản xuất</h2>
+                <h2>Phân bổ sản xuất</h2>
                 {canManage && q.status === "BUYER_ACCEPTED" && <Button variant="primary" onClick={() => setConfirm("start")}><Factory className="size-4" /> Phát lệnh sản xuất</Button>}
                 {canManage && q.status === "IN_PRODUCTION" && <Button variant="celadon" onClick={() => setConfirm("deliver")}><PackageCheck className="size-4" /> Xác nhận đã nhận đủ hàng</Button>}
               </div>
@@ -329,12 +352,12 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
                   return (
                     <Link key={b.id} href={`/trace/${b.batchCode}`} className="rounded-[var(--radius-tile)] border border-vua bg-su/80 p-4 hover:border-datnung/40">
                       <div className="flex items-center justify-between">
-                        <p className="font-mono text-xs text-lam">{b.batchCode}</p>
+                        <p className="code text-[13px] text-lam">{b.batchCode}</p>
                         <Badge tone={b.status === "COMPLETED" ? "celadon" : "gold"}>{b.status === "COMPLETED" ? "Hoàn tất" : "Đang làm"}</Badge>
                       </div>
-                      <p className="mt-1 font-serif text-xl">{b.artisan.workshopName}</p>
+                      <p className="mt-1 text-lg font-semibold">{b.artisan.workshopName}</p>
                       <p className="text-sm text-tro">{formatNumber(b.allocatedQuantity ?? 0)} sản phẩm · {n}/6 công đoạn</p>
-                      <div className="mt-2 h-1.5 overflow-hidden rounded bg-nga-sau"><div className="h-full bg-gradient-to-r from-datnung to-lua" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
+                      <div className="mt-2 h-1.5 overflow-hidden rounded bg-nga-sau"><div className="h-full bg-datnung" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
                     </Link>
                   );
                 })}
@@ -345,12 +368,12 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
           {/* BQL và người mua: chào giá đã xử lý */}
           {canManage && q.bids.some((b) => b.status !== "PENDING") && (
             <section>
-              <h3 className="mb-3 text-xl">Kết quả chào giá</h3>
+              <h2 className="mb-3">Kết quả chào giá</h2>
               <ul className="divide-y divide-vua rounded-[var(--radius-tile)] border border-vua bg-su/70 text-sm">
                 {q.bids.filter((b) => b.status !== "PENDING").map((b) => (
                   <li key={b.id} className="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5">
                     <span>{b.artisan.workshopName}</span>
-                    <span className="font-mono text-xs">{formatVnd(b.offeredPricePerUnit)} × {formatNumber(b.allocatedQuantity ?? b.committedQuantity)}</span>
+                    <span className="tabular text-[13px]">{formatVnd(b.offeredPricePerUnit)} × {formatNumber(b.allocatedQuantity ?? b.committedQuantity)}</span>
                     <Badge tone={b.status === "ACCEPTED" ? "celadon" : "ash"}>{b.status === "ACCEPTED" ? "Trúng thầu" : b.status === "WITHDRAWN" ? "Đã rút" : "Không chọn"}</Badge>
                   </li>
                 ))}
@@ -365,7 +388,7 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
             <p className="label mb-3 !text-lam">Chi tiết yêu cầu</p>
             <p className="whitespace-pre-line leading-relaxed">{q.specifications}</p>
             <dl className="mt-4 space-y-2 border-t border-vua pt-4">
-              <div className="flex justify-between gap-3"><dt className="text-tro">Ngân sách</dt><dd className="font-mono">{formatVnd(q.targetBudgetPerUnit)}/sp</dd></div>
+              <div className="flex justify-between gap-3"><dt className="text-tro">Ngân sách</dt><dd className="tabular font-medium">{formatVnd(q.targetBudgetPerUnit)}/sp</dd></div>
               <div className="flex justify-between gap-3"><dt className="text-tro">Giao tới</dt><dd className="text-right">{q.deliveryAddress}</dd></div>
               {q.biddingClosesAt && <div className="flex justify-between gap-3"><dt className="text-tro">Hạn chào giá</dt><dd>{formatDate(q.biddingClosesAt, true)}</dd></div>}
               <div className="flex justify-between gap-3"><dt className="text-tro">Xưởng được mời</dt><dd>{q.invitations.length}</dd></div>
@@ -374,14 +397,14 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
           </Card>
 
           <Card className="p-5">
-            <p className="label mb-4 flex items-center gap-1.5 !text-lam"><History className="size-3.5" /> Lịch sử trạng thái</p>
+            <p className="label mb-4 flex items-center gap-1.5 !text-lam"><History className="size-4" /> Lịch sử trạng thái</p>
             <ol className="relative space-y-4 border-l border-vua pl-5">
               {q.history.map((h) => (
                 <li key={h.id} className="relative">
                   <span className="absolute -left-[25px] top-1 grid size-3 place-items-center rounded-full bg-lam ring-4 ring-nga" />
                   <p className="text-sm font-medium">{QUOTE_STATUS[h.toStatus].label}</p>
-                  <p className="text-xs text-tro">{h.actor ? `${h.actor.name}` : "Hệ thống"} · {formatDate(h.createdAt, true)}</p>
-                  {h.note && <p className="text-xs text-tro">{h.note}</p>}
+                  <p className="text-[13px] text-tro">{h.actor ? `${h.actor.name}` : "Hệ thống"} · {formatDate(h.createdAt, true)}</p>
+                  {h.note && <p className="text-[13px] text-tro">{h.note}</p>}
                 </li>
               ))}
             </ol>
@@ -428,11 +451,11 @@ export function QuoteRoom({ initial, variant, head }: { initial: QuoteView; vari
     </>
   );
 
-  // Khu khách hàng "Tấm dệt": đầu phòng (tiêu đề, huy hiệu khóa lạc quan, 6 trạng thái) dệt trong một dải đỏ dày
+  // Khu khách hàng "Tấm dệt": đầu phòng (tiêu đề, huy hiệu khóa lạc quan, 6 trạng thái, việc tiếp theo) nằm trong dải của mục Đơn sỉ
   if (variant === "weave") {
     return (
       <div>
-        <Band hue="n7" weight="heavy" as="div" edges="bottom" bodyClassName="space-y-7 pt-14 lg:pt-16" label="Phòng báo giá">
+        <Band hue="n7" as="div" edges="bottom" bodyClassName="space-y-6 pt-8 lg:pt-14" label="Phòng báo giá">
           {head}
           <div className="on-band">{header}</div>
           {flow}
