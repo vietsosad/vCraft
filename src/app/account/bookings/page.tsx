@@ -55,7 +55,7 @@ export default async function AccountBookings() {
                   <h2 className="mb-4 flex items-baseline gap-2">{m} <span className="nhan text-tro">{list.length} buổi</span></h2>
                   <ul className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                     {list.map((b) => (
-                      <li key={b.id}><VisitPatch b={b} actions={<BookingActions code={b.code} version={b.version} status={b.status} as="buyer" />} /></li>
+                      <li key={b.id} data-reveal="weave"><VisitPatch b={b} actions={<BookingActions code={b.code} version={b.version} status={b.status} as="buyer" />} /></li>
                     ))}
                   </ul>
                 </section>
@@ -66,7 +66,7 @@ export default async function AccountBookings() {
                 <h2 className="mb-4 flex items-baseline gap-2">Đã qua hoặc đã đóng <span className="nhan text-tro">{past.length} buổi</span></h2>
                 <ul className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                   {past.map((b) => (
-                    <li key={b.id}>
+                    <li key={b.id} data-reveal="weave">
                       <VisitPatch
                         b={b}
                         past

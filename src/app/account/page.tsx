@@ -73,7 +73,7 @@ export default async function WeaveHome() {
       <header className="account-hero" style={bandVars("n8", "dark")}>
         <div className="account-hero-content">
           <div className="account-hero-rule" aria-hidden><span /></div>
-          <h1 className="giong-ke">{firstName ? `Chào ${firstName},` : "Chào bạn,"}</h1>
+          <h1 className="giong-ke"><span>{firstName ? `Chào ${firstName},` : "Chào bạn,"}</span></h1>
           {user.organization && <p className="account-hero-organization">{user.organization}</p>}
           <div className="account-hero-summary">
             <a href="#viec-cho-ban">{tasks.length ? `${tasks.length} việc chờ bạn` : "Không có việc chờ"}</a>
@@ -82,17 +82,20 @@ export default async function WeaveHome() {
           </div>
           <div className="account-hero-actions">
             <Link href="/account/quotes/new" className="btn-moc" aria-label="Tạo yêu cầu báo giá"><FilePlus2 className="size-4 shrink-0" aria-hidden /> Yêu cầu báo giá</Link>
-            <Link href="/scan" className="btn-soi"><QrCode className="size-4 shrink-0" aria-hidden /> Quét tem QR</Link>
+            <Link href="/scan" className="btn-soi" aria-label="Quét tem QR"><QrCode className="size-4 shrink-0" aria-hidden /> Quét QR</Link>
           </div>
         </div>
         <figure className="account-hero-photo">
-          <Image src="/seed/hands-trim.webp" alt="" fill priority sizes="(max-width: 671px) 100vw, (max-width: 1400px) 47vw, 630px" />
+          <div className="account-hero-photo-frame">
+            <Image src="/seed/hands-trim.webp" alt="" fill priority sizes="(max-width: 671px) 100vw, (max-width: 1400px) 47vw, 630px" />
+          </div>
+          <span className="account-hero-rings" aria-hidden />
           <figcaption><span aria-hidden /> Trên bàn xoay Bát Tràng</figcaption>
         </figure>
       </header>
 
       <div className="account-home-grid">
-        <section className="account-panel account-tasks" id="viec-cho-ban" aria-labelledby="account-tasks-title">
+        <section className="account-panel account-tasks" data-reveal="weave" id="viec-cho-ban" aria-labelledby="account-tasks-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><ClipboardList className="size-[18px]" aria-hidden /></span>
@@ -102,7 +105,7 @@ export default async function WeaveHome() {
           </div>
           {tasks.length > 0 ? (
             <>
-              <ul className="account-task-list">
+              <ul className="account-task-list" data-weave-cascade>
                 {taskPreview.map((task) => (
                   <li key={task.key}>
                     <Link href={task.href} className="account-task">
@@ -126,7 +129,7 @@ export default async function WeaveHome() {
           ) : <p className="account-empty">Bạn đã xử lý hết việc cần làm.</p>}
         </section>
 
-        <section className="account-panel account-orders" aria-labelledby="account-orders-title">
+        <section className="account-panel account-orders" data-reveal="weave" aria-labelledby="account-orders-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><FileText className="size-[18px]" aria-hidden /></span>
@@ -136,7 +139,7 @@ export default async function WeaveHome() {
             <Link href="/account/quotes?ngan=tat-ca" className="account-link">Tất cả đơn sỉ <ArrowRight className="size-4" aria-hidden /></Link>
           </div>
           {shown.length > 0 ? (
-            <ul className="grid grid-cols-1 gap-2.5">
+            <ul className="grid grid-cols-1 gap-2.5" data-weave-cascade>
               {shown.map((quote) => <li key={quote.id}><OrderPatch q={quote} compact /></li>)}
             </ul>
           ) : (
@@ -147,7 +150,7 @@ export default async function WeaveHome() {
           )}
         </section>
 
-        <section className="account-panel account-visit" aria-labelledby="account-visit-title">
+        <section className="account-panel account-visit" data-reveal="weave" aria-labelledby="account-visit-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><CalendarDays className="size-[18px]" aria-hidden /></span>
@@ -165,7 +168,7 @@ export default async function WeaveHome() {
           )}
         </section>
 
-        <section className="account-panel account-letters" aria-labelledby="account-letters-title">
+        <section className="account-panel account-letters" data-reveal="weave" aria-labelledby="account-letters-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><Bell className="size-[18px]" aria-hidden /></span>
@@ -174,7 +177,7 @@ export default async function WeaveHome() {
             <Link href="/account/notifications" className="account-link">Hộp thư <ArrowRight className="size-4" aria-hidden /></Link>
           </div>
           {letters.length > 0 ? (
-            <ul className="account-task-list">
+            <ul className="account-task-list" data-weave-cascade>
               {letters.map((letter) => (
                 <li key={letter.id}>
                   <NotificationLink id={letter.id} href={letter.link ?? "/account/notifications"} read={!!letter.readAt} className="account-letter-preview">
@@ -191,7 +194,7 @@ export default async function WeaveHome() {
           ) : <p className="account-empty">Chưa có thư nào.</p>}
         </section>
 
-        <section className="account-panel account-saved" aria-labelledby="account-saved-title">
+        <section className="account-panel account-saved" data-reveal="weave" aria-labelledby="account-saved-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><Heart className="size-[18px]" aria-hidden /></span>
@@ -207,7 +210,7 @@ export default async function WeaveHome() {
           ) : (
             <>
               <p className="mb-3 text-sm text-tro">{favCount} tác phẩm · {favWorkshopCount} xưởng</p>
-              {savedProducts.length > 0 && <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {savedProducts.length > 0 && <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4" data-weave-cascade>
                 {savedProducts.map((product) => (
                   <li key={product.slug}>
                     <LaidPiece href={`/products/${product.slug}`} name={product.name} image={asImages(product.images)[0]} sizes="(max-width: 640px) 40vw, 160px" showName />
@@ -225,7 +228,7 @@ export default async function WeaveHome() {
           )}
         </section>
 
-        <section className="account-panel account-traces" aria-labelledby="account-traces-title">
+        <section className="account-panel account-traces" data-reveal="weave" aria-labelledby="account-traces-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><QrCode className="size-[18px]" aria-hidden /></span>
@@ -236,7 +239,7 @@ export default async function WeaveHome() {
           {traced.length > 0 ? (
             <>
               <p className="mb-3 text-sm text-tro">{tracedTotal} lô đã quét</p>
-              <ul className="grid grid-cols-1 gap-2.5">
+              <ul className="grid grid-cols-1 gap-2.5" data-weave-cascade>
                 {traced.map((batch) => <li key={batch.code}><TracePatch t={batch} compact /></li>)}
               </ul>
             </>
@@ -245,7 +248,7 @@ export default async function WeaveHome() {
       </div>
 
       {worked.length > 0 && (
-        <section className="account-panel mt-4" aria-labelledby="account-worked-title">
+        <section className="account-panel mt-4" data-reveal="weave" aria-labelledby="account-worked-title">
           <div className="account-panel-head">
             <div>
               <span className="account-panel-icon"><Store className="size-[18px]" aria-hidden /></span>

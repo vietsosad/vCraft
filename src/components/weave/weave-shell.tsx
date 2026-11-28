@@ -106,6 +106,7 @@ export function WeaveShell({ user, badges = {}, children }: { user: ShellUser; b
               ))}
             </ul>
           </nav>
+          <div className="account-scroll-line" aria-hidden />
         </header>
 
         <main id="main" tabIndex={-1}>

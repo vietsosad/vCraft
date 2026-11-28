@@ -225,7 +225,7 @@
       gap: 0.3rem;
       padding-block: 0.3rem 0.45rem;
     }
-    .account-desktop-nav .account-nav-link[aria-current="page"]::after {
+      .account-desktop-nav .account-nav-link[aria-current="page"]::after {
       position: absolute;
       bottom: -0.45rem;
       inset-inline: 0.75rem;
@@ -325,7 +325,6 @@
   .account-hero-photo img {
     object-fit: cover;
     object-position: center 59%;
-    animation: account-photo-in 850ms var(--ease-out-expo) both;
   }
   .account-hero-photo::after {
     position: absolute;
@@ -524,17 +523,6 @@
   }
   .det .patch.lift:has(a:focus-visible) { outline: 2px solid var(--account-focus); outline-offset: 3px; }
   .warp { height: 5px; border-radius: 2px; background: var(--account-line); }
-  .warp.done { background: var(--account-jade); }
-  .warp.now { background: linear-gradient(90deg, var(--account-accent) 55%, var(--account-line) 55%); }
-
-  .weave-page { animation: account-page-in 240ms var(--ease-out-expo); }
-  .account-hero-content > * { animation: account-page-in 440ms var(--ease-out-expo) both; }
-  .account-hero-content > :nth-child(2) { animation-delay: 30ms; }
-  .account-hero-content > :nth-child(3) { animation-delay: 65ms; }
-  .account-hero-content > :nth-child(4) { animation-delay: 90ms; }
-  .account-hero-content > :nth-child(5) { animation-delay: 115ms; }
-  @keyframes account-page-in { from { opacity: 0.7; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
-  @keyframes account-photo-in { from { scale: 1.05; } to { scale: 1; } }
   @keyframes account-underline { from { scale: 0.55 1; } to { scale: 1 1; } }
   @keyframes account-sheet-in { from { translate: 0 100%; } to { translate: 0 0; } }
 }
@@ -558,7 +546,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .weave-page, .account-hero-content > *, .account-hero-photo img,
   .account-more[open], .account-desktop-nav .account-nav-link[aria-current="page"]::after { animation: none; }
   .det .account-link svg, .det .account-task-arrow { translate: none; transition: none; }
 }

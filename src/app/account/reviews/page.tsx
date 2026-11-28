@@ -58,7 +58,7 @@ export default async function AccountReviews() {
           ) : (
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
               {pending.map((p) => (
-                <article id={`review-${p.ref}-${p.artisan.id}`} key={`${p.ref}-${p.artisan.id}`} className="patch p-6">
+                <article id={`review-${p.ref}-${p.artisan.id}`} key={`${p.ref}-${p.artisan.id}`} data-reveal="weave" className="patch p-6">
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <h3 className="text-lg leading-snug">{p.artisan.workshopName}</h3>
@@ -90,7 +90,7 @@ export default async function AccountReviews() {
           ) : (
             <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
               {mine.map((r) => (
-                <li key={r.id}>
+                <li key={r.id} data-reveal="weave">
                   <article className="patch h-full p-6">
                     <div className="flex items-start justify-between gap-3">
                       <Link href={`/artisans/${r.artisan.slug}#danh-gia`} className="text-lg font-semibold leading-snug hover:underline">{r.artisan.workshopName}</Link>

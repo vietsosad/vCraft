@@ -51,7 +51,7 @@ export function WeaveTrack({ status, labels = true, className }: { status: Quote
   if (idx === -2) return <p className={cn("text-sm line-through opacity-70", className)}>Đơn đã hủy</p>;
   const delivered = status === "DELIVERED";
   return (
-    <ol className={cn("grid grid-cols-5 gap-1", className)} aria-label={`Tiến độ đơn: ${QUOTE_STATUS[status].label}`}>
+    <ol className={cn("weave-track grid grid-cols-5 gap-1", className)} aria-label={`Tiến độ đơn: ${QUOTE_STATUS[status].label}`}>
       {ORDER_LEGS.map((l, i) => {
         const done = delivered || i < idx;
         const now = !delivered && i === idx;

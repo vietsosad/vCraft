@@ -53,7 +53,7 @@ export default async function AccountFavorites() {
             <Band hue="n5" tone="quiet" label="Tác phẩm" bodyClassName="pt-8">
               <ul className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-4">
                 {products.map((p) => (
-                  <li key={p.id} className="flex flex-col">
+                  <li key={p.id} data-reveal="weave" className="flex flex-col">
                     <div className="relative mx-auto w-full max-w-[15rem]">
                       <LaidPiece href={`/products/${p.slug}`} name={p.name} image={asImages(p.images)[0]} sizes="(max-width: 768px) 45vw, 22vw" />
                       <FavoriteButton productId={p.id} initial canFavorite className="absolute right-1.5 top-1.5 z-10" />
@@ -78,7 +78,7 @@ export default async function AccountFavorites() {
                 {workshops.map((w) => {
                   const open = getOpenState(w);
                   return (
-                    <li key={w.id}>
+                    <li key={w.id} data-reveal="weave">
                       <article className="patch group relative overflow-hidden">
                         <VImage image={asImage(w.coverImage)} ratio="16/10" sizes="(max-width: 768px) 100vw, 33vw" imgClassName="transition-transform duration-300 group-hover:scale-[1.03]" />
                         <div className="flex items-start gap-3 p-5">

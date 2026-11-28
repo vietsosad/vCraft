@@ -6,6 +6,7 @@ import { pendingReviews } from "@/lib/services/engagement-service";
 import { buyerQuotes } from "@/lib/services/buyer-zone";
 import { WeaveShell } from "@/components/weave/weave-shell";
 import "@/styles/weave.css";
+import "@/styles/weave-motion.css";
 
 /** Chữ hiệu riêng của khu khách hàng: góc cắt như sợi dệt, khác chữ biển hiệu của trang chủ. */
 const chakra = Chakra_Petch({ subsets: ["latin", "vietnamese"], weight: ["500", "600", "700"], variable: "--font-chakra", display: "swap" });

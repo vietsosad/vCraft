@@ -29,7 +29,7 @@ export async function LetterList({ userId, unread }: { userId: string; unread: n
           </h2>
           <ul className="space-y-2.5">
             {list.map((n) => (
-              <li key={n.id}>
+              <li key={n.id} data-reveal="weave">
                 <NotificationLink id={n.id} href={n.link} read={!!n.readAt} className="patch grid w-full grid-cols-[auto_minmax(0,1fr)] items-start gap-3 px-4 py-4 text-left sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:px-5">
                   <span className={cn("nhan mt-0.5 px-2 py-1", n.readAt ? "text-tro" : "rounded bg-lam-nhat text-chu-nau")}>
                     {n.readAt ? "Đã đọc" : "Chưa đọc"}

@@ -32,7 +32,7 @@ export default async function AccountTraces() {
           </div>
         ) : (
           <ul className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-            {items.map((t) => <li key={t.code}><TracePatch t={t} /></li>)}
+            {items.map((t) => <li key={t.code} data-reveal="weave"><TracePatch t={t} /></li>)}
           </ul>
         )}
       </div>

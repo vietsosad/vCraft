@@ -1,0 +1,168 @@
+/* Chuyển động của Tấm dệt. Các giá trị mặc định hiện đầy đủ khi chưa có hiệu ứng. */
+@layer components {
+  .det {
+    --weave-ease: cubic-bezier(0.2, 0.7, 0.22, 1);
+    --weave-glint: color-mix(in srgb, var(--account-gold) 65%, var(--account-accent));
+  }
+
+  .account-scroll-line {
+    display: none;
+    position: absolute;
+    inset: auto 0 -2px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--account-accent), var(--weave-glint) 55%, var(--account-jade));
+    pointer-events: none;
+    transform-origin: left;
+  }
+
+  .account-hero-photo-frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .account-hero-rings {
+    position: absolute;
+    z-index: 1;
+    right: -1.95rem;
+    bottom: -3rem;
+    width: clamp(9rem, 22vw, 19rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: repeating-radial-gradient(circle, transparent 0 9%, rgb(255 226 184 / 0.32) 9.2% 9.6%, transparent 9.8% 13%);
+    mask-image: conic-gradient(from 0deg, transparent, black 76deg, black 228deg, transparent 294deg);
+    pointer-events: none;
+  }
+  .account-hero-photo figcaption { z-index: 2; }
+  .det .account-hero h1 { overflow: clip; padding-block: 0.14em 0.07em; margin-block: -0.14em -0.07em; }
+  .account-hero h1 span { display: block; }
+
+  .weave-track .warp {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--account-line);
+  }
+  .weave-track .warp::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    transform-origin: left;
+  }
+  .weave-track .warp.done::before { background: var(--account-jade); }
+  .weave-track .warp.now::before { background: linear-gradient(90deg, var(--account-accent) 55%, transparent 55%); }
+
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  @layer components {
+    .weave-page { animation: weave-page-enter 420ms var(--weave-ease); }
+    .account-hero-rule span { animation: weave-lozenge 780ms var(--weave-ease) both; }
+    .account-hero h1 span { animation: weave-title-enter 820ms var(--ease-out-expo) 70ms both; }
+    .account-hero-organization { animation: weave-line-enter 620ms var(--weave-ease) 145ms both; }
+    .account-hero-summary { animation: weave-line-enter 620ms var(--weave-ease) 215ms both; }
+    .account-hero-actions { animation: weave-line-enter 620ms var(--weave-ease) 280ms both; }
+    .account-hero-photo-frame { animation: weave-photo-enter 1050ms var(--ease-out-expo) 30ms both; }
+    .account-hero-photo figcaption { animation: weave-line-enter 650ms var(--weave-ease) 355ms both; }
+    .account-hero-rings { animation: weave-rings-enter 1100ms var(--ease-out-expo) 230ms both; }
+    .account-subhead h1 { animation: weave-line-enter 560ms var(--ease-out-expo); }
+    .account-subhead .soft { animation: weave-line-enter 540ms var(--ease-out-expo) 65ms backwards; }
+
+
+    :is([data-weave-cascade] > *, .weave-track li) { --weave-index: 0; }
+    :is([data-weave-cascade] > *, .weave-track li):nth-child(2) { --weave-index: 1; }
+    :is([data-weave-cascade] > *, .weave-track li):nth-child(3) { --weave-index: 2; }
+    :is([data-weave-cascade] > *, .weave-track li):nth-child(4) { --weave-index: 3; }
+    .weave-track li:nth-child(5) { --weave-index: 4; }
+
+    .account-filter-results { animation: weave-filter-enter 420ms var(--weave-ease); }
+    .account-tasks:target { animation: weave-target 1.35s var(--weave-ease); }
+    [data-reveal="weave"][data-in] .warp:is(.done, .now)::before {
+      animation: weave-fill 630ms var(--ease-out-expo) calc(130ms + var(--weave-index) * 85ms) backwards;
+    }
+
+    @supports (animation-timeline: scroll()) {
+      .account-scroll-line {
+        display: block;
+        animation: weave-fill linear both;
+        animation-timeline: scroll(root block);
+      }
+      .account-hero-photo img {
+        animation: weave-photo-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0px 56vh;
+      }
+      .account-hero-content::before {
+        animation: weave-motif-scroll linear both;
+        animation-timeline: scroll(root block);
+        animation-range: 0px 48vh;
+      }
+    }
+
+    @keyframes weave-page-enter { from { opacity: 0.78; } to { opacity: 1; } }
+    @keyframes weave-title-enter {
+      from { opacity: 0.1; translate: 0 82%; }
+      to { opacity: 1; translate: 0 0; }
+    }
+    @keyframes weave-line-enter {
+      from { opacity: 0.48; translate: 0 9px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+    @keyframes weave-lozenge {
+      from { scale: 0.55; rotate: 0deg; opacity: 0.4; }
+      to { scale: 1; rotate: 45deg; opacity: 1; }
+    }
+    @keyframes weave-photo-enter {
+      from { clip-path: inset(0 0 0 14%); opacity: 0.5; }
+      to { clip-path: inset(0); opacity: 1; }
+    }
+    @keyframes weave-rings-enter {
+      from { rotate: -24deg; opacity: 0.25; }
+      to { rotate: 0deg; opacity: 1; }
+    }
+    @keyframes weave-photo-scroll {
+      from { scale: 1.035; translate: 0 0; }
+      to { scale: 1.18; translate: 0 6%; }
+    }
+    @keyframes weave-motif-scroll {
+      from { background-position: 0 0; }
+      to { background-position: 0 36px; }
+    }
+    @keyframes weave-filter-enter {
+      from { opacity: 0.7; translate: 0 7px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+    @keyframes weave-fill { from { scale: 0 1; } to { scale: 1 1; } }
+    @keyframes weave-target {
+      from { box-shadow: 0 0 0 3px var(--weave-glint); }
+      to { box-shadow: var(--account-shadow); }
+    }
+  }
+
+  /* MotionRuntime đánh dấu data-in khi cụm đã vào khung nhìn. */
+  .js .det.ui-operate [data-reveal="weave"][data-in] {
+    animation: weave-section-enter 670ms var(--ease-out-expo);
+  }
+  .js .det.ui-operate [data-reveal="weave"][data-in] [data-weave-cascade] > :nth-child(-n+4) {
+    animation: weave-item-enter 540ms var(--ease-out-expo) calc(75ms + var(--weave-index) * 62ms) backwards;
+  }
+  .js .det.ui-operate [data-reveal="weave"]:focus-within,
+  .js .det.ui-operate [data-reveal="weave"] [data-weave-cascade] > :focus-within {
+    animation: none;
+  }
+  .js .det.ui-operate [data-reveal="weave"]:target[data-in] {
+    animation: weave-target 1.35s var(--weave-ease);
+  }
+
+  @keyframes weave-section-enter {
+    from { opacity: 0.73; translate: 0 20px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes weave-item-enter {
+    from { opacity: 0.48; translate: 0 10px; }
+    to { opacity: 1; translate: 0 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .account-scroll-line { display: none; }
+}

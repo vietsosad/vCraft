@@ -63,7 +63,7 @@ export default async function AccountQuotes({ searchParams }: { searchParams: Pr
                     aria-current={on ? "page" : undefined}
                     scroll={false}
                     className={cn(
-                      "nhan flex min-h-11 items-center gap-2 px-4 transition",
+                      "account-filter-link nhan flex min-h-11 items-center gap-2 rounded-md px-4",
                       on ? "bg-nau text-[#fbfaf5]" : "bg-muc/[0.05] text-tro hover:bg-muc/10 hover:text-muc",
                     )}
                   >
@@ -76,19 +76,21 @@ export default async function AccountQuotes({ searchParams }: { searchParams: Pr
           </ul>
         </nav>
 
-        {quotes.length === 0 ? (
-          <div className="patch max-w-2xl p-7">
-            <h2>Chưa có đơn sỉ nào</h2>
-            <p className="mt-2 text-tro">Thử đặt 500 chiếc cốc men trắng ngà in logo cho sự kiện sắp tới: hệ thống mời các xưởng có sở trường và đủ công suất, bạn nhận chào giá kín trong vài ngày.</p>
-            <Link href="/account/quotes/new" className="mt-5 inline-flex min-h-11 items-center gap-2 bg-nau px-5 font-semibold text-[#fbfaf5]">Tạo yêu cầu đầu tiên</Link>
-          </div>
-        ) : list.length === 0 ? (
-          <p className="py-8 text-lg text-tro">{active.empty}</p>
-        ) : (
-          <ul className="space-y-4">
-            {list.map((q) => <li key={q.id}><OrderPatch q={q} /></li>)}
-          </ul>
-        )}
+        <div key={active.key} className="account-filter-results">
+          {quotes.length === 0 ? (
+            <div className="patch max-w-2xl p-7">
+              <h2>Chưa có đơn sỉ nào</h2>
+              <p className="mt-2 text-tro">Thử đặt 500 chiếc cốc men trắng ngà in logo cho sự kiện sắp tới: hệ thống mời các xưởng có sở trường và đủ công suất, bạn nhận chào giá kín trong vài ngày.</p>
+              <Link href="/account/quotes/new" className="mt-5 inline-flex min-h-11 items-center gap-2 bg-nau px-5 font-semibold text-[#fbfaf5]">Tạo yêu cầu đầu tiên</Link>
+            </div>
+          ) : list.length === 0 ? (
+            <p className="py-8 text-lg text-tro">{active.empty}</p>
+          ) : (
+            <ul className="space-y-4">
+              {list.map((q) => <li key={q.id} data-reveal="weave"><OrderPatch q={q} /></li>)}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
