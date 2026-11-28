@@ -10,7 +10,7 @@ const TILES = ["tile-lam", "tile-hoavan", "tile-ran", "tile-dat", "tile-sen", "t
  */
 export function MissingTile({ code, title, children, actions }: { code: string; title: string; children: ReactNode; actions: ReactNode }) {
   return (
-    <main id="main" className="grout grid min-h-dvh place-items-center px-4 py-16">
+    <main id="main" className="ui-operate grout grid min-h-dvh place-items-center px-4 py-16">
       <div className="w-full max-w-xl text-center">
         <div className="mb-10 flex justify-center"><Logo /></div>
         <div className="mosaic mx-auto grid w-fit grid-cols-5" aria-hidden>
@@ -20,12 +20,12 @@ export function MissingTile({ code, title, children, actions }: { code: string; 
               className={cn("size-14 animate-tile-set sm:size-16", t ? cn("tile", t) : "grid place-items-center rounded-[var(--radius-tile)] border-2 border-dashed border-tro/40 bg-nga")}
               style={{ ["--d" as string]: `${i * 40}ms` }}
             >
-              {!t && <span className="font-display text-lg text-tro">{code}</span>}
+              {!t && <span className="dau-hieu font-display text-lg text-tro">{code}</span>}
             </span>
           ))}
         </div>
-        <h1 className="title-lg mt-10">{title}</h1>
-        <div className="mx-auto mt-4 max-w-md text-tro">{children}</div>
+        <h1 className="mt-10">{title}</h1>
+        <div className="mx-auto mt-3 max-w-md text-tro">{children}</div>
         <div className="mt-8 flex flex-wrap justify-center gap-2">{actions}</div>
       </div>
     </main>

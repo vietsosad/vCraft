@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Phudu, Alegreya, Be_Vietnam_Pro, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import "@/styles/operate.css";
 import { ToastProvider } from "@/components/ui/toast";
 import { MotionRuntime } from "@/components/motion/motion-runtime";
 import { DemoBar } from "@/components/layout/demo-bar";
