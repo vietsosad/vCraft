@@ -45,17 +45,8 @@
   --color-giay: #fffdf8;
   --color-dem: #0f1b38;
 
-  /* Tấm dệt (khu khách hàng /account): ngả màu men nâu cổ và men trắng rạn tinh khiết.
-   * Các dải là một thùng nhuộm củ nâu từ đậm đến nhạt (tám nấc n1–n8 trong src/styles/weave.css);
-   * nội dung đọc nằm trên miếng trắng sứ có vân rạn rất mờ, nổi lên trên nền nâu như hoa văn men trắng khắc nổi.
-   * nau: nâu men đậm cố định (nút, khối);  chu-nau: chữ nâu, tự sáng lên ở chế độ tối;
-   * nghe: vàng mật ong, điểm nhấn nhỏ cùng họ màu;  mun: nâu đen của biên vải;  vai/vai-2: nền ngà và miếng trắng sứ. */
-  --color-nau: #5c4321;
-  --color-chu-nau: #6b4a1e;
-  --color-nghe: #d9a548;
-  --color-mun: #1f170d;
-  --color-vai: #ece4d4;
-  --color-vai-2: #fdfcf8;
+  /* Khu khách hàng "Đường làng" (/account) dùng chung bảng màu này; màu riêng của cảnh làng
+   * (trời, mái ngói, sông, sơn then, giấy dó, son) nằm trong src/styles/lang.css. */
 
   /* Màu biểu đồ: đã chạy bộ kiểm tra (độ sáng, độ bão hòa, mù màu, tương phản) trên nền sứ */
   --chart-1: #1f4e9a;
@@ -128,11 +119,6 @@
     --color-doson: #f08a80;
     --color-doson-dam: #f5a49c;
     --color-on: #10151e;
-    /* Tấm dệt: nền nâu đen như men nâu trong bóng tối, miếng vải nâu trầm; chữ nâu sáng lên thành vàng ngà */
-    --color-chu-nau: #e2c48e;
-    --color-vai: #120d08;
-    --color-vai-2: #1e1710;
-    --color-mun: #0e0a05;
     --chart-1: #5a84d6;
     --chart-2: #c8602e;
     --chart-3: #1aa585;

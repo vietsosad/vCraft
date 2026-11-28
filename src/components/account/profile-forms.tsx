@@ -127,17 +127,28 @@ function deviceName(ua: string | null) {
   return `${br} trên ${os}`;
 }
 
+/** Số thiết bị hiện sẵn; phần còn lại mở bằng nút "Xem cả …" để thẻ không dài vô tận. */
+const SESSIONS_SHOWN = 5;
+
 export function SessionsCard() {
   const [rows, setRows] = useState<SessionRow[] | null>(null);
+  const [all, setAll] = useState(false);
   useEffect(() => {
-    api<SessionRow[]>("/api/account/sessions").then(setRows).catch(() => setRows([]));
+    api<SessionRow[]>("/api/account/sessions")
+      .then((r) => setRows([...r].sort((a, b) => Number(b.current) - Number(a.current))))
+      .catch(() => setRows([]));
   }, []);
+  const shown = rows && !all ? rows.slice(0, SESSIONS_SHOWN) : rows;
+  const hidden = rows ? rows.length - (shown?.length ?? 0) : 0;
   return (
     <Card className="p-6">
-      <h2 className="flex items-center gap-2"><ShieldCheck className="size-5 text-ngoc" /> Thiết bị đang đăng nhập</h2>
-      <ul className="mt-4 divide-y divide-vua">
+      <h2 className="flex items-center gap-2">
+        <ShieldCheck className="size-5 text-ngoc" /> Thiết bị đang đăng nhập
+        {rows && rows.length > 0 && <span className="text-sm font-normal text-tro">{rows.length}</span>}
+      </h2>
+      <ul id="session-list" className="mt-4 divide-y divide-vua">
         {rows === null && <li className="py-3 text-sm text-tro">Đang tải…</li>}
-        {rows?.map((s) => {
+        {shown?.map((s) => {
           const mobile = /Android|iPhone|iPad/.test(s.userAgent ?? "");
           const Icon = mobile ? Smartphone : Laptop;
           return (
@@ -152,6 +163,17 @@ export function SessionsCard() {
           );
         })}
       </ul>
+      {rows && rows.length > SESSIONS_SHOWN && (
+        <button
+          type="button"
+          onClick={() => setAll((v) => !v)}
+          aria-expanded={all}
+          aria-controls="session-list"
+          className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-lam underline-offset-4 hover:underline"
+        >
+          {all ? "Thu gọn danh sách" : `Xem cả ${rows.length} thiết bị (thêm ${hidden})`}
+        </button>
+      )}
     </Card>
   );
 }

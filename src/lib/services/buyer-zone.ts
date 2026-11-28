@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { asImage, asImages, type MediaImage } from "@/lib/types";
 
 /**
- * Dữ liệu cho "Tấm dệt" – khu riêng của khách hàng. Mỗi hàm trả về đúng một dải:
+ * Dữ liệu cho "Đường làng" – khu riêng của khách hàng. Mỗi hàm trả về đúng một điểm dừng:
  * đơn sỉ, sổ truy xuất, các xưởng đã làm việc cùng.
  */
 
@@ -115,7 +115,7 @@ export async function tracedBatches(userId: string, take = 60) {
 export type TracedBatch = Awaited<ReturnType<typeof tracedBatches>>[number];
 
 /**
- * Các xưởng khách đã thật sự làm việc cùng (mỗi xưởng một huy hiệu dệt) –
+ * Các xưởng khách đã thật sự làm việc cùng (mỗi xưởng một ấn men lam) –
  * đã ghé (buổi trải nghiệm hoàn tất), đã đặt (chào giá được chốt) hoặc đã đánh giá.
  */
 export async function workedWorkshops(userId: string) {

@@ -7,14 +7,15 @@ import { api } from "@/lib/api-client";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast";
 
-export function MarkAllRead() {
+/** Đánh dấu mọi thư đã đọc; khu khách hàng dùng nút viền cỡ vừa, các khu khác giữ nút chữ nhỏ. */
+export function MarkAllRead({ variant = "ghost", size = "sm" }: { variant?: "ghost" | "outline"; size?: "sm" | "md" }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const toast = useToast();
   return (
     <Button
-      size="sm"
-      variant="ghost"
+      size={size}
+      variant={variant}
       loading={loading}
       onClick={async () => {
         setLoading(true);

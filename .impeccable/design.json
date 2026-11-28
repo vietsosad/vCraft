@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-22T00:00:00.000Z",
+  "generatedAt": "2026-11-28T00:00:00.000Z",
   "title": "Design System: vCraft",
   "extensions": {
     "colorMeta": {
@@ -545,159 +545,74 @@
           "#f9edda"
         ]
       },
-      "nau": {
-        "role": "primary",
-        "displayName": "Nâu men",
-        "canonical": "#5c4321",
-        "oklch": "oklch(40.6% 0.063 70.0)",
-        "usage": "Nâu men cố định: nút đặc và khối trên miếng vải (lọc đang chọn, cuống ngày lịch còn hiệu lực). lam của thành phần dùng chung được nhuộm lại thành nâu men trong khu (tối: #d6b57a). Không dùng cho chữ trên miếng vải (dùng chu-nau).",
-        "tonalRamp": [
-          "#1a1006",
-          "#2f2010",
-          "#46321a",
-          "#5c4321",
-          "#7a5c33",
-          "#9a7a46",
-          "#c2a674",
-          "#ebe1c9"
-        ],
-        "scope": "Tấm dệt (khu khách hàng /account)"
+      "then": {
+        "role": "neutral",
+        "displayName": "Sơn then",
+        "canonical": "#1e1511",
+        "darkTheme": "#17100c",
+        "usage": "Kệ trưng bày, đồng hồ lò, dải lò bậc thang của phòng báo giá; chữ trên sơn then là giấy #fffdf8, chữ phụ #e6d9bf, chữ nhấn #f3dc9f. Biến --then trong lang.css.",
+        "scope": "Đường làng (khu khách hàng /account)"
       },
-      "chu-nau": {
-        "role": "primary",
-        "displayName": "Chữ nâu",
-        "canonical": "#6b4a1e",
-        "oklch": "oklch(43.5% 0.075 66.0)",
-        "darkTheme": "#e2c48e",
-        "usage": "Chữ màu trên miếng vải: mã đơn, mã lô, số chào giá, việc cần làm tiếp, liên kết, dấu đã xác nhận, vòng focus trên nền sáng. Sáng lên ở chế độ tối để luôn đạt 4.5:1.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "nau-ramp": {
-        "role": "primary",
-        "displayName": "Tám nấc nâu (dải)",
-        "canonical": "#46321a",
+      "chi": {
+        "role": "accent",
+        "displayName": "Chỉ vàng",
+        "canonical": "#c9a24e",
         "ramp": {
-          "n8": "#46321a",
-          "n7": "#55401f",
-          "n6": "#644b26",
-          "n5": "#72572d",
-          "n4": "#c2a674",
-          "n3": "#d1ba8e",
-          "n2": "#dfcfab",
-          "n1": "#ebe1c9"
+          "chi": "#c9a24e",
+          "chi-nhat": "#f3dc9f"
+        },
+        "usage": "Viền ván kệ, tâm kim đồng hồ lò; chi-nhat cho mã phiếu, nhãn trạng thái và nút trên sơn then. Biến --chi, --chi-nhat.",
+        "scope": "Đường làng (khu khách hàng /account)"
+      },
+      "giay-do": {
+        "role": "neutral",
+        "displayName": "Giấy dó",
+        "canonical": "#fbf4e4",
+        "darkTheme": "#261e18",
+        "usage": "Mặt thư ở Bến thư và lời đánh giá đã viết; viền #e4d2ad (tối #3b3028), chữ phụ --muc-do #5c5246 (tối #c9bba6).",
+        "scope": "Đường làng (khu khách hàng /account)"
+      },
+      "son": {
+        "role": "accent",
+        "displayName": "Son triện",
+        "canonical": "#b3261e",
+        "darkTheme": "#c9362c",
+        "usage": "Triện của lô đã kiểm chứng trong sổ hộ chiếu và dấu 'Mới' của thư chưa đọc; chữ trên son luôn là giấy. Biến --son.",
+        "scope": "Đường làng (khu khách hàng /account)"
+      },
+      "troi-lang": {
+        "role": "neutral",
+        "displayName": "Trời làng",
+        "canonical": "#f6ead4",
+        "ramp": {
+          "sky-top": "#f6ead4",
+          "sky-mid": "#f7f2e8",
+          "sky-low": "#dbe6f5"
         },
         "darkRamp": {
-          "n8": "#3a2a16",
-          "n7": "#41301a",
-          "n6": "#48361e",
-          "n5": "#503c22",
-          "n4": "#584226",
-          "n3": "#60482a",
-          "n2": "#684e2f",
-          "n1": "#705434"
+          "sky-top": "#050817",
+          "sky-mid": "#0f1b38",
+          "sky-low": "#1d3463"
         },
-        "usage": "Một thùng nhuộm củ nâu lấy từ gốm men nâu cổ: n8 Việc của tôi, n7 Đơn sỉ và phòng báo giá, n6 Lịch hẹn, n5 Đã lưu (chữ ngà #fbf8f0); n4 Truy xuất, n3 Đánh giá, n2 Thư, n1 Hồ sơ (chữ nâu đen #2a1d0c). Ở chế độ tối mọi nấc dùng chữ ngà #f4ede0. Khai báo trong src/styles/weave.css (--n1…--n8), không qua @theme. Thay bảng cầu vồng rồi bảng chàm (22/11/2026).",
-        "scope": "Tấm dệt (khu khách hàng /account)"
+        "usage": "Nền cảnh bến sông và dải trời của đầu trang con; ban ngày bình minh, chế độ tối là đêm hội đèn (sao, đèn lồng hiện).",
+        "scope": "Đường làng (khu khách hàng /account)"
       },
-      "hat-trang": {
+      "song-lang": {
         "role": "neutral",
-        "displayName": "Hạt men trắng",
-        "canonical": "#f6f1e6",
-        "usage": "Hàng hạt trên mọi biên răng cưa, như hàng hạt trắng đắp quanh miệng bình men nâu; sợi ngà của tua vải. Giá trị viết thẳng trong loom.ts.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "nghe": {
-        "role": "tertiary",
-        "displayName": "Vàng mật ong",
-        "canonical": "#d9a548",
-        "oklch": "oklch(75.0% 0.125 77.0)",
-        "usage": "Điểm nhấn nhỏ cùng họ nâu: chữ Tấm dệt, vùng chọn, hover nút vải mộc, nhãn Mới, nút Viết đánh giá, chấm đang mở cửa. Luôn đi với chữ nâu đen.",
-        "tonalRamp": [
-          "#130900",
-          "#322000",
-          "#553a00",
-          "#7b5600",
-          "#a77603",
-          "#d49812",
-          "#fdbe4c",
-          "#ffecce"
-        ],
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "mun": {
-        "role": "neutral",
-        "displayName": "Nâu đen",
-        "canonical": "#1f170d",
-        "oklch": "oklch(20.5% 0.025 70.0)",
-        "darkTheme": "#0e0a05",
-        "usage": "Biên vải trên cùng, nền thanh sọc biên dưới đáy điện thoại; chữ trên nhãn vàng.",
-        "tonalRamp": [
-          "#0a0a12",
-          "#22232c",
-          "#3e3f48",
-          "#5b5d67",
-          "#7e7f8a",
-          "#a2a4af",
-          "#c8cad5",
-          "#eceef9"
-        ],
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "vai": {
-        "role": "neutral",
-        "displayName": "Nền ngà",
-        "canonical": "#ece4d4",
-        "oklch": "oklch(91.9% 0.020 82.0)",
-        "darkTheme": "#120d08",
-        "usage": "Nền khu .det với vân dệt 1px ngang mỗi 3px, dọc mỗi 4px, 5% nâu.",
-        "tonalRamp": [
-          "#0c0b07",
-          "#25241f",
-          "#41403a",
-          "#5f5e58",
-          "#82807a",
-          "#a6a59e",
-          "#cccac4",
-          "#f0eee7"
-        ],
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "vai-2": {
-        "role": "neutral",
-        "displayName": "Trắng sứ (miếng vải)",
-        "canonical": "#fdfcf8",
-        "oklch": "oklch(98.5% 0.005 95.1)",
-        "darkTheme": "#1e1710",
-        "usage": "Mặt miếng vải khâu, phủ vân men rạn crackle-faint.svg dưới lớp trắng 50% ở chế độ sáng; su của thành phần dùng chung trỏ về đây trong khu.",
-        "tonalRamp": [
-          "#0c0b09",
-          "#252421",
-          "#40403d",
-          "#5e5e5a",
-          "#81807d",
-          "#a5a5a1",
-          "#cbcac7",
-          "#efeeea"
-        ],
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "soi-trang": {
-        "role": "neutral",
-        "displayName": "Sợi trắng",
-        "canonical": "#fbfaf5",
-        "oklch": "oklch(98.4% 0.007 97.3)",
-        "usage": "Chữ trên dải nâu đậm, nút vải mộc, ô số đếm sọc biên. Giá trị viết thẳng (#fbfaf5) trong mã, không phải biến CSS; không đổi theo chế độ.",
-        "tonalRamp": [
-          "#0c0b08",
-          "#252420",
-          "#41403c",
-          "#5e5e59",
-          "#81807c",
-          "#a6a5a0",
-          "#cbcbc6",
-          "#efeeea"
-        ],
-        "scope": "Tấm dệt (khu khách hàng /account)"
+        "displayName": "Sông",
+        "canonical": "#cddbf0",
+        "ramp": {
+          "river": "#cddbf0",
+          "river-deep": "#9db5de",
+          "wave": "#1f4e9a"
+        },
+        "darkRamp": {
+          "river": "#13244a",
+          "river-deep": "#0b1632",
+          "wave": "#94b4ee"
+        },
+        "usage": "Sông và hoa văn sóng mây trên cảnh bến.",
+        "scope": "Đường làng (khu khách hàng /account)"
       }
     },
     "typographyMeta": {
@@ -761,20 +676,15 @@
         "purpose": "Thời gian, mô tả phụ 13px; thông tin cần để quyết định 14px; sàn 12px cho mọi nhãn và huy hiệu.",
         "scope": "Phạm vi thao tác .ui-operate"
       },
-      "weave-label": {
-        "displayName": "Nhãn dệt",
-        "purpose": ".nhan: tên đoạn sọc biên, số đếm cạnh tiêu đề nhóm, nhãn ngày, Mới/Đã mở, dt; Be Vietnam Pro 13px 600 chữ thường, không giãn.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
+      "lang-hero": {
+        "displayName": "Lời chào bến sông (Phudu)",
+        "purpose": "Lời chào trên bến sông, tiêu đề trang con, 'Đường làng hôm nay', số lớn của Cổng làng: Phudu 800 chữ hoa qua .font-display.dau-hieu; lời chào ngắt dòng sau dấu phẩy, có quầng màu trời (.chu-troi).",
+        "scope": "Đường làng (khu khách hàng /account)"
       },
-      "weave-pixel": {
-        "displayName": "Chữ pixel dệt 5×7",
-        "purpose": "Chỉ cho huy hiệu xưởng (WovenBadge): hai chữ cái đầu bỏ dấu, khung 13 ô có hàng chấm răng cưa. Định nghĩa trong src/components/weave/loom.ts.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
-      },
-      "weave-mark": {
-        "displayName": "Tên Tấm dệt (Chakra Petch)",
-        "purpose": "Chỉ chữ 'Tấm dệt' trên biên vải (.hieu); mọi chữ khác trong khu theo phạm vi thao tác.",
-        "scope": "Tấm dệt (khu khách hàng /account)"
+      "lang-story": {
+        "displayName": "Giọng kể của làng (Alegreya)",
+        "purpose": "Tiêu đề từng điểm dừng, tên điểm dừng, tên xưởng và tác phẩm, tiêu đề thư, lời chào giá, lời đánh giá, tiêu đề phòng báo giá: Alegreya 700 qua .font-serif.giong-ke, số thẳng hàng (lining-nums).",
+        "scope": "Đường làng (khu khách hàng /account)"
       }
     },
     "shadows": [
@@ -806,34 +716,29 @@
         "purpose": "Nút men khi ấn, kèm translateY(1px)."
       },
       {
-        "name": "patch",
-        "value": "0 1px 0 rgb(42 29 12 / 0.08), 0 12px 22px -18px rgb(42 29 12 / 0.55)",
-        "purpose": "Tấm dệt: miếng vải khâu và [data-card] trong khu."
+        "name": "lang-station",
+        "value": "inset 0 1px 0 rgb(255 255 255 / .28), inset 0 -2px 0 rgb(0 0 0 / .08), var(--shadow-soft)",
+        "purpose": "Đường làng: điểm dừng trên bản đồ; rê chuột nhấc 4px và đổi sang --shadow-lift; đang chọn thêm vòng lam 24% rộng 3px."
       },
       {
-        "name": "patch-lift",
-        "value": "0 1px 0 rgb(42 29 12 / 0.08), 0 20px 30px -20px rgb(42 29 12 / 0.6)",
-        "purpose": "Tấm dệt: miếng vải liên kết khi rê, kèm translateY(-2px)."
+        "name": "lang-task-hover",
+        "value": "var(--shadow-lift), translateY(-2px), viền ngả lam 35%",
+        "purpose": "Đường làng: hàng việc, đơn, thư khi rê; ô :target sáng vòng lam."
       },
       {
-        "name": "patch-thin",
-        "value": "0 1px 0 rgb(42 29 12 / 0.06)",
-        "purpose": "Tấm dệt: miếng vải dệt mảnh (việc đã xong/đã hủy)."
+        "name": "lang-chosen-bid",
+        "value": "0 0 0 3px color-mix(in srgb, var(--color-ngoc) 25%, transparent), var(--shadow-lift)",
+        "purpose": "Đường làng: thẻ chào giá đang được chia (viền men ngọc), đặt ngoài @layer để thắng lớp tiện ích."
       },
       {
-        "name": "btn-moc",
-        "value": "inset 0 -3px 0 rgb(42 29 12 / 0.14), 0 6px 14px -10px rgb(0 0 0 / 0.6)",
-        "purpose": "Tấm dệt: nút vải mộc trên dải."
+        "name": "lang-piece",
+        "value": "drop-shadow(0 10px 8px rgb(0 0 0 / .35)) + vệt tiếp đất bầu dục đen 50%",
+        "purpose": "Đường làng: tác phẩm tách nền đứng trên kệ sơn then; khung ảnh giấy dó dùng 0 10px 18px -10px rgb(0 0 0 / .8)."
       },
       {
-        "name": "selvage-dock",
-        "value": "0 -10px 24px -14px rgb(0 0 0 / 0.6)",
-        "purpose": "Tấm dệt: thanh sọc biên dưới đáy điện thoại."
-      },
-      {
-        "name": "laid-piece",
-        "value": "drop-shadow(0 10px 8px rgb(0 0 0 / 0.25))",
-        "purpose": "Tấm dệt: tác phẩm tách nền bày trên vải, kèm vệt tiếp đất bầu dục đen 40%."
+        "name": "lang-passport",
+        "value": "perspective 1600px, hai trang nghiêng ±4°, bóng trong 24px ở gáy",
+        "purpose": "Đường làng: sổ hộ chiếu mở đôi."
       }
     ],
     "motion": [
@@ -903,34 +808,49 @@
         "purpose": "Đường thay thế bắt buộc."
       },
       {
-        "name": "weave-page",
-        "value": "0.18s ease-out both, opacity 0 → 1 (không trượt)",
-        "purpose": "Tấm dệt: chuyển mục (template.tsx)."
-      },
-      {
-        "name": "patch-lift",
-        "value": "0.16s ease-out-expo, translateY(-1px), viền 18% → 40%",
-        "purpose": "Tấm dệt: miếng vải liên kết khi rê."
-      },
-      {
-        "name": "laid-piece-lift",
-        "value": "0.2s, translateY(-4px)",
-        "purpose": "Tấm dệt: tác phẩm bày trên vải khi rê."
-      },
-      {
-        "name": "weave-more-sheet",
-        "value": "0.42s cubic-bezier(0.16, 1, 0.3, 1), y 100% → 0; dải con x -16px → 0, trễ 40ms + 40ms mỗi dải",
-        "purpose": "Tấm dệt: tấm 'Khác' trên điện thoại."
-      },
-      {
-        "name": "weave-reduced-motion",
-        "value": "không weave-page, không chuyển tiếp ở sọc biên, nút và miếng vải",
-        "purpose": "Tấm dệt: đường thay thế khi giảm chuyển động."
-      },
-      {
         "name": "operate-motion",
         "value": "150-200ms cho chuyển trạng thái; animate-rise 0.2s; data-reveal hiện ngay; không tilt, không parallax, không vệt sáng lướt",
         "purpose": "Phạm vi thao tác .ui-operate: màn thao tác không chờ cuộn mới hiện dữ liệu."
+      },
+      {
+        "name": "lang-page",
+        "value": "0.2s ease-out both, opacity 0 → 1",
+        "purpose": "Đường làng: chuyển trang (template.tsx)."
+      },
+      {
+        "name": "lang-traveler",
+        "value": "đi theo getPointAtLength của con đường, 500–1500ms, easeInOutCubic, nảy bước 6 lần",
+        "purpose": "Đường làng: người lữ khách đi giữa các điểm dừng, quay mặt theo hướng đi; giảm chuyển động thì đứng sẵn ở điểm mới."
+      },
+      {
+        "name": "lang-hien / lang-gan-vien / lang-dong-dau",
+        "value": "0.55s trồi 14px; 0.85s gắn vào lệch 3°, cách nhau 70–110ms; 0.7s triện đóng xuống, cách nhau 220ms",
+        "purpose": "Đường làng: nội dung điểm dừng, danh sách, triện son."
+      },
+      {
+        "name": "lang-press",
+        "value": "520ms, hai vòng lam loang từ điểm bấm (scale .35 → 1.9)",
+        "purpose": "Đường làng: phản hồi khi nhấn liên kết và nút (LangPress)."
+      },
+      {
+        "name": "lang-scene",
+        "value": "khói 7.5s, sóng 16s/26s, thuyền dập dềnh 4.2s, thuyền xa 110s, trống đồng quay 90s, chim 52s, tre 6.5s, sao 3.4s",
+        "purpose": "Đường làng: cảnh bến sông; con trỏ chuột làm các lớp xê dịch theo độ xa gần."
+      },
+      {
+        "name": "lang-kiln",
+        "value": "tàn lửa bay 6s, lửa khoang hiện tại lập lòe 1.4s, kim đồng hồ lò lắc về chặng 1.6s",
+        "purpose": "Đường làng: phòng báo giá và đồng hồ lò."
+      },
+      {
+        "name": "lang-loading",
+        "value": "offset-path theo quãng đường gạch, 2.4s đi đi lại lại, bước nảy 0.4s",
+        "purpose": "Đường làng: màn đang tải (loading.tsx, role=status)."
+      },
+      {
+        "name": "lang-reduced-motion",
+        "value": ".lang * không animation, không transition; kim đồng hồ đứng sẵn ở chặng",
+        "purpose": "Đường làng: đường thay thế khi giảm chuyển động."
       }
     ],
     "breakpoints": [
@@ -945,7 +865,7 @@
       {
         "name": "lg",
         "value": "1024px",
-        "note": "thanh bên khu làm việc xuất hiện; Tấm dệt: sọc biên tám màu lên đầu trang thay thanh 5 ô dưới đáy"
+        "note": "thanh bên khu làm việc xuất hiện; Đường làng: thanh đáy năm ô nhường chỗ cho đầu trang (1024–1279px là dải cuộn ngang tám mục, từ 1280px là sáu điểm dừng)"
       }
     ],
     "textures": [
@@ -982,39 +902,24 @@
         "value": "sóng nước lam cao 14px lặp ngang"
       },
       {
-        "name": "cutout",
-        "value": "/seed/cutout/*.webp + .webp.json (nguồn gốc, derivedFrom, processing); danh mục src/lib/cutouts.ts",
-        "purpose": "Tấm dệt: tác phẩm đứng thẳng trên dải lá (LaidPiece); tách nền GrabCut + duyệt tay; ảnh ngoài danh mục là miếng ảnh khâu."
+        "name": "lang-cutout",
+        "purpose": "Đường làng: tác phẩm đứng thẳng trên kệ sơn then và trên thuyền chở gốm; tách nền GrabCut + duyệt tay, có .webp.json ghi nguồn gốc, danh mục src/lib/cutouts.ts."
       },
       {
-        "name": "weave-ground",
-        "value": "repeating-linear-gradient 1px mỗi 3px (ngang) và mỗi 4px (dọc), rgb(42 29 12 / 0.05) trên vai; tối rgb(170 185 255 / 0.05)",
-        "purpose": "Tấm dệt: vân sợi bông của nền khu."
+        "name": "lang-hoi-van",
+        "purpose": "Đường làng: dải hồi văn chữ triện (ô 24×12) dưới đầu trang và đầu trang con, lam 30%."
       },
       {
-        "name": "weave-motif",
-        "value": "SVG crispEdges sinh từ lưới (trám, sao, răng cưa, móc, ô cờ, sóng), ô 4px; 12% trắng hoặc 10% chàm đen; mặt nạ đậm ở hai mép, 28% trong 50% ± 34rem",
-        "purpose": "Tấm dệt: hoa văn tông-trên-tông phủ dải."
+        "name": "lang-song-may",
+        "purpose": "Đường làng: sóng mây lam trên sông (ô 60×26) và dưới bản đồ đường làng (48×20)."
       },
       {
-        "name": "band-edge",
-        "value": "lưới 10×5 ô ở 3px, lát 30×15px, hai màu so le, lật dọc ở mép dưới",
-        "purpose": "Tấm dệt: biên răng cưa của dải, biên vải trên, đoạn sọc biên đang mở."
+        "name": "lang-road",
+        "purpose": "Đường làng: con đường gạch ba lớp (nền 30, gạch đất nung đứt 12/5 22%, chỉ vữa đứt 3/7)."
       },
       {
-        "name": "running-stitch",
-        "value": "border 1.5px dashed màu dải 70%, inset 5px, góc 2px; dày: 3px double 85% inset 6px + dải răng cưa 9px; mảnh: 35%",
-        "purpose": "Tấm dệt: đường chỉ khâu của miếng vải."
-      },
-      {
-        "name": "warp",
-        "value": "sợi dọc 1px mỗi 4px ở currentColor 32%, cao 0.8rem; done: màu dải + răng cưa 22%; now: nửa trên màu dải",
-        "purpose": "Tấm dệt: tiến độ đơn sỉ."
-      },
-      {
-        "name": "fringe",
-        "value": "cao 46px, sợi 2px mỗi 7px lần lượt chàm, củ nâu, nghệ, lá; mặt nạ mờ dần từ 30%",
-        "purpose": "Tấm dệt: tua vải cuối trang tổng quan."
+        "name": "lang-shelf-plank",
+        "purpose": "Đường làng: ván kệ lặp theo từng hàng (.ke-hang: --anh, --van, --chu), chỉ vàng 3px trên ván then-3."
       }
     ]
   },
@@ -1100,49 +1005,49 @@
       "css": ".ds-nav { display: flex; gap: 2px; align-items: center; height: 64px; padding: 0 16px; background: color-mix(in srgb, var(--color-nga) 88%, transparent); border-bottom: 1px solid var(--color-vua); font-family: var(--font-sans); } .ds-nav-link { position: relative; padding: 8px 12px; border-radius: var(--radius-tile, 6px); font-size: 15px; font-weight: 500; text-decoration: none; color: color-mix(in srgb, var(--color-muc) 65%, transparent); transition: color .2s; } .ds-nav-link:hover { color: var(--color-muc); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-lam); outline-offset: 2px; } .ds-nav-link.is-active { color: var(--color-muc); } .ds-nav-link.is-active::after { content: \"\"; position: absolute; left: 12px; right: 12px; bottom: -12px; height: 5px; border-radius: 2px; background: var(--color-datnung); }"
     },
     {
-      "name": "Dải dệt và đầu dải (Tấm dệt)",
-      "kind": "custom",
-      "refersTo": "weave-band-heavy",
-      "description": "Dải màu nhuộm hết bề ngang, hoa văn tông-trên-tông đậm ở mép và lặng giữa, biên răng cưa dưới; số việc dệt liền vào tiêu đề Chakra Petch.",
-      "html": "<header class=\"ds-band\"><div class=\"ds-band-body\"><h1 class=\"ds-band-title\"><span class=\"ds-so\">3</span><span>Đơn sỉ</span></h1><p class=\"ds-band-soft\">Theo dõi chào giá kín của các xưởng và chốt đơn.</p><a class=\"ds-btn-moc\" href=\"#\">Tạo yêu cầu báo giá</a></div><div class=\"ds-band-edge\" aria-hidden=\"true\"></div></header>",
-      "css": ".ds-band { position: relative; isolation: isolate; background-color: #55401f; color: #fbfaf5; font-family: var(--font-sans); } .ds-band::before { content: ''; position: absolute; inset: 0; z-index: -1; background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 8 8' shape-rendering='crispEdges'%3E%3Cpath fill='rgba(255,255,255,0.12)' d='M0 0h8v1H0zM0 7h8v1H0zM1 6h6v1H1zM2 4h4v2H2zM3 3h2v1H3z'/%3E%3C/svg%3E\"); -webkit-mask-image: linear-gradient(90deg, #000 0, #000 8%, rgb(0 0 0 / 0.28) 20%, rgb(0 0 0 / 0.28) 80%, #000 92%); mask-image: linear-gradient(90deg, #000 0, #000 8%, rgb(0 0 0 / 0.28) 20%, rgb(0 0 0 / 0.28) 80%, #000 92%); } .ds-band-body { padding: 48px 32px; } .ds-band-title { display: flex; align-items: baseline; gap: 16px; margin: 0; font-family: var(--font-chakra), var(--font-sans); font-weight: 700; font-size: 2.6rem; line-height: 1.02; letter-spacing: -0.012em; text-transform: none; } .ds-so { font-size: 1.45em; line-height: 0.88; letter-spacing: -0.03em; font-variant-numeric: tabular-nums lining-nums; } .ds-band-soft { margin: 12px 0 24px; max-width: 42rem; color: rgb(251 250 245 / 0.76); } .ds-band-edge { height: 15px; transform: scaleY(-1); background-size: 30px 15px; background-repeat: repeat-x; background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='15' viewBox='0 0 10 5' shape-rendering='crispEdges'%3E%3Cpath fill='%232a1d0c' d='M0 0h10v1H0zM1 1h8v1H1zM2 2h6v1H2zM3 3h4v1H3z'/%3E%3Cpath fill='%23e2a52b' d='M0 4h1v1H0zM2 4h1v1H2zM4 4h1v1H4zM6 4h1v1H6zM8 4h1v1H8z'/%3E%3C/svg%3E\"); } .ds-btn-moc { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem; border-radius: 3px; background: #fbfaf5; color: #2a1d0c; font-weight: 650; font-size: 0.95rem; text-decoration: none; box-shadow: inset 0 -3px 0 rgb(42 29 12 / 0.14), 0 6px 14px -10px rgb(0 0 0 / 0.6); transition: transform .2s cubic-bezier(0.16,1,0.3,1), background-color .2s ease-out; } .ds-btn-moc:hover { background: var(--color-nghe, #d9a548); } .ds-btn-moc:focus-visible { outline: 2px solid var(--color-nghe, #d9a548); outline-offset: 2px; } .ds-btn-moc:active { transform: translateY(1px); }"
+      "name": "Điểm dừng trên đường làng",
+      "kind": "navigation",
+      "refersTo": "lang-station",
+      "description": "Nút điểm dừng: biểu tượng nét 2.2 trong ô 58px, tên giọng kể, dòng phụ là số liệu thật, ô đếm đất nung khi có việc gấp; aria-pressed, ← → Home End để đi.",
+      "html": "<button class=\"ds-tram\" aria-pressed=\"true\"><span class=\"ds-tram-icon\">⌂</span><span class=\"ds-tram-ten\">Cổng làng</span><span class=\"ds-tram-phu\">4 việc chờ bạn</span><span class=\"ds-tram-dem\">2</span></button>",
+      "css": ".ds-tram{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;width:150px;padding:10px 8px;border:1px solid #d9cdb7;border-radius:10px;background:#fffdf8;color:#1c1a17;font-family:'Be Vietnam Pro',system-ui,sans-serif;box-shadow:0 0 0 3px rgb(31 78 154/.24),0 22px 44px -22px rgb(28 26 23/.45);border-color:#1f4e9a}.ds-tram-icon{display:grid;place-items:center;width:58px;height:58px;border-radius:8px;background:#1f4e9a;color:#fffdf8;font-size:26px}.ds-tram-ten{font:700 1.05rem/1.2 Alegreya,Georgia,serif}.ds-tram-phu{font-size:13px;color:#655e54}.ds-tram-dem{position:absolute;top:-8px;right:-8px;min-width:22px;height:22px;border-radius:6px;background:#a34a23;color:#fffdf8;font:700 12px/22px 'Be Vietnam Pro',sans-serif;text-align:center}"
     },
     {
-      "name": "Nút viền sợi (Tấm dệt)",
-      "kind": "button",
-      "refersTo": "button-soi",
-      "description": "Hành động phụ trên dải: trong suốt, viền trong 1.5px màu chữ của dải, rê nền trắng 10%.",
-      "html": "<div class=\"ds-soi-wrap\"><a class=\"ds-btn-soi\" href=\"#\">Mở sổ</a></div>",
-      "css": ".ds-soi-wrap { padding: 20px; background: #72572d; } .ds-btn-soi { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem; border-radius: 3px; color: #fbfaf5; font-family: var(--font-sans); font-weight: 650; font-size: 0.95rem; text-decoration: none; box-shadow: inset 0 0 0 1.5px currentColor; transition: transform .2s cubic-bezier(0.16,1,0.3,1), background-color .2s ease-out; } .ds-btn-soi:hover { background: rgb(255 255 255 / 0.1); } .ds-btn-soi:focus-visible { outline: 2px solid var(--color-nghe, #d9a548); outline-offset: 2px; } .ds-btn-soi:active { transform: translateY(1px); }"
+      "name": "Hàng việc và thẻ đơn",
+      "kind": "list-item",
+      "refersTo": "lang-task-row",
+      "description": "Hàng việc: viên đất nung dấu thoi (gấp) hoặc viên ngọc dấu tròn, tiêu đề, chi tiết cắt một dòng, mã mono, mũi tên. Thẻ đơn thêm dải sáu viên công đoạn.",
+      "html": "<a class=\"ds-viec\" href=\"#\"><span class=\"ds-viec-o\">◆</span><span><b>So sánh 4 chào giá và chốt</b><small>Đặt 5.000 chiếc cốc sứ trắng ngà</small></span><span class=\"ds-viec-cd\"><i class=\"da\"></i><i class=\"da\"></i><i class=\"nay\"></i><i></i><i></i><i></i></span></a>",
+      "css": ".ds-viec{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid #d9cdb7;border-radius:10px;background:#fffdf8;color:#1c1a17;font-family:'Be Vietnam Pro',system-ui,sans-serif;border-radius:8px;text-decoration:none}.ds-viec-o{display:grid;place-items:center;width:44px;height:44px;border-radius:6px;background:#a34a23;color:#fffdf8}.ds-viec small{display:block;color:#655e54}.ds-viec-cd{display:grid;grid-template-columns:repeat(6,14px);gap:4px;margin-left:auto}.ds-viec-cd i{height:12px;border-radius:2px;background:#e4d9c3}.ds-viec-cd i.da{background:#a34a23}.ds-viec-cd i.nay{background:#ee8a43}"
     },
     {
-      "name": "Miếng vải khâu (Tấm dệt)",
-      "kind": "card",
-      "refersTo": "patch",
-      "description": "Nội dung đọc trên vải mộc góc 3px với đường chỉ chạy màu dải; việc gấp dệt dày (răng cưa trên, chỉ đôi), việc xong dệt mảnh.",
-      "html": "<a class=\"ds-patch ds-dense\" href=\"#\"><b>So 3 chào giá và chốt xưởng</b><small>Bộ bát men lam cho nhà hàng</small></a><a class=\"ds-patch\" href=\"#\"><b>Đánh giá Xưởng Minh Hải</b><small>Buổi nặn gốm 15/11</small></a><a class=\"ds-patch ds-thin\" href=\"#\"><b>Đơn đã hoàn tất</b><small>Lọ hoa men rạn · 200 sp</small></a>",
-      "css": ".ds-patch { position: relative; display: block; max-width: 420px; margin-bottom: 10px; padding: 16px 20px; border-radius: 3px; background: var(--color-vai-2, #fdfcf8); color: var(--color-muc); font-family: var(--font-sans); text-decoration: none; box-shadow: 0 1px 0 rgb(42 29 12 / 0.08), 0 12px 22px -18px rgb(42 29 12 / 0.55); transition: transform .45s cubic-bezier(0.16,1,0.3,1), box-shadow .45s cubic-bezier(0.16,1,0.3,1); } .ds-patch::after { content: ''; position: absolute; inset: 5px; border: 1.5px dashed color-mix(in srgb, var(--color-nau, #5c4321) 70%, transparent); border-radius: 2px; pointer-events: none; } .ds-patch:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgb(42 29 12 / 0.08), 0 20px 30px -20px rgb(42 29 12 / 0.6); } .ds-patch:focus-visible { outline: 2px solid var(--color-nghe, #d9a548); outline-offset: 2px; } .ds-patch b { display: block; font-weight: 600; } .ds-patch small { display: block; margin-top: 2px; font-size: 14px; color: var(--color-tro); } .ds-dense { padding-top: 26px; } .ds-dense::before { content: ''; position: absolute; inset-inline: 0; top: 0; height: 9px; background-color: #55401f; -webkit-mask: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 4 3' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h4v1H0zM1 1h2v1H1z'/%3E%3C/svg%3E\") repeat-x 0 0 / 12px 9px; mask: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='9' viewBox='0 0 4 3' shape-rendering='crispEdges'%3E%3Cpath d='M0 0h4v1H0zM1 1h2v1H1z'/%3E%3C/svg%3E\") repeat-x 0 0 / 12px 9px; } .ds-dense::after { inset: 6px; border: 3px double color-mix(in srgb, #55401f 85%, transparent); } .ds-thin { box-shadow: 0 1px 0 rgb(42 29 12 / 0.06); } .ds-thin::after { border-color: color-mix(in srgb, var(--color-nau, #5c4321) 35%, transparent); }"
+      "name": "Lò bậc thang và huy hiệu khóa lạc quan",
+      "kind": "status",
+      "refersTo": "lang-kiln-band",
+      "description": "Đầu phòng báo giá trên sơn then: huy hiệu Record vN · Optimistic Lock (bắt buộc) và sáu khoang lò = sáu trạng thái; khoang hiện tại bén lửa, aria-current=step.",
+      "html": "<div class=\"ds-lo\"><span class=\"ds-lock\">🔒 Record v2 · Optimistic Lock</span><ol><li class=\"da\">Bản nháp</li><li class=\"da\">Đã gửi các xưởng</li><li class=\"nay\">Đang nhận chào giá</li><li>Đã chốt phân bổ</li><li>Đang sản xuất</li><li>Đã giao hàng</li></ol></div>",
+      "css": ".ds-lo{background:#1e1511;color:#fffdf8;padding:20px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif}.ds-lock{display:inline-block;background:#1f4e9a;color:#fffdf8;font:12px 'JetBrains Mono',monospace;padding:2px 10px;border-radius:4px}.ds-lo ol{display:flex;gap:10px;list-style:none;padding:0;margin:16px 0 0;align-items:flex-end}.ds-lo li{flex:1;text-align:center;font-size:13px;padding-top:44px;border-radius:40px 40px 6px 6px;background:#3a2b22;color:#d9cdb7}.ds-lo li.da{background:#5a3323;color:#fffdf8}.ds-lo li.nay{background:radial-gradient(70% 60% at 50% 30%,#ffd28a,#ee8a43 45%,#6e3a22 80%);color:#fffdf8;font-weight:600}"
     },
     {
-      "name": "Sọc biên tám màu (Tấm dệt)",
-      "kind": "nav",
-      "refersTo": "selvage-segment",
-      "description": "Điều hướng khu khách hàng: mỗi đoạn một màu mục; rê hoặc đang mở thì hoa văn hiện, đoạn đang mở dệt dài xuống phủ mép dải dưới; số đếm là ô vải trắng.",
-      "html": "<nav class=\"ds-selv-row\"><a class=\"ds-selv\" href=\"#\" style=\"--band:#46321a\"><span>Việc của tôi</span></a><a class=\"ds-selv\" href=\"#\" aria-current=\"page\" style=\"--band:#55401f\"><span>Đơn sỉ</span><i class=\"ds-dem\">3</i></a><a class=\"ds-selv\" href=\"#\" style=\"--band:#644b26\"><span>Lịch hẹn</span></a><a class=\"ds-selv\" href=\"#\" style=\"--band:#72572d\"><span>Đã lưu</span></a></nav>",
-      "css": ".ds-selv-row { display: grid; grid-template-columns: repeat(4, 1fr); padding-bottom: 32px; } .ds-selv { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 3.4rem; padding: 0.55rem 0.75rem 0.6rem; background-color: var(--band); color: #fbfaf5; text-decoration: none; font: 600 0.72rem/1.2 var(--font-chakra), var(--font-sans); letter-spacing: 0.09em; text-transform: uppercase; } .ds-selv.ds-dark { color: #2a1d0c; } .ds-selv::before { content: ''; position: absolute; inset: 0; opacity: 0; background-image: repeating-linear-gradient(45deg, rgb(255 255 255 / 0.12) 0 4px, transparent 4px 8px), repeating-linear-gradient(-45deg, rgb(255 255 255 / 0.12) 0 4px, transparent 4px 8px); transition: opacity .3s ease-out; pointer-events: none; } .ds-selv:hover::before, .ds-selv[aria-current=page]::before { opacity: 1; } .ds-selv[aria-current=page]::after { content: ''; position: absolute; inset-inline: 0; bottom: calc(-1.1rem - 15px); height: calc(1.1rem + 15px); background-color: var(--band); } .ds-selv:focus-visible { outline: 2px solid var(--color-nghe, #d9a548); outline-offset: -2px; } .ds-selv span { position: relative; } .ds-dem { position: absolute; top: 0.45rem; right: 0.5rem; display: grid; place-items: center; min-width: 1.45rem; height: 1.45rem; padding: 0 0.3rem; background: #fbfaf5; color: #2a1d0c; font: 700 0.75rem/1 var(--font-chakra), var(--font-sans); font-style: normal; letter-spacing: 0; box-shadow: 0 0 0 2px var(--band); }"
+      "name": "Thẻ chào giá và mười viên chia đơn",
+      "kind": "form",
+      "refersTo": "lang-step-button",
+      "description": "Chào giá: xưởng giọng kể, đơn giá ngọc/đất nung theo ngân sách, nút −/+ 44px theo bước tròn một phần mười, ô gõ tự chặn; thanh mười viên gốm lấp đầy theo tổng đã chia, nút chốt chỉ mở khi đủ số lượng.",
+      "html": "<div class=\"ds-chao\"><b>Gốm sứ Hưng Phát</b> <span class=\"gia\">42.000 ₫/sp</span><div class=\"buoc\"><button>−</button><output>3.000</output><button>+</button></div><div class=\"vien\"><i class=\"d\"></i><i class=\"d\"></i><i class=\"d\"></i><i class=\"d\"></i><i class=\"d\"></i><i class=\"d\"></i><i></i><i></i><i></i><i></i></div></div>",
+      "css": ".ds-chao{border:1px solid #d9cdb7;border-radius:10px;background:#fffdf8;color:#1c1a17;font-family:'Be Vietnam Pro',system-ui,sans-serif;padding:18px 20px;border-color:#3b6f5e;box-shadow:0 0 0 3px rgb(59 111 94/.25)}.ds-chao b{font:700 1.35rem Alegreya,Georgia,serif}.ds-chao .gia{color:#3b6f5e;font-weight:700}.ds-chao .buoc{display:flex;gap:8px;margin-top:10px}.ds-chao .buoc button{width:44px;height:44px;border:1px solid #d9cdb7;border-radius:6px;background:#fffdf8;font-size:20px}.ds-chao output{display:grid;place-items:center;width:104px;border:1px solid #d9cdb7;border-radius:6px;background:#f7f2e8;font-weight:700}.ds-chao .vien{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;padding:5px;margin-top:12px;border-radius:8px;background:#d9cdb7}.ds-chao .vien i{height:26px;border-radius:4px;background:#e4d9c3}.ds-chao .vien i.d{background:#1f4e9a}"
     },
     {
-      "name": "Tiến độ dệt và huy hiệu khóa lạc quan (Tấm dệt)",
-      "kind": "custom",
-      "refersTo": "optimistic-lock-badge",
-      "description": "Đầu phòng báo giá trên dải củ nâu: huy hiệu Record vN · Optimistic Lock (bắt buộc giữ) và tiến độ năm chặng: đã dệt kín, đang dệt nửa, chưa tới chỉ còn sợi dọc.",
-      "html": "<div class=\"ds-room\"><span class=\"ds-lock\"><svg width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"4\" y=\"11\" width=\"16\" height=\"10\" rx=\"2\"/><path d=\"M8 11V7a4 4 0 0 1 8 0v4\"/></svg>Record v4 · Optimistic Lock</span><ol class=\"ds-warp-track\"><li class=\"done\"><i></i>Đã gửi</li><li class=\"done\"><i></i>Chào giá</li><li class=\"now\"><i></i>Chốt xưởng</li><li><i></i>Sản xuất</li><li><i></i>Giao hàng</li></ol></div>",
-      "css": ".ds-room { max-width: 520px; padding: 24px; background: #55401f; color: #fbfaf5; font-family: var(--font-sans); } .ds-lock { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 4px; background: var(--color-nau, #5c4321); color: #fbfaf5; font: 400 11px var(--font-mono); } .ds-warp-track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; margin: 20px 0 0; padding: 16px; list-style: none; border-radius: 3px; background: var(--color-vai-2, #fdfcf8); color: var(--color-muc); font-size: 0.72rem; } .ds-warp-track i { display: block; height: 0.8rem; margin-bottom: 6px; background-image: repeating-linear-gradient(90deg, color-mix(in srgb, currentColor 32%, transparent) 0 1px, transparent 1px 4px); } .ds-warp-track li { opacity: .7; } .ds-warp-track .done i { background: #55401f; } .ds-warp-track .now { opacity: 1; font-weight: 600; } .ds-warp-track .now i { background-image: linear-gradient(#55401f 0 50%, transparent 50%), repeating-linear-gradient(90deg, color-mix(in srgb, currentColor 32%, transparent) 0 1px, transparent 1px 4px); }"
+      "name": "Triện son và thư giấy dó",
+      "kind": "badge",
+      "refersTo": "lang-stamp",
+      "description": "Triện: ô vuông son viền trong giấy, nghiêng -6°, mã lô mono và tên xưởng Phudu, bấm mở trang truy xuất. Thư: giấy dó, dấu son 'Mới' 44px khi chưa đọc.",
+      "html": "<a class=\"ds-trien\" href=\"#\"><span>BT-2026-LAM-004</span><b>Xưởng gốm Ông Tư</b></a><div class=\"ds-thu\"><span class=\"moi\">Mới</span><small>12 ngày trước</small><b>Có 4 chào giá cho đơn 5.000 cốc</b></div>",
+      "css": ".ds-trien{display:inline-flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;width:120px;aspect-ratio:1;border-radius:4px;background:#b3261e;color:#fffdf8;box-shadow:inset 0 0 0 5px #b3261e,inset 0 0 0 7px #fffdf8;transform:rotate(-6deg);text-decoration:none;font:600 12px 'JetBrains Mono',monospace}.ds-trien b{font:800 12px Phudu,sans-serif;text-transform:uppercase}.ds-thu{position:relative;margin-top:16px;padding:14px 16px;border:1px solid #e4d2ad;border-radius:8px;background:#fbf4e4;color:#1c1a17}.ds-thu small{display:block;color:#5c5246}.ds-thu b{font:700 1.2rem Alegreya,Georgia,serif}.ds-thu .moi{position:absolute;right:14px;top:14px;display:grid;place-items:center;width:44px;height:44px;border-radius:4px;transform:rotate(-6deg);background:#b3261e;color:#fffdf8;font:800 12px Phudu,sans-serif;text-transform:uppercase}"
     }
   ],
   "narrative": {
     "northStar": "Con đường gốm sứ",
-    "overview": "vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tác phẩm, mỗi lô hàng là một viên gốm men được gắn vào cùng một lưới mạch vữa của làng. Nền là men ngà, có lưới mạch vữa xám ấm kẻ ngang dọc nhìn thấy được; những mảng lớn được tráng men thành viên gốm (men lam Bát Tràng, men ngọc, đất nung), xen giữa là viên hoa văn mây sóng lam vẽ tay, viên men rạn và viên sen. Xác thực được đóng bằng triện son. Hệ thống từ chối mô-típ \"chợ thủ công nền kem, chữ có chân, điểm nhấn đất nung\" quen thuộc: ở đây màu men chiếm trọn mảng, không chỉ làm điểm nhấn.\n\nMật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Hai khu làm việc nghệ nhân và Ban quản lý gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Khu khách hàng không dùng khung này mà có thế giới riêng (xem dưới). Chế độ tối \"lò đêm\" đổi nền thành than ấm của lòng lò đã tắt lửa; men vẫn sáng trên nền lò.\n\nKhu khách hàng (`/account`) có thế giới riêng là **Tấm dệt**: một tấm thổ cẩm dài trên khung cửi, tách hẳn khỏi bức ghép gốm của trang chủ và cổng đăng nhập (không mạch vữa, không Phudu, không viên men). Nền là sợi bông trắng có vân dệt (tối: vải chàm đen); mỗi tính năng là một dải màu nhuộm đặc chạy hết bề ngang, có hoa văn pixel tông-trên-tông và biên răng cưa, các dải nối nhau từ trên xuống. Nội dung đọc nằm trên miếng vải mộc khâu đính bằng đường chỉ chạy. Điều hướng là sọc biên tám màu, mỗi đoạn một màu tính năng. Việc gấp dệt dày, việc đã xong dệt mảnh; tiến độ đơn là đoạn vải đã dệt kín, chặng chưa tới chỉ còn sợi dọc; xưởng hiện bằng huy hiệu chữ pixel dệt. Hoa văn là hình học tự vẽ trên lưới ô vuông, không chép mẫu của một dân tộc cụ thể. Tấm dệt chỉ thuộc khu khách hàng; khu nghệ nhân và Ban quản lý vẫn dùng khung thanh bên chung (`zone-shell`) và sẽ có bản sắc riêng sau, không mượn Tấm dệt.\n\nChuyển động kể đúng một câu chuyện vật liệu: viên gốm được \"gắn\" vào mạch vữa (hơi lệch, hơi xoay rồi ăn khớp), bóng men lướt theo con trỏ khi rê lên viên, kim đồng hồ lò có quán tính và giảm chấn thật. Mọi chuyển động đều có đường thay thế khi người dùng giảm chuyển động.",
+    "overview": "vCraft là con đường ghép gốm ven sông Hồng: mỗi xưởng, mỗi tác phẩm, mỗi lô hàng là một viên gốm men được gắn vào cùng một lưới mạch vữa của làng. Nền là men ngà, có lưới mạch vữa xám ấm kẻ ngang dọc nhìn thấy được; những mảng lớn được tráng men thành viên gốm (men lam Bát Tràng, men ngọc, đất nung), xen giữa là viên hoa văn mây sóng lam vẽ tay, viên men rạn và viên sen. Xác thực được đóng bằng triện son. Hệ thống từ chối mô-típ \"chợ thủ công nền kem, chữ có chân, điểm nhấn đất nung\" quen thuộc: ở đây màu men chiếm trọn mảng, không chỉ làm điểm nhấn.\n\nMật độ chia hai giọng. Khu triển lãm công khai (thuyết phục) dùng bức ghép lớn, biển hiệu Phudu chữ hoa và ảnh tác phẩm thật làm viên gốm. Hai khu làm việc nghệ nhân và Ban quản lý gọn và chăm chú hơn: mỗi khu có thanh bên một màu men chiếm trọn chiều cao, vùng làm việc nền ngà, thẻ sứ trắng, và trên điện thoại là thanh tab dưới đáy bấm bằng một tay. Khu khách hàng (/account) là Đường làng: một buổi dạo làng gốm Bát Tràng – bến sông vẽ tay đổi ngày/đêm theo chế độ, con đường gạch qua sáu điểm dừng (Cổng làng, Lò đơn sỉ, Bàn xoay, Kệ trưng bày, Nhà triện, Bến thư) có người lữ khách đi theo, mỗi điểm một vật thể làng nghề; phòng báo giá là lò bậc thang sáu khoang.",
     "keyCharacteristics": [
       "Nền men ngà với lưới mạch vữa 72px nhìn thấy được; các khối gắn vào bức ghép cách nhau đúng một mạch vữa 6px.",
       "Màu men là mảng, không phải viền: lam, đất nung, men ngọc phủ trọn viên biển hiệu, thanh bên, ô số liệu.",
@@ -1150,7 +1055,7 @@
       "Bốn giọng chữ có vai rõ ràng: Phudu chữ hoa cho biển hiệu, Alegreya cho tên và lời kể, Be Vietnam Pro cho chữ làm việc, JetBrains Mono cho mã lô.",
       "Trạng thái được mang bằng cả hình dấu lẫn màu.",
       "Triện son là con dấu duy nhất của sự xác thực.",
-      "Khu khách hàng là Tấm dệt: dải màu nhuộm hết bề ngang, biên răng cưa, miếng vải mộc khâu chỉ, sọc biên tám màu, chữ Chakra Petch; không lan sang khu khác."
+      "Khu khách hàng là Đường làng: bến sông vẽ tay đổi ngày/đêm, con đường gạch sáu điểm dừng có người lữ khách đi theo, mỗi điểm một vật thể làng nghề; không lan sang khu khác."
     ],
     "rules": [
       {
@@ -1169,16 +1074,6 @@
         "section": "colors"
       },
       {
-        "name": "Quy tắc Một mục một màu nhuộm",
-        "body": "Trong Tấm dệt, mỗi mục giữ đúng màu nhuộm của nó ở mọi nơi: đoạn sọc biên, dải đầu trang, dải trên trang tổng quan, màu chỉ khâu của miếng vải, mã và số của mục. Một dải là một màu đặc phủ hết bề ngang; không pha hai màu nhuộm trong một dải, không mượn màu mục khác.",
-        "section": "colors"
-      },
-      {
-        "name": "Quy tắc Sợi nghệ",
-        "body": "Vàng nghệ là sợi sáng duy nhất của Tấm dệt: vùng chọn, focus, hover nút chính. Không thêm màu nhấn thứ hai cho các vai này.",
-        "section": "colors"
-      },
-      {
         "name": "Quy tắc Biển hiệu",
         "body": "Phudu chỉ dùng chữ hoa và chỉ cho tiêu đề, số lớn và chữ trên triện; không bao giờ cho đoạn văn.",
         "section": "typography"
@@ -1187,26 +1082,6 @@
         "name": "Quy tắc Không dòng mồi",
         "body": "Tiêu đề đứng một mình. Nhãn nhóm không được đặt làm dòng chữ nhỏ phía trên tiêu đề.",
         "section": "typography"
-      },
-      {
-        "name": "Quy tắc Số dệt vào tên",
-        "body": "Trong Tấm dệt, con số là một phần của tiêu đề (\"3 việc chờ bạn\", \"2 Đơn sỉ\"): số Chakra Petch lớn đứng ngay trước chữ, cùng dòng chân. Số bằng không thì không hiện, thao tác chính thay chỗ. Không dựng hàng ô số liệu.",
-        "section": "typography"
-      },
-      {
-        "name": "Quy tắc Chakra chữ thường",
-        "body": "Chakra Petch viết chữ thường cho tiêu đề và số; chữ hoa giãn chỉ dành cho nhãn `.nhan` ngắn, đứng cạnh hoặc dưới tiêu đề.",
-        "section": "typography"
-      },
-      {
-        "name": "Quy tắc Hai mép dày, giữa lặng",
-        "body": "Hoa văn của dải đậm đủ ở hai mép và lặng xuống 28% sau cột nội dung (mặt nạ chuyển từ `50% ± 41rem` vào `50% ± 34rem`), để chữ trên dải luôn đọc được mà tấm vải vẫn đầy hoa văn ở lề.",
-        "section": "layout"
-      },
-      {
-        "name": "Quy tắc Một đường biên vải",
-        "body": "Vùng được chia bằng biên răng cưa của dải và đường chỉ khâu của miếng vải, không bằng khung thẻ, đường kẻ xám hay thanh bên.",
-        "section": "layout"
       },
       {
         "name": "Quy tắc Viên nằm trên vữa",
@@ -1219,13 +1094,33 @@
         "section": "elevation"
       },
       {
-        "name": "Quy tắc Gấp dệt dày, xong dệt mảnh",
-        "body": "Độ nặng thị giác đi theo độ gấp của việc. Dải có việc chờ khách dệt dày (đệm `clamp(2.2rem, 5vw, 3.6rem)`), dải bình thường 1.6rem, dải không còn việc dệt mảnh (1.1rem). Miếng vải của việc gấp có dải răng cưa màu dải ở mép trên và đường chỉ đôi 3px; việc đã xong hay đã hủy dệt mảnh: chỉ khâu 35%, gần như không bóng.",
-        "section": "elevation"
+        "name": "Quy tắc Cảnh là của làng",
+        "body": "Màu cảnh (trời, sông, mái, sơn then, giấy dó) chỉ ở cảnh và vật thể của Đường làng; mọi chữ và thành phần thao tác dùng token chung. Không thêm men màu mới.",
+        "section": "colors"
       },
       {
-        "name": "Quy tắc Hoa văn tự dệt",
-        "body": "Mọi hoa văn (trám, sao tám cánh, răng cưa, móc câu, ô cờ đôi, sóng), biên và chữ huy hiệu đều sinh từ lưới ô vuông trong `src/components/weave/loom.ts` và xuất thành SVG nét sắc (`crispEdges`). Đây là hình học tự vẽ, không chép mẫu của một dân tộc cụ thể, không dùng ảnh vải thật làm nền.",
+        "name": "Quy tắc Ngày và đêm cùng đọc được",
+        "body": "Mỗi màu cảnh có cặp sáng/tối trong lang.css; mọi chữ trong khu đạt 4.5:1 ở cả hai chế độ, kể cả khi đổi chế độ bằng nút lúc đang xem.",
+        "section": "colors"
+      },
+      {
+        "name": "Quy tắc Số nằm trong câu",
+        "body": "Con số là một phần của câu kể hoặc tiêu đề; đến mười thì viết bằng chữ trong câu kể, trên tiêu đề trang con thì số đứng trước tên. Số bằng không thì không hiện, lời mời thay chỗ. Không dựng hàng ô số liệu.",
+        "section": "typography"
+      },
+      {
+        "name": "Quy tắc Mỗi điểm dừng một vật thể",
+        "body": "Nội dung của một điểm dừng mở bằng vật thể của nó (đồng hồ lò, bàn xoay, kệ, sổ hộ chiếu, thư), rồi mới tới danh sách. Không dựng lưới thẻ giống nhau cho mọi điểm.",
+        "section": "layout"
+      },
+      {
+        "name": "Quy tắc Danh sách co theo cột",
+        "body": "Lưới danh sách luôn khai báo cột (grid-cols-1 = minmax(0, 1fr)); lưới không khai báo cột sẽ nở theo chữ một dòng bị cắt và tràn ngang trên điện thoại.",
+        "section": "layout"
+      },
+      {
+        "name": "Quy tắc Tranh tự vẽ",
+        "body": "Cảnh làng, lò, bàn xoay, kệ, sổ và biểu tượng điểm dừng là SVG tự vẽ trong src/components/lang/; ảnh thật chỉ là ảnh tác phẩm (tách nền có nguồn gốc) và ảnh xưởng.",
         "section": "shapes"
       }
     ],
@@ -1234,18 +1129,17 @@
       "**Do** dùng góc 6px cho viên, nút, ô nhập; 8px cho thẻ; 10px cho bức ghép và hộp thoại.",
       "**Do** mang trạng thái bằng cả hình dấu (tròn, thoi, vuông, vòng) lẫn màu.",
       "**Do** dùng triện son `doson` cho mọi dấu hiệu \"đã được Ban quản lý xác thực\".",
-      "**Do** giữ mỗi khu làm việc trong thế giới của nó: khách hàng là Tấm dệt, nghệ nhân đất nung, Ban quản lý đêm với điểm ngọc.",
+      "**Do** giữ mỗi khu làm việc trong thế giới của nó: khách hàng là Đường làng, nghệ nhân đất nung, Ban quản lý đêm với điểm ngọc.",
       "**Do** dùng `on` cho chữ trên men đổi theo chế độ và `giay` cho chữ trên viên `*-nen`, ảnh, nền đêm.",
       "**Do** cho mọi chuyển động một đường thay thế khi `prefers-reduced-motion: reduce`.",
       "**Do** dùng `--chart-1..4` cho mọi chuỗi dữ liệu, cột rộng tối đa 24px, đầu cột bo 4px, kèm bảng số liệu.",
       "**Do** giữ mục tiêu bấm từ 44px trở lên, 56px cho tab điện thoại.",
-      "**Do** giữ Tấm dệt trong khu khách hàng; khu nghệ nhân và Ban quản lý dùng khung chung cho tới khi có bản sắc riêng.",
-      "**Do** cho mỗi mục của Tấm dệt đúng một màu nhuộm theo `ROUTE_HUE` và dùng nó cho sọc biên, dải, chỉ khâu, mã và số của mục.",
-      "**Do** đặt nội dung đọc trên miếng vải mộc khâu chỉ góc 3px; để dải dệt dày khi có việc chờ khách và dệt mảnh khi không còn việc.",
-      "**Do** dệt con số vào tiêu đề bằng Chakra Petch và ẩn số khi bằng không.",
-      "**Do** sinh mọi hoa văn, biên và chữ huy hiệu từ lưới ô vuông trong `loom.ts`.",
       "**Do** giữ huy hiệu \"Record vN · Optimistic Lock\" và thanh 6 trạng thái trong dải đầu của phòng báo giá, luôn nhìn thấy.",
-      "**Do** chỉ cho tác phẩm đứng thẳng trên vải khi ảnh tách nền đã được duyệt tay, có tên trong `cutouts.ts` và có tệp `.webp.json` ghi nguồn gốc; còn lại dùng miếng ảnh khâu."
+      "**Do** chỉ cho tác phẩm đứng thẳng trên vải khi ảnh tách nền đã được duyệt tay, có tên trong `cutouts.ts` và có tệp `.webp.json` ghi nguồn gốc; còn lại dùng miếng ảnh khâu.",
+      "**Do** giữ Đường làng trong khu khách hàng; khu nghệ nhân và Ban quản lý dùng khung chung cho tới khi có bản sắc riêng.",
+      "**Do** mở mỗi điểm dừng bằng vật thể của nó và kể số liệu thật bằng câu, ẩn số khi bằng không và thay bằng lời mời.",
+      "**Do** khai báo màu cảnh mới thành cặp sáng/tối trên .lang trong lang.css và chạy lại kiểm tra tương phản ở cả hai chế độ.",
+      "**Do** giữ huy hiệu Record vN · Optimistic Lock và sáu khoang lò trong dải đầu của phòng báo giá, luôn nhìn thấy."
     ],
     "donts": [
       "**Don't** dựng giao diện kiểu chợ thủ công nền kem, chữ có chân và một điểm nhấn đất nung; men màu phải phủ mảng.",
@@ -1256,10 +1150,10 @@
       "**Don't** dùng `doson` để trang trí.",
       "**Don't** viết màu dữ liệu lên chữ trong biểu đồ.",
       "**Don't** đưa ảnh tách nền tự động chưa duyệt, hoặc thiếu tệp nguồn gốc, lên vải.",
-      "**Don't** đem bức ghép, mạch vữa, viên men hay Phudu vào Tấm dệt, hay đem dải dệt và sọc biên sang khu nghệ nhân, Ban quản lý.",
-      "**Don't** dựng ô số liệu xếp hàng hay thẻ bo tròn viền mảnh trong Tấm dệt; số dệt vào tiêu đề, nội dung nằm trên miếng vải.",
-      "**Don't** chép hoa văn của một dân tộc cụ thể hay dùng ảnh vải thổ cẩm thật làm nền.",
-      "**Don't** để hoa văn đậm sau cột chữ; giữa dải luôn lặng."
+      "**Don't** để hoa văn đậm sau cột chữ; giữa dải luôn lặng.",
+      "**Don't** đem cảnh làng, con đường hay vật thể của Đường làng sang khu nghệ nhân, Ban quản lý.",
+      "**Don't** để người lữ khách hay vật trang trí che chữ thao tác; chữ đè lên tranh phải có quầng màu trời (.chu-troi).",
+      "**Don't** chép tranh, hoa văn hay ảnh của người khác làm cảnh làng; cảnh và biểu tượng là SVG tự vẽ."
     ]
   }
 }

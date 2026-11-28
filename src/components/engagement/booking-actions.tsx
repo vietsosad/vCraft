@@ -34,7 +34,7 @@ const COPY: Record<Action, { title: string; body: string; confirm: string; note?
 };
 
 /** Thao tác trên một lịch hẹn: xưởng xác nhận/từ chối/hoàn tất, khách hủy. */
-export function BookingActions({ code, version, status, as }: { code: string; version: number; status: BookingStatus; as: "artisan" | "buyer" }) {
+export function BookingActions({ code, version, status, as, size = "sm" }: { code: string; version: number; status: BookingStatus; as: "artisan" | "buyer"; size?: "sm" | "md" }) {
   const [action, setAction] = useState<Action | null>(null);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
@@ -73,7 +73,7 @@ export function BookingActions({ code, version, status, as }: { code: string; ve
         {available.map((a) => {
           const Icon = ICON[a];
           return (
-            <Button key={a} size="sm" variant={VARIANT[a]} onClick={() => setAction(a)}>
+            <Button key={a} size={size} variant={VARIANT[a]} onClick={() => setAction(a)}>
               <Icon className="size-4" /> {COPY[a].confirm}
             </Button>
           );
