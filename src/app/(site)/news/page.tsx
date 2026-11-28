@@ -34,12 +34,12 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
       {news.length === 0 ? (
         <div className="mt-10"><EmptyState title="Chưa có tin trong chuyên mục này" /></div>
       ) : (
-        <div className="mt-10 grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+        <div className="giong-ke mt-8 grid gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
           {news.map((n, i) => (
             <Link key={n.id} href={`/news/${n.slug}`} data-reveal style={{ ["--d" as string]: `${(i % 3) * 70}ms` }} className={cn("group block", i === 0 && !active && "md:col-span-2 lg:col-span-2")}>
-              <VImage image={asImage(n.coverImage)} ratio={i === 0 && !active ? "16/8" : "16/10"} sizes="(max-width: 768px) 100vw, 50vw" className="tile" imgClassName="transition-transform duration-[900ms] group-hover:scale-[1.04]" />
-              <p className={cn("mt-4 text-xs font-semibold", n.isUrgent ? "text-doson" : "text-tro")}>{n.isUrgent && "Khẩn · "}{NEWS_CATEGORIES[n.category]} · {formatDate(n.publishedAt)}</p>
-              <h2 className={cn("mt-1 font-serif font-bold normal-case leading-snug transition-colors group-hover:text-lam", i === 0 && !active ? "text-3xl md:text-4xl" : "text-2xl")}>{n.title}</h2>
+              <VImage image={asImage(n.coverImage)} ratio={i === 0 && !active ? "16/8" : "16/10"} sizes="(max-width: 768px) 100vw, 50vw" className="tile" imgClassName="transition-transform duration-300 group-hover:scale-[1.02]" />
+              <p className={cn("mt-3.5 text-[13px] font-semibold", n.isUrgent ? "text-doson" : "text-tro")}>{n.isUrgent && "Khẩn · "}{NEWS_CATEGORIES[n.category]} · {formatDate(n.publishedAt)}</p>
+              <h2 className={cn("mt-1 font-serif font-bold normal-case leading-snug transition-colors group-hover:text-lam", i === 0 && !active ? "text-2xl md:text-[1.75rem]" : "text-xl")}>{n.title}</h2>
               <p className="mt-2 line-clamp-3 text-sm text-tro">{n.excerpt}</p>
             </Link>
           ))}

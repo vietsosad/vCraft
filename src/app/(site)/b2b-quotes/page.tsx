@@ -40,7 +40,7 @@ export default async function WholesaleLanding() {
         <div className="mosaic mx-auto max-w-[1440px] grid-cols-1 md:grid-cols-12">
           <div className="tile tile-lam animate-tile-set flex flex-col justify-between gap-10 p-8 text-giay md:col-span-7 md:p-12">
             <div>
-              <RevealText as="h1" text="Một yêu cầu, cả làng chào giá" delay={200} className="title-xl block !text-[clamp(2.4rem,5.4vw,4.6rem)]" />
+              <RevealText as="h1" text="Một yêu cầu, cả làng chào giá" delay={200} className="title-xl block" />
               <p className="mt-5 max-w-xl text-[17px] text-giay/85">
                 Gửi một yêu cầu báo giá, hệ thống mời đúng các xưởng có sở trường và đủ công suất. Bạn so sánh chào giá kín, chốt và chia đơn
                 cho nhiều hộ cùng làm. Mỗi phần đơn có lô sản xuất và mã QR riêng.
@@ -66,7 +66,7 @@ export default async function WholesaleLanding() {
             { v: delivered, l: "đơn đã chốt hoặc đã giao" },
           ].map((x, i) => (
             <div key={x.l} className="tile animate-tile-set bg-su p-5 md:col-span-4" style={{ ["--d" as string]: `${200 + i * 80}ms` }}>
-              <p className="font-display text-4xl">{formatNumber(x.v)}</p>
+              <p className="op-stat">{formatNumber(x.v)}</p>
               <p className="text-sm text-tro">{x.l}</p>
             </div>
           ))}
@@ -82,9 +82,9 @@ export default async function WholesaleLanding() {
               <div className="rounded-[6px] bg-su/92 p-4">
                 <p className="flex items-center justify-between">
                   <s.icon className="size-6 text-lam" aria-hidden />
-                  <span className="font-display text-3xl text-lam/35">{i + 1}</span>
+                  <span className="text-2xl font-bold tabular text-lam/45" aria-hidden>{i + 1}</span>
                 </p>
-                <p className="mt-4 font-serif text-xl font-bold">{s.title}</p>
+                <p className="mt-3 text-lg font-semibold">{s.title}</p>
                 <p className="mt-1 text-sm text-tro">{s.text}</p>
               </div>
             </li>
