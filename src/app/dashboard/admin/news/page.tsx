@@ -13,7 +13,7 @@ export default async function AdminNewsPage() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-3xl">Tin tức cộng đồng</h2>
+        <h1>Tin tức cộng đồng</h1>
         <ButtonLink href="/dashboard/admin/news/new" variant="cobalt"><Plus className="size-4" /> Đăng tin</ButtonLink>
       </div>
       <ul className="divide-y divide-vua rounded-[var(--radius-tile)] border border-vua bg-su/70">

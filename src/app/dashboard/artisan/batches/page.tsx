@@ -22,7 +22,7 @@ export default async function BatchesPage() {
     <div>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-3xl">Lô sản xuất & nhật ký</h2>
+          <h1>Lô sản xuất & nhật ký</h1>
           <p className="text-sm text-tro">Mỗi lô có một mã QR dùng chung cho mọi sản phẩm trong lô. Lô hoàn tất sẽ khóa nhật ký.</p>
         </div>
         <ButtonLink href="/dashboard/artisan/batches/new"><QrCode className="size-4" /> Mở lô mới</ButtonLink>
@@ -30,9 +30,32 @@ export default async function BatchesPage() {
       {batches.length === 0 ? (
         <EmptyState title="Mỗi mẻ gốm là một câu chuyện" description="Hãy mở lô đầu tiên và ghi lại công đoạn xử lý đất." action={<ButtonLink href="/dashboard/artisan/batches/new">Mở lô mới</ButtonLink>} />
       ) : (
-        <div className="relative overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/70">
+        <>
+        {/* Điện thoại: mỗi lô là một thẻ – mã, tên, tiến độ, trạng thái đọc từ trên xuống, không phải cuộn ngang */}
+        <ul className="space-y-2.5 md:hidden">
+          {batches.map((b) => {
+            const n = asStages(b.productionStages).filter((s) => !s.isAddendum).length;
+            return (
+              <li key={b.id}>
+                <Link href={`/dashboard/artisan/batches/${b.batchCode}`} className="block rounded-[8px] border border-vua bg-su p-4 transition-colors hover:border-datnung/40">
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="code text-[13px] text-datnung">{b.batchCode}</span>
+                    <Badge tone={b.status === "COMPLETED" ? "celadon" : "gold"}>{b.status === "COMPLETED" ? "Đã khóa" : "Đang làm"}</Badge>
+                  </div>
+                  <p className="mt-1 font-semibold leading-snug">{b.batchTitle}</p>
+                  <p className="mt-0.5 text-[13px] text-tro">{GLAZES[b.glazeType].label} · {formatNumber(b.quantityProduced)} sp · {b._count.products} sản phẩm gắn lô</p>
+                  <div className="mt-3 flex items-center gap-3">
+                    <div className="h-1.5 flex-1 overflow-hidden rounded bg-nga-sau"><div className="h-full bg-datnung" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
+                    <span className="text-[13px] tabular text-tro">{n}/6 công đoạn · {formatNumber(b.scanCount)} lượt quét</span>
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="relative hidden overflow-x-auto rounded-[var(--radius-tile)] border border-vua bg-su/70 md:block">
           <table className="w-full min-w-[760px] text-sm">
-            <thead className="bg-nga-dam/70 text-left text-xs uppercase tracking-wider text-tro">
+            <thead className="bg-nga-dam/70 text-left text-[13px] font-semibold text-tro">
               <tr><th className="px-4 py-3">Mã lô</th><th className="px-4 py-3">Tên lô</th><th className="px-4 py-3">Tiến độ</th><th className="px-4 py-3">Trạng thái</th><th className="px-4 py-3 text-right">Lượt quét</th><th className="px-4 py-3">Ngày mở</th></tr>
             </thead>
             <tbody className="divide-y divide-vua">
@@ -40,17 +63,17 @@ export default async function BatchesPage() {
                 const n = asStages(b.productionStages).filter((s) => !s.isAddendum).length;
                 return (
                   <tr key={b.id} className="hover:bg-nga-dam/40">
-                    <td className="px-4 py-3 font-mono text-xs"><Link href={`/dashboard/artisan/batches/${b.batchCode}`} className="text-datnung hover:underline">{b.batchCode}</Link></td>
+                    <td className="px-4 py-3"><Link href={`/dashboard/artisan/batches/${b.batchCode}`} className="code text-[13px] text-datnung hover:underline">{b.batchCode}</Link></td>
                     <td className="px-4 py-3">
                       <Link href={`/dashboard/artisan/batches/${b.batchCode}`} className="hover:text-datnung">{b.batchTitle}</Link>
-                      <p className="text-xs text-tro">{GLAZES[b.glazeType].label} · {formatNumber(b.quantityProduced)} sp · {b._count.products} sản phẩm gắn lô{b.quoteRequest ? ` · đơn ${b.quoteRequest.requestCode}` : ""}</p>
+                      <p className="text-[13px] text-tro">{GLAZES[b.glazeType].label} · {formatNumber(b.quantityProduced)} sp · {b._count.products} sản phẩm gắn lô{b.quoteRequest ? ` · đơn ${b.quoteRequest.requestCode}` : ""}</p>
                     </td>
                     <td className="px-4 py-3">
                       <div className="h-1.5 w-28 overflow-hidden rounded bg-nga-sau"><div className="h-full bg-datnung" style={{ width: `${Math.min(100, (n / 6) * 100)}%` }} /></div>
-                      <p className="mt-1 font-mono text-[11px] text-tro">{n}/6 công đoạn</p>
+                      <p className="mt-1 text-xs tabular text-tro">{n}/6 công đoạn</p>
                     </td>
                     <td className="px-4 py-3"><Badge tone={b.status === "COMPLETED" ? "celadon" : "gold"}>{b.status === "COMPLETED" ? "Đã khóa" : "Đang làm"}</Badge></td>
-                    <td className="px-4 py-3 text-right font-mono">{formatNumber(b.scanCount)}</td>
+                    <td className="px-4 py-3 text-right tabular">{formatNumber(b.scanCount)}</td>
                     <td className="px-4 py-3 text-xs text-tro">{formatDate(b.createdAt)}</td>
                   </tr>
                 );
@@ -58,6 +81,7 @@ export default async function BatchesPage() {
             </tbody>
           </table>
         </div>
+        </>
       )}
     </div>
   );

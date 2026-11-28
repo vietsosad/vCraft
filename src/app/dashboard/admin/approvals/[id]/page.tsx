@@ -22,7 +22,7 @@ export default async function ApplicationPage({ params }: { params: Promise<{ id
       <div className="space-y-6">
         <div>
           <Link href="/dashboard/admin/approvals" className="text-sm text-tro hover:text-muc">← Hàng đợi duyệt</Link>
-          <h2 className="mt-2 text-3xl">{app.workshopName}</h2>
+          <h1 className="mt-2">{app.workshopName}</h1>
           <p className="text-tro">Dòng họ {app.clanName} · thành lập {app.establishedYear}</p>
         </div>
         <Card className="grid gap-4 p-6 text-sm sm:grid-cols-2">

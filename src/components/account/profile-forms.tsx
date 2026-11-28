@@ -41,7 +41,7 @@ export function ProfileForm({ initial, showOrganization }: { initial: { name: st
 
   return (
     <Card className="p-6">
-      <h2 className="font-serif text-2xl font-bold normal-case">Thông tin cá nhân</h2>
+      <h2>Thông tin cá nhân</h2>
       <form onSubmit={onSubmit} noValidate className="mt-5 grid gap-4 sm:grid-cols-2">
         <Field label="Họ và tên" htmlFor="pf-name" error={errors.name} required>
           <Input id="pf-name" autoComplete="name" value={form.name} invalid={!!errors.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
@@ -97,7 +97,7 @@ export function PasswordForm() {
 
   return (
     <Card className="p-6">
-      <h2 className="font-serif text-2xl font-bold normal-case">Đổi mật khẩu</h2>
+      <h2>Đổi mật khẩu</h2>
       <p className="mt-1 text-sm text-tro">Sau khi đổi, mọi thiết bị khác sẽ bị đăng xuất.</p>
       <form onSubmit={onSubmit} noValidate className="mt-5 space-y-4">
         <Field label="Mật khẩu hiện tại" htmlFor="pw-current" error={errors.currentPassword} required>
@@ -134,7 +134,7 @@ export function SessionsCard() {
   }, []);
   return (
     <Card className="p-6">
-      <h2 className="flex items-center gap-2 font-serif text-2xl font-bold normal-case"><ShieldCheck className="size-5 text-ngoc" /> Thiết bị đang đăng nhập</h2>
+      <h2 className="flex items-center gap-2"><ShieldCheck className="size-5 text-ngoc" /> Thiết bị đang đăng nhập</h2>
       <ul className="mt-4 divide-y divide-vua">
         {rows === null && <li className="py-3 text-sm text-tro">Đang tải…</li>}
         {rows?.map((s) => {

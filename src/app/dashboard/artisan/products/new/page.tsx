@@ -7,7 +7,7 @@ export default async function NewProductPage() {
   const batches = await prisma.productBatch.findMany({ where: { artisanId: user.artisanId! }, select: { id: true, batchCode: true, batchTitle: true }, orderBy: { createdAt: "desc" } });
   return (
     <div className="mx-auto max-w-3xl">
-      <h2 className="mb-6 text-3xl">Thêm sản phẩm</h2>
+      <h1 className="mb-6">Thêm sản phẩm</h1>
       <ProductForm batches={batches} verified={user.artisanVerified} />
     </div>
   );

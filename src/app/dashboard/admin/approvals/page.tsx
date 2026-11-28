@@ -21,7 +21,7 @@ export default async function ApprovalsPage({ searchParams }: { searchParams: Pr
     <div>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-3xl">Kiểm duyệt hộ nghề</h2>
+          <h1>Kiểm duyệt hộ nghề</h1>
           <p className="text-sm text-tro">Đối chiếu minh chứng với danh sách hộ làm nghề trước khi cấp huy hiệu – chặn hàng nhái trà trộn.</p>
         </div>
         <div className="flex gap-1 rounded-[8px] border border-vua bg-su p-1 text-sm">
@@ -38,7 +38,7 @@ export default async function ApprovalsPage({ searchParams }: { searchParams: Pr
             <li key={r.id}>
               <Link href={`/dashboard/admin/approvals/${r.id}`} className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-tile)] border border-vua bg-su/70 p-5 hover:border-lam/40">
                 <div>
-                  <p className="font-serif text-xl">{r.workshopName}</p>
+                  <p className="text-lg font-semibold">{r.workshopName}</p>
                   <p className="text-sm text-tro">{r.user.name} · dòng họ {r.clanName} · {r.user.email}</p>
                   <p className="text-xs text-tro">{r.address} · {r.specialties.map((s) => GLAZES[s].label).join(", ")}</p>
                 </div>
