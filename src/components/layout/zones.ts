@@ -1,6 +1,6 @@
 import {
-  LayoutDashboard, FileText, Heart, CalendarDays, Star, UserCog, Bell, Store, Package, Layers, BarChart3,
-  ShieldCheck, ClipboardCheck, Network, Newspaper, Users, ScrollText, QrCode, type LucideIcon,
+  LayoutDashboard, FileText, Heart, CalendarDays, Star, UserCog, Store, Package, Layers, BarChart3,
+  ShieldCheck, ClipboardCheck, Network, Newspaper, Users, ScrollText, Route, Flame, Stamp, Mail, type LucideIcon,
 } from "lucide-react";
 
 export type Role = "BUYER" | "ARTISAN" | "ADMIN";
@@ -31,29 +31,30 @@ export type Zone = {
  */
 export const ZONES: Record<Role, Zone> = {
   BUYER: {
-    name: "Tấm dệt",
+    name: "Đường làng",
     roleLabel: "Khách hàng",
     home: "/account",
     loginHref: "/login",
-    avatar: "bg-nau",
+    avatar: "bg-lam-nen",
     band: "tile-lam",
     tone: "lam",
-    // Mỗi mục là một dải màu của tấm thổ cẩm (xem src/components/weave)
+    // Mỗi mục là một điểm dừng trên đường làng (xem src/components/lang)
     nav: [
-      { href: "/account", label: "Việc của tôi", short: "Việc", icon: LayoutDashboard, exact: true },
-      { href: "/account/quotes", label: "Đơn sỉ", short: "Đơn sỉ", icon: FileText, badgeKey: "quotes" },
-      { href: "/account/bookings", label: "Lịch hẹn", short: "Lịch", icon: CalendarDays },
-      { href: "/account/favorites", label: "Đã lưu", short: "Đã lưu", icon: Heart },
-      { href: "/account/traces", label: "Truy xuất", short: "Truy xuất", icon: QrCode },
+      { href: "/account", label: "Việc chờ bạn", short: "Đường làng", icon: Route, exact: true },
+      { href: "/account/quotes", label: "Lò đơn sỉ", short: "Lò đơn", icon: Flame, badgeKey: "quotes" },
+      { href: "/account/bookings", label: "Bàn xoay", short: "Bàn xoay", icon: CalendarDays },
+      { href: "/account/favorites", label: "Kệ trưng bày", short: "Kệ", icon: Heart },
+      { href: "/account/traces", label: "Hộ chiếu", short: "Hộ chiếu", icon: Stamp },
       { href: "/account/reviews", label: "Đánh giá", short: "Đánh giá", icon: Star, badgeKey: "reviews" },
-      { href: "/account/notifications", label: "Thư", short: "Thư", icon: Bell, badgeKey: "unread" },
+      { href: "/account/notifications", label: "Bến thư", short: "Thư", icon: Mail, badgeKey: "unread" },
       { href: "/account/profile", label: "Hồ sơ", short: "Hồ sơ", icon: UserCog },
     ],
     menu: [
-      { href: "/account", label: "Việc của tôi", icon: LayoutDashboard },
-      { href: "/account/quotes", label: "Đơn đặt sỉ", icon: FileText },
-      { href: "/account/bookings", label: "Lịch hẹn nặn gốm", icon: CalendarDays },
-      { href: "/account/traces", label: "Sổ truy xuất", icon: QrCode },
+      { href: "/account", label: "Việc chờ bạn", icon: Route },
+      { href: "/account/quotes", label: "Lò đơn sỉ", icon: Flame },
+      { href: "/account/bookings", label: "Bàn xoay – lịch nặn gốm", icon: CalendarDays },
+      { href: "/account/traces", label: "Hộ chiếu làng nghề", icon: Stamp },
+      { href: "/account/reviews", label: "Đánh giá", icon: Star },
       { href: "/account/profile", label: "Hồ sơ & bảo mật", icon: UserCog },
     ],
     tabs: ["/account", "/account/quotes", "/account/bookings", "/account/favorites"],
